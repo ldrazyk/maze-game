@@ -1,0 +1,23 @@
+:root {
+    --path: hsl(60, 10%, 58%);
+    --wall: hsl(50, 10%, 20%);
+}
+
+#control_panel {
+    display: flex;
+    flex-wrap: wrap;
+    height: 400px;
+    width: 400px;
+}
+
+#control_panel button {
+    flex-basis: 33%;
+    flex-grow: 1;
+    font-size: 2em;
+    color: hsl(0, 0%, 50%);
+    background-color: var(--path);
+}
+
+#control_panel button.active {
+    color: hsl(0, 0%, 0%);
+}

@@ -1,0 +1,219 @@
+:root {
+    --path: hsl(60, 10%, 58%);
+    --wall: hsl(50, 10%, 20%);
+    --pink: hsl(330, 100%, 90%);
+    --blue: hsl(200, 100%, 85%);
+    --border: hsl(0, 0%, 0%);
+    --back: hsl(0, 0%, 10%);
+    --pink-flag: url(../img/flag_pink_256.png);
+    --pink-lion-wake: url(../img/lion_pink_wake_256.png);
+    --pink-lion-sleep: url(../img/lion_pink_sleep_256.png);
+    --pink-rooster-wake: url(../img/rooster_pink_wake_256.png);
+    --pink-rooster-sleep: url(../img/rooster_pink_sleep_256.png);
+    --pink-snake-wake: url(../img/snake_pink_wake_256.png);
+    --pink-snake-sleep: url(../img/snake_pink_sleep_256.png);
+    --pink-active: url(../img/active_pink_256.png);
+    --pink-reach-v: url(../img/reach_v_pink_256.png);
+    --pink-reach-h: url(../img/reach_h_pink_256.png);
+    --pink-hover: url(../img/hover_pink_256.png);
+    --blue-flag: url(../img/flag_blue_256.png);
+    --blue-lion-wake: url(../img/lion_blue_wake_256.png);
+    --blue-lion-sleep: url(../img/lion_blue_sleep_256.png);
+    --blue-rooster-wake: url(../img/rooster_blue_wake_256.png);
+    --blue-rooster-sleep: url(../img/rooster_blue_sleep_256.png);
+    --blue-snake-wake: url(../img/snake_blue_wake_256.png);
+    --blue-snake-sleep: url(../img/snake_blue_sleep_256.png);
+    --blue-active: url(../img/active_blue_256.png);
+    --blue-reach-v: url(../img/reach_v_blue_256.png);
+    --blue-reach-h: url(../img/reach_h_blue_256.png);
+    --blue-hover: url(../img/hover_blue_256.png);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#root {
+    display: flex;
+    height: 100vh;
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+    box-sizing: content-box;
+    border-style: solid;
+    /* border-width: 0 0 2px 2px; */
+    border-width: 1px;
+    border-color: var(--wall);
+    /* background-color: var(--path); */
+}
+
+.row {
+    display: flex;
+}
+
+
+/* FIELD */
+
+.field {
+    position: relative;
+    float: left;
+    height: 66px;
+    width: 66px;
+    border-style: solid; 
+    /* border-width: 2px 2px 0 0; */
+    border-width: 1px;
+    border-color: var(--wall);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.wall {
+    background-color: var(--wall);
+}
+
+.path,
+.exit {
+    background-color: var(--path);
+}
+
+.flag.blue {
+    background-image: var(--blue-flag);
+}
+
+.flag.pink {
+    background-image: var(--pink-flag);
+}
+
+/* PAWN, HIGHLIGHT */
+
+.pawn,
+.highlight,
+.flag {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* HIGHLIGHT */
+
+.field.selected .highlight.blue {
+    background-color: var(--blue);
+}
+
+.field.selected .highlight.pink {
+    background-color: var(--pink);
+}
+
+.field.active .highlight.blue {
+    background-image: var(--blue-active);
+}
+
+.field.active .highlight.pink {
+    background-image: var(--pink-active);
+}
+
+.field.active:hover .highlight.blue {
+    background-image: var(--blue-hover);
+}
+
+.field.active:hover .highlight.pink {
+    background-image: var(--pink-hover);
+}
+
+.field.reach .highlight.blue.horizontal {
+    background-image: var(--blue-reach-h);
+}
+
+.field.reach .highlight.blue.vertical {
+    background-image: var(--blue-reach-v);
+}
+
+.field.reach .highlight.pink.horizontal {
+    background-image: var(--pink-reach-h);
+}
+
+.field.reach .highlight.pink.vertical {
+    background-image: var(--pink-reach-v);
+}
+
+.field.reach .highlight.blue:hover {
+    background-image: var(--blue-hover);
+}
+
+.field.reach .highlight.pink:hover {
+    background-image: var(--pink-hover);
+}
+
+
+/* PAWN */
+
+/* sleep */
+
+.blue.lion {
+    background-image: var(--blue-lion-sleep);
+}
+
+.blue.rooster {
+    background-image: var(--blue-rooster-sleep);
+}
+
+.blue.snake {
+    background-image: var(--blue-snake-sleep);
+}
+
+.pink.lion {
+    background-image: var(--pink-lion-sleep);
+}
+
+.pink.rooster {
+    background-image: var(--pink-rooster-sleep);
+}
+
+.pink.snake {
+    background-image: var(--pink-snake-sleep);
+}
+
+/* wake */
+
+.field.selected .blue.lion,
+.field.active:hover .blue.lion {
+    background-image: var(--blue-lion-wake);
+}
+
+.field.selected .blue.rooster,
+.field.active:hover .blue.rooster {
+    background-image: var(--blue-rooster-wake);
+}
+
+.field.selected .blue.snake,
+.field.active:hover .blue.snake {
+    background-image: var(--blue-snake-wake);
+}
+
+.field.selected .pink.lion,
+.field.active:hover .pink.lion {
+    background-image: var(--pink-lion-wake);
+}
+
+.field.selected .pink.rooster,
+.field.active:hover .pink.rooster {
+    background-image: var(--pink-rooster-wake);
+}
+
+.field.selected .pink.snake,
+.field.active:hover .pink.snake {
+    background-image: var(--pink-snake-wake);
+}
+
