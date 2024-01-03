@@ -2,8 +2,7 @@ import Session from "./Session.mjs";
 import Subject from "./utils/Subject.mjs";
 
 const Model = function() {
-    let subject;
-    let session, game; 
+    let subject, session, game;
 
     const createSubject = function () {
         

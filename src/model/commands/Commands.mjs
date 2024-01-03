@@ -1,43 +1,34 @@
+import CommandsHistory from "./CommandsHistory.mjs";
 import MoveCommand from "./MoveCommand.mjs";
 import HoldCommand from "./HoldCommand.mjs";
 
 const Commands = function(game) {
-    let position, history;
+    let commandsHistory;
 
-    const resetHistory = function() {
-        history = [];
-        position = 0;
+    const createHistory = function () {
+        commandsHistory = CommandsHistory();
     };
 
     const init = function() {
-        resetHistory();
+        createHistory();
     }();
 
     // history
 
+    const resetHistory = function() {
+        commandsHistory.reset();
+    };
+
     const execute = function (command) {
-        command.execute()
-        if (position < history.length) {
-            history = history.slice(0, position);
-        }
-        history.push(command);
-        position += 1;
+        commandsHistory.execute(command);
     };
 
     const undo = function () {
-        console.log(`>>>commands.undo() history[${position}->${position - 1}]`);
-        if (position > 0) {
-            history[position - 1].unexecute();
-            position -= 1;
-        }
+        commandsHistory.undo();
     };
 
     const redo = function () {
-        console.log(`>>>commands.redo() history[${position}->${position + 1}]`);
-        if (position < history.length) {
-            history[position].execute();
-            position += 1;
-        }
+        commandsHistory.redo();
     };
 
     // commnads factory
