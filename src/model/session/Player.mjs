@@ -1,31 +1,14 @@
-const Player = function (spec) {
-    let name, color, number, active, score;
+const Player = function ({ name, color, number }) {
+    let score;
 
     const init = function() {
-        ({name, color, number} = spec);
-        active = false;
+        
         score = 0;
     }();
-
-    // game interface
-
-    const isActive = function() {
-        return active;
-    };
-
-    const activate = function() {
-        active = true;
-    };
-
-    const disactivate = function() {
-        active = false;
-    };
 
     const addWin = function() {
         score += 1;
     };
-
-    // get
 
     const getName = function() {
         return name;
@@ -47,9 +30,6 @@ const Player = function (spec) {
 
     return Object.freeze(
         {
-            // isActive: isActive,
-            // activate: activate,
-            // disactivate: disactivate,
             addWin: addWin,
             
             getName: getName,

@@ -1,4 +1,4 @@
-import Session from "./Session.mjs";
+import Session from "./session/Session.mjs";
 import Subject from "./utils/Subject.mjs";
 
 const Model = function() {

@@ -1,7 +1,7 @@
 import Player from './Player.mjs';
-import Game from './game/Game.mjs';
-import Commands from './commands/Commands.mjs';
-import ArrayIterator from "./utils/ArrayIterator.mjs";
+import Game from '../game/Game.mjs';
+import Commands from '../commands/Commands.mjs';
+import ArrayIterator from "../utils/ArrayIterator.mjs";
 
 const Session = function ({ playersSpec }) {
     const players = [];
