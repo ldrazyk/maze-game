@@ -2,7 +2,6 @@ import Board from "./Board.mjs";
 import Pawns from "./Pawns.mjs";
 import MovesCounter from "./MovesCounter.mjs";
 import CommandsEmpty from "../commands/CommandsEmpty.mjs";
-import shuffle from "../utils/shuffle.mjs";
 
 const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
     let commands;
@@ -20,57 +19,10 @@ const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
 
     const placePawns = function (startZoneSize=1) {
 
-        const findExit = function (playerNumber) {
-            let exit;
-            const exitsIterator = board.getIterator('exits');
-            while (exitsIterator.hasNext()) {
-                exit = exitsIterator.next();
-                if (playerNumber == exit.getExitNumber()) {
-                    break;
-                }
-            }
-            return exit;
-        };
-
-        const findStartZone = function (exit) {
-            const startZone = [];
-
-            const x = exit.getX();
-            const y = exit.getY();
-            
-            let direction = -1;
-            if (x == 1) direction = 1;
-            for (let xDistance = 1; xDistance <= startZoneSize; xDistance += 1) {
-                for (let yDistance = -startZoneSize; yDistance <= startZoneSize; yDistance += 1) {
-                    const field = board.getField({x: x + direction * xDistance, y: y + yDistance});
-                    if (field && field.getType() == 'path') {
-                        startZone.push(field);
-                    }
-                }
-            }
-            return startZone;
-        };
-
-        const placePlayersPawns = function ({ playerNumber, startZone }) {
-
-            shuffle(startZone);
-
-            const pawnsIterator = pawns.getIterator({playerNumber: playerNumber});
-
-            let n = 0;
-            while (pawnsIterator.hasNext()) {
-                const field = startZone[n];
-                const pawn = pawnsIterator.next();
-                pawn.move(field);
-                field.take(pawn);
-                n += 1;
-            }
-        };
-
         for (let playerNumber = 1; playerNumber <= 2; playerNumber += 1) {
-            const exit = findExit(playerNumber);
-            const startZone = findStartZone(exit);
-            placePlayersPawns({ playerNumber, startZone });
+
+            const pawnsIterator = pawns.getIterator({ playerNumber: playerNumber });
+            board.placePawns({ playerNumber, pawnsIterator, startZoneSize });
         }
     };
 

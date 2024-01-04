@@ -1,5 +1,6 @@
 import Field from "./Field.mjs";
 import ArrayIterator from "../utils/ArrayIterator.mjs";
+import shuffle from "../utils/shuffle.mjs";
 
 const Board = function ({ matrixSpec, players }) {
 
@@ -73,7 +74,7 @@ const Board = function ({ matrixSpec, players }) {
         setParams();
         createFields();
     }();
-
+    
 
     const getIterator = function (type=false) {
 
@@ -101,6 +102,58 @@ const Board = function ({ matrixSpec, players }) {
         return field;
     };
 
+    const placePawns = function ({ playerNumber, pawnsIterator, startZoneSize }) {
+
+        const getExit = function (playerNumber) {
+            let exit;
+    
+            for (let n = 0; n < exits.length; n += 1) {
+                exit = exits[n];
+                if (playerNumber == exit.getExitNumber()) {
+                    break;
+                }
+            }
+            return exit;
+        };
+
+        const findStartZone = function (exit) {
+            const startZone = [];
+
+            const exitsX = exit.getX();
+            const exitsY = exit.getY();
+            
+            let direction = -1;
+            if (exitsX == 1) direction = 1;
+            for (let xDistance = 1; xDistance <= startZoneSize; xDistance += 1) {
+                for (let yDistance = -startZoneSize; yDistance <= startZoneSize; yDistance += 1) {
+                    const field = getField({x: exitsX + direction * xDistance, y: exitsY + yDistance});
+                    if (field && field.getType() == 'path') {
+                        startZone.push(field);
+                    }
+                }
+            }
+            return startZone;
+        };
+
+        const place = function ({ pawnsIterator, startZone }) {
+
+            shuffle(startZone);
+
+            let n = 0;
+            while (pawnsIterator.hasNext()) {
+                const field = startZone[n];
+                const pawn = pawnsIterator.next();
+                pawn.move(field);
+                field.take(pawn);
+                n += 1;
+            }
+        };
+
+        const exit = getExit(playerNumber);
+        const startZone = findStartZone(exit);
+        place({ pawnsIterator, startZone })
+    };
+
     const getName = function() {
         return params.name;
     };
@@ -116,6 +169,7 @@ const Board = function ({ matrixSpec, players }) {
 
     return Object.freeze(
         {
+            placePawns: placePawns,
             getIterator: getIterator,
             getField: getField,
             getName: getName,
