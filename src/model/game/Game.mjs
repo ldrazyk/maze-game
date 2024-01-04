@@ -7,7 +7,7 @@ import shuffle from "../utils/shuffle.mjs";
 const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
     let commands;
     let board, pawns;
-    let turnCounter, turnNumber, activePlayer, passivePlayer, movesCounter, result;
+    let turnCounter, turnNumber, movesCounter, result;
     //movesCounter: obiekt, sortowanie kolejności pionków i sprawdzanie maxHold
 
     const createBoard = function(matrixSpec) {
@@ -67,7 +67,7 @@ const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
             }
         };
 
-        for (let playerNumber = 1; playerNumber <= players.length; playerNumber += 1) {
+        for (let playerNumber = 1; playerNumber <= 2; playerNumber += 1) {
             const exit = findExit(playerNumber);
             const startZone = findStartZone(exit);
             placePlayersPawns({ playerNumber, startZone });
@@ -99,9 +99,9 @@ const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
         const setResult = function (code) {
 
             if (code == 'exit') {
-                result = {ended: true, winner: activePlayer, looser: passivePlayer, type: code};
+                result = {ended: true, winner: players.getActive(), looser: players.getActive(false), type: code};
             } else if (code = 'no_pawns') {
-                result = {ended: true, winner: passivePlayer, looser: activePlayer, type: code};
+                result = {ended: true, winner: players.getActive(false), looser: players.getActive(), type: code};
             }
         };
 
@@ -169,18 +169,11 @@ const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
         };
 
         const changeActivePlayer = function() {
-            if ((gameNumber + turnCounter) % 2 == 0) {
-                activePlayer = players[0];
-                passivePlayer = players[1];
-            } else {
-                activePlayer = players[1];
-                passivePlayer = players[0];
-            }
-            console.log('Active players number: ' + activePlayer.getNumber());  // test
+            players.changeActive();
         };
     
         const changeActivePawns = function () {
-            pawns.setActivePawns(activePlayer.getNumber());
+            pawns.setActivePawns(players.getActive().getNumber());
             updateReaches();
             if (pawns.hasNext()) {
                 pawns.selectNext();

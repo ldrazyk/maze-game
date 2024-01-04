@@ -1,17 +1,14 @@
-import Player from './Player.mjs';
+import Players from './Players.mjs';
 import Game from '../game/Game.mjs';
 import Commands from '../commands/Commands.mjs';
-import ArrayIterator from "../utils/ArrayIterator.mjs";
 
 const Session = function ({ playersSpec }) {
-    const players = [];
+    let players;
     let gameNumber = 0;
     let game;
 
     const createPlayers = function() {
-        for (const spec of playersSpec) {
-            players.push(Player(spec));
-        };
+        players = Players({ playersSpec: playersSpec });
     };
 
     const init = function () {
@@ -39,11 +36,11 @@ const Session = function ({ playersSpec }) {
 
 
     const getPlayer = function(number) {
-        return players[number - 1];
+        return players.getPlayer(number);
     };
 
     const getPlayersIterator = function() {
-        return ArrayIterator(players);
+        return players.getPlayersIterator();
     };
 
     const getGameNumber = function() {

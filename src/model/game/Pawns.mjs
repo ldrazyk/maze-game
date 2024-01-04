@@ -1,21 +1,21 @@
 import ArrayIterator from "../utils/ArrayIterator.mjs";
 import Pawn from "./Pawn.mjs";
 
-const Pawns = function (spec) {
+const Pawns = function ({ players, pawnsSpec }) {
     let pawnsArray1d, pawnsPlayersArrays, pawnsDictionary; // [], [[], []], {}
     let activePawns, selectedPosition, selected;
 
     const init = function () {
-        let players, pawnsSpec;
-        ({players, pawnsSpec} = spec);
+        
         // spec = {players: [Player1, Player2], 
         // pawnsSpec: [ [{type: 'lion', amount: 1}, {type: 'snake', amount: 1}], [{type: lion, amount: 1}, {..}] ] }
         pawnsArray1d = [];
         pawnsPlayersArrays = [];
         pawnsDictionary = {};
-        for (let n = 0; n < players.length; n += 1) {
+
+        for (let n = 0; n < 2; n += 1) {
             pawnsPlayersArrays.push([]);
-            const thisPlayer = players[n];
+            const thisPlayer = players.getPlayer(n + 1);
             const thisPawnsSpec = pawnsSpec[n];
             let pawnNumber = 1;
             for (let typeNumber = 0; typeNumber < thisPawnsSpec.length; typeNumber += 1) {

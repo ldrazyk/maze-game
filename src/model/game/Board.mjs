@@ -44,7 +44,7 @@ const Board = function ({ matrixSpec, players }) {
                 if (typeCode == 2) exitNumber = 1;
                 else exitNumber = 2;
 
-                player = players[exitNumber - 1];
+                player = players.getPlayer(exitNumber);
             }
 
             const id = `f_${row + 1}_${column + 1}`;
