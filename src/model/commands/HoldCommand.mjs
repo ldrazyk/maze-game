@@ -1,10 +1,10 @@
 import DisactivateCommand from "./DisactivateCommand.mjs";
 
-const HoldCommand = function(spec) {
-    let game, pawn, disactivateCommand;
+const HoldCommand = function({ pawn, game }) {
+    let disactivateCommand;
 
     const init = function() {
-        ({pawn, game} = spec);
+        
         disactivateCommand = DisactivateCommand({game: game, pawn: pawn, type: 'hold'});
     }();
 

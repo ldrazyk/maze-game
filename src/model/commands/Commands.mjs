@@ -33,34 +33,45 @@ const Commands = function(game) {
 
     // commnads factory
 
-    const createMoveCommand = function (spec) {
-        let selected, reach, positionId, direction, position, command;
-        ({positionId, direction} = spec);
-        command = false;
-        selected = game.getSelected();
-        if (selected) {
-            reach = selected.getReach();
-            if (direction) {
-                position = reach[direction];
-            } else if (positionId) {
-                const unchecked = game.getField({id: positionId});
-                for (const field of Object.values(reach)) {
-                    if (field == unchecked) {
-                        position = unchecked;
-                        break;
+    const createMoveCommand = function ({ positionId=false, direction=false }) {
+        // if positionId: checks if field is in reach
+        // if direction: reach[direction] can be Field or false
+        let command = false;
+        
+        const selected = game.getSelected();
+
+        const getPosition = function () {
+            
+            let position = false;
+
+            if (selected) {
+                const reach = selected.getReach();
+
+                if (direction) {
+                    position = reach[direction]; // reach should be object ?
+                } else if (positionId) {
+                    const field = game.getField({id: positionId});
+                    if (Object.values(reach).includes(field)) { // game should have method inReach({ id, field? })
+                        position = field;
                     }
                 }
             }
-        }
-        
+
+            return position;
+        };
+
+        const position = getPosition();
+
         if (position) {
             command = MoveCommand({pawn: selected, position: position, game: game});
         }
+
         return command;
     };
 
     const createHoldCommand = function() {
         let command = false;
+        
         if (game.canHold()) {
             command = HoldCommand({game: game, pawn: game.getSelected()});
         } else {

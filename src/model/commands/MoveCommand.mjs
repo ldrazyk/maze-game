@@ -1,11 +1,11 @@
 import DisactivateCommand from "./DisactivateCommand.mjs";
 import KillCommand from "./KillCommand.mjs";
 
-const MoveCommand = function(spec) {
-    let game, pawn, position, oldPosition, disactivateCommand, killCommand;
+const MoveCommand = function({ pawn, position, game }) {
+    let oldPosition, killCommand, disactivateCommand;
 
     const init = function() {
-        ({pawn, position, game} = spec);
+        
         oldPosition = pawn.getPosition();
         killCommand = KillCommand(position);
         disactivateCommand = DisactivateCommand({game: game, pawn: pawn, type: 'move'});

@@ -1,11 +1,6 @@
 
-const DisactivateCommand = function(spec) {
-    let game, pawn, type;
+const DisactivateCommand = function({ game, pawn, type }) {
     // type = 'move' or 'hold'
-
-    const init = function() {
-        ({game, pawn, type} = spec);
-    }();
 
     const execute = function() {
         game.cleanAfterMove({pawn: pawn, type: type, undo: false});
