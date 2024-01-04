@@ -2,6 +2,7 @@ import Board from "./Board.mjs";
 import Pawns from "./Pawns.mjs";
 import MovesCounter from "./MovesCounter.mjs";
 import TurnCounter from "./TurnCounter.mjs";
+import Result from "./Result.mjs";
 import CommandsEmpty from "../commands/CommandsEmpty.mjs";
 
 const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
@@ -31,14 +32,18 @@ const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
         turnCounter = TurnCounter();
     };
 
+    const createResult = function () {
+        result = Result(players);
+    };
+
     const init = function() {
 
         createBoard(matrixSpec);
         createPawns(pawnsSpec);
         placePawns(2);
         createTurnCounter();
+        createResult();
 
-        result = {ended: false, winner: false, looser: false, type: false};
     }();
 
     const setCommands = function(newCommands) {
@@ -51,16 +56,7 @@ const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
 
     const endGame = function(code) {
         
-        const setResult = function (code) {
-
-            if (code == 'exit') {
-                result = {ended: true, winner: players.getActive(), looser: players.getActive(false), type: code};
-            } else if (code = 'no_pawns') {
-                result = {ended: true, winner: players.getActive(false), looser: players.getActive(), type: code};
-            }
-        };
-
-        setResult(code);
+        result.set(code);
         commands = CommandsEmpty();
         notify('endGame');
     };
@@ -266,7 +262,7 @@ const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
     };
 
     const getResult = function() {
-        return result;
+        return result.getResult();
     };
 
     return Object.freeze(
