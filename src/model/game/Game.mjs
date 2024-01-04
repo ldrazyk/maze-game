@@ -1,12 +1,13 @@
 import Board from "./Board.mjs";
 import Pawns from "./Pawns.mjs";
 import MovesCounter from "./MovesCounter.mjs";
+import TurnCounter from "./TurnCounter.mjs";
 import CommandsEmpty from "../commands/CommandsEmpty.mjs";
 
 const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
     let commands;
     let board, pawns;
-    let turnCounter, turnNumber, movesCounter, result;
+    let turnCounter, movesCounter, result;
     //movesCounter: obiekt, sortowanie kolejności pionków i sprawdzanie maxHold
 
     const createBoard = function(matrixSpec) {
@@ -26,14 +27,16 @@ const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
         }
     };
 
+    const createTurnCounter = function () {
+        turnCounter = TurnCounter();
+    };
+
     const init = function() {
 
         createBoard(matrixSpec);
         createPawns(pawnsSpec);
         placePawns(2);
-        
-        turnCounter = 0;
-        turnNumber = 0;
+        createTurnCounter();
 
         result = {ended: false, winner: false, looser: false, type: false};
     }();
@@ -113,11 +116,7 @@ const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
     const nextTurn = function() {
 
         const changeTurnNumber = function() {
-            turnCounter += 1;
-            if (turnCounter % 2 == 1) {
-                turnNumber += 1;
-            }
-            console.log('Turn number: ' + turnNumber);  // test
+            turnCounter.next();
         };
 
         const changeActivePlayer = function() {
@@ -215,7 +214,7 @@ const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
     };
 
     const canStartTurn = function() {
-        if (turnCounter == 0 || !movesCounter.canMove()) {
+        if ( turnCounter.getTurn() == 0 || !movesCounter.canMove() ) {
             return true;
         } else {
             return false;
@@ -262,6 +261,10 @@ const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
 
     // get game
 
+    const getNumber = function() {
+        return gameNumber;
+    };
+
     const getResult = function() {
         return result;
     };
@@ -288,6 +291,7 @@ const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
             getBoardName: getBoardName,
             getBoardRows: getBoardRows,
             getBoardColumns: getBoardColumns,
+            getNumber: getNumber,
             getResult: getResult,
             
         }
