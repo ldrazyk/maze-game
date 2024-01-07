@@ -29,7 +29,7 @@ const Controller = function(model) {
 
     // buttons game commands
 
-    const nextTurn = function(spec) {
+    const nextTurn = function() {
         console.log('\n>> controler.nextTurn()');  // test
         model.nextTurn();
     };

@@ -87,18 +87,35 @@ const Board = function ({ matrixSpec, players }) {
         }
     };
 
-    const getField = function({id=false, x=false, y=false}) {
+    const getField = function({ id=false, x=false, y=false, direction=false }) {
+
+        const getFieldByCoordinates = function (x, y) {
+            return fieldsMatrix[x-1][y-1];
+        };
+
+        const getFieldInDirection = function (field, direction) {
+            let x = field.getX();
+            let y = field.getY();
+            if (direction == 'up') x = x - 1;
+            else if (direction == 'down') x = x + 1;
+            else if (direction == 'left') y = y - 1;
+            else if (direction == 'right') y = y + 1;
+
+            return getFieldByCoordinates(x, y);
+        };
 
         let field = false;
 
         if (id) {
-            try {field = fieldsDictionary[id];}
-            catch {}
+            field = fieldsDictionary[id];
+        } else if (x) {
+            field = getFieldByCoordinates(x, y);
         }
-        else if (x) {
-            try {field = fieldsMatrix[x-1][y-1];}
-            catch {}
+        
+        if (direction) {
+            field = getFieldInDirection(field, direction);
         }
+
         return field;
     };
 

@@ -63,49 +63,10 @@ const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
 
     const updateReaches = function() {
 
-        const createReachSpec = function({ position, direction, pawn }) {
-
-            let reach = false;
-            
-            if (position) {
-                if (position.getType() == 'path') {
-                    const otherPawn = position.getPawn();
-                    if (otherPawn == false) {
-                        reach = position;
-                    }
-                    else if (pawn.getPlayer() !== otherPawn.getPlayer() & pawn.getKills() == otherPawn.getType()) {
-                        reach = position;
-                    }
-                } else if (position.getType() == 'exit' & pawn.getPlayer().getNumber() != position.getExitNumber()) {
-                    reach = position;
-                }
-            }
-
-            return {reach: reach, direction: direction};
-        };
-
-        const updatePawnReach = function (pawn) {
-
-            const position = pawn.getPosition();
-            const x = position.getX();
-            const y = position.getY();
-            const moveUp = {position: board.getField({x: x - 1, y: y}), direction: 'up', pawn: pawn};
-            const moveDown = {position: board.getField({x: x + 1, y: y}), direction: 'down', pawn: pawn};
-            const moveLeft = {position: board.getField({x: x, y: y - 1}), direction: 'left', pawn: pawn};
-            const moveRight = {position: board.getField({x: x, y: y + 1}), direction: 'right', pawn: pawn};
-            const moves = [moveUp, moveDown, moveLeft, moveRight];
-            const reaches = moves.map(createReachSpec);
-            let reachObject = {};
-            for (const r of reaches) {
-                reachObject[r.direction] = r.reach;
-            }
-            pawn.setReach(reachObject);
-        };
-
         const iterator = pawns.getIterator({active: true});
         while (iterator.hasNext()) {
             const pawn = iterator.next();
-            updatePawnReach(pawn);
+            pawn.updateReach();
         }
     };
 
@@ -120,6 +81,7 @@ const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
         };
     
         const changeActivePawns = function () {
+
             pawns.setActivePawns(players.getActive().getNumber());
             updateReaches();
             if (pawns.hasNext()) {
@@ -143,8 +105,10 @@ const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
     const movePawn = function({ pawn, position }) {
 
         const oldPosition = pawn.getPosition();
+        if (oldPosition) {
+            oldPosition.free();
+        }
         pawn.move(position);
-        oldPosition.free();
         position.take(pawn);
     };
 
@@ -217,6 +181,54 @@ const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
         }
     };
 
+    const canPawnMoveToField = function ({ pawnSpec, fieldSpec }) {
+
+        const getPawnFromSpec = function () {
+            let { pawn, pawnId } = pawnSpec;
+
+            if (!pawn) {
+                pawn = pawns.getPawn(pawnId);
+            }
+            return pawn;
+        };
+
+        const getFieldFromSpec = function () {
+            let { field } = fieldSpec;
+
+            if (!field) {
+                field = board.getField(fieldSpec);
+            }
+            return field;
+        };
+
+        const isMoveLegal = function (pawn, field) {
+            let result = false;
+
+            if (field.getType() == 'path') {
+
+                result = true;
+
+                const otherPawn = field.getPawn();
+                if ( otherPawn && ( pawn.getPlayer() == otherPawn.getPlayer() || pawn.getKills() != otherPawn.getType() )) {
+                    result = false;
+                }
+
+            } else if (position.getType() == 'exit' & pawn.getPlayer().getNumber() != position.getExitNumber()) {
+                result = true;
+            }
+            return result;
+        };
+
+        let result = false;
+        const pawn = getPawnFromSpec();
+        const field = getFieldFromSpec();
+        if (field && isMoveLegal(pawn, field)) {
+            result = field;
+        }
+
+        return result;
+    };
+
     // get
 
     // get pawns
@@ -278,6 +290,7 @@ const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
             cleanAfterMove: cleanAfterMove,
             canHold: canHold,
             canStartTurn: canStartTurn,
+            canPawnMoveToField: canPawnMoveToField,
 
             getSelected: getSelected,
             getPawn: getPawn,

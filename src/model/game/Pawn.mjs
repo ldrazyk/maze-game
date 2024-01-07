@@ -3,22 +3,30 @@ import ArrayIterator from "../utils/ArrayIterator.mjs";
 const Pawn = function ({ id, type, player }) {
     let kills;
     let position, reach, alive, active, order;
+    let game;
 
-    const init = function() {
-        
-        position = false;
-        reach = false;  // {up: Field, down: Field, ...}
-        alive = true;
-        active = false;
-        order = false;
+    const setKills = function () {
 
         if (type == 'lion') kills = 'rooster';
         else if (type == 'rooster') kills = 'snake';
         else if (type == 'snake') kills = 'lion';
+    };
+
+    const init = function() {
+
+        setKills();
+        
+        position = false;
+        reach = { up: false, down: false, left: false, right: false };
+        alive = true;
+        active = false;
+        order = false;
 
     }();
 
-    // game interface
+    const setGame = function (mediator) {
+        game = mediator;
+    };
 
     const isAlive = function() {
         return alive;
@@ -29,18 +37,37 @@ const Pawn = function ({ id, type, player }) {
     }
 
     const move = function (newPosition) {
+        
         position = newPosition;
-        let positionId;
-        if (newPosition) {
-            positionId = newPosition.getId();
-        } else {
-            positionId = 'false';
-        }
-        console.log(`>> ${id} moved to ${positionId}`);
+
+        const log = function () {
+            let positionId;
+            if (newPosition) {
+                positionId = newPosition.getId();
+            } else {
+                positionId = 'false';
+            }
+            console.log(`>> ${id} moved to ${positionId}`);
+        };
+
+        log();
     };
 
     const setReach = function(newReach) {
         reach = newReach;
+    };
+
+    const updateReach = function () {
+
+        Object.keys(reach).forEach(direction => {
+
+            reach[direction] = game.canPawnMoveToField(
+                {
+                    pawnSpec: { pawnId: id },
+                    fieldSpec: { field: field, direction: direction }
+                }
+            );
+        });
     };
 
     const setAlive = function(bool) {
@@ -105,6 +132,8 @@ const Pawn = function ({ id, type, player }) {
 
     return Object.freeze(
         {
+            setGame: setGame,
+
             isAlive: isAlive,
             isActive: isActive,
             move: move,
@@ -112,6 +141,7 @@ const Pawn = function ({ id, type, player }) {
             setAlive: setAlive,
             setActive: setActive,
             setOrder: setOrder,
+            updateReach: updateReach,
 
             getPosition: getPosition,
             getReach: getReach,
