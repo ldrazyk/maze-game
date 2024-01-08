@@ -53,10 +53,6 @@ const Pawn = function ({ id, type, player }) {
         log();
     };
 
-    const setReach = function(newReach) {
-        reach = newReach;
-    };
-
     const updateReach = function () {
 
         Object.keys(reach).forEach(direction => {
@@ -137,7 +133,6 @@ const Pawn = function ({ id, type, player }) {
             isAlive: isAlive,
             isActive: isActive,
             move: move,
-            setReach: setReach,
             setAlive: setAlive,
             setActive: setActive,
             setOrder: setOrder,

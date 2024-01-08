@@ -21,9 +21,9 @@ const Game = function ({ players, gameNumber, matrixSpec, pawnsSpec, notify }) {
 
     const placePawns = function (startZoneSize=1) {
 
-        for (let playerNumber = 1; playerNumber <= 2; playerNumber += 1) {
+        for (let n = 0; n < players.getAmount(); n += 1) {
 
-            const pawnsIterator = pawns.getIterator({ playerNumber: playerNumber });
+            const pawnsIterator = pawns.getIterator({ playerNumber: n + 1 });
             board.placePawns({ playerNumber, pawnsIterator, startZoneSize });
         }
     };

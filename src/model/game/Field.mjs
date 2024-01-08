@@ -1,10 +1,9 @@
 const Field = function ({ id, type, x, y, exitNumber=false, player=false }) {
-    let pawn, reach;
+    let pawn;
 
     const init = function() {
         
         pawn = false;
-        reach = false;
     }();
 
 
@@ -22,16 +21,6 @@ const Field = function ({ id, type, x, y, exitNumber=false, player=false }) {
         pawn = false;
         console.log(`>> ${id} freed`);
     };
-
-    // const setReach = function(newReach) {
-    //     reach = newReach;
-    //     // reach =('up', 'down', 'left'... false)
-    // };
-    
-
-    // const getReach = function() {
-    //     return reach;
-    // };
 
     const getPawn = function() {
         return pawn;
@@ -81,8 +70,6 @@ const Field = function ({ id, type, x, y, exitNumber=false, player=false }) {
             isFree: isFree,
             take: take,
             free: free,
-            // setReach: setReach,
-            // getReach: getReach,
             getPawn: getPawn,
             
             getId: getId,

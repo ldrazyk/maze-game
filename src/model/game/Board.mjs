@@ -5,7 +5,7 @@ import shuffle from "../utils/shuffle.mjs";
 const Board = function ({ matrixSpec, players }) {
 
     const { name, matrix } = matrixSpec;
-    const params = { name: name, rows: 0, columns: 0};
+    const size = { rows: 0, columns: 0};
 
     const fieldsArray = [];
     const fieldsMatrix = [];
@@ -14,10 +14,10 @@ const Board = function ({ matrixSpec, players }) {
     const exits = [];
     const walls = [];
     
-    const setParams = function () {
+    const setSize = function () {
 
-        params.rows = matrix.length;
-        params.columns = matrix[0].length;
+        size.rows = matrix.length;
+        size.columns = matrix[0].length;
     };
 
     const createFields = function () {
@@ -58,11 +58,11 @@ const Board = function ({ matrixSpec, players }) {
             specificArray.push(field);
         };
        
-        for (let row = 0; row < params.rows; row += 1) {
+        for (let row = 0; row < size.rows; row += 1) {
 
             fieldsMatrix.push([]);
             
-            for (let column = 0; column < params.columns; column += 1) {
+            for (let column = 0; column < size.columns; column += 1) {
 
                 createField(row, column);
             }
@@ -71,7 +71,7 @@ const Board = function ({ matrixSpec, players }) {
 
     const init = function() {
         
-        setParams();
+        setSize();
         createFields();
     }();
     
@@ -172,15 +172,15 @@ const Board = function ({ matrixSpec, players }) {
     };
 
     const getName = function() {
-        return params.name;
+        return name;
     };
 
     const getRows = function() {
-        return params.rows;
+        return size.rows;
     };
 
     const getColumns = function() {
-        return params.columns;
+        return size.columns;
     };
     
 

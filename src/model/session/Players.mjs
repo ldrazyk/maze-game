@@ -43,6 +43,10 @@ const Players = function ({ playersSpec }) {
         return ArrayIterator(players);
     };
 
+    const getAmount = function () {
+        return players.length;
+    };
+
     return Object.freeze(
         {
             changeActive: changeActive,
@@ -50,6 +54,7 @@ const Players = function ({ playersSpec }) {
             getActive: getActive,
             getPlayer: getPlayer,
             getPlayersIterator: getPlayersIterator,
+            getAmount: getAmount,
         }
     );
 };
