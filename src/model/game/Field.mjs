@@ -14,12 +14,20 @@ const Field = function ({ id, type, x, y, exitNumber=false, player=false }) {
 
     const take = function(newPawn) {
         pawn = newPawn;
-        console.log(`>> ${id} took ${newPawn.getId()}`);
+
+        const log = function () {
+            console.log(`>> ${id} took ${newPawn.getId()}`);
+        };
+        // log();
     };
 
     const free = function() {
         pawn = false;
-        console.log(`>> ${id} freed`);
+
+        const log = function () {
+            console.log(`>> ${id} freed`);
+        };
+        // log();
     };
 
     const getPawn = function() {

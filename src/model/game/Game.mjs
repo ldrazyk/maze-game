@@ -19,6 +19,75 @@ const Game = function () {
         placePawns(2);
     };
 
+    // questions
+
+    const canStartTurn = function() {
+        if ( !movesCounter.canMove() ) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    const canPawnMoveToField = function ({ pawnSpec, fieldSpec }) {
+
+        const getPawnFromSpec = function () {
+            let { pawn, pawnId } = pawnSpec;
+
+            if (!pawn) {
+                pawn = pawns.getPawn(pawnId);
+            }
+            return pawn;
+        };
+
+        const getFieldFromSpec = function () {
+            let { id, x, y, field, direction } = fieldSpec;
+
+            let resultField;
+
+            if (id || x || direction) {
+                resultField = board.getField(fieldSpec);
+            } else {
+                resultField = field;
+            }
+
+            return resultField;
+        };
+
+        const isMoveLegal = function (pawn, field) {
+            let result = false;
+
+            if (field.getType() == 'path') {
+
+                result = true;
+
+                const otherPawn = field.getPawn();
+                if ( otherPawn && ( pawn.getPlayer() == otherPawn.getPlayer() || pawn.getKills() != otherPawn.getType() )) {
+                    result = false;
+                }
+
+            } else if (field.getType() == 'exit' & pawn.getPlayer().getNumber() != field.getExitNumber()) {
+                result = true;
+            }
+            return result;
+        };
+
+        let result = false;
+        const pawn = getPawnFromSpec();
+        const field = getFieldFromSpec();
+        if (field && isMoveLegal(pawn, field)) {
+            result = field;
+        }
+
+        return result;
+    };
+
+    const canHold = function() {
+        return movesCounter.canHold();
+    };
+
+    // game events
+
     const endGame = function(code) {
         
         scores.add(code);
@@ -32,60 +101,6 @@ const Game = function () {
         while (iterator.hasNext()) {
             const pawn = iterator.next();
             pawn.updateReach();
-        }
-    };
-
-    const canStartTurn = function() {
-        if ( !movesCounter.canMove() ) {
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    const nextTurn = function() {
-
-        const changeTurnNumber = function() {
-            turnCounter.next();
-        };
-
-        const changeActivePlayer = function() {
-            players.changeActive();
-        };
-    
-        const changeActivePawns = function () {
-            pawns.setActivePawns(players.getActive().getNumber());
-        };
-
-        const selectNextOrEndGame = function () {
-            
-            if (pawns.hasNext()) {
-                pawns.selectNext();
-                notify('nextTurn');
-            } else {
-                endGame('no_pawns');
-            }
-        };
-
-        const resetMovesCounter = function() {
-            movesCounter.reset(pawns.getActiveAmount());
-        };
-
-        const resetCommandsHistory = function() {
-            commands.resetHistory();
-        };
-
-        if (canStartTurn()) {
-
-            changeTurnNumber();
-            changeActivePlayer();
-            changeActivePawns();
-            updateReaches();
-            selectNextOrEndGame();
-            resetMovesCounter();
-            resetCommandsHistory();  
-        } else {
-            console.log("Can't end turn! You still have active pawns!");
         }
     };
 
@@ -148,6 +163,54 @@ const Game = function () {
             notify('select');
         }
     };
+    
+    // UI
+
+    const nextTurn = function() {
+
+        const changeTurnNumber = function() {
+            turnCounter.next();
+        };
+
+        const changeActivePlayer = function() {
+            players.changeActive();
+        };
+    
+        const changeActivePawns = function () {
+            pawns.setActivePawns(players.getActive().getNumber());
+        };
+
+        const selectNextOrEndGame = function () {
+            
+            if (pawns.hasNext()) {
+                pawns.selectNext();
+                notify('nextTurn');
+            } else {
+                endGame('no_pawns');
+            }
+        };
+
+        const resetMovesCounter = function() {
+            movesCounter.reset(pawns.getActiveAmount());
+        };
+
+        const resetCommandsHistory = function() {
+            commands.resetHistory();
+        };
+
+        if (canStartTurn()) {
+
+            changeTurnNumber();
+            changeActivePlayer();
+            changeActivePawns();
+            updateReaches();
+            selectNextOrEndGame();
+            resetMovesCounter();
+            resetCommandsHistory();  
+        } else {
+            console.log("Can't end turn! You still have active pawns!");
+        }
+    };
 
     const selectNext = function() {
         const isSelected = pawns.selectNext();
@@ -165,7 +228,6 @@ const Game = function () {
         const tryMove = function() {
             
             if (selectedPawn.isFieldInReach(clickedField)) {
-
                 commands.move(fieldId);
             }
         };
@@ -173,9 +235,7 @@ const Game = function () {
         const trySelect = function() {
 
             if (clickedPawn && clickedPawn.isActive()) {
-
                 select(clickedPawn.getId());
-
             } else {
                 tryMove();
             }
@@ -184,9 +244,7 @@ const Game = function () {
         const tryHold = function () {
 
             if (clickedPawn === selectedPawn) {
-
                 commands.hold();
-
             } else {
                 trySelect();
             }
@@ -221,63 +279,6 @@ const Game = function () {
 
     const moveRight = function () {
         commands.moveRight();
-    };
-
-    const canHold = function() {
-        return movesCounter.canHold();
-    };
-
-    const canPawnMoveToField = function ({ pawnSpec, fieldSpec }) {
-
-        const getPawnFromSpec = function () {
-            let { pawn, pawnId } = pawnSpec;
-
-            if (!pawn) {
-                pawn = pawns.getPawn(pawnId);
-            }
-            return pawn;
-        };
-
-        const getFieldFromSpec = function () {
-            let { id, x, y, field, direction } = fieldSpec;
-
-            let resultField;
-
-            if (id || x || direction) {
-                resultField = board.getField(fieldSpec);
-            } else {
-                resultField = field;
-            }
-
-            return resultField;
-        };
-
-        const isMoveLegal = function (pawn, field) {
-            let result = false;
-
-            if (field.getType() == 'path') {
-
-                result = true;
-
-                const otherPawn = field.getPawn();
-                if ( otherPawn && ( pawn.getPlayer() == otherPawn.getPlayer() || pawn.getKills() != otherPawn.getType() )) {
-                    result = false;
-                }
-
-            } else if (field.getType() == 'exit' & pawn.getPlayer().getNumber() != field.getExitNumber()) {
-                result = true;
-            }
-            return result;
-        };
-
-        let result = false;
-        const pawn = getPawnFromSpec();
-        const field = getFieldFromSpec();
-        if (field && isMoveLegal(pawn, field)) {
-            result = field;
-        }
-
-        return result;
     };
 
     // setters

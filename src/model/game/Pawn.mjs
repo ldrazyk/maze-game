@@ -50,7 +50,7 @@ const Pawn = function ({ id, type, player }) {
             console.log(`>> ${id} moved to ${positionId}`);
         };
 
-        log();
+        // log();
     };
 
     const updateReach = function () {
