@@ -66,17 +66,13 @@ const Pawn = function ({ id, type, player }) {
         });
     };
 
-    const isFieldInReach = function (field) {
-        let result = false;
+    const isInReach = function (field) {
 
-        for (let reachField of Object.values(reach)) {
-            if (field === reachField) {
-                result = true;
-                break;
-            }
+        if (Object.values(reach).includes(field)) {
+            return true;
+        } else {
+            return false;
         }
-
-        return result;
     };
 
     const setAlive = function(bool) {
@@ -97,8 +93,13 @@ const Pawn = function ({ id, type, player }) {
         return position;
     };
 
-    const getReach = function() {  // remove ?
-        return reach;
+    const getReach = function(direction=false) {
+
+        if (direction) {
+            return reach[direction];
+        } else {
+            return reach;
+        }
     };
 
     const getReachIterator = function() {
@@ -150,7 +151,7 @@ const Pawn = function ({ id, type, player }) {
             setActive: setActive,
             setOrder: setOrder,
             updateReach: updateReach,
-            isFieldInReach: isFieldInReach,
+            isInReach: isInReach,
 
             getPosition: getPosition,
             getReach: getReach,

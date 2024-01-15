@@ -36,84 +36,16 @@ const Commands = function() {
         commandsHistory.redo();
     };
 
-    const createMoveCommand = function ({ positionId=false, direction=false }) {
-        // if positionId: checks if field is in reach
-        // if direction: reach[direction] can be Field or false
-        let command = false;
-        
-        const selected = game.getSelected();
-
-        const getPosition = function () {
-            
-            let position = false;
-
-            if (selected) {
-                const reach = selected.getReach();
-
-                if (direction) {
-                    position = reach[direction]; // reach should be object ?
-                } else if (positionId) {
-                    const field = game.getField({id: positionId});
-                    if (Object.values(reach).includes(field)) { // game should have method inReach({ id, field? })
-                        position = field;
-                    }
-                }
-            }
-
-            return position;
-        };
-
-        const position = getPosition();
-
-        if (position) {
-            command = MoveCommand({pawn: selected, position: position, game: game});
-        }
-
-        return command;
-    };
-
-
-    // game interface
-
     const hold = function () {
 
-        const command = HoldCommand({ game: game, pawn: game.getSelected() });
+        const command = HoldCommand({ pawn: game.getSelected(), game: game });
         execute(command);
     };
 
-    const move = function (id) {
-        const command = createMoveCommand({positionId: id});
-        if (command) {
-            execute(command);
-        }
-    };
+    const move = function (field) {
 
-    const moveUp = function () {
-        const command = createMoveCommand({direction: 'up'});
-        if (command) {
-            execute(command);
-        }
-    };
-
-    const moveDown = function () {
-        const command = createMoveCommand({direction: 'down'});
-        if (command) {
-            execute(command);
-        }
-    };
-
-    const moveLeft = function () {
-        const command = createMoveCommand({direction: 'left'});
-        if (command) {
-            execute(command);
-        }
-    };
-
-    const moveRight = function () {
-        const command = createMoveCommand({direction: 'right'});
-        if (command) {
-            execute(command);
-        }
+        const command = MoveCommand({ pawn: game.getSelected(), position: field, game: game });
+        execute(command);
     };
 
     return Object.freeze(
@@ -126,10 +58,6 @@ const Commands = function() {
 
             hold: hold,
             move: move,
-            moveUp: moveUp,
-            moveDown: moveDown,
-            moveLeft: moveLeft,
-            moveRight: moveRight,
         }
     );
 };

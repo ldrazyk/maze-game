@@ -223,6 +223,19 @@ const Game = function () {
         }
     };
 
+    const moveToPosition = function (position) {
+
+        commands.move(position)
+    };
+
+    const moveInDirection = function (direction) {
+
+        const position = pawns.getSelected().getReach(direction);
+        if (position) {
+            commands.move(position);
+        }
+    };
+
     const click = function (fieldId) {
         
         const clickedField = board.getField({id: fieldId});
@@ -231,8 +244,8 @@ const Game = function () {
         
         const tryMove = function() {
             
-            if (selectedPawn.isFieldInReach(clickedField)) {
-                commands.move(fieldId);
+            if (selectedPawn.isInReach(clickedField)) {
+                moveToPosition(clickedField);
             }
         };
 
@@ -266,19 +279,19 @@ const Game = function () {
     };
 
     const moveUp = function () {
-        commands.moveUp();
+        moveInDirection('up');
     };
 
     const moveDown = function () {
-        commands.moveDown();
+        moveInDirection('down');
     };
 
     const moveLeft = function () {
-        commands.moveLeft();
+        moveInDirection('left');
     };
 
     const moveRight = function () {
-        commands.moveRight();
+        moveInDirection('right');
     };
 
     // setters
