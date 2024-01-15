@@ -2,8 +2,9 @@ import CommandsHistory from "./CommandsHistory.mjs";
 import MoveCommand from "./MoveCommand.mjs";
 import HoldCommand from "./HoldCommand.mjs";
 
-const Commands = function(game) {
+const Commands = function() {
     let commandsHistory;
+    let game;
 
     const createHistory = function () {
         commandsHistory = CommandsHistory();
@@ -12,6 +13,10 @@ const Commands = function(game) {
     const init = function() {
         createHistory();
     }();
+
+    const setGame = function (mediator) {
+        game = mediator;
+    };
 
     // history
 
@@ -30,8 +35,6 @@ const Commands = function(game) {
     const redo = function () {
         commandsHistory.redo();
     };
-
-    // commnads factory
 
     const createMoveCommand = function ({ positionId=false, direction=false }) {
         // if positionId: checks if field is in reach
@@ -82,27 +85,6 @@ const Commands = function(game) {
 
     // game interface
 
-    const placePawns = function() {
-        game.placePawns();      
-    };
-
-    const nextTurn = function() {
-        if (game.canStartTurn()) {
-            resetHistory();
-            game.nextTurn();
-        } else {
-            console.log("Can't end turn! You still have active pawns!");
-        }
-    };
-
-    const select = function (id) {
-        game.select(id);
-    };
-
-    const selectNext = function() {
-        game.selectNext();
-    };
-
     const hold = function () {
         const command = createHoldCommand();
         if (command) {
@@ -145,57 +127,20 @@ const Commands = function(game) {
         }
     };
 
-    const click = function (fieldId) {
-        
-        const selected = game.getSelected();
-
-        const maybeMove = function() {
-            const iterator = selected.getReachIterator();
-            while (iterator.hasNext()) {
-                const field = iterator.next();
-                if (field && field.getId() == fieldId) {
-                    move(fieldId);
-                    break;
-                }
-            }
-        };
-
-        const maybeSelect = function() {
-            const pawn = game.getField({id: fieldId}).getPawn();
-            if (pawn && pawn.isActive()) {
-                select(pawn.getId());
-            } else {
-                maybeMove();
-            }
-        };
-
-        const maybeHold = function() {
-            if (fieldId == selected.getPosition().getId()) {
-                hold();
-            } else {
-                maybeSelect();
-            }
-        };
-
-        if (selected) maybeHold();
-    };
-
     return Object.freeze(
         {
+            setGame: setGame,
+
+            resetHistory: resetHistory,
             undo: undo,
             redo: redo,
 
-            placePawns: placePawns,
-            nextTurn: nextTurn,
-            select: select,
-            selectNext: selectNext,
             hold: hold,
             move: move,
             moveUp: moveUp,
             moveDown: moveDown,
             moveLeft: moveLeft,
             moveRight: moveRight,
-            click: click,
         }
     );
 };

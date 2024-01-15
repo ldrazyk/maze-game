@@ -34,7 +34,7 @@ const Pawn = function ({ id, type, player }) {
 
     const isActive = function() {
         return active;
-    }
+    };
 
     const move = function (newPosition) {
         
@@ -60,10 +60,23 @@ const Pawn = function ({ id, type, player }) {
             reach[direction] = game.canPawnMoveToField(
                 {
                     pawnSpec: { pawnId: id },
-                    fieldSpec: { field: field, direction: direction }
+                    fieldSpec: { field: position, direction: direction }
                 }
             );
         });
+    };
+
+    const isFieldInReach = function (field) {
+        let result = false;
+
+        for (let reachField of Object.values(reach)) {
+            if (field === reachField) {
+                result = true;
+                break;
+            }
+        }
+
+        return result;
     };
 
     const setAlive = function(bool) {
@@ -84,7 +97,7 @@ const Pawn = function ({ id, type, player }) {
         return position;
     };
 
-    const getReach = function() {
+    const getReach = function() {  // remove ?
         return reach;
     };
 
@@ -137,6 +150,7 @@ const Pawn = function ({ id, type, player }) {
             setActive: setActive,
             setOrder: setOrder,
             updateReach: updateReach,
+            isFieldInReach: isFieldInReach,
 
             getPosition: getPosition,
             getReach: getReach,

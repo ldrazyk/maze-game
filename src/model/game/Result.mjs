@@ -1,27 +1,41 @@
-const Result = function (players) {
-    let result;
+const Result = function () {
+    let scores = [];
+    let game;
 
-    const init = function () {
-        result = {ended: false, winner: false, looser: false, type: false};
-    }();
+    const setGame = function (mediator) {
+        game = mediator;
+    };
 
-    const set = function (code) {
+    const add = function (code) {
 
+        let score = { game: game.getNumber(), type: code };
+        let places;
         if (code == 'exit') {
-            result = {ended: true, winner: players.getActive(), looser: players.getActive(false), type: code};
+            places = { winner: game.getActivePlayer(), looser: game.getActivePlayer(false) };
         } else if (code = 'no_pawns') {
-            result = {ended: true, winner: players.getActive(false), looser: players.getActive(), type: code};
+            places = { winner: game.getActivePlayer(false), looser: game.getActivePlayer() };
         }
+        places.winner.addWin();
+        score = {...score, ...places};
+        scores.push(score);
     };
 
-    const getResult = function () {
-        return result;
+    const getLast = function () {
+        return scores[scores.length - 1];
     };
+
+    const getScores = function () {
+        return scores;
+    };
+
 
     return Object.freeze(
         {
-            set: set,
-            getResult: getResult,
+            setGame: setGame,
+
+            add: add,
+            getLast: getLast,
+            getScores: getScores
         }
     )
 };

@@ -1,17 +1,25 @@
-import Session from "./session/Session.mjs";
 import Subject from "./utils/Subject.mjs";
+import GameBuilder from "./game/GameBuilder.mjs";
+import Session from "./session/Session.mjs";
 
 const Model = function() {
-    let subject, session, game;
+    let subject, gameBuilder;
+    let session, game;
 
     const createSubject = function () {
         
         subject = Subject();
     };
 
+    const createGameBuilder = function () {
+
+        gameBuilder = GameBuilder();
+    };
+
     const init = function () {
 
         createSubject();
+        createGameBuilder();
     }();
 
     const notify = function (code) {
@@ -38,50 +46,65 @@ const Model = function() {
 
     const createGame = function({ matrixSpec, pawnsSpec }) {
         
-        const spec = { matrixSpec: matrixSpec, pawnsSpec: pawnsSpec, notify: notify }
-        session.createGame(spec);
-        game = session.getGame();
+        const builder = gameBuilder;
+
+        const make = function () {
+            builder.reset();
+            builder.setNotify(notify)
+            builder.setNumber(session.getGameNumber())
+            builder.setPlayers(session.getPlayers())
+            builder.setBoard(matrixSpec)
+            builder.setPawns(pawnsSpec)
+            builder.setTurnCounter()
+            builder.setMovesCounter()
+            builder.setScores()
+            builder.setCommands()
+            builder.setCommandsEmpty();
+        };
+
+        make();
+        game = builder.getResult();
+
         notify('createGame');
     };
-
     const nextTurn = function() {
-        game.getCommands().nextTurn();
+        game.nextTurn();
     };
 
     const selectNext = function () {
-        game.getCommands().selectNext();
+        game.selectNext();
     };
 
     const click = function (fieldId) {
-        game.getCommands().click(fieldId);
+        game.click(fieldId);
     };
 
     const undo = function () {
-        game.getCommands().undo();
+        game.undo();
     };
 
     const redo = function () {
-        game.getCommands().redo();
+        game.redo();
     };
 
     const hold = function () {
-        game.getCommands().hold();
+        game.hold();
     };
 
     const moveUp = function () {
-        game.getCommands().moveUp();
+        game.moveUp();
     };
 
     const moveDown = function () {
-        game.getCommands().moveDown();
+        game.moveDown();
     };
 
     const moveLeft = function () {
-        game.getCommands().moveLeft();
+        game.moveLeft();
     };
 
     const moveRight = function () {
-        game.getCommands().moveRight();
+        game.moveRight();
     };
 
 
@@ -128,6 +151,8 @@ const Model = function() {
 
             createSession: createSession,
             createGame: createGame,
+
+            // UI
             nextTurn: nextTurn,
             selectNext: selectNext,
             click: click,

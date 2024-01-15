@@ -2,7 +2,7 @@ import Field from "./Field.mjs";
 import ArrayIterator from "../utils/ArrayIterator.mjs";
 import shuffle from "../utils/shuffle.mjs";
 
-const Board = function ({ matrixSpec, players }) {
+const Board = function (matrixSpec) {
 
     const { name, matrix } = matrixSpec;
     const size = { rows: 0, columns: 0};
@@ -13,6 +13,12 @@ const Board = function ({ matrixSpec, players }) {
     const paths = [];
     const exits = [];
     const walls = [];
+
+    let game;
+
+    const setGame = function (mediator) {
+        game = mediator;
+    };
     
     const setSize = function () {
 
@@ -42,10 +48,9 @@ const Board = function ({ matrixSpec, players }) {
                 type = 'exit';
                 specificArray = exits;
 
-                if (typeCode == 2) exitNumber = 1;
-                else exitNumber = 2;
+                exitNumber = typeCode - 1;
 
-                player = players.getPlayer(exitNumber);
+                player = game.getPlayer(exitNumber);
             }
 
             const id = `f_${row + 1}_${column + 1}`;
@@ -73,8 +78,7 @@ const Board = function ({ matrixSpec, players }) {
         
         setSize();
         createFields();
-    }();
-    
+    };
 
     const getIterator = function (type=false) {
 
@@ -87,7 +91,7 @@ const Board = function ({ matrixSpec, players }) {
         }
     };
 
-    const getField = function({ id=false, x=false, y=false, direction=false }) {
+    const getField = function({ id=false, x=false, y=false, field=false, direction=false }) {
 
         const getFieldByCoordinates = function (x, y) {
             return fieldsMatrix[x-1][y-1];
@@ -103,8 +107,6 @@ const Board = function ({ matrixSpec, players }) {
 
             return getFieldByCoordinates(x, y);
         };
-
-        let field = false;
 
         if (id) {
             field = fieldsDictionary[id];
@@ -160,8 +162,7 @@ const Board = function ({ matrixSpec, players }) {
             while (pawnsIterator.hasNext()) {
                 const field = startZone[n];
                 const pawn = pawnsIterator.next();
-                pawn.move(field);
-                field.take(pawn);
+                game.movePawn({pawn: pawn, position: field});
                 n += 1;
             }
         };
@@ -186,6 +187,9 @@ const Board = function ({ matrixSpec, players }) {
 
     return Object.freeze(
         {
+            setGame: setGame,
+            init: init,
+
             placePawns: placePawns,
             getIterator: getIterator,
             getField: getField,

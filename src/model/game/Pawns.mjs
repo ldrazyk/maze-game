@@ -1,21 +1,25 @@
 import ArrayIterator from "../utils/ArrayIterator.mjs";
 import Pawn from "./Pawn.mjs";
 
-const Pawns = function ({ players, pawnsSpec }) {
-    let pawnsArray1d, pawnsPlayersArrays, pawnsDictionary; // [], [[], []], {}
+const Pawns = function (pawnsSpec) {
+    let pawnsArray, pawnsPlayersArrays, pawnsDictionary; // [], [[], []], {}
     let activePawns, selectedPosition, selected;
 
-    const init = function () {
-        
-        // spec = {players: [Player1, Player2], 
+    let game;
+
+    const setGame = function (mediator) {
+        game = mediator;
+    };
+
+    const createPawns = function () {
         // pawnsSpec: [ [{type: 'lion', amount: 1}, {type: 'snake', amount: 1}], [{type: lion, amount: 1}, {..}] ] }
-        pawnsArray1d = [];
+        pawnsArray = [];
         pawnsPlayersArrays = [];
         pawnsDictionary = {};
 
-        for (let n = 0; n < 2; n += 1) {
+        for (let n = 0; n < pawnsSpec.length; n += 1) {
             pawnsPlayersArrays.push([]);
-            const thisPlayer = players.getPlayer(n + 1);
+            const thisPlayer = game.getPlayer(n + 1);
             const thisPawnsSpec = pawnsSpec[n];
             let pawnNumber = 1;
             for (let typeNumber = 0; typeNumber < thisPawnsSpec.length; typeNumber += 1) {
@@ -24,16 +28,22 @@ const Pawns = function ({ players, pawnsSpec }) {
                     const pawnId = 'p_' + (n + 1) + '_' + pawnNumber;
                     pawnNumber += 1;
                     const pawn = Pawn({player: thisPlayer, id: pawnId, type: thisTypeSpec.type});
-                    pawnsArray1d.push(pawn);
+                    pawn.setGame(game);
+                    pawnsArray.push(pawn);
                     pawnsPlayersArrays[n].push(pawn);
                     pawnsDictionary[pawnId] = pawn;
                 }
             }
         }
+    };
+
+    const init = function () {
+        
+        createPawns();
         activePawns = false;
         selectedPosition = false;
         selected = false;
-    }();
+    };
 
     const setActivePawns = function (number) {
         console.log('Active pawns: ');  // test
@@ -102,7 +112,7 @@ const Pawns = function ({ players, pawnsSpec }) {
         } else if (active) {
             iterator = ArrayIterator(activePawns);
         } else {
-            iterator = ArrayIterator(pawnsArray1d);  
+            iterator = ArrayIterator(pawnsArray);  
         }
         return iterator;
     };
@@ -121,6 +131,9 @@ const Pawns = function ({ players, pawnsSpec }) {
 
     return Object.freeze(
         {
+            setGame: setGame,
+            init: init,
+
             setActivePawns: setActivePawns,
             hasNext: hasNext,
             selectNext: selectNext,

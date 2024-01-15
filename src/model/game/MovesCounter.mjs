@@ -1,10 +1,18 @@
-const MovesCounter = function(movesAmount) {
-    let moves, holds, maxHolds;
+const MovesCounter = function() {
+    let movesAmount, maxHolds;
+    let moves, holds;
 
-    const init = function() {
+    const reset = function (newMovesAmount) {
+
+        movesAmount = newMovesAmount;
+        maxHolds = parseInt(movesAmount / 2);
         moves = 0;
         holds = 0;
-        maxHolds = parseInt(movesAmount / 2);
+    };
+
+    const init = function() {
+        
+        reset(0);
     }();
 
     const canHold = function() {
@@ -44,6 +52,8 @@ const MovesCounter = function(movesAmount) {
 
     return Object.freeze(
         {
+            reset: reset,
+
             canHold: canHold,
             canMove: canMove,
             add: add,
