@@ -46,13 +46,13 @@ const Pawns = function (pawnsSpec) {
     };
 
     const setActivePawns = function (number) {
-        console.log('Active pawns: ');  // test
+        // console.log('Active pawns: ');  // test
         activePawns = [];
         for (const pawn of pawnsPlayersArrays[number - 1]) {
             if (pawn.isAlive()) {
                 activePawns.push(pawn);
                 pawn.setActive(true);
-                console.log('\t' + pawn.toString());    // test
+                // console.log('\t' + pawn.toString());    // test
             }
         }
         activePawns.sort(function(a, b) {return a.getOrder() - b.getOrder()});
@@ -104,6 +104,13 @@ const Pawns = function (pawnsSpec) {
         }
     };
 
+    const updateReaches = function() {
+
+        activePawns.forEach(pawn => {
+            pawn.updateReach();
+        });
+    };
+
     const getIterator = function (spec) {
         let playerNumber, active, iterator;
         if (spec) ({playerNumber, active} = spec);
@@ -138,6 +145,7 @@ const Pawns = function (pawnsSpec) {
             hasNext: hasNext,
             selectNext: selectNext,
             select: select,
+            updateReaches: updateReaches,
 
             getIterator: getIterator,
             getPawn: getPawn,

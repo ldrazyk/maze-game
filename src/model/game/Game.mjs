@@ -96,12 +96,7 @@ const Game = function () {
     };
 
     const updateReaches = function() {
-
-        const iterator = pawns.getIterator({active: true});
-        while (iterator.hasNext()) {
-            const pawn = iterator.next();
-            pawn.updateReach();
-        }
+        pawns.updateReaches();
     };
 
     const movePawn = function({ pawn, position }) {
@@ -219,6 +214,15 @@ const Game = function () {
         }
     };
 
+    const hold = function () {
+        
+        if (movesCounter.canHold()) {
+            commands.hold();
+        } else {
+            console.log("Can't hold this many pawns!");
+        }
+    };
+
     const click = function (fieldId) {
         
         const clickedField = board.getField({id: fieldId});
@@ -244,7 +248,7 @@ const Game = function () {
         const tryHold = function () {
 
             if (clickedPawn === selectedPawn) {
-                commands.hold();
+                hold();
             } else {
                 trySelect();
             }
@@ -259,10 +263,6 @@ const Game = function () {
 
     const redo = function () {
         commands.redo();
-    };
-
-    const hold = function () {
-        commands.hold();
     };
 
     const moveUp = function () {

@@ -72,24 +72,13 @@ const Commands = function() {
         return command;
     };
 
-    const createHoldCommand = function() {
-        let command = false;
-        
-        if (game.canHold()) {
-            command = HoldCommand({game: game, pawn: game.getSelected()});
-        } else {
-            console.log("Can't hold this many pawns!");
-        }
-        return command;
-    };
 
     // game interface
 
     const hold = function () {
-        const command = createHoldCommand();
-        if (command) {
-            execute(command);
-        }
+
+        const command = HoldCommand({ game: game, pawn: game.getSelected() });
+        execute(command);
     };
 
     const move = function (id) {
