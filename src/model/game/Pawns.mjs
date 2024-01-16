@@ -37,22 +37,36 @@ const Pawns = function (pawnsSpec) {
         }
     };
 
-    const init = function () {
+    const disactivatePawns = function () {
+
+        if (activePawns) {
+            activePawns.forEach(pawn => {
+                pawn.setActive(false);
+            })
+        }
+    };
+
+    const reset = function () {
         
-        createPawns();
+        disactivatePawns();
         activePawns = false;
         selectedPosition = false;
         selected = false;
     };
 
+    const init = function () {
+        
+        createPawns();
+        reset();
+    };
+
     const setActivePawns = function (number) {
-        // console.log('Active pawns: ');  // test
+        
         activePawns = [];
         for (const pawn of pawnsPlayersArrays[number - 1]) {
             if (pawn.isAlive()) {
                 activePawns.push(pawn);
                 pawn.setActive(true);
-                // console.log('\t' + pawn.toString());    // test
             }
         }
         activePawns.sort(function(a, b) {return a.getOrder() - b.getOrder()});
@@ -141,6 +155,7 @@ const Pawns = function (pawnsSpec) {
             setGame: setGame,
             init: init,
 
+            reset: reset,
             setActivePawns: setActivePawns,
             hasNext: hasNext,
             selectNext: selectNext,

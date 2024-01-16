@@ -1,5 +1,7 @@
+import updateClass from "../utils/updateClass.mjs";
+
 const FieldComponent = function({ controler, field }) {
-    let type, row, column, id;
+    let type, row, column, id, pawn;
     let mainElement;
     let highlightElement, flagElement, pawnElement;
 
@@ -9,6 +11,7 @@ const FieldComponent = function({ controler, field }) {
         row = field.getX();
         column = field.getY();
         id = field.getId();
+        pawn = field.getPawn();
     };
 
     const createElements = function () {
@@ -71,78 +74,100 @@ const FieldComponent = function({ controler, field }) {
         createElements();
     }();
 
-
     const updatePawn = function () {
+        pawn = field.getPawn();
+    };
 
-        const updateFlag = function () {
-            if (flagElement) {
-                flagElement.className = 'flag';
+    const hideFlag = function () {
+        if (flagElement && pawn) {
+            flagElement.className = 'flag';
+        }
+    };
+
+    const updatePawnElement = function () {
+
+        const findPawnClass = function () {
+            let newClassName = 'pawn';
+            if (pawn) {
+                newClassName += ' ' + 'has_pawn ' + pawn.getType() + ' ' + pawn.getPlayer().getColor();
             }
+            return newClassName;
         };
-
-        const oldClassName = pawnElement.className;
-        let newClassName = 'pawn';
-
-        const pawn = field.getPawn();
-        if (pawn) {
-            newClassName += ' ' + 'has_pawn ' + pawn.getType() + ' ' + pawn.getPlayer().getColor();
-            updateFlag();
-        }
-
-        if (newClassName != oldClassName) {
-            pawnElement.className = newClassName;
-        }
+        
+        updatePawn();
+        hideFlag();
+        updateClass(pawnElement, findPawnClass());
     };
 
     const updateHighlight = function (selected) {
 
-        const oldMainClassName = mainElement.className;
-        const oldHighlightsClassName = highlightElement.className;
-        let newMainClassName = 'field ' + type;
-        let newHighlightsClassName = 'highlight';
+        const findMainAndHiglightClass = function () {
 
-        const pawn = field.getPawn();
-        if (pawn) {
-            if (pawn.isActive()) {
-                newMainClassName += ' active';
-                newHighlightsClassName += ' ' + pawn.getPlayer().getColor();
-                if (pawn.getId() == selected.getId()) {
-                    newMainClassName += ' selected';
-                };
-            }
-        }
-
-        if (selected) {
-
-            let reachDirection = false;
-            const selectedReach = selected.getReach();
-            for ( const [direction, reachField] of Object.entries(selectedReach) ) {
-                if (reachField === field) {
-                    reachDirection = direction;
-                    break;
-                }
-            }
+            let mainClass = 'field ' + type;
+            let highlightClass = 'highlight';
     
-            if (reachDirection) {
+            const addActive = function () {
+                mainClass += ' active';
+                highlightClass += ' ' + pawn.getPlayer().getColor();
+            };
+
+            const addSelected = function () {
+                mainClass += ' selected';
+            };
+
+            const getReachDirection = function () {
+
+                let reachDirection = false;
+                for ( const [direction, reachField] of Object.entries(selected.getReach()) ) {
+                    if (reachField === field) {
+                        reachDirection = direction;
+                        break;
+                    }
+                }
+                return reachDirection;
+            };
+
+            const addReach = function (reachDirection) {
                 
-                const color = selected.getPlayer().getColor();
-    
-                let reachType = 'horizontal';
-                if (['up', 'down'].includes(reachDirection)) {
-                    reachType = 'vertical';
-                }
-    
-                newMainClassName += ' reach';
-                newHighlightsClassName += ' ' + color + ' ' + reachType;
-            }
-        }
+                const getReachType = function (reachDirection) {
 
-        if (newMainClassName != oldMainClassName) {
-            mainElement.className = newMainClassName;
-        }
-        if (newHighlightsClassName != oldHighlightsClassName) {
-            highlightElement.className = newHighlightsClassName;
-        }
+                    let reachType;
+                    if (['up', 'down'].includes(reachDirection)) {
+                        reachType = 'vertical';
+                    } else {
+                        reachType = 'horizontal';
+                    }
+                    return reachType;
+                };
+    
+                mainClass += ' reach';
+                highlightClass += ' ' + selected.getPlayer().getColor() + ' ' + getReachType(reachDirection);
+            };
+            
+
+            if (pawn && pawn.isActive()) {
+
+                addActive();
+
+                if (selected && pawn === selected) {
+                    addSelected();
+                };
+
+            } else if (selected) {
+    
+                const reachDirection = getReachDirection();
+                if (reachDirection) {
+                    addReach(reachDirection);
+                }
+            }
+
+            return { mainClass, highlightClass };
+        };
+
+        updatePawn();
+        const {mainClass, highlightClass} = findMainAndHiglightClass();
+        updateClass(mainElement, mainClass);
+        updateClass(highlightElement, highlightClass);
     };
 
     const getRow = function () {
@@ -167,7 +192,7 @@ const FieldComponent = function({ controler, field }) {
 
     return Object.freeze(
         {
-            updatePawn: updatePawn,
+            updatePawn: updatePawnElement,
             updateHighlight: updateHighlight,
             getRow: getRow,
             getColumn: getColumn,

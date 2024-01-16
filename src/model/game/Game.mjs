@@ -2,7 +2,7 @@ const Game = function () {
     let notify, gameNumber;
     let players, board, pawns;
     let turnCounter, movesCounter, scores;
-    let commands, commandsEmpty;
+    let commands, commandsEmpty, killCommands;
 
     const placePawns = function (startZoneSize=1) {
 
@@ -87,7 +87,9 @@ const Game = function () {
     const endGame = function(code) {
         
         scores.add(code);
+
         commands = commandsEmpty;
+        pawns.reset();
         notify('endGame');
     };
 
@@ -334,6 +336,10 @@ const Game = function () {
         commandsEmpty = colleague;
     };
 
+    const setKillCommands = function(killCommandsFunction) {
+        killCommands = killCommandsFunction;
+    };
+
     // get
 
     const getPlayer = function(number) {
@@ -385,6 +391,10 @@ const Game = function () {
     const getNumber = function() {
         return gameNumber;
     };
+
+    const getTurnNumber = function () {
+        return turnCounter.getTurn();
+    };
      
     const getScore = function() {
         return scores.getLast();
@@ -395,11 +405,9 @@ const Game = function () {
         {
             init: init,
 
-            updateReaches: updateReaches,
+            isMoveLegal: isMoveLegal,
             movePawn: movePawn,
             cleanAfterMove: cleanAfterMove,
-            canStartTurn: canStartTurn,
-            isMoveLegal: isMoveLegal,
 
             // UI
             nextTurn: nextTurn,
@@ -423,6 +431,7 @@ const Game = function () {
             setScores: setScores,
             setCommands: setCommands,
             setCommandsEmpty: setCommandsEmpty,
+            setKillCommands: setKillCommands,
             
             getPlayer: getPlayer,
             getActivePlayer: getActivePlayer, 
@@ -435,6 +444,7 @@ const Game = function () {
             getBoardRows: getBoardRows,
             getBoardColumns: getBoardColumns,
             getNumber: getNumber,
+            getTurnNumber: getTurnNumber,
             getScore: getScore,
         }
     );

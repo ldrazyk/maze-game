@@ -100,7 +100,7 @@ const BoardComponent = function({ model, controler }) {
         if (['createGame', 'move'].includes(code)) {
             updatePawns();
         }
-        if ( ['select', 'move', 'hold', 'nextTurn'].includes(code) ) {
+        if ( ['select', 'move', 'hold', 'nextTurn', 'endGame'].includes(code) ) {
             updateHighlights();
         }
     };

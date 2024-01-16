@@ -45,22 +45,8 @@ const View = function() {
 
     const endGame = function() {
 
-        const updateFlags = function() {
-            const flagElements = Array.from(document.querySelectorAll('.flag'));
-            for (let element of flagElements) {
-                if (element.firstChild.classList.contains('has_pawn')) {
-                    element.className = 'flag';
-                    break;
-                }
-            }
-        };
-
         const score = model.getScore();
         console.log(`Game over!\nWinner: ${score.winner.getName()}\nType: ${score.type}`);
-        if (score.type == 'exit') {
-            updateFlags();
-        }
-        
     };
 
     const update = function(code) {

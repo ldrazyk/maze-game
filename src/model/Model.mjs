@@ -67,6 +67,7 @@ const Model = function() {
 
         notify('createGame');
     };
+    
     const nextTurn = function() {
         game.nextTurn();
     };
@@ -140,6 +141,14 @@ const Model = function() {
         return game.getSelected();
     };
 
+    const getGameNumber = function() {
+        return game.getNumber();
+    };
+
+    const getTurnNumber = function() {
+        return game.getTurnNumber();
+    };
+
     const getScore = function() {
         return game.getScore();
     };
@@ -172,6 +181,8 @@ const Model = function() {
             getBoardColumns: getBoardColumns,
             getPawnsIterator: getPawnsIterator,
             getSelected: getSelected,
+            getGameNumber: getGameNumber,
+            getTurnNumber: getTurnNumber,
             getScore: getScore,
         }
     );
