@@ -3,7 +3,7 @@ import Board from "./Board.mjs";
 import Pawns from "./Pawns.mjs";
 import TurnCounter from "./TurnCounter.mjs";
 import MovesCounter from "./MovesCounter.mjs";
-import Result from "./Result.mjs";
+import Scores from "./Scores.mjs";
 import Commands from "../commands/Commands.mjs";
 import CommandsEmpty from "../commands/CommandsEmpty.mjs";
 
@@ -66,7 +66,7 @@ const GameBuilder = function () {
 
     const setScores = function () {
 
-        const scores = Result();
+        const scores = Scores();
 
         game.setScores(scores);
         scores.setGame(game);

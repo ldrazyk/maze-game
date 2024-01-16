@@ -18,8 +18,7 @@ const Commands = function() {
         game = mediator;
     };
 
-    // history
-
+    
     const resetHistory = function() {
         commandsHistory.reset();
     };
