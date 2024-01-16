@@ -2,7 +2,7 @@ const Game = function () {
     let notify, gameNumber;
     let players, board, pawns;
     let turnCounter, movesCounter, scores;
-    let commands, commandsEmpty, killCommands;
+    let commands, killCommands;
 
     const placePawns = function (startZoneSize=1) {
 
@@ -87,8 +87,7 @@ const Game = function () {
     const endGame = function(code) {
         
         scores.add(code);
-
-        commands = commandsEmpty;
+        killCommands();
         pawns.reset();
         notify('endGame');
     };
@@ -332,10 +331,6 @@ const Game = function () {
         commands = colleague;
     };
 
-    const setCommandsEmpty = function(colleague) {
-        commandsEmpty = colleague;
-    };
-
     const setKillCommands = function(killCommandsFunction) {
         killCommands = killCommandsFunction;
     };
@@ -430,7 +425,6 @@ const Game = function () {
             setMovesCounter: setMovesCounter,
             setScores: setScores,
             setCommands: setCommands,
-            setCommandsEmpty: setCommandsEmpty,
             setKillCommands: setKillCommands,
             
             getPlayer: getPlayer,

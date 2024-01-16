@@ -5,7 +5,6 @@ import TurnCounter from "./TurnCounter.mjs";
 import MovesCounter from "./MovesCounter.mjs";
 import Scores from "./Scores.mjs";
 import Commands from "../commands/Commands.mjs";
-import CommandsEmpty from "../commands/CommandsEmpty.mjs";
 
 const GameBuilder = function () {
     let game;
@@ -80,11 +79,9 @@ const GameBuilder = function () {
         commands.setGame(game);
     };
 
-    const setCommandsEmpty = function () {
+    const setKillCommands = function (killCommands) {
         
-        const commandsEmpty = CommandsEmpty();
-        
-        game.setCommandsEmpty(commandsEmpty);
+        game.setKillCommands(killCommands);
     };
 
     const getResult = function () {
@@ -106,7 +103,7 @@ const GameBuilder = function () {
             setMovesCounter: setMovesCounter,
             setScores: setScores,
             setCommands: setCommands,
-            setCommandsEmpty: setCommandsEmpty,
+            setKillCommands: setKillCommands,
             getResult: getResult
         }
     );

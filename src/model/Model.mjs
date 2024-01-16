@@ -1,6 +1,7 @@
 import Subject from "./utils/Subject.mjs";
 import GameBuilder from "./game/GameBuilder.mjs";
 import Session from "./session/Session.mjs";
+import EndedGameAdapter from "./game/EndedGameAdapter.mjs";
 
 const Model = function() {
     let subject, gameBuilder;
@@ -37,6 +38,11 @@ const Model = function() {
         subject.detach(observer);
     };
 
+    const killCommands = function () {
+        
+        game = EndedGameAdapter(game);
+    };
+
 
     const createSession = function({ playersSpec }) {
         
@@ -50,16 +56,16 @@ const Model = function() {
 
         const make = function () {
             builder.reset();
-            builder.setNotify(notify)
-            builder.setNumber(session.getGameNumber())
-            builder.setPlayers(session.getPlayers())
-            builder.setBoard(matrixSpec)
-            builder.setPawns(pawnsSpec)
-            builder.setTurnCounter()
-            builder.setMovesCounter()
-            builder.setScores()
-            builder.setCommands()
-            builder.setCommandsEmpty();
+            builder.setNotify(notify);
+            builder.setNumber(session.getGameNumber());
+            builder.setPlayers(session.getPlayers());
+            builder.setBoard(matrixSpec);
+            builder.setPawns(pawnsSpec);
+            builder.setTurnCounter();
+            builder.setMovesCounter();
+            builder.setScores();
+            builder.setCommands();
+            builder.setKillCommands(killCommands);
         };
 
         make();
@@ -67,7 +73,7 @@ const Model = function() {
 
         notify('createGame');
     };
-    
+
     const nextTurn = function() {
         game.nextTurn();
     };
