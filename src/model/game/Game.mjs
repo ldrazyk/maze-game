@@ -29,7 +29,7 @@ const Game = function () {
         }
     };
 
-    const canPawnMoveToField = function ({ pawnSpec, fieldSpec }) {
+    const isMoveLegal = function ({ pawnSpec, fieldSpec }) {
 
         const getPawnFromSpec = function () {
             let { pawn, pawnId } = pawnSpec;
@@ -54,7 +54,7 @@ const Game = function () {
             return resultField;
         };
 
-        const isMoveLegal = function (pawn, field) {
+        const couldPawnMoveToField = function (pawn, field) {
             let result = false;
 
             if (field.getType() == 'path') {
@@ -75,15 +75,11 @@ const Game = function () {
         let result = false;
         const pawn = getPawnFromSpec();
         const field = getFieldFromSpec();
-        if (field && isMoveLegal(pawn, field)) {
+        if (field && couldPawnMoveToField(pawn, field)) {
             result = field;
         }
 
         return result;
-    };
-
-    const canHold = function() {
-        return movesCounter.canHold();
     };
 
     // game events
@@ -127,6 +123,12 @@ const Game = function () {
             pawn.setActive(undo);
         };
 
+        const checkExitWin = function() {
+            if (pawn.getPosition().getType() == 'exit') {
+                endGame('exit');
+            }
+        };
+
         const maybeUpdateReaches = function() {
             if (type == 'move') {
                 updateReaches();
@@ -137,19 +139,15 @@ const Game = function () {
             pawns.selectNext();
         };
 
-        const checkExitWin = function() {
-            if (pawn.getPosition().getType() == 'exit') {
-                endGame('exit');
-            }
-        };
-
         updateMovesCounter();
         updatePawnsOrder();
         disactivatePawn();
-        maybeUpdateReaches();
-        selectNextAfterMove();
-        notify(type);
         checkExitWin();
+        if (!scores.ended()) {
+            maybeUpdateReaches();
+            selectNextAfterMove();
+        }
+        notify(type);
     };
 
     const select = function (id) {
@@ -388,7 +386,7 @@ const Game = function () {
         return gameNumber;
     };
      
-    const getLastScore = function() {
+    const getScore = function() {
         return scores.getLast();
     };
     
@@ -400,9 +398,8 @@ const Game = function () {
             updateReaches: updateReaches,
             movePawn: movePawn,
             cleanAfterMove: cleanAfterMove,
-            canHold: canHold,
             canStartTurn: canStartTurn,
-            canPawnMoveToField: canPawnMoveToField,
+            isMoveLegal: isMoveLegal,
 
             // UI
             nextTurn: nextTurn,
@@ -438,7 +435,7 @@ const Game = function () {
             getBoardRows: getBoardRows,
             getBoardColumns: getBoardColumns,
             getNumber: getNumber,
-            getLastScore: getLastScore,
+            getScore: getScore,
         }
     );
 };

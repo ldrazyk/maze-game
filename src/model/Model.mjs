@@ -140,8 +140,8 @@ const Model = function() {
         return game.getSelected();
     };
 
-    const getResult = function() {
-        return game.getResult();
+    const getScore = function() {
+        return game.getScore();
     };
 
     return Object.freeze(
@@ -172,7 +172,7 @@ const Model = function() {
             getBoardColumns: getBoardColumns,
             getPawnsIterator: getPawnsIterator,
             getSelected: getSelected,
-            getResult: getResult,
+            getScore: getScore,
         }
     );
 };

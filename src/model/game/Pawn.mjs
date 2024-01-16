@@ -57,7 +57,7 @@ const Pawn = function ({ id, type, player }) {
 
         Object.keys(reach).forEach(direction => {
 
-            reach[direction] = game.canPawnMoveToField(
+            reach[direction] = game.isMoveLegal(
                 {
                     pawnSpec: { pawnId: id },
                     fieldSpec: { field: position, direction: direction }

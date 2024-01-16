@@ -55,9 +55,9 @@ const View = function() {
             }
         };
 
-        const result = model.getResult();
-        console.log(`Game over!\nWinner: ${result.winner.getName()}\nType: ${result.type}`);
-        if (result.type == 'exit') {
+        const score = model.getScore();
+        console.log(`Game over!\nWinner: ${score.winner.getName()}\nType: ${score.type}`);
+        if (score.type == 'exit') {
             updateFlags();
         }
         

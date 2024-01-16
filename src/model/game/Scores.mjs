@@ -1,6 +1,8 @@
-const Result = function () {
+const Scores = function () {
+    let ended = false;
     let scores = [];
     let game;
+    
 
     const setGame = function (mediator) {
         game = mediator;
@@ -8,6 +10,7 @@ const Result = function () {
 
     const add = function (code) {
 
+        ended = true;
         let score = { game: game.getNumber(), type: code };
         let places;
         if (code == 'exit') {
@@ -18,6 +21,10 @@ const Result = function () {
         places.winner.addWin();
         score = {...score, ...places};
         scores.push(score);
+    };
+
+    const gameEnded = function () {
+        return ended;
     };
 
     const getLast = function () {
@@ -34,10 +41,11 @@ const Result = function () {
             setGame: setGame,
 
             add: add,
+            ended: gameEnded,
             getLast: getLast,
             getScores: getScores
         }
     )
 };
 
-export default Result;
+export default Scores;
