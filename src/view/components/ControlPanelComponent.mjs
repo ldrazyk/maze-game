@@ -17,15 +17,15 @@ const ControlPanelComponent = function(controler) {
         const createButtonElements = function () {
 
             const buttonsSpec = [
-                { id: 'btn_select_next', text: 'Select', onClick: controler.selectNext, order: 1 },
-                { id: 'btn_up', text: '^', onClick: controler.moveUp, order: 2 },
-                { id: 'btn_next_turn', text: 'Next Turn', onClick: controler.nextTurn, order: 3 },
-                { id: 'btn_left', text: '<-', onClick: controler.moveLeft, order: 4 },
-                { id: 'btn_hold', text: 'x', onClick: controler.hold, order: 5 },
-                { id: 'btn_right', text: '->', onClick: controler.moveRight, order: 6 },
-                { id: 'btn_undo', text: 'Undo', onClick: controler.undo, order: 7 },
-                { id: 'btn_down', text: 'v', onClick: controler.moveDown, order: 8 },
-                { id: 'btn_redo', text: 'Redo', onClick: controler.redo, order: 9 },
+                { id: 'select_next', text: 'Select', onClick: controler.selectNext, order: 1 },
+                { id: 'up', text: '^', onClick: controler.moveUp, order: 2 },
+                { id: 'next_turn', text: 'Next Turn', onClick: controler.nextTurn, order: 3 },
+                { id: 'left', text: '<-', onClick: controler.moveLeft, order: 4 },
+                { id: 'hold', text: 'x', onClick: controler.hold, order: 5 },
+                { id: 'right', text: '->', onClick: controler.moveRight, order: 6 },
+                { id: 'undo', text: 'Undo', onClick: controler.undo, order: 7 },
+                { id: 'down', text: 'v', onClick: controler.moveDown, order: 8 },
+                { id: 'redo', text: 'Redo', onClick: controler.redo, order: 9 },
             ];
 
             buttonsSpec.forEach(spec => {
@@ -45,6 +45,22 @@ const ControlPanelComponent = function(controler) {
         createElements();
     }();
 
+    const executeOnButtons = function (ids, methodeName) {
+
+        ids.forEach(id => {
+            buttonComponents[id][methodeName]();
+        });
+    };
+
+    const activateButtons = function (ids) {
+
+        executeOnButtons(ids, 'activate');
+    };
+
+    const disactivateButtons = function (ids) {
+
+        executeOnButtons(ids, 'disactivate');
+    };
     
     const appendTo = function (container) {
         
@@ -53,11 +69,17 @@ const ControlPanelComponent = function(controler) {
 
     const update = function (code) {
 
-        console.log('>> ControlPanelComponent.update("' + code + '")');
+        // console.log('>> ControlPanelComponent.update("' + code + '")');
+
+        const directionIds = ['up', 'down', 'left', 'right'];
         
         if (code == 'createGame') {
-            buttonComponents.btn_next_turn.activate();
+            activateButtons(['next_turn']);
         }
+        if (['nextTurn'].includes(code)) {
+            activateButtons(['select_next', ...directionIds, 'hold']);
+            disactivateButtons(['next_turn']);
+        };
     };
 
     return Object.freeze(

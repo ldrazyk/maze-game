@@ -5,7 +5,7 @@ const ButtonComponent = function ({ id, text, onClick, order }) {
 
         mainElement = document.createElement('button');
         mainElement.textContent = text;
-        mainElement.id = id;
+        mainElement.id = 'btn_' + id;
         mainElement.style.order = order;
     };
 
