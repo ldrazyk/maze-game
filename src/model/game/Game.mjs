@@ -22,11 +22,8 @@ const Game = function () {
     // questions
 
     const canStartTurn = function() {
-        if ( !movesCounter.canMove() ) {
-            return true;
-        } else {
-            return false;
-        }
+        
+        return !movesCounter.canMove();
     };
 
     const isMoveLegal = function ({ pawnSpec, fieldSpec }) {
@@ -293,7 +290,7 @@ const Game = function () {
         moveInDirection('right');
     };
 
-    // setters
+    // mediator setters
 
     const setNotify = function (notifyFunction) {
         notify = notifyFunction;
@@ -394,10 +391,40 @@ const Game = function () {
     const getScore = function() {
         return scores.getLast();
     };
+
+    // GameState
+
+    const canSelectNext = function () {
+        return pawns.canSelectNext();
+    };
+
+    const canMoveSelected = function (direction) {
+        return pawns.canMoveSelected(direction);
+    };
+    
+    const canHold = function () {
+        return movesCounter.canHold();
+    };
+
+    const canUndo = function () {
+        return commands.canUndo();
+    };
+
+    const canRedo = function () {
+        return commands.canRedo();
+    };
     
 
     return Object.freeze(
         {
+            // GameState
+            canStartTurn: canStartTurn,
+            canSelectNext: canSelectNext,   // move to GameState
+            canMoveSelected: canMoveSelected,   // move to GameState
+            canHold: canHold,   // move to GameState
+            canUndo: canUndo,   // move to GameState
+            canRedo: canRedo,   // move to GameState
+
             init: init,
 
             isMoveLegal: isMoveLegal,
@@ -411,11 +438,13 @@ const Game = function () {
             undo: undo,
             redo: redo,
             hold: hold,
-            moveUp: moveUp,
-            moveDown: moveDown,
-            moveLeft: moveLeft,
-            moveRight: moveRight,
+            moveInDirection: moveInDirection,
+            moveUp: moveUp,   // move to GameOperator
+            moveDown: moveDown,   // move to GameOperator
+            moveLeft: moveLeft,   // move to GameOperator
+            moveRight: moveRight,   // move to GameOperator
 
+            // mediator setters
             setNotify: setNotify,
             setNumber: setNumber,
             setPlayers: setPlayers,
