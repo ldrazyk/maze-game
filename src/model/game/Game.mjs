@@ -1,8 +1,9 @@
 const Game = function () {
     let notify, gameNumber;
+    let gameState, gameDirector, emptyGameDirector;
     let players, board, pawns;
     let turnCounter, movesCounter, scores;
-    let commands, killCommands;
+    let commands;
 
     const placePawns = function (startZoneSize=1) {
 
@@ -84,7 +85,6 @@ const Game = function () {
     const endGame = function(code) {
         
         scores.add(code);
-        killCommands();
         pawns.reset();
         notify('endGame');
     };
@@ -121,31 +121,33 @@ const Game = function () {
             pawn.setActive(undo);
         };
 
+        
+        const maybeUpdateReaches = function() {
+            if (type == 'move') {
+                updateReaches();
+            }
+        };
+        
+        const selectNextAfterMove = function() {
+            pawns.selectNext();
+        };
+
         const checkExitWin = function() {
             if (pawn.getPosition().getType() == 'exit') {
                 endGame('exit');
             }
         };
 
-        const maybeUpdateReaches = function() {
-            if (type == 'move') {
-                updateReaches();
-            }
-        };
-
-        const selectNextAfterMove = function() {
-            pawns.selectNext();
-        };
-
         updateMovesCounter();
         updatePawnsOrder();
         disactivatePawn();
-        checkExitWin();
-        if (!scores.ended()) {
-            maybeUpdateReaches();
-            selectNextAfterMove();
-        }
+        
+        maybeUpdateReaches();
+        selectNextAfterMove();
+        
         notify(type);
+        
+        checkExitWin();
     };
 
     const select = function (id) {
@@ -171,6 +173,14 @@ const Game = function () {
             pawns.setActivePawns(players.getActive().getNumber());
         };
 
+        const resetMovesCounter = function() {
+            movesCounter.reset(pawns.getActiveAmount());
+        };
+
+        const resetCommandsHistory = function() {
+            commands.resetHistory();
+        };
+
         const selectNextOrEndGame = function () {
             
             if (pawns.hasNext()) {
@@ -181,13 +191,6 @@ const Game = function () {
             }
         };
 
-        const resetMovesCounter = function() {
-            movesCounter.reset(pawns.getActiveAmount());
-        };
-
-        const resetCommandsHistory = function() {
-            commands.resetHistory();
-        };
 
         if (canStartTurn()) {
 
@@ -195,9 +198,9 @@ const Game = function () {
             changeActivePlayer();
             changeActivePawns();
             updateReaches();
-            selectNextOrEndGame();
             resetMovesCounter();
             resetCommandsHistory();  
+            selectNextOrEndGame();
         } else {
             console.log("Can't end turn! You still have active pawns!");
         }
@@ -300,6 +303,18 @@ const Game = function () {
         gameNumber = newNumber;
     };
 
+    const setGameState = function (colleague) {
+        gameState = colleague;
+    };
+
+    const setGameDirector = function (colleague) {
+        gameDirector = colleague;
+    };
+
+    const setEmptyGameDirector = function (colleague) {
+        emptyGameDirector = colleague;
+    };
+
     const setPlayers = function (colleague) {
         players = colleague;
     };
@@ -328,11 +343,11 @@ const Game = function () {
         commands = colleague;
     };
 
-    const setKillCommands = function(killCommandsFunction) {
-        killCommands = killCommandsFunction;
-    };
+    // getters
 
-    // get
+    const getGameState = function () {
+        return gameState;
+    };
 
     const getPlayer = function(number) {
         return players.getPlayer(number);
@@ -341,8 +356,6 @@ const Game = function () {
     const getActivePlayer = function(active=true) {
         return players.getActive(active);
     };
-
-    // get pawns
 
     const getSelected = function() {
         return pawns.getSelected();
@@ -356,80 +369,19 @@ const Game = function () {
         return pawns.getIterator(spec);
     };
 
-    // get board
-
-    const getField = function (spec) {
-        return board.getField(spec);
-    };
-
-    const getBoardIterator = function() {
-        return board.getIterator();
-    };
-
-    const getBoardName = function() {
-        return board.getName();
-    };
-
-    const getBoardRows = function() {
-        return board.getRows();
-    };
-
-    const getBoardColumns = function() {
-        return board.getColumns();
-    };
-
-    // get game
-
     const getNumber = function() {
         return gameNumber;
     };
 
-    const getTurnNumber = function () {
-        return turnCounter.getTurn();
-    };
-     
-    const getScore = function() {
-        return scores.getLast();
-    };
-
-    // GameState
-
-    const canSelectNext = function () {
-        return pawns.canSelectNext();
-    };
-
-    const canMoveSelected = function (direction) {
-        return pawns.canMoveSelected(direction);
-    };
-    
-    const canHold = function () {
-        return movesCounter.canHold();
-    };
-
-    const canUndo = function () {
-        return commands.canUndo();
-    };
-
-    const canRedo = function () {
-        return commands.canRedo();
-    };
-    
 
     return Object.freeze(
         {
-            // GameState
-            canStartTurn: canStartTurn,
-            canSelectNext: canSelectNext,   // move to GameState
-            canMoveSelected: canMoveSelected,   // move to GameState
-            canHold: canHold,   // move to GameState
-            canUndo: canUndo,   // move to GameState
-            canRedo: canRedo,   // move to GameState
-
             init: init,
 
-            isMoveLegal: isMoveLegal,
-            movePawn: movePawn,
-            cleanAfterMove: cleanAfterMove,
+            canStartTurn: canStartTurn, // used privately and in GameState
+            isMoveLegal: isMoveLegal,   // used in Pawn
+            movePawn: movePawn, // used in Board
+            cleanAfterMove: cleanAfterMove, // used in DisactivateCommand
 
             // UI
             nextTurn: nextTurn,
@@ -447,6 +399,9 @@ const Game = function () {
             // mediator setters
             setNotify: setNotify,
             setNumber: setNumber,
+            setGameState: setGameState,
+            setGameDirector: setGameDirector,
+            setEmptyGameDirector: setEmptyGameDirector,
             setPlayers: setPlayers,
             setBoard: setBoard,
             setPawns: setPawns,
@@ -454,21 +409,14 @@ const Game = function () {
             setMovesCounter: setMovesCounter,
             setScores: setScores,
             setCommands: setCommands,
-            setKillCommands: setKillCommands,
             
-            getPlayer: getPlayer,
-            getActivePlayer: getActivePlayer, 
-            getSelected: getSelected,
-            getPawn: getPawn,
-            getPawnsIterator: getPawnsIterator,
-            getField: getField,
-            getBoardIterator: getBoardIterator,
-            getBoardName: getBoardName,
-            getBoardRows: getBoardRows,
-            getBoardColumns: getBoardColumns,
-            getNumber: getNumber,
-            getTurnNumber: getTurnNumber,
-            getScore: getScore,
+            getGameState: getGameState, // used in Model
+            getPlayer: getPlayer, // used in Board, Pawns
+            getActivePlayer: getActivePlayer,   // used in Scores
+            getSelected: getSelected,   // used in Commands
+            // getPawn: getPawn,   // not used ?
+            // getPawnsIterator: getPawnsIterator,   // not used ?
+            getNumber: getNumber,   // used in Scores
         }
     );
 };

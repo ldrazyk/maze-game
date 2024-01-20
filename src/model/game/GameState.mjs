@@ -1,6 +1,9 @@
 const GameState = function () {
     
-    let game, commands, pawns, movesCounter;
+    let game;
+    let board, pawns;
+    let turnCounter, movesCounter, scores;
+    let commands;
 
     // setters
 
@@ -8,16 +11,28 @@ const GameState = function () {
         game = mediator;
     };
 
-    const setCommands = function(module) {
-        commands = module;
+    const setBoard = function (component) {
+        board = component;
+    };
+    
+    const setPawns = function (component) {
+        pawns = component;
     };
 
-    const setPawns = function (module) {
-        pawns = module;
+    const setTurnCounter = function (component) {
+        turnCounter = component;
+    };
+    
+    const setMovesCounter = function (component) {
+        movesCounter = component;
     };
 
-    const setMovesCounter = function (module) {
-        movesCounter = module;
+    const setScores = function (component) {
+        scores = component;
+    };
+    
+    const setCommands = function(component) {
+        commands = component;
     };
 
     // game state interface
@@ -45,15 +60,56 @@ const GameState = function () {
     const canRedo = function () {
         return commands.canRedo();
     };
+
+    // get game
+
+    const getGameNumber = function() {
+        return game.getNumber();
+    };
+
+    const getTurnNumber = function () {
+        return turnCounter.getTurn();
+    };
+     
+    const getScore = function() {
+        return scores.getLast();
+    };
+
+    // get board
+
+    const getBoardIterator = function() {
+        return board.getIterator();
+    };
+
+    const getBoardName = function() {
+        return board.getName();
+    };
+
+    const getBoardRows = function() {
+        return board.getRows();
+    };
+
+    const getBoardColumns = function() {
+        return board.getColumns();
+    };
+
+    // get pawns
+
+    const getSelected = function() {
+        return pawns.getSelected();
+    };
     
     
     return Object.freeze(
         {
             // setters
             setGame: setGame,
-            setCommands: setCommands,
+            setBoard: setBoard,
             setPawns: setPawns,
+            setTurnCounter: setTurnCounter,
             setMovesCounter: setMovesCounter,
+            setScores: setScores,
+            setCommands: setCommands,
             // game state interface
             canStartTurn: canStartTurn,
             canSelectNext: canSelectNext,
@@ -61,6 +117,17 @@ const GameState = function () {
             canHold: canHold,
             canUndo: canUndo,
             canRedo: canRedo,
+            // get game
+            getGameNumber: getGameNumber,   // will be used
+            getTurnNumber: getTurnNumber,   // will be used
+            getScore: getScore, // used in ViewJs
+            // get board
+            getBoardIterator: getBoardIterator, // used in BoardComponent
+            getBoardName: getBoardName, // used in BoardComponent
+            getBoardRows: getBoardRows, // used in BoardComponent
+            getBoardColumns: getBoardColumns,   // used in BoardComponent
+            // get pawns
+            getSelected: getSelected   // used in BoardComponent
         }
     );
 };

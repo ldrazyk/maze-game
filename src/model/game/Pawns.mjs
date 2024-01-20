@@ -150,6 +150,11 @@ const Pawns = function (pawnsSpec) {
         return activePawns.length;
     };
 
+    const canSelectNext = function () {
+        
+        return hasNext();
+    };
+
     return Object.freeze(
         {
             setGame: setGame,
@@ -166,6 +171,8 @@ const Pawns = function (pawnsSpec) {
             getPawn: getPawn,
             getSelected: getSelected,
             getActiveAmount: getActiveAmount,
+
+            canSelectNext: canSelectNext,
         }
     );
 };

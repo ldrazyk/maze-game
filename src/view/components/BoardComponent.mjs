@@ -8,9 +8,9 @@ const BoardComponent = function({ model, controler }) {
 
     const setProps = function () {
 
-        name = model.getBoardName();
-        rows = model.getBoardRows();
-        columns = model.getBoardColumns();
+        name = model.getGameState().getBoardName();
+        rows = model.getGameState().getBoardRows();
+        columns = model.getGameState().getBoardColumns();
     };
 
     const createElements = function () {
@@ -45,7 +45,7 @@ const BoardComponent = function({ model, controler }) {
 
         const createFieldComponents = function () {
 
-            const iterator = model.getBoardIterator();
+            const iterator = model.getGameState().getBoardIterator();
             while (iterator.hasNext()) {
 
                 const field = iterator.next();
@@ -89,7 +89,7 @@ const BoardComponent = function({ model, controler }) {
 
         const updateHighlights = function () {
 
-            const selected = model.getSelected();
+            const selected = model.getGameState().getSelected();
 
             Object.values(pathComponents).forEach(component => {
                 component.updateHighlight(selected);

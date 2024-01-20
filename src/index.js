@@ -45,7 +45,19 @@ const createTestGame = function() {
             ]
     };
 
-    controler.createGame({matrixSpec: matrixSpec0, pawnsSpec: [pawnsSpec1, pawnsSpec1]});
+    const matrixSpec01 = {
+        name: "matrixSmall",
+        matrix: [
+            [1, 1, 3, 1, 1],
+            [1, 0, 0, 0, 1],
+            [1, 0, 0, 0, 1],
+            [1, 0, 0, 0, 1],
+            [1, 0, 0, 0, 1],
+            [1, 1, 2, 1, 1]
+            ]
+    };
+
+    controler.createGame({matrixSpec: matrixSpec01, pawnsSpec: [pawnsSpec1, pawnsSpec1]});
 };
 
 const app = function() {

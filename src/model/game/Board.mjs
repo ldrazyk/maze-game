@@ -94,7 +94,11 @@ const Board = function (matrixSpec) {
     const getField = function({ id=false, x=false, y=false, field=false, direction=false }) {
 
         const getFieldByCoordinates = function (x, y) {
-            return fieldsMatrix[x-1][y-1];
+            try {
+                return fieldsMatrix[x-1][y-1];
+            } catch {
+                return false;
+            }
         };
 
         const getFieldInDirection = function (field, direction) {

@@ -47,6 +47,16 @@ const Commands = function() {
         execute(command);
     };
 
+    const canUndo = function () {
+
+        return commandsHistory.canUndo();        
+    };
+
+    const canRedo = function () {
+
+        return commandsHistory.canRedo();        
+    };
+
     return Object.freeze(
         {
             setGame: setGame,
@@ -57,6 +67,9 @@ const Commands = function() {
 
             hold: hold,
             move: move,
+
+            canUndo: canUndo,
+            canRedo: canRedo,
         }
     );
 };

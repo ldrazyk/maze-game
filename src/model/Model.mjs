@@ -1,7 +1,6 @@
 import Subject from "./utils/Subject.mjs";
 import GameBuilder from "./game/GameBuilder.mjs";
 import Session from "./session/Session.mjs";
-import EndedGameAdapter from "./game/EndedGameAdapter.mjs";
 
 const Model = function() {
     let subject, gameBuilder;
@@ -38,12 +37,6 @@ const Model = function() {
         subject.detach(observer);
     };
 
-    const killCommands = function () {
-        
-        game = EndedGameAdapter(game);
-    };
-
-
     const createSession = function({ playersSpec }) {
         
         session = Session({ playersSpec: playersSpec });
@@ -56,6 +49,8 @@ const Model = function() {
 
         const make = function () {
             builder.reset();
+            builder.setState();
+            builder.setOperator();
             builder.setNotify(notify);
             builder.setNumber(session.getGameNumber());
             builder.setPlayers(session.getPlayers());
@@ -65,7 +60,6 @@ const Model = function() {
             builder.setMovesCounter();
             builder.setScores();
             builder.setCommands();
-            builder.setKillCommands(killCommands);
         };
 
         make();
@@ -123,40 +117,8 @@ const Model = function() {
         return session.getPlayersIterator();
     };
 
-    const getBoardIterator = function() {
-        return game.getBoardIterator();
-    };
-
-    const getBoardName = function() {
-        return game.getBoardName();
-    };
-
-    const getBoardRows = function() {
-        return game.getBoardRows();
-    };
-
-    const getBoardColumns = function() {
-        return game.getBoardColumns();
-    };
-
-    const getPawnsIterator = function(spec) {
-        return game.getPawnsIterator(spec);
-    };
-
-    const getSelected = function() {
-        return game.getSelected();
-    };
-
-    const getGameNumber = function() {
-        return game.getNumber();
-    };
-
-    const getTurnNumber = function() {
-        return game.getTurnNumber();
-    };
-
-    const getScore = function() {
-        return game.getScore();
+    const getGameState = function () {
+        return game.getGameState();
     };
 
     return Object.freeze(
@@ -167,7 +129,7 @@ const Model = function() {
             createSession: createSession,
             createGame: createGame,
 
-            // UI
+            // game operations
             nextTurn: nextTurn,
             selectNext: selectNext,
             click: click,
@@ -179,17 +141,10 @@ const Model = function() {
             moveLeft: moveLeft,
             moveRight: moveRight,
 
+            // model state
             getPlayer: getPlayer,
             getPlayersIterator: getPlayersIterator,
-            getBoardIterator: getBoardIterator,
-            getBoardName: getBoardName,
-            getBoardRows: getBoardRows,
-            getBoardColumns: getBoardColumns,
-            getPawnsIterator: getPawnsIterator,
-            getSelected: getSelected,
-            getGameNumber: getGameNumber,
-            getTurnNumber: getTurnNumber,
-            getScore: getScore,
+            getGameState: getGameState,
         }
     );
 };

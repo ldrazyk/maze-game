@@ -32,7 +32,7 @@ const View = function() {
 
     const createControlPanel = function() {
 
-        controlPanelComponent = ControlPanelComponent(controler);
+        controlPanelComponent = ControlPanelComponent({model: model, controler: controler});
         controlPanelComponent.appendTo(root);
         components.push(controlPanelComponent);
     };
@@ -45,7 +45,7 @@ const View = function() {
 
     const endGame = function() {
 
-        const score = model.getScore();
+        const score = model.getGameState().getScore();
         console.log(`Game over!\nWinner: ${score.winner.getName()}\nType: ${score.type}`);
     };
 

@@ -10,30 +10,59 @@ const CommandsHistory = function () {
         resetHistory();
     }();
 
+    const logPosition = function (log=true) {
+        if (log) {
+            console.log(`>>>CommandsHistory.position : ${position}`);
+        }
+    };
 
     const execute = function (command) {
-        command.execute()
+        
         if (position < history.length) {
             history = history.slice(0, position);
         }
         history.push(command);
         position += 1;
+
+        command.execute();
+
+        logPosition(false);
     };
 
     const undo = function () {
-        console.log(`>>>commands.undo() history[${position}->${position - 1}]`);
+        
         if (position > 0) {
-            history[position - 1].unexecute();
             position -= 1;
+            history[position].unexecute();
         }
+        logPosition(false);
     };
 
     const redo = function () {
-        console.log(`>>>commands.redo() history[${position}->${position + 1}]`);
+        
         if (position < history.length) {
-            history[position].execute();
             position += 1;
+            history[position - 1].execute();
         }
+        logPosition(false);
+    };
+
+    const canUndo = function () {
+
+        if (position > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    const canRedo = function () {
+
+        if (position < history.length) {
+            return true;
+        } else {
+            return false;
+        }     
     };
 
     return Object.freeze(
@@ -42,6 +71,9 @@ const CommandsHistory = function () {
             execute: execute,
             undo: undo,
             redo: redo,
+
+            canUndo: canUndo,
+            canRedo: canRedo,
         }
     );
 

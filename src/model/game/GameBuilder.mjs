@@ -5,13 +5,30 @@ import TurnCounter from "./TurnCounter.mjs";
 import MovesCounter from "./MovesCounter.mjs";
 import Scores from "./Scores.mjs";
 import Commands from "../commands/Commands.mjs";
+import GameState from "./GameState.mjs";
 
 const GameBuilder = function () {
-    let game;
+    let game, gameState;
+    let mediators;
 
     const reset = function () {
 
         game = Game();
+        mediators = [game];
+    };
+
+    const setState = function () {
+
+        gameState = GameState();
+        mediators.push(gameState);
+
+        game.setGameState(gameState);
+        gameState.setGame(game);
+    };
+
+    const setOperator = function () {
+
+        
     };
 
     const setNotify = function (notifyFunction) {
@@ -24,16 +41,16 @@ const GameBuilder = function () {
         game.setNumber(newNumber);
     };
 
-    const setPlayers = function (colleague) {
+    const setPlayers = function (players) {
 
-        game.setPlayers(colleague);
+        game.setPlayers(players);
     };
 
     const setBoard = function (matrixSpec) {
 
         const board = Board(matrixSpec);
         
-        game.setBoard(board);
+        mediators.forEach(mediator => mediator.setBoard(board));
         board.setGame(game);
 
         board.init();
@@ -43,7 +60,7 @@ const GameBuilder = function () {
         
         const pawns = Pawns(pawnsSpec);
 
-        game.setPawns(pawns);
+        mediators.forEach(mediator => mediator.setPawns(pawns));
         pawns.setGame(game);
 
         pawns.init();
@@ -53,21 +70,21 @@ const GameBuilder = function () {
 
         const turnCounter = TurnCounter();
 
-        game.setTurnCounter(turnCounter);
+        mediators.forEach(mediator => mediator.setTurnCounter(turnCounter));
     };
     
     const setMovesCounter = function () {
 
         const movesCounter = MovesCounter();
 
-        game.setMovesCounter(movesCounter);
+        mediators.forEach(mediator => mediator.setMovesCounter(movesCounter));
     };
 
     const setScores = function () {
 
         const scores = Scores();
 
-        game.setScores(scores);
+        mediators.forEach(mediator => mediator.setScores(scores));
         scores.setGame(game);
     };
 
@@ -75,13 +92,8 @@ const GameBuilder = function () {
 
         const commands = Commands();
         
-        game.setCommands(commands);
+        mediators.forEach(mediator => mediator.setCommands(commands));
         commands.setGame(game);
-    };
-
-    const setKillCommands = function (killCommands) {
-        
-        game.setKillCommands(killCommands);
     };
 
     const getResult = function () {
@@ -94,6 +106,8 @@ const GameBuilder = function () {
     return Object.freeze(
         {
             reset: reset,
+            setState: setState,
+            setOperator: setOperator,
             setNotify: setNotify,
             setNumber: setNumber,
             setPlayers: setPlayers,
@@ -103,7 +117,6 @@ const GameBuilder = function () {
             setMovesCounter: setMovesCounter,
             setScores: setScores,
             setCommands: setCommands,
-            setKillCommands: setKillCommands,
             getResult: getResult
         }
     );

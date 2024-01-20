@@ -1,9 +1,8 @@
 import ButtonComponent from "./ButtonComponent.mjs"
 
-const ControlPanelComponent = function(controler) {
+const ControlPanelComponent = function({ controler, model }) {
     let mainElement;
     const buttonComponents = {};
-
 
     const createElements = function () {
 
@@ -69,17 +68,77 @@ const ControlPanelComponent = function(controler) {
 
     const update = function (code) {
 
-        // console.log('>> ControlPanelComponent.update("' + code + '")');
-
-        const directionIds = ['up', 'down', 'left', 'right'];
+        const gameState = model.getGameState();
         
-        if (code == 'createGame') {
-            activateButtons(['next_turn']);
-        }
-        if (['nextTurn'].includes(code)) {
-            activateButtons(['select_next', ...directionIds, 'hold']);
-            disactivateButtons(['next_turn']);
+        const directionIds = ['up', 'down', 'left', 'right'];
+        const allIds = [...directionIds, 'select_next', 'next_turn', 'hold', 'undo', 'redo'];
+        
+        const checkNextTurn = function () {
+
+            if (gameState.canStartTurn()) {
+                activateButtons(['next_turn']);
+            } else {
+                disactivateButtons(['next_turn']);
+            }
         };
+
+        const checkSelectNext = function () {
+            
+            if (gameState.canSelectNext()) {
+                activateButtons(['select_next']);
+            } else {
+                disactivateButtons(['select_next']);
+            }
+        };
+
+        const checkHold = function () {
+            
+            if (gameState.canHold()) {
+                activateButtons(['hold']);
+            } else {
+                disactivateButtons(['hold']);
+            }
+        };
+
+        const checkMove = function () {
+            
+            if (gameState.getSelected()) {
+                activateButtons(directionIds);
+            } else {
+                disactivateButtons(directionIds);
+            }
+        };
+
+        const checkUndo = function () {
+            
+            if (gameState.canUndo()) {
+                activateButtons(['undo']);
+            } else {
+                disactivateButtons(['undo']);
+            }
+        };
+
+        const checkRedo = function () {
+            
+            if (gameState.canRedo()) {
+                activateButtons(['redo']);
+            } else {
+                disactivateButtons(['redo']);
+            }
+        };
+
+        if (!['createGame', 'endGame'].includes(code)) {
+            checkNextTurn();
+            checkSelectNext();
+            checkHold();
+            checkMove();
+            checkUndo();
+            checkRedo();
+        } else if (code == 'createGame') {
+            activateButtons(['next_turn']);
+        } else {
+            disactivateButtons(allIds);
+        }
     };
 
     return Object.freeze(
