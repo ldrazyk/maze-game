@@ -1,6 +1,6 @@
 import FieldComponent from './FieldComponent.mjs';
 
-const BoardComponent = function({ model, controler }) {
+const BoardComponent = function({ model, onFieldClick }) {
     let mainElement;
     let name, rows, columns;
     const rowElements = [];
@@ -50,7 +50,7 @@ const BoardComponent = function({ model, controler }) {
 
                 const field = iterator.next();
 
-                const component = FieldComponent({field: field, controler: controler});
+                const component = FieldComponent({field: field, onClick: onFieldClick });
                 
                 const type = field.getType();
                 if (type != 'wall') {

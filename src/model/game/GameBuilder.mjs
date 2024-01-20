@@ -6,6 +6,8 @@ import MovesCounter from "./MovesCounter.mjs";
 import Scores from "./Scores.mjs";
 import Commands from "../commands/Commands.mjs";
 import GameState from "./GameState.mjs";
+import GameOperator from "./GameOperator.mjs";
+import GameOperatorEmpty from "./GameOperatorEmpty.mjs";
 
 const GameBuilder = function () {
     let game, gameState;
@@ -28,7 +30,18 @@ const GameBuilder = function () {
 
     const setOperator = function () {
 
-        
+        const gameOperator = GameOperator();
+
+        game.setGameOperator(gameOperator);
+        gameOperator.setGame(game);
+    };
+
+    const setEmptyOperator = function () {
+
+        const gameOperatorEmpty = GameOperatorEmpty();
+
+        game.setEmptyGameOperator(gameOperatorEmpty);
+        gameOperatorEmpty.setGame(game);
     };
 
     const setNotify = function (notifyFunction) {
@@ -108,6 +121,7 @@ const GameBuilder = function () {
             reset: reset,
             setState: setState,
             setOperator: setOperator,
+            setEmptyOperator: setEmptyOperator,
             setNotify: setNotify,
             setNumber: setNumber,
             setPlayers: setPlayers,

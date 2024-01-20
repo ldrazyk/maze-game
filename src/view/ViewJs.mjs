@@ -25,7 +25,7 @@ const View = function() {
 
     const createBoardComponent = function() {
 
-        boardComponent = BoardComponent({model: model, controler: controler});
+        boardComponent = BoardComponent({model: model, onFieldClick: controler.click});
         boardComponent.appendTo(root);
         components.push(boardComponent);
     };

@@ -1,6 +1,6 @@
 const Game = function () {
     let notify, gameNumber;
-    let gameState, gameDirector, emptyGameDirector;
+    let gameState, gameOperator, emptyGameOperator;
     let players, board, pawns;
     let turnCounter, movesCounter, scores;
     let commands;
@@ -86,6 +86,7 @@ const Game = function () {
         
         scores.add(code);
         pawns.reset();
+        gameOperator = emptyGameOperator;
         notify('endGame');
     };
 
@@ -221,18 +222,18 @@ const Game = function () {
             console.log("Can't hold this many pawns!");
         }
     };
-
-    const moveToPosition = function (position) {
-
-        commands.move(position)
-    };
-
+    
     const moveInDirection = function (direction) {
-
+        
         const position = pawns.getSelected().getReach(direction);
         if (position) {
             commands.move(position);
         }
+    };
+
+    const moveToPosition = function (position) {
+
+        commands.move(position)
     };
 
     const click = function (fieldId) {
@@ -268,29 +269,13 @@ const Game = function () {
 
         if (selectedPawn) tryHold();
     };
-
+    
     const undo = function () {
         commands.undo();
     };
 
     const redo = function () {
         commands.redo();
-    };
-
-    const moveUp = function () {
-        moveInDirection('up');
-    };
-
-    const moveDown = function () {
-        moveInDirection('down');
-    };
-
-    const moveLeft = function () {
-        moveInDirection('left');
-    };
-
-    const moveRight = function () {
-        moveInDirection('right');
     };
 
     // mediator setters
@@ -307,12 +292,12 @@ const Game = function () {
         gameState = colleague;
     };
 
-    const setGameDirector = function (colleague) {
-        gameDirector = colleague;
+    const setGameOperator = function (colleague) {
+        gameOperator = colleague;
     };
 
-    const setEmptyGameDirector = function (colleague) {
-        emptyGameDirector = colleague;
+    const setEmptyGameOperator = function (colleague) {
+        emptyGameOperator = colleague;
     };
 
     const setPlayers = function (colleague) {
@@ -349,6 +334,10 @@ const Game = function () {
         return gameState;
     };
 
+    const getGameOperator = function () {
+        return gameOperator;
+    };
+
     const getPlayer = function(number) {
         return players.getPlayer(number);
     };
@@ -383,25 +372,21 @@ const Game = function () {
             movePawn: movePawn, // used in Board
             cleanAfterMove: cleanAfterMove, // used in DisactivateCommand
 
-            // UI
+            // used in GameOperator
             nextTurn: nextTurn,
             selectNext: selectNext,
+            hold: hold,
+            moveInDirection: moveInDirection,
             click: click,
             undo: undo,
             redo: redo,
-            hold: hold,
-            moveInDirection: moveInDirection,
-            moveUp: moveUp,   // move to GameOperator
-            moveDown: moveDown,   // move to GameOperator
-            moveLeft: moveLeft,   // move to GameOperator
-            moveRight: moveRight,   // move to GameOperator
 
             // mediator setters
             setNotify: setNotify,
             setNumber: setNumber,
             setGameState: setGameState,
-            setGameDirector: setGameDirector,
-            setEmptyGameDirector: setEmptyGameDirector,
+            setGameOperator: setGameOperator,
+            setEmptyGameOperator: setEmptyGameOperator,
             setPlayers: setPlayers,
             setBoard: setBoard,
             setPawns: setPawns,
@@ -411,6 +396,7 @@ const Game = function () {
             setCommands: setCommands,
             
             getGameState: getGameState, // used in Model
+            getGameOperator: getGameOperator,   // used in Model
             getPlayer: getPlayer, // used in Board, Pawns
             getActivePlayer: getActivePlayer,   // used in Scores
             getSelected: getSelected,   // used in Commands

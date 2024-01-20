@@ -14,20 +14,20 @@ const MovesCounter = function() {
         
         reset(0);
     }();
-
-    const canHold = function() {
-        if (holds < maxHolds) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    };
-
+    
     const canMove = function() {
         if (moves < movesAmount) {
             return true;
         } else {
+            return false;
+        }
+    };
+    
+    const canHold = function() {
+        if (holds < maxHolds && canMove()) {
+            return true;
+        }
+        else {
             return false;
         }
     };

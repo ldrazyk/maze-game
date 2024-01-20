@@ -1,6 +1,6 @@
 import updateClass from "../utils/updateClass.mjs";
 
-const FieldComponent = function({ controler, field }) {
+const FieldComponent = function({ field, onClick }) {
     let type, row, column, id, pawn;
     let mainElement;
     let highlightElement, flagElement, pawnElement;
@@ -56,7 +56,7 @@ const FieldComponent = function({ controler, field }) {
 
         const addEvents = function() {
 
-            pawnElement.addEventListener('click', () => { controler.click(id) });
+            pawnElement.addEventListener('click', () => { onClick(id) });
         };
 
         createFieldElement();

@@ -51,6 +51,7 @@ const Model = function() {
             builder.reset();
             builder.setState();
             builder.setOperator();
+            builder.setEmptyOperator();
             builder.setNotify(notify);
             builder.setNumber(session.getGameNumber());
             builder.setPlayers(session.getPlayers());
@@ -68,47 +69,50 @@ const Model = function() {
         notify('createGame');
     };
 
+    // game operations
+
     const nextTurn = function() {
-        game.nextTurn();
+        game.getGameOperator().nextTurn();
     };
 
     const selectNext = function () {
-        game.selectNext();
+        game.getGameOperator().selectNext();
     };
-
+    
+    const hold = function () {
+        game.getGameOperator().hold();
+    };
+    
+    const moveUp = function () {
+        game.getGameOperator().moveUp();
+    };
+    
+    const moveDown = function () {
+        game.getGameOperator().moveDown();
+    };
+    
+    const moveLeft = function () {
+        game.getGameOperator().moveLeft();
+    };
+    
+    const moveRight = function () {
+        game.getGameOperator().moveRight();
+    };
+    
     const click = function (fieldId) {
-        game.click(fieldId);
+        game.getGameOperator().click(fieldId);
     };
 
     const undo = function () {
-        game.undo();
+        game.getGameOperator().undo();
     };
 
     const redo = function () {
-        game.redo();
+        game.getGameOperator().redo();
     };
 
-    const hold = function () {
-        game.hold();
-    };
-
-    const moveUp = function () {
-        game.moveUp();
-    };
-
-    const moveDown = function () {
-        game.moveDown();
-    };
-
-    const moveLeft = function () {
-        game.moveLeft();
-    };
-
-    const moveRight = function () {
-        game.moveRight();
-    };
-
-
+    // state
+    
     const getPlayer = function (number) {
         return session.getPlayer(number);
     };
@@ -132,14 +136,14 @@ const Model = function() {
             // game operations
             nextTurn: nextTurn,
             selectNext: selectNext,
-            click: click,
-            undo: undo,
-            redo: redo,
             hold: hold,
             moveUp: moveUp,
             moveDown: moveDown,
             moveLeft: moveLeft,
             moveRight: moveRight,
+            click: click,
+            undo: undo,
+            redo: redo,
 
             // model state
             getPlayer: getPlayer,
