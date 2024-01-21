@@ -151,8 +151,16 @@ const Pawns = function (pawnsSpec) {
     };
 
     const canSelectNext = function () {
-        
         return hasNext();
+    };
+
+    const canMoveSelected = function (direction) {
+
+        if (selected && selected.getReach(direction)) {
+            return true;
+        } else {
+            return false;
+        }
     };
 
     return Object.freeze(
@@ -173,6 +181,7 @@ const Pawns = function (pawnsSpec) {
             getActiveAmount: getActiveAmount,
 
             canSelectNext: canSelectNext,
+            canMoveSelected: canMoveSelected,
         }
     );
 };

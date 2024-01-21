@@ -100,10 +100,25 @@ const ControlPanelComponent = function({ controler, model }) {
             }
         };
 
-        const checkMove = function () {
+        const checkMoves = function () {
+
+            const checkEachDirection = function () {
+
+                const checkDirection = function (direction) {
+                    if (gameState.canMove(direction)) {
+                        activateButtons([direction]);
+                    } else {
+                        disactivateButtons([direction]);
+                    }
+                };
+
+                directionIds.forEach(direction => {
+                    checkDirection(direction);
+                })
+            };
             
             if (gameState.getSelected()) {
-                activateButtons(directionIds);
+                checkEachDirection();
             } else {
                 disactivateButtons(directionIds);
             }
@@ -131,7 +146,7 @@ const ControlPanelComponent = function({ controler, model }) {
             checkNextTurn();
             checkSelectNext();
             checkHold();
-            checkMove();
+            checkMoves();
             checkUndo();
             checkRedo();
         } else if (code == 'createGame') {

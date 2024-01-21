@@ -350,14 +350,6 @@ const Game = function () {
         return pawns.getSelected();
     };
 
-    const getPawn = function (id) {
-        return pawns.getPawn(id);
-    };
-
-    const getPawnsIterator = function(spec) {
-        return pawns.getIterator(spec);
-    };
-
     const getNumber = function() {
         return gameNumber;
     };
@@ -369,7 +361,7 @@ const Game = function () {
 
             canStartTurn: canStartTurn, // used privately and in GameState
             isMoveLegal: isMoveLegal,   // used in Pawn
-            movePawn: movePawn, // used in Board
+            movePawn: movePawn, // used in Board, MoveCommand
             cleanAfterMove: cleanAfterMove, // used in DisactivateCommand
 
             // used in GameOperator
@@ -400,8 +392,6 @@ const Game = function () {
             getPlayer: getPlayer, // used in Board, Pawns
             getActivePlayer: getActivePlayer,   // used in Scores
             getSelected: getSelected,   // used in Commands
-            // getPawn: getPawn,   // not used ?
-            // getPawnsIterator: getPawnsIterator,   // not used ?
             getNumber: getNumber,   // used in Scores
         }
     );
