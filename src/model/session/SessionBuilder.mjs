@@ -1,6 +1,6 @@
 import Session from './Session.mjs';
 import Players from './Players.mjs';
-import Scores from '../game/Scores.mjs'
+import Scores from './Scores.mjs'
 
 const SessionBuilder = function () {
     let session;
