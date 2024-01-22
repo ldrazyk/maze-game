@@ -1,14 +1,19 @@
 import Subject from "./utils/Subject.mjs";
+import SessionBuilder from "./session/SessionBuilder.mjs";
 import GameBuilder from "./game/GameBuilder.mjs";
-import Session from "./session/Session.mjs";
 
 const Model = function() {
-    let subject, gameBuilder;
+    let subject, gameBuilder, sessionBuilder;
     let session, game;
 
     const createSubject = function () {
         
         subject = Subject();
+    };
+
+    const createSessionBuilder = function () {
+
+        sessionBuilder = SessionBuilder();
     };
 
     const createGameBuilder = function () {
@@ -19,6 +24,7 @@ const Model = function() {
     const init = function () {
 
         createSubject();
+        createSessionBuilder();
         createGameBuilder();
     }();
 
@@ -39,7 +45,17 @@ const Model = function() {
 
     const createSession = function({ playersSpec }) {
         
-        session = Session({ playersSpec: playersSpec });
+        const builder = sessionBuilder;
+
+        const make = function () {
+            builder.reset();
+            builder.setPlayers(playersSpec);
+            builder.setScores();
+        };
+
+        make();
+        session = builder.getResult();
+
         notify('createSession');
     };
 
@@ -59,7 +75,7 @@ const Model = function() {
             builder.setPawns(pawnsSpec);
             builder.setTurnCounter();
             builder.setMovesCounter();
-            builder.setScores();
+            builder.setScores(session.getScores());
             builder.setCommands();
         };
 

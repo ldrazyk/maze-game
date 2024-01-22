@@ -1,16 +1,20 @@
 const Scores = function () {
-    let ended = false;
-    let scores = [];
     let game;
-    
+    let ended;
+    const scores = [];
 
     const setGame = function (mediator) {
         game = mediator;
     };
 
+    const reset = function () {
+        ended = false;
+    };
+
     const add = function (code) {
 
         ended = true;
+
         let score = { game: game.getNumber(), type: code };
         let places;
         if (code == 'exit') {
@@ -40,6 +44,7 @@ const Scores = function () {
         {
             setGame: setGame,
 
+            reset: reset,
             add: add,
             ended: gameEnded,
             getLast: getLast,

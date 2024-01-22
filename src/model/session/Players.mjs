@@ -1,7 +1,7 @@
 import Player from "./Player.mjs";
 import ArrayIterator from "../utils/ArrayIterator.mjs";
 
-const Players = function ({ playersSpec }) {
+const Players = function (playersSpec) {
     const players = [];
     let activePosition = 0;
     let pasivePosition = 1;

@@ -3,7 +3,6 @@ import Board from "./Board.mjs";
 import Pawns from "./Pawns.mjs";
 import TurnCounter from "./TurnCounter.mjs";
 import MovesCounter from "./MovesCounter.mjs";
-import Scores from "./Scores.mjs";
 import Commands from "../commands/Commands.mjs";
 import GameState from "./GameState.mjs";
 import GameOperator from "./GameOperator.mjs";
@@ -93,10 +92,9 @@ const GameBuilder = function () {
         mediators.forEach(mediator => mediator.setMovesCounter(movesCounter));
     };
 
-    const setScores = function () {
+    const setScores = function (scores) {
 
-        const scores = Scores();
-
+        scores.reset();
         mediators.forEach(mediator => mediator.setScores(scores));
         scores.setGame(game);
     };

@@ -1,18 +1,19 @@
-import Players from './Players.mjs';
-
-const Session = function ({ playersSpec }) {
-    let players;
+const Session = function () {
+    let players, scores;
     let gameNumber;
-
-    const createPlayers = function() {
-        players = Players({ playersSpec: playersSpec });
-    };
 
     const init = function () {
         
-        createPlayers();
         gameNumber = 0;
     }();
+
+    const setPlayers = function (newPlayers) {
+        players = newPlayers;
+    };
+
+    const setScores = function (newScores) {
+        scores = newScores;
+    };
 
     const getPlayers = function () {
         return players;
@@ -25,6 +26,10 @@ const Session = function ({ playersSpec }) {
     const getPlayersIterator = function() {
         return players.getPlayersIterator();
     };
+    
+    const getScores = function () {
+        return scores;
+    };
 
     const getGameNumber = function() {
         gameNumber += 1;
@@ -33,9 +38,13 @@ const Session = function ({ playersSpec }) {
 
     return Object.freeze(
         {
+            setPlayers: setPlayers,
+            setScores: setScores,
+
             getPlayers: getPlayers,
             getPlayer: getPlayer,
             getPlayersIterator: getPlayersIterator,
+            getScores: getScores,
             getGameNumber: getGameNumber,
         }
     );
