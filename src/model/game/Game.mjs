@@ -20,67 +20,14 @@ const Game = function () {
         placePawns(2);
     };
 
-    // questions
+    // PRIVATE & PUBLIC
 
     const canStartTurn = function() {
         
         return !movesCounter.canMove();
     };
 
-    const isMoveLegal = function ({ pawnSpec, fieldSpec }) {
-
-        const getPawnFromSpec = function () {
-            let { pawn, pawnId } = pawnSpec;
-
-            if (!pawn) {
-                pawn = pawns.getPawn(pawnId);
-            }
-            return pawn;
-        };
-
-        const getFieldFromSpec = function () {
-            let { id, x, y, field, direction } = fieldSpec;
-
-            let resultField;
-
-            if (id || x || direction) {
-                resultField = board.getField(fieldSpec);
-            } else {
-                resultField = field;
-            }
-
-            return resultField;
-        };
-
-        const couldPawnMoveToField = function (pawn, field) {
-            let result = false;
-
-            if (field.getType() == 'path') {
-
-                result = true;
-
-                const otherPawn = field.getPawn();
-                if ( otherPawn && ( pawn.getPlayer() == otherPawn.getPlayer() || pawn.getKills() != otherPawn.getType() )) {
-                    result = false;
-                }
-
-            } else if (field.getType() == 'exit' & pawn.getPlayer().getNumber() != field.getExitNumber()) {
-                result = true;
-            }
-            return result;
-        };
-
-        let result = false;
-        const pawn = getPawnFromSpec();
-        const field = getFieldFromSpec();
-        if (field && couldPawnMoveToField(pawn, field)) {
-            result = field;
-        }
-
-        return result;
-    };
-
-    // game events
+    // PRIVATE
 
     const endGame = function(code) {
         
@@ -94,71 +41,21 @@ const Game = function () {
         pawns.updateReaches();
     };
 
-    const movePawn = function({ pawn, position }) {
-
-        const oldPosition = pawn.getPosition();
-        if (oldPosition) {
-            oldPosition.free();
-        }
-        pawn.move(position);
-        position.take(pawn);
-    };
-
-    const cleanAfterMove = function({ pawn, type, undo }) {
-
-        const updateMovesCounter = function() {
-            if (!undo) {
-                movesCounter.add(type);
-            } else {
-                movesCounter.remove(type);
-            }
-        };
-
-        const updatePawnsOrder = function() {
-            pawn.setOrder(movesCounter.getMoves());
-        };
-
-        const disactivatePawn = function() {
-            pawn.setActive(undo);
-        };
-
-        
-        const maybeUpdateReaches = function() {
-            if (type == 'move') {
-                updateReaches();
-            }
-        };
-        
-        const selectNextAfterMove = function() {
-            pawns.selectNext();
-        };
-
-        const checkExitWin = function() {
-            if (pawn.getPosition().getType() == 'exit') {
-                endGame('exit');
-            }
-        };
-
-        updateMovesCounter();
-        updatePawnsOrder();
-        disactivatePawn();
-        
-        maybeUpdateReaches();
-        selectNextAfterMove();
-        
-        notify(type);
-        
-        checkExitWin();
-    };
-
     const select = function (id) {
         const isSelected = pawns.select(id);
         if (isSelected) {
             notify('select');
         }
     };
-    
-    // UI
+
+    const moveToPosition = function (position) {
+
+        commands.move(position)
+    };
+
+    // PUBLIC
+
+    // for operator
 
     const nextTurn = function() {
 
@@ -231,11 +128,6 @@ const Game = function () {
         }
     };
 
-    const moveToPosition = function (position) {
-
-        commands.move(position)
-    };
-
     const click = function (fieldId) {
         
         const clickedField = board.getField({id: fieldId});
@@ -278,6 +170,144 @@ const Game = function () {
         commands.redo();
     };
 
+    // mediator interface
+
+    const movePawn = function({ pawn, position }) {
+
+        const oldPosition = pawn.getPosition();
+        if (oldPosition) {
+            oldPosition.free();
+        }
+        pawn.move(position);
+        position.take(pawn);
+    };
+
+    const cleanAfterMove = function({ pawn, type, undo }) {
+
+        const updateMovesCounter = function() {
+            if (!undo) {
+                movesCounter.add(type);
+            } else {
+                movesCounter.remove(type);
+            }
+        };
+
+        const updatePawnsOrder = function() {
+            pawn.setOrder(movesCounter.getMoves());
+        };
+
+        const disactivatePawn = function() {
+            pawn.setActive(undo);
+        };
+
+        
+        const maybeUpdateReaches = function() {
+            if (type == 'move') {
+                updateReaches();
+            }
+        };
+        
+        const selectNextAfterMove = function() {
+            pawns.selectNext();
+        };
+
+        const checkExitWin = function() {
+            if (pawn.getPosition().getType() == 'exit') {
+                endGame('exit');
+            }
+        };
+
+        updateMovesCounter();
+        updatePawnsOrder();
+        disactivatePawn();
+        
+        maybeUpdateReaches();
+        selectNextAfterMove();
+        
+        notify(type);
+        
+        checkExitWin();
+    };
+
+    const isMoveLegal = function ({ pawnSpec, fieldSpec }) {
+
+        const getPawnFromSpec = function () {
+            let { pawn, pawnId } = pawnSpec;
+
+            if (!pawn) {
+                pawn = pawns.getPawn(pawnId);
+            }
+            return pawn;
+        };
+
+        const getFieldFromSpec = function () {
+            let { id, x, y, field, direction } = fieldSpec;
+
+            let resultField;
+
+            if (id || x || direction) {
+                resultField = board.getField(fieldSpec);
+            } else {
+                resultField = field;
+            }
+
+            return resultField;
+        };
+
+        const couldPawnMoveToField = function (pawn, field) {
+            let result = false;
+
+            if (field.getType() == 'path') {
+
+                result = true;
+
+                const otherPawn = field.getPawn();
+                if ( otherPawn && ( pawn.getPlayer() == otherPawn.getPlayer() || pawn.getKills() != otherPawn.getType() )) {
+                    result = false;
+                }
+
+            } else if (field.getType() == 'exit' & pawn.getPlayer().getNumber() != field.getExitNumber()) {
+                result = true;
+            }
+            return result;
+        };
+
+        let result = false;
+        const pawn = getPawnFromSpec();
+        const field = getFieldFromSpec();
+        if (field && couldPawnMoveToField(pawn, field)) {
+            result = field;
+        }
+
+        return result;
+    };
+
+    const getPlayer = function(number) {
+        return players.getPlayer(number);
+    };
+    
+    const getActivePlayer = function(active=true) {
+        return players.getActive(active);
+    };
+    
+    const getSelected = function() {
+        return pawns.getSelected();
+    };
+    
+    const getNumber = function() {
+        return gameNumber;
+    };
+    
+    // getters for model
+    
+    const getGameState = function () {
+        return gameState;
+    };
+    
+    const getGameOperator = function () {
+        return gameOperator;
+    };
+    
     // mediator setters
 
     const setNotify = function (notifyFunction) {
@@ -328,41 +358,9 @@ const Game = function () {
         commands = colleague;
     };
 
-    // getters
-
-    const getGameState = function () {
-        return gameState;
-    };
-
-    const getGameOperator = function () {
-        return gameOperator;
-    };
-
-    const getPlayer = function(number) {
-        return players.getPlayer(number);
-    };
-
-    const getActivePlayer = function(active=true) {
-        return players.getActive(active);
-    };
-
-    const getSelected = function() {
-        return pawns.getSelected();
-    };
-
-    const getNumber = function() {
-        return gameNumber;
-    };
-
-
     return Object.freeze(
         {
             init: init,
-
-            canStartTurn: canStartTurn, // used privately and in GameState
-            isMoveLegal: isMoveLegal,   // used in Pawn
-            movePawn: movePawn, // used in Board, MoveCommand
-            cleanAfterMove: cleanAfterMove, // used in DisactivateCommand
 
             // used in GameOperator
             nextTurn: nextTurn,
@@ -372,6 +370,20 @@ const Game = function () {
             click: click,
             undo: undo,
             redo: redo,
+
+            // mediator interface
+            canStartTurn: canStartTurn, // used privately and in GameState
+            movePawn: movePawn, // used in Board, MoveCommand
+            cleanAfterMove: cleanAfterMove, // used in DisactivateCommand
+            isMoveLegal: isMoveLegal,   // used in Pawn
+            getPlayer: getPlayer, // used in Board, Pawns
+            getActivePlayer: getActivePlayer,   // used in Scores
+            getSelected: getSelected,   // used in Commands
+            getNumber: getNumber,   // used in Scores
+            
+            // getters for model
+            getGameState: getGameState, // used in Model
+            getGameOperator: getGameOperator,   // used in Model
 
             // mediator setters
             setNotify: setNotify,
@@ -386,13 +398,6 @@ const Game = function () {
             setMovesCounter: setMovesCounter,
             setScores: setScores,
             setCommands: setCommands,
-            
-            getGameState: getGameState, // used in Model
-            getGameOperator: getGameOperator,   // used in Model
-            getPlayer: getPlayer, // used in Board, Pawns
-            getActivePlayer: getActivePlayer,   // used in Scores
-            getSelected: getSelected,   // used in Commands
-            getNumber: getNumber,   // used in Scores
         }
     );
 };
