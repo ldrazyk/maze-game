@@ -122,8 +122,12 @@ const Pawn = function ({ id, type, player }) {
         return kills;
     };
 
-    const getPlayer = function() {
-        return player;
+    const getPlayerNumber = function() {
+        return player.getNumber();
+    };
+
+    const getColor = function() {
+        return player.getColor();
     };
 
     const toString = function() {
@@ -160,7 +164,8 @@ const Pawn = function ({ id, type, player }) {
             getId: getId,
             getType: getType,
             getKills: getKills,
-            getPlayer: getPlayer,
+            getPlayerNumber: getPlayerNumber,
+            getColor: getColor,
             toString: toString,
         }
     );

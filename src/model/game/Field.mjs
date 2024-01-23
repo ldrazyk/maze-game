@@ -54,8 +54,13 @@ const Field = function ({ id, type, x, y, exitNumber=false, player=false }) {
         return exitNumber;
     };
 
-    const getPlayer = function() {
-        return player;
+    const getFlagColor = function () {
+
+        if (player) {
+            return player.getColor();
+        } else {
+            return false;
+        }
     };
 
     const toString = function() {
@@ -85,7 +90,7 @@ const Field = function ({ id, type, x, y, exitNumber=false, player=false }) {
             getX: getX,
             getY: getY,
             getExitNumber: getExitNumber,
-            getPlayer: getPlayer,
+            getFlagColor: getFlagColor,
             toString: toString,
         }
     );

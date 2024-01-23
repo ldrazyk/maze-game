@@ -52,13 +52,11 @@ const BoardComponent = function({ model, onFieldClick }) {
 
                 const component = FieldComponent({field: field, onClick: onFieldClick });
                 
-                const type = field.getType();
-                if (type != 'wall') {
+                if (component.getType() != 'wall') {
                     pathComponents[component.getId()] = component;
                 }
 
-                const rowNumber = component.getRow();
-                component.appendTo(rowElements[rowNumber - 1]);
+                component.appendTo(rowElements[component.getRow() - 1]);
             }
         };
 

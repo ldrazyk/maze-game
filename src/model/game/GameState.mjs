@@ -42,7 +42,7 @@ const GameState = function () {
     };
     
     const canSelectNext = function () {
-        return pawns.canSelectNext();
+        return movesCounter.canSelectNext();
     };
 
     const canMove = function (direction) {

@@ -150,10 +150,6 @@ const Pawns = function (pawnsSpec) {
         return activePawns.length;
     };
 
-    const canSelectNext = function () {
-        return hasNext();
-    };
-
     const canMoveSelected = function (direction) {
 
         if (selected && selected.getReach(direction)) {
@@ -180,7 +176,6 @@ const Pawns = function (pawnsSpec) {
             getSelected: getSelected,
             getActiveAmount: getActiveAmount,
 
-            canSelectNext: canSelectNext,
             canMoveSelected: canMoveSelected,
         }
     );

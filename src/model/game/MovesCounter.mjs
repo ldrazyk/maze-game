@@ -50,6 +50,14 @@ const MovesCounter = function() {
         return moves;
     };
 
+    const canSelectNext = function () {
+        if (movesAmount - moves > 1) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
     return Object.freeze(
         {
             reset: reset,
@@ -59,6 +67,7 @@ const MovesCounter = function() {
             add: add,
             remove: remove,
             getMoves: getMoves,
+            canSelectNext: canSelectNext,
         }
     );
 };

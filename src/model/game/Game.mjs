@@ -262,11 +262,11 @@ const Game = function () {
                 result = true;
 
                 const otherPawn = field.getPawn();
-                if ( otherPawn && ( pawn.getPlayer() == otherPawn.getPlayer() || pawn.getKills() != otherPawn.getType() )) {
+                if ( otherPawn && ( pawn.getPlayerNumber() == otherPawn.getPlayerNumber() || pawn.getKills() != otherPawn.getType() )) {
                     result = false;
                 }
 
-            } else if (field.getType() == 'exit' & pawn.getPlayer().getNumber() != field.getExitNumber()) {
+            } else if (field.getType() == 'exit' & pawn.getPlayerNumber() != field.getExitNumber()) {
                 result = true;
             }
             return result;

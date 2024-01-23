@@ -37,7 +37,7 @@ const FieldComponent = function({ field, onClick }) {
 
             if (type == 'exit') {
                 flagElement = document.createElement('div');
-                flagElement.classList.add(field.getPlayer().getColor(), 'flag');
+                flagElement.classList.add(field.getFlagColor(), 'flag');
                 highlightElement.appendChild(flagElement);
             }
         };
@@ -89,7 +89,7 @@ const FieldComponent = function({ field, onClick }) {
         const findPawnClass = function () {
             let newClassName = 'pawn';
             if (pawn) {
-                newClassName += ' ' + 'has_pawn ' + pawn.getType() + ' ' + pawn.getPlayer().getColor();
+                newClassName += ' ' + 'has_pawn ' + pawn.getType() + ' ' + pawn.getColor();
             }
             return newClassName;
         };
@@ -108,7 +108,7 @@ const FieldComponent = function({ field, onClick }) {
     
             const addActive = function () {
                 mainClass += ' active';
-                highlightClass += ' ' + pawn.getPlayer().getColor();
+                highlightClass += ' ' + pawn.getColor();
             };
 
             const addSelected = function () {
@@ -141,7 +141,7 @@ const FieldComponent = function({ field, onClick }) {
                 };
     
                 mainClass += ' reach';
-                highlightClass += ' ' + selected.getPlayer().getColor() + ' ' + getReachType(reachDirection);
+                highlightClass += ' ' + selected.getColor() + ' ' + getReachType(reachDirection);
             };
             
 
@@ -171,18 +171,19 @@ const FieldComponent = function({ field, onClick }) {
     };
 
     const getRow = function () {
-        
         return row;
     };
 
     const getColumn = function () {
-        
         return column;
     };
 
     const getId = function () {
-        
         return id;
+    };
+
+    const getType = function () {
+        return type;
     };
 
     const appendTo = function (container) {
@@ -197,6 +198,7 @@ const FieldComponent = function({ field, onClick }) {
             getRow: getRow,
             getColumn: getColumn,
             getId: getId,
+            getType: getType,
             appendTo: appendTo,
         }
     );
