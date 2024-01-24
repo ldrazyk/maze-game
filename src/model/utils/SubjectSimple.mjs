@@ -1,4 +1,4 @@
-const Subject = function(getObject=false) {
+const Subject = function() {
     const observers = [];
 
     const attach = function (observer) {
@@ -12,14 +12,9 @@ const Subject = function(getObject=false) {
         } else {}
     };
 
-    const notify = function(code=false, object=false) {
-
-        if (!object && getObject) {
-            object = getObject();
-        }
-
+    const notify = function(code=false) {
         for (let observer of observers) {
-            observer.update({ code, object });
+            observer.update(code);
         }
     };
 

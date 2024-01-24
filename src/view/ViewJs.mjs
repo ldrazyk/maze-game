@@ -2,7 +2,7 @@ import BoardComponent from "./components/BoardComponent.mjs";
 import ControlPanelComponent from "./components/ControlPanelComponent.mjs";
 
 const View = function() {
-    let model, controler
+    let controler
     let root, boardComponent, controlPanelComponent;
     const components = [];
 
@@ -15,56 +15,53 @@ const View = function() {
         findRoot();
     }();
 
-    const setModel = function(newModel) {
-        model = newModel;
-    };
-
     const setControler = function(newControler) {
         controler = newControler;
     };
 
-    const createBoardComponent = function() {
+    // add something
 
-        boardComponent = BoardComponent({model: model, onFieldClick: controler.click});
+    const createBoardComponent = function(gameState) {
+
+        boardComponent = BoardComponent({ initGameState: gameState, onFieldClick: controler.click });
         boardComponent.appendTo(root);
         components.push(boardComponent);
     };
 
     const createControlPanel = function() {
 
-        controlPanelComponent = ControlPanelComponent({model: model, controler: controler});
+        controlPanelComponent = ControlPanelComponent({ controler: controler });
         controlPanelComponent.appendTo(root);
         components.push(controlPanelComponent);
     };
 
-    const createGame = function() {
+    const createGame = function(gameState) {
 
-        createBoardComponent();
+        createBoardComponent(gameState);
         createControlPanel();
     };
 
-    const endGame = function() {
+    const endGame = function(gameState) {
 
-        const score = model.getGameState().getScore();
+        const score = gameState.getScore();
         console.log(`Game over!\nWinner: ${score.winner.getName()}\nType: ${score.type}`);
     };
 
-    const update = function(code) {
+    const update = function({ code=false, object=false }) {
 
         console.log('> view.update("' + code + '")');
         
         if (code == 'createGame') {
-            createGame();
+            createGame(object);
         } else if (code == 'endGame') {
-            endGame();
+            endGame(object);
         }
 
-        components.forEach(component => { component.update(code) });
+        components.forEach(component => { component.update({ code: code, object: object }) });
     };
 
     return Object.freeze(
         {
-            setModel: setModel,
             setControler: setControler,
             update: update,
         }

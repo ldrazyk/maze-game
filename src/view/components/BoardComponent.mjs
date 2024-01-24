@@ -1,6 +1,6 @@
 import FieldComponent from './FieldComponent.mjs';
 
-const BoardComponent = function({ model, onFieldClick }) {
+const BoardComponent = function({ initGameState, onFieldClick }) {
     let mainElement;
     let name, rows, columns;
     const rowElements = [];
@@ -8,9 +8,9 @@ const BoardComponent = function({ model, onFieldClick }) {
 
     const setProps = function () {
 
-        name = model.getGameState().getBoardName();
-        rows = model.getGameState().getBoardRows();
-        columns = model.getGameState().getBoardColumns();
+        name = initGameState.getBoardName();
+        rows = initGameState.getBoardRows();
+        columns = initGameState.getBoardColumns();
     };
 
     const createElements = function () {
@@ -45,7 +45,7 @@ const BoardComponent = function({ model, onFieldClick }) {
 
         const createFieldComponents = function () {
 
-            const iterator = model.getGameState().getBoardIterator();
+            const iterator = initGameState.getBoardIterator();
             while (iterator.hasNext()) {
 
                 const field = iterator.next();
@@ -76,7 +76,7 @@ const BoardComponent = function({ model, onFieldClick }) {
         container.appendChild(mainElement);
     };
 
-    const update = function (code) {
+    const update = function ({ code, object }) {
 
         const updatePawns = function () {
 
@@ -87,7 +87,8 @@ const BoardComponent = function({ model, onFieldClick }) {
 
         const updateHighlights = function () {
 
-            const selected = model.getGameState().getSelected();
+            const gameState = object;
+            const selected = gameState.getSelected();
 
             Object.values(pathComponents).forEach(component => {
                 component.updateHighlight(selected);

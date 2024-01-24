@@ -13,7 +13,6 @@ const Controller = function(model) {
         }
         view = newView;
         model.attach(view);
-        view.setModel(model);
         view.setControler(self);
     }
 

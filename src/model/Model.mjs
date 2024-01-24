@@ -6,9 +6,16 @@ const Model = function() {
     let subject, gameBuilder, sessionBuilder;
     let session, game;
 
+    const getGameState = function () {
+
+        if (game) {
+            return game.getGameState();
+        }
+    };
+
     const createSubject = function () {
         
-        subject = Subject();
+        subject = Subject(getGameState);
     };
 
     const createSessionBuilder = function () {
@@ -137,10 +144,6 @@ const Model = function() {
         return session.getPlayersIterator();
     };
 
-    const getGameState = function () {
-        return game.getGameState();
-    };
-
     return Object.freeze(
         {
             attach: attach,
@@ -164,7 +167,6 @@ const Model = function() {
             // model state
             getPlayer: getPlayer,
             getPlayersIterator: getPlayersIterator,
-            getGameState: getGameState,
         }
     );
 };

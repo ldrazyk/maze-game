@@ -1,6 +1,6 @@
 import ButtonComponent from "./ButtonComponent.mjs"
 
-const ControlPanelComponent = function({ controler, model }) {
+const ControlPanelComponent = function({ controler }) {
     let mainElement;
     const buttonComponents = {};
 
@@ -66,10 +66,9 @@ const ControlPanelComponent = function({ controler, model }) {
         container.appendChild(mainElement);
     };
 
-    const update = function (code) {
+    const update = function ({ code, object }) {
 
-        const gameState = model.getGameState();
-        
+        const gameState = object;
         const directionIds = ['up', 'down', 'left', 'right'];
         const allIds = [...directionIds, 'select_next', 'next_turn', 'hold', 'undo', 'redo'];
         
