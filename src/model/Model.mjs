@@ -76,7 +76,7 @@ const Model = function() {
             builder.setOperator();
             builder.setEmptyOperator();
             builder.setNotify(notify);
-            builder.setNumber(session.getGameNumber());
+            builder.setNumber(session.getIncreasedGameNumber());
             builder.setPlayers(session.getPlayers());
             builder.setBoard(matrixSpec);
             builder.setPawns(pawnsSpec);

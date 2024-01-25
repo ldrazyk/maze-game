@@ -1,3 +1,6 @@
+import Score from "./Score.mjs";
+import ArrayIterator from "../utils/ArrayIterator.mjs";
+
 const Scores = function () {
     let game;
     let ended;
@@ -15,15 +18,15 @@ const Scores = function () {
 
         ended = true;
 
-        let score = { game: game.getNumber(), type: code };
-        let places;
-        if (code == 'exit') {
-            places = { winner: game.getActivePlayer(), looser: game.getActivePlayer(false) };
-        } else if (code = 'no_pawns') {
-            places = { winner: game.getActivePlayer(false), looser: game.getActivePlayer() };
-        }
-        places.winner.addWin();
-        score = {...score, ...places};
+        const score = Score(
+            {
+                type: code, 
+                gameNumber: game.getNumber(), 
+                activePlayer: game.getActivePlayer(), 
+                passivePlayer: game.getActivePlayer(false)
+            }
+        );
+
         scores.push(score);
     };
 
@@ -31,12 +34,12 @@ const Scores = function () {
         return ended;
     };
 
-    const getLast = function () {
-        return scores[scores.length - 1];
+    const getLastScoreString = function () {
+        return scores[scores.length - 1].toString();
     };
 
-    const getScores = function () {
-        return scores;
+    const getScoresIterator = function () {
+        return ArrayIterator(scores);
     };
 
 
@@ -47,8 +50,8 @@ const Scores = function () {
             reset: reset,
             add: add,
             ended: gameEnded,
-            getLast: getLast,
-            getScores: getScores
+            getLastScoreString: getLastScoreString,
+            getScoresIterator: getScoresIterator
         }
     )
 };

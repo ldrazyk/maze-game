@@ -31,7 +31,7 @@ const Session = function () {
         return scores;
     };
 
-    const getGameNumber = function() {
+    const getIncreasedGameNumber = function() {
         gameNumber += 1;
         return gameNumber;
     };
@@ -45,7 +45,7 @@ const Session = function () {
             getPlayer: getPlayer,
             getPlayersIterator: getPlayersIterator,
             getScores: getScores,
-            getGameNumber: getGameNumber,
+            getIncreasedGameNumber: getIncreasedGameNumber,
         }
     );
 };

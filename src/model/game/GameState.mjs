@@ -71,8 +71,8 @@ const GameState = function () {
         return turnCounter.getTurn();
     };
      
-    const getScore = function() {
-        return scores.getLast();
+    const getLastScoreString = function() {
+        return scores.getLastScoreString();
     };
 
     // get board
@@ -120,7 +120,7 @@ const GameState = function () {
             // get game
             getGameNumber: getGameNumber,   // will be used
             getTurnNumber: getTurnNumber,   // will be used
-            getScore: getScore, // used in ViewJs
+            getLastScoreString: getLastScoreString, // used in ViewJs
             // get board
             getBoardIterator: getBoardIterator, // used in BoardComponent
             getBoardName: getBoardName, // used in BoardComponent

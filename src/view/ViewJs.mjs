@@ -43,8 +43,8 @@ const View = function() {
 
     const endGame = function(gameState) {
 
-        const score = gameState.getScore();
-        console.log(`Game over!\nWinner: ${score.winner.getName()}\nType: ${score.type}`);
+        const scoreString = gameState.getLastScoreString();
+        console.log(scoreString);
     };
 
     const update = function({ code=false, object=false }) {
