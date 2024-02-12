@@ -1,16 +1,20 @@
 import FieldComponent from './FieldComponent.mjs';
 
-const BoardComponent = function({ initGameState, onFieldClick }) {
+const BoardComponent = function({ gameState }) {
+    
     let mainElement;
-    let name, rows, columns;
+    const id = 'board';
     const rowElements = [];
     const pathComponents = {};
+    let name, rows, columns;
+    
+    let mediator;
 
     const setProps = function () {
 
-        name = initGameState.getBoardName();
-        rows = initGameState.getBoardRows();
-        columns = initGameState.getBoardColumns();
+        name = gameState.getBoardName();
+        rows = gameState.getBoardRows();
+        columns = gameState.getBoardColumns();
     };
 
     const createElements = function () {
@@ -45,12 +49,12 @@ const BoardComponent = function({ initGameState, onFieldClick }) {
 
         const createFieldComponents = function () {
 
-            const iterator = initGameState.getBoardIterator();
+            const iterator = gameState.getBoardIterator();
             while (iterator.hasNext()) {
 
                 const field = iterator.next();
 
-                const component = FieldComponent({field: field, onClick: onFieldClick });
+                const component = FieldComponent({field: field, onClick: (id) => mediator.click(id) });
                 
                 if (component.getType() != 'wall') {
                     pathComponents[component.getId()] = component;
@@ -71,9 +75,9 @@ const BoardComponent = function({ initGameState, onFieldClick }) {
         createElements();
     }();
 
-    const appendTo = function (container) {
-        
-        container.appendChild(mainElement);
+    const setMediator = function (newMediator) {
+    
+        mediator = newMediator;
     };
 
     const update = function ({ code, object }) {
@@ -104,10 +108,22 @@ const BoardComponent = function({ initGameState, onFieldClick }) {
         }
     };
 
+    const getId = function () {
+        
+        return id;
+    };
+
+    const getMain = function () {
+    
+        return mainElement;
+    };
+
     return Object.freeze(
         {
-            appendTo: appendTo,
-            update: update,
+            setMediator,
+            update,
+            getId,
+            getMain,
         }
     );
 };

@@ -1,8 +1,12 @@
 import ButtonComponent from "./ButtonComponent.mjs"
 
-const ControlPanelComponent = function({ controler }) {
+const ControlPanelComponent = function({  }) {
+    
     let mainElement;
     const buttonComponents = {};
+    const id = 'control_panel';
+
+    let mediator;
 
     const createElements = function () {
 
@@ -16,15 +20,15 @@ const ControlPanelComponent = function({ controler }) {
         const createButtonElements = function () {
 
             const buttonsSpec = [
-                { id: 'select_next', text: 'Select', onClick: controler.selectNext, order: 1 },
-                { id: 'up', text: '^', onClick: controler.moveUp, order: 2 },
-                { id: 'next_turn', text: 'Next Turn', onClick: controler.nextTurn, order: 3 },
-                { id: 'left', text: '<-', onClick: controler.moveLeft, order: 4 },
-                { id: 'hold', text: 'x', onClick: controler.hold, order: 5 },
-                { id: 'right', text: '->', onClick: controler.moveRight, order: 6 },
-                { id: 'undo', text: 'Undo', onClick: controler.undo, order: 7 },
-                { id: 'down', text: 'v', onClick: controler.moveDown, order: 8 },
-                { id: 'redo', text: 'Redo', onClick: controler.redo, order: 9 },
+                { id: 'select_next', text: 'Select', onClick: () => mediator.selectNext(), order: 1 },
+                { id: 'up', text: '^', onClick: () => mediator.moveUp(), order: 2 },
+                { id: 'next_turn', text: 'Next Turn', onClick: () => mediator.nextTurn(), order: 3 },
+                { id: 'left', text: '<-', onClick: () => mediator.moveLeft(), order: 4 },
+                { id: 'hold', text: 'x', onClick: () => mediator.hold(), order: 5 },
+                { id: 'right', text: '->', onClick: () => mediator.moveRight(), order: 6 },
+                { id: 'undo', text: 'Undo', onClick: () => mediator.undo(), order: 7 },
+                { id: 'down', text: 'v', onClick: () => mediator.moveDown(), order: 8 },
+                { id: 'redo', text: 'Redo', onClick: () => mediator.redo(), order: 9 },
             ];
 
             buttonsSpec.forEach(spec => {
@@ -44,6 +48,11 @@ const ControlPanelComponent = function({ controler }) {
         createElements();
     }();
 
+    const setMediator = function (newMediator) {
+    
+        mediator = newMediator;
+    };
+
     const executeOnButtons = function (ids, methodeName) {
 
         ids.forEach(id => {
@@ -61,11 +70,6 @@ const ControlPanelComponent = function({ controler }) {
         executeOnButtons(ids, 'disactivate');
     };
     
-    const appendTo = function (container) {
-        
-        container.appendChild(mainElement);
-    };
-
     const update = function ({ code, object }) {
 
         const gameState = object;
@@ -155,10 +159,22 @@ const ControlPanelComponent = function({ controler }) {
         }
     };
 
+    const getId = function () {
+        
+        return id;
+    };
+
+    const getMain = function () {
+        
+        return mainElement;
+    };
+
     return Object.freeze(
         {
-            appendTo: appendTo,
+            setMediator: setMediator,
             update: update,
+            getId: getId,
+            getMain: getMain,
         }
     );
 };

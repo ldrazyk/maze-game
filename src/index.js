@@ -2,18 +2,18 @@ import Model from './model/Model.mjs';
 import ViewJs from './view/ViewJs.mjs';
 import Controller from './controller/Controller.mjs';
 
-let model, view, controler;
+let model, view, controller;
 
 const createMVC = function() {
     model = Model();
     view = ViewJs();
-    controler = Controller(model);
-    controler.setSelf(controler);
-    controler.setView(view);
+    controller = Controller(model);
+    controller.setSelf(controller);
+    controller.setView(view);
 };
 
 const createTestSession = function() {
-    controler.createSession({playersSpec: [{name: 'Walter White', color: 'blue', number: 1}, {name: 'Jessy Pinkman', color: 'pink', number: 2}]});
+    controller.createSession({playersSpec: [{name: 'Walter White', color: 'blue', number: 1}, {name: 'Jessy Pinkman', color: 'pink', number: 2}]});
 };
 
 const createTestGame = function() {
@@ -57,7 +57,7 @@ const createTestGame = function() {
             ]
     };
 
-    controler.createGame({matrixSpec: matrixSpec01, pawnsSpec: [pawnsSpec1, pawnsSpec1]});
+    controller.createGame({matrixSpec: matrixSpec01, pawnsSpec: [pawnsSpec1, pawnsSpec1]});
 };
 
 const app = function() {

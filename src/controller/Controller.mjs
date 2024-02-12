@@ -3,8 +3,8 @@ const Controller = function(model) {
 
     // init
 
-    const setSelf = function (controler) {
-        self = controler;
+    const setSelf = function (controller) {
+        self = controller;
     };
 
     const setView = function (newView) {
@@ -29,12 +29,12 @@ const Controller = function(model) {
     // buttons game commands
 
     const nextTurn = function() {
-        console.log('\n>> controler.nextTurn()');  // test
+        console.log('\n>> controller.nextTurn()');  // test
         model.nextTurn();
     };
 
     const selectNext = function() {
-        console.log('\n>> controler.selectNext()');
+        console.log('\n>> controller.selectNext()');
         model.selectNext();
     };
 
@@ -69,19 +69,19 @@ const Controller = function(model) {
     }; 
 
     const click = function (fieldId) {
-        console.log('\n>> controler.click( ' + fieldId + ' )');
+        console.log('\n>> controller.click( ' + fieldId + ' )');
         model.click(fieldId);
     }; 
 
     // history commands
 
     const undo = function() {
-        console.log('\n>> controler.undo()');
+        console.log('\n>> controller.undo()');
         model.undo();
     };
 
     const redo = function() {
-        console.log('\n>> controler.redo()');
+        console.log('\n>> controller.redo()');
         model.redo();
     };
 
