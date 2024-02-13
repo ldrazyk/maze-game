@@ -38,16 +38,16 @@ const View = function() {
 
         builder.setContainer({ id: 'main', type: 'div', parentId: 'root' });
 
-        builder.setContainer({ id: 'section_1', type: 'section', parentId: 'main', order: 1 });
+        builder.setContainer({ id: 'section_1', type: 'section', parentId: 'main' });
 
-        builder.setBoard({ parentId: 'section_1', order: 1, gameState: gameState });
-        builder.setInfoPanel({ parentId: 'section_1', order: 2 });
+        builder.setBoard({ parentId: 'section_1', gameState: gameState });
+        builder.setInfoPanel({ parentId: 'section_1' });
 
-        builder.setContainer({ id: 'section_2', type: 'section', parentId: 'main', order: 2 });
+        builder.setContainer({ id: 'section_2', type: 'section', parentId: 'main' });
 
-        builder.setControlPanel({ parentId: 'section_2', order: 2 });
-        builder.setPlayersPanel({ playersNumber: 1, parentId: 'section_2', order: 1, gameState: gameState });
-        builder.setPlayersPanel({ playersNumber: 2, parentId: 'section_2', order: 3, gameState: gameState });
+        builder.setControlPanel({ parentId: 'section_2' });
+        builder.setPlayerPanel({ playerNumber: 1, parentId: 'section_2', gameState: gameState });
+        builder.setPlayerPanel({ playerNumber: 2, parentId: 'section_2', gameState: gameState });
 
         mediator = builder.getResult();
     };

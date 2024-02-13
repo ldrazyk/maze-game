@@ -2,7 +2,7 @@ import ViewMediator from "./ViewMediator.mjs";
 import ContainerComponent from "./ContainerComponent.mjs";
 import BoardComponent from "./BoardComponent.mjs";
 import ControlPanelComponent from "./ControlPanelComponent.mjs";
-import PlayersPanel from "./PlayersPanel.mjs";
+import PlayerPanel from "./PlayerPanel.mjs";
 import InfoPanel from "./InfoPanel.mjs";
 
 const ViewBuilder = function () {
@@ -44,9 +44,9 @@ const ViewBuilder = function () {
         addComponent({ creator: ControlPanelComponent, spec: spec });
     };
 
-    const setPlayersPanel = function (spec) {
+    const setPlayerPanel = function (spec) {
         
-        addComponent({ creator: PlayersPanel, spec: spec});
+        addComponent({ creator: PlayerPanel, spec: spec});
     };
 
     const setInfoPanel = function (spec) {
@@ -67,7 +67,7 @@ const ViewBuilder = function () {
             setContainer: setContainer,
             setBoard: setBoard,
             setControlPanel: setControlPanel,
-            setPlayersPanel: setPlayersPanel,
+            setPlayerPanel: setPlayerPanel,
             setInfoPanel: setInfoPanel,
             getResult: getResult
         }

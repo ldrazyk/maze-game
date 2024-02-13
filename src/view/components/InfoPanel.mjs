@@ -1,6 +1,7 @@
 const InfoPanel = function () {
     
     let mainElement;
+    let screen;
     const id = 'info_panel';
 
     let mediator;
@@ -15,7 +16,16 @@ const InfoPanel = function () {
             mainElement.textContent = 'Info Panel';
         };
 
+        const createScreen = function () {
+        
+            screen = document.createElement('div');
+            screen.classList.add('screen');
+            mainElement.appendChild(screen);
+            screen.textContent = 'screen';
+        };
+
         createMain();
+        createScreen();
     };
 
     const init = function () {

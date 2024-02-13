@@ -19,7 +19,7 @@ const createTestSession = function() {
 const createTestGame = function() {
     const pawnsSpec1 = [{type: 'lion', amount: 1}, {type: 'rooster', amount: 1}, {type: 'snake', amount: 1}];
 
-    const matrixSpec8 = {
+    const matrixSpec08 = {
         name: "matrix08",
         matrix: [
             [1, 1, 1, 3, 1, 1, 1],
@@ -32,7 +32,7 @@ const createTestGame = function() {
             ]
     };
 
-    const matrixSpec0 = {
+    const matrixSpec00 = {
         name: "matrix00",
         matrix: [
             [1, 1, 1, 3, 1, 1, 1],
@@ -57,7 +57,7 @@ const createTestGame = function() {
             ]
     };
 
-    controller.createGame({matrixSpec: matrixSpec01, pawnsSpec: [pawnsSpec1, pawnsSpec1]});
+    controller.createGame({matrixSpec: matrixSpec00, pawnsSpec: [pawnsSpec1, pawnsSpec1]});
 };
 
 const app = function() {

@@ -1,7 +1,7 @@
-const PlayersPanel = function ({ playerNumber }) {
+const PlayerPanel = function ({ playerNumber }) {
     
     let mainElement;
-    const id = 'players_panel_' + playerNumber;
+    const id = 'player_panel_' + playerNumber;
 
     let mediator;
     
@@ -53,4 +53,4 @@ const PlayersPanel = function ({ playerNumber }) {
     );
 };
 
-export default PlayersPanel;
+export default PlayerPanel;
