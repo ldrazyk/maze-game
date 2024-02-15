@@ -81,6 +81,11 @@ const ViewMediator = function (root) {
         controller.moveRight() ;
     };
 
+    const hold = function () {
+    
+        controller.hold() ;
+    };
+
     const undo = function () {
     
         controller.undo() ;
@@ -106,6 +111,7 @@ const ViewMediator = function (root) {
             moveDown,
             moveLeft,
             moveRight,
+            hold,
             undo,
             redo,
         }

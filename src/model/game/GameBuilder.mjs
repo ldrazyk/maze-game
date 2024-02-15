@@ -55,7 +55,8 @@ const GameBuilder = function () {
 
     const setPlayers = function (players) {
 
-        game.setPlayers(players);
+        // game.setPlayers(players);
+        mediators.forEach(mediator => mediator.setPlayers(players));
     };
 
     const setBoard = function (matrixSpec) {

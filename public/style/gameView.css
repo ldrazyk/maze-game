@@ -6,6 +6,8 @@
 }
 
 #main>section {
+    display: flex;
+    flex-direction: column;
     padding: 10px;
 }
 
@@ -15,4 +17,50 @@
     padding: 5px;
     color: white;
     background-color: black;
+}
+
+#player_panel_1 {
+    order: 2;
+}
+
+#player_panel_2 {
+    order: -1;
+}
+
+.player-panel {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.player-panel.pink {
+    background-color: var(--pink);
+}
+
+.player-panel.blue {
+    background-color: var(--blue);
+}
+
+.player-name {
+    font-size: 30px;
+    background-color: transparent;
+    border: none;
+}
+
+.player-name:focus {
+    background-color: white;
+    border: none;
+}
+
+.turn-section {
+    display: flex;
+    visibility: hidden;
+}
+
+.turn-section>* {
+    margin-right: 15px;
+}
+
+.player-panel.active .turn-section {
+    visibility: visible;
 }

@@ -3,8 +3,8 @@ import ArrayIterator from "../utils/ArrayIterator.mjs";
 
 const Players = function (playersSpec) {
     const players = [];
-    let activePosition = 0;
-    let pasivePosition = 1;
+    let activePosition;
+    let passivePosition;
 
     const createPlayers = function () {
         for (const spec of playersSpec) {
@@ -12,27 +12,41 @@ const Players = function (playersSpec) {
         };
     };
 
+    const initActivePosition = function () {
+    
+        passivePosition = 0;
+        activePosition = 1;
+    };
+
     const init = function () {
+
         createPlayers();
+        initActivePosition();
     }();
 
     const changeActive = function () {
         if (activePosition == 0) {
             activePosition = 1;
-            pasivePosition = 0;
+            passivePosition = 0;
         } else {
             activePosition = 0;
-            pasivePosition = 1;
+            passivePosition = 1;
         }
         console.log('Active players number: ' + players[activePosition].getNumber());  // test
     };
 
     const getActive = function (active=true) {
+
         if (active) {
             return players[activePosition];
         } else {
-            return players[pasivePosition];
+            return players[passivePosition];
         }
+    };
+
+    const getActiveNumber = function (active=true) {
+    
+        return getActive(active).getNumber();
     };
 
     const getPlayer = function (number) {
@@ -49,12 +63,13 @@ const Players = function (playersSpec) {
 
     return Object.freeze(
         {
-            changeActive: changeActive,
+            changeActive,
             
-            getActive: getActive,
-            getPlayer: getPlayer,
-            getPlayersIterator: getPlayersIterator,
-            getAmount: getAmount,
+            getActive,
+            getActiveNumber,
+            getPlayer,
+            getPlayersIterator,
+            getAmount,
         }
     );
 };

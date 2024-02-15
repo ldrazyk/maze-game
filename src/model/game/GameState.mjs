@@ -1,14 +1,20 @@
 const GameState = function () {
     
     let game;
+    let players;
     let board, pawns;
     let turnCounter, movesCounter, scores;
     let commands;
 
     // setters
 
+    
     const setGame = function (mediator) {
         game = mediator;
+    };
+
+    const setPlayers = function (component) {
+        players = component;
     };
 
     const setBoard = function (component) {
@@ -53,12 +59,44 @@ const GameState = function () {
         return movesCounter.canHold();
     };
 
+    const getMoves = function() {
+        
+        return movesCounter.getMoves();
+    };
+    
+    const getMovesAmount = function() {
+        
+        return movesCounter.getMovesAmount();
+    };
+
+    const getHolds = function() {
+        
+        return movesCounter.getHolds();
+    };
+
+    const getMaxHolds = function() {
+        
+        return movesCounter.getMaxHolds();
+    };
+
     const canUndo = function () {
         return commands.canUndo();
     };
 
     const canRedo = function () {
         return commands.canRedo();
+    };
+
+    // get players
+
+    const getPlayer = function (number) {
+    
+        return players.getPlayer(number);
+    };
+
+    const getActiveNumber = function (active=true) {
+    
+        return players.getActiveNumber(active);
     };
 
     // get game
@@ -103,31 +141,39 @@ const GameState = function () {
     return Object.freeze(
         {
             // setters
-            setGame: setGame,
-            setBoard: setBoard,
-            setPawns: setPawns,
-            setTurnCounter: setTurnCounter,
-            setMovesCounter: setMovesCounter,
-            setScores: setScores,
-            setCommands: setCommands,
+            setGame,
+            setPlayers,
+            setBoard,
+            setPawns,
+            setTurnCounter,
+            setMovesCounter,
+            setScores,
+            setCommands,
             // game state interface
-            canStartTurn: canStartTurn,
-            canSelectNext: canSelectNext,
-            canMove: canMove,
-            canHold: canHold,
-            canUndo: canUndo,
-            canRedo: canRedo,
+            canStartTurn,
+            canSelectNext,
+            canMove,
+            canHold,
+            getMoves,
+            getMovesAmount,
+            getHolds,
+            getMaxHolds,
+            canUndo,
+            canRedo,
+            // get players
+            getPlayer,
+            getActiveNumber,
             // get game
-            getGameNumber: getGameNumber,   // will be used
-            getTurnNumber: getTurnNumber,   // will be used
-            getLastScoreString: getLastScoreString, // used in ViewJs
+            getGameNumber,   // will be used
+            getTurnNumber,   // will be used
+            getLastScoreString, // used in ViewJs
             // get board
-            getBoardIterator: getBoardIterator, // used in BoardComponent
-            getBoardName: getBoardName, // used in BoardComponent
-            getBoardRows: getBoardRows, // used in BoardComponent
-            getBoardColumns: getBoardColumns,   // used in BoardComponent
+            getBoardIterator, // used in BoardComponent
+            getBoardName, // used in BoardComponent
+            getBoardRows, // used in BoardComponent
+            getBoardColumns,   // used in BoardComponent
             // get pawns
-            getSelected: getSelected   // used in BoardComponent
+            getSelected,   // used in BoardComponent
         }
     );
 };

@@ -1,12 +1,12 @@
 import Model from './model/Model.mjs';
-import ViewJs from './view/ViewJs.mjs';
+import View from './view/View.mjs';
 import Controller from './controller/Controller.mjs';
 
 let model, view, controller;
 
 const createMVC = function() {
     model = Model();
-    view = ViewJs();
+    view = View();
     controller = Controller(model);
     controller.setSelf(controller);
     controller.setView(view);
@@ -57,7 +57,7 @@ const createTestGame = function() {
             ]
     };
 
-    controller.createGame({matrixSpec: matrixSpec00, pawnsSpec: [pawnsSpec1, pawnsSpec1]});
+    controller.createGame({matrixSpec: matrixSpec01, pawnsSpec: [pawnsSpec1, pawnsSpec1]});
 };
 
 const app = function() {

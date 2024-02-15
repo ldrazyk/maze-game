@@ -22,20 +22,26 @@ const Player = function ({ name, color, number }) {
         return number;
     };
 
+    const getScore = function () {
+    
+        return score;
+    };
+
     const toString = function() {
         let string = '';
-        string += `Player ={ number: ${number}, name: ${name}, color: ${color} }`;
+        string += `Player ={ number: ${number}, name: ${name}, color: ${color}, score: ${score} }`;
         return string;
     };
 
     return Object.freeze(
         {
-            addWin: addWin,
+            addWin,
             
-            getName: getName,
-            getColor: getColor,
-            getNumber: getNumber,
-            toString: toString,
+            getName,
+            getColor,
+            getNumber,
+            getScore,
+            toString,
         }
     );
 };

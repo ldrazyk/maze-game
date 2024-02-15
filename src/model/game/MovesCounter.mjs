@@ -49,6 +49,18 @@ const MovesCounter = function() {
     const getMoves = function() {
         return moves;
     };
+    
+    const getMovesAmount = function() {
+        return movesAmount;
+    };
+
+    const getHolds = function() {
+        return holds;
+    };
+
+    const getMaxHolds = function() {
+        return maxHolds;
+    };
 
     const canSelectNext = function () {
         if (movesAmount - moves > 1) {
@@ -60,14 +72,17 @@ const MovesCounter = function() {
 
     return Object.freeze(
         {
-            reset: reset,
+            reset,
 
-            canHold: canHold,
-            canMove: canMove,
-            add: add,
-            remove: remove,
-            getMoves: getMoves,
-            canSelectNext: canSelectNext,
+            canHold,
+            canMove,
+            add,
+            remove,
+            getMoves,
+            getMovesAmount,
+            getHolds,
+            getMaxHolds,
+            canSelectNext,
         }
     );
 };
