@@ -89,7 +89,7 @@ const FieldComponent = function({ field, onClick }) {
         const findPawnClass = function () {
             let newClassName = 'pawn';
             if (pawn) {
-                newClassName += ' ' + 'has_pawn ' + pawn.getType() + ' ' + pawn.getColor();
+                newClassName += ' ' + 'has_pawn ' + pawn.getType() + ' ' + pawn.getColor() + ' player-' + pawn.getPlayerNumber();
             }
             return newClassName;
         };

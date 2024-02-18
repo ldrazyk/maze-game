@@ -49,6 +49,11 @@ const Players = function (playersSpec) {
         return getActive(active).getNumber();
     };
 
+    const getActiveColor = function (active=true) {
+    
+        return getActive(active).getColor();
+    };
+
     const getPlayer = function (number) {
         return players[number - 1];
     };
@@ -67,6 +72,7 @@ const Players = function (playersSpec) {
             
             getActive,
             getActiveNumber,
+            getActiveColor,
             getPlayer,
             getPlayersIterator,
             getAmount,

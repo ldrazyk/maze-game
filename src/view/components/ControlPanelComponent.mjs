@@ -4,9 +4,15 @@ const ControlPanelComponent = function({  }) {
     
     let mainElement;
     const buttonComponents = {};
+    const state = {};
     const id = 'control_panel';
 
     let mediator;
+
+    const initState = function () {
+    
+        state.color == false;
+    };
 
     const createElements = function () {
 
@@ -20,22 +26,22 @@ const ControlPanelComponent = function({  }) {
         const createButtonElements = function () {
 
             const buttonsSpec = [
-                { id: 'select_next', text: 'Select', onClick: () => mediator.selectNext(), order: 1 },
-                { id: 'up', text: '^', onClick: () => mediator.moveUp(), order: 2 },
-                { id: 'next_turn', text: 'Next Turn', onClick: () => mediator.nextTurn(), order: 3 },
-                { id: 'left', text: '<-', onClick: () => mediator.moveLeft(), order: 4 },
-                { id: 'hold', text: 'x', onClick: () => mediator.hold(), order: 5 },
-                { id: 'right', text: '->', onClick: () => mediator.moveRight(), order: 6 },
-                { id: 'undo', text: 'Undo', onClick: () => mediator.undo(), order: 7 },
-                { id: 'down', text: 'v', onClick: () => mediator.moveDown(), order: 8 },
-                { id: 'redo', text: 'Redo', onClick: () => mediator.redo(), order: 9 },
+                { id: 'select', onClick: () => mediator.selectNext(), order: 1 },
+                { id: 'up', onClick: () => mediator.moveUp(), order: 2 },
+                { id: 'turn', onClick: () => mediator.nextTurn(), order: 3 },
+                { id: 'left', onClick: () => mediator.moveLeft(), order: 4 },
+                { id: 'hold', onClick: () => mediator.hold(), order: 5 },
+                { id: 'right', onClick: () => mediator.moveRight(), order: 6 },
+                { id: 'undo', onClick: () => mediator.undo(), order: 7 },
+                { id: 'down', onClick: () => mediator.moveDown(), order: 8 },
+                { id: 'redo', onClick: () => mediator.redo(), order: 9 },
             ];
 
             buttonsSpec.forEach(spec => {
                 
                 const button = ButtonComponent(spec);
-                button.appendTo(mainElement);
                 buttonComponents[spec.id] = button;
+                mainElement.appendChild(button.getMain());
             });
         };
 
@@ -73,36 +79,86 @@ const ControlPanelComponent = function({  }) {
     const update = function ({ code, object }) {
 
         const gameState = object;
-        const directionIds = ['up', 'down', 'left', 'right'];
-        const allIds = [...directionIds, 'select_next', 'next_turn', 'hold', 'undo', 'redo'];
+
+        const disactivateAllButtons = function () {
         
-        const checkNextTurn = function () {
-
-            if (gameState.canStartTurn()) {
-                activateButtons(['next_turn']);
-            } else {
-                disactivateButtons(['next_turn']);
-            }
+            Object.values(buttonComponents).forEach(button => {
+                button.setActive(false);
+            });
         };
 
-        const checkSelectNext = function () {
-            
-            if (gameState.canSelectNext()) {
-                activateButtons(['select_next']);
-            } else {
-                disactivateButtons(['select_next']);
-            }
+        const updateColor = function () {
+        
+            mainElement.classList = 'control_panel ' + state.color;
         };
 
-        const checkHold = function () {
-            
-            if (gameState.canHold()) {
-                activateButtons(['hold']);
-            } else {
-                disactivateButtons(['hold']);
-            }
+        const updateButton = function (name) {
+        
+            buttonComponents[name].setActive(state[name]);
         };
 
+        const stateUpdateFunctions = {
+
+            color: {
+                getter: gameState.getActiveColor,
+                updater: updateColor
+            },
+            turn: {
+                getter: gameState.canStartTurn,
+            },
+            select: {
+                getter: gameState.canSelectNext,
+            },
+            hold: {
+                getter: gameState.canHold,
+            },
+            undo: {
+                getter: gameState.canUndo,
+            },
+            redo: {
+                getter: gameState.canRedo,
+            },
+        };
+
+        const updateState = function (name) {
+        
+            const getter = stateUpdateFunctions[name].getter;
+            const updater = stateUpdateFunctions[name].updater;
+
+            const newState = getter();
+
+            if (state[name] != newState) {
+                state[name] = newState;
+                updater();
+            }
+        };
+        
+        const updateButtonState = function (name) {
+        
+            const getter = stateUpdateFunctions[name].getter;
+            const updater = () => updateButton(name);
+
+            const newState = getter();
+
+            if (state[name] != newState) {
+                state[name] = newState;
+                updater();
+            }
+        };
+        
+        const updateMoveButtonState = function (name) {
+
+            const getter = () => gameState.canMove(name);
+            const updater = () => updateButton(name);
+
+            const newState = getter();
+
+            if (state[name] != newState) {
+                state[name] = newState;
+                updater();
+            }
+        };
+        
         const checkMoves = function () {
 
             const checkEachDirection = function () {
@@ -120,42 +176,38 @@ const ControlPanelComponent = function({  }) {
                 })
             };
             
-            if (gameState.getSelected()) {
+            if (gameState.getSelected()) { // move to model
                 checkEachDirection();
             } else {
                 disactivateButtons(directionIds);
             }
         };
 
-        const checkUndo = function () {
-            
-            if (gameState.canUndo()) {
-                activateButtons(['undo']);
-            } else {
-                disactivateButtons(['undo']);
-            }
-        };
+    
 
-        const checkRedo = function () {
-            
-            if (gameState.canRedo()) {
-                activateButtons(['redo']);
-            } else {
-                disactivateButtons(['redo']);
-            }
-        };
+        const moveButtonNames = ['up', 'down', 'left', 'right'];
+        const otherButtonNames = ['select', 'turn', 'hold', 'undo', 'redo'];
 
-        if (!['createGame', 'endGame'].includes(code)) {
-            checkNextTurn();
-            checkSelectNext();
-            checkHold();
-            checkMoves();
-            checkUndo();
-            checkRedo();
+        if ( !['createGame', 'endGame'].includes(code) ) {
+            
+            moveButtonNames.forEach(name => {
+                updateMoveButtonState(name);
+            });
+
+            otherButtonNames.forEach(name => {
+                updateButtonState(name);
+            });
+            
+            if (code == 'nextTurn') {
+                updateState('color');
+            }
+
         } else if (code == 'createGame') {
-            activateButtons(['next_turn']);
+
+            buttonComponents['turn'].setActive(true);
         } else {
-            disactivateButtons(allIds);
+
+            disactivateAllButtons();
         }
     };
 

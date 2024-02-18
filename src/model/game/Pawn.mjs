@@ -7,9 +7,13 @@ const Pawn = function ({ id, type, player }) {
 
     const setKills = function () {
 
-        if (type == 'lion') kills = 'rooster';
-        else if (type == 'rooster') kills = 'snake';
-        else if (type == 'snake') kills = 'lion';
+        const killsTable = {
+            'lion': 'rooster',
+            'rooster': 'snake',
+            'snake': 'lion'
+        }
+
+        kills = killsTable[type];
     };
 
     const init = function() {

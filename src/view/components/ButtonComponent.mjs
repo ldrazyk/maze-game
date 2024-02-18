@@ -1,41 +1,48 @@
-const ButtonComponent = function ({ id, text, onClick, order }) {
+import createElement from "../utils/createElement.mjs";
+
+const ButtonComponent = function ({ id=false, text=false, onClick, order=false }) {
     let mainElement;
+    let imageElement;
 
-    const createMainElement = function () {
+    const createElements = function () {
 
-        mainElement = document.createElement('button');
-        mainElement.textContent = text;
-        mainElement.id = 'btn_' + id;
-        mainElement.style.order = order;
+        let btnId = false;
+        if (id) {
+            btnId = 'btn-' + id;
+        }
+
+        mainElement = createElement({ type: 'button', id: btnId, text, order});
+        imageElement = createElement({ type: 'div', classList: 'btn-img', parent: mainElement});
+        
     };
 
     const init = function() {
         
-        createMainElement();
+        createElements();
     }();
 
-    const activate = function () {
+    const setActive = function (active=true) {
 
-        mainElement.addEventListener('click', onClick);
-        mainElement.classList.add('active');
+        if (active) {
+
+            mainElement.addEventListener('click', onClick);
+            mainElement.classList.add('active');
+        } else {
+
+            mainElement.removeEventListener('click', onClick);
+            mainElement.classList.remove('active');
+        }
     };
 
-    const disactivate = function () {
-
-        mainElement.removeEventListener('click', onClick);
-        mainElement.classList.remove('active');
-    };
-
-    const appendTo = function (container) {
-        
-        container.appendChild(mainElement);
+    const getMain = function () {
+    
+        return mainElement;
     };
 
     return Object.freeze(
         {
-            activate: activate,
-            disactivate: disactivate,
-            appendTo: appendTo,
+            setActive,
+            getMain,
         }
     );
 };

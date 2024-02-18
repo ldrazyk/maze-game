@@ -1,23 +1,87 @@
 :root {
-    --path: hsl(60, 10%, 58%);
-    --wall: hsl(50, 10%, 20%);
+    --turn: url(../img/buttons/turn.png);
+    --select: url(../img/buttons/select.png);
+    --move: url(../img/buttons/move.png);
+    --hold: url(../img/buttons/hold.png);
+    --redo: url(../img/buttons/redo.png);
 }
 
-#control_panel {
+.control_panel {
     display: flex;
     flex-wrap: wrap;
-    height: 400px;
-    width: 400px;
+    max-width: 500px;
+    padding: 20px;
+    background-color: var(--path);
 }
 
-#control_panel button {
-    flex-basis: 33%;
-    flex-grow: 1;
+.control_panel.blue {
+    background-color: var(--blue);
+}
+
+.control_panel.pink {
+    background-color: var(--pink);
+}
+
+.control_panel button {
+    height: 128px;
+    width: 128px;
+    padding: 8px;
     font-size: 2em;
     color: hsl(0, 0%, 50%);
     background-color: var(--path);
 }
 
-#control_panel button.active {
+.control_panel button.active {
     color: hsl(0, 0%, 0%);
+}
+
+.btn-img {
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    opacity: 0.3;
+}
+
+.active>.btn-img {
+    opacity: 0.8;
+}
+
+#btn-turn .btn-img {
+    background-image: var(--turn);
+}
+
+#btn-select .btn-img {
+    background-image: var(--select);
+}
+
+#btn-up .btn-img {
+    background-image: var(--move);
+    transform: rotate(-90deg);
+}
+
+#btn-right .btn-img {
+    background-image: var(--move);
+}
+
+#btn-down .btn-img {
+    background-image: var(--move);
+    transform: rotate(90deg);
+}
+
+#btn-left .btn-img {
+    background-image: var(--move);
+    transform: rotate(180deg);
+}
+
+#btn-hold .btn-img {
+    background-image: var(--hold);
+}
+
+#btn-redo .btn-img {
+    background-image: var(--redo);
+}
+
+#btn-undo .btn-img {
+    background-image: var(--redo);
+    transform: scaleX(-1);
 }

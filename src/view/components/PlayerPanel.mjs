@@ -4,7 +4,6 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
     
     let mainElement;
     const elements = {};
-    let nameElement, scoreElement, turnElement, movesElement, holdsElement;
     let player;
     const props = {};
 
@@ -15,7 +14,7 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
         player = gameState.getPlayer(playerNumber);
     };
 
-    const setProps = function () {
+    const initProps = function () {
     
         props.id = 'player_panel_' + playerNumber;
         props.number = playerNumber;
@@ -35,7 +34,6 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
                     type: 'div',
                     classList: 'player-panel ' + props.color,
                     id: props.id,
-                    // textContent: player.toString()
                 }
             );
         };
@@ -124,7 +122,7 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
     const init = function () {
     
         setPlayer();
-        setProps();
+        initProps();
         createElements();
     }();
 
@@ -186,6 +184,7 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
         };
 
         const updateParamsTable = {
+            
             active: {
                 getter: getActive,
                 updater: updateActive
@@ -208,7 +207,7 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
             },
 
 
-        }
+        };
     
         const updateProp = function (propName) {
         
@@ -234,11 +233,15 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
 
         if (props.active) {
             
-            const propNames = ['turn', 'score', 'moves', 'holds'];
+            const propNames = ['turn', 'moves', 'holds'];
 
             propNames.forEach(name => {
                 updateProp(name);
             });
+        }
+
+        if (code == 'endGame') {
+            updateProp('score');
         }
 
     };

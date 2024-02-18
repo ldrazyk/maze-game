@@ -99,6 +99,11 @@ const GameState = function () {
         return players.getActiveNumber(active);
     };
 
+    const getActiveColor = function (active=true) {
+    
+        return players.getActiveColor(active);
+    };
+
     // get game
 
     const getGameNumber = function() {
@@ -163,6 +168,7 @@ const GameState = function () {
             // get players
             getPlayer,
             getActiveNumber,
+            getActiveColor,
             // get game
             getGameNumber,   // will be used
             getTurnNumber,   // will be used
