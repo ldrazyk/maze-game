@@ -1,8 +1,8 @@
 import createElement from "../utils/createElement.mjs";
 
-const ButtonComponent = function ({ id=false, text=false, onClick, order=false }) {
+const ButtonComponent = function ({ id=false, text=false, onClick, order=false, svgNames, getSvgCopy }) {
     let mainElement;
-    let imageElement;
+    let containers = [];
 
     const createElements = function () {
 
@@ -12,8 +12,20 @@ const ButtonComponent = function ({ id=false, text=false, onClick, order=false }
         }
 
         mainElement = createElement({ type: 'button', id: btnId, text, order});
-        imageElement = createElement({ type: 'div', classList: 'btn-img', parent: mainElement});
+
+        containers[0] = createElement({ type: 'div', classList: 'container positive', parent: mainElement});
+        containers[1] = createElement({ type: 'div', classList: 'container negative', parent: mainElement});
+
+        const addSvgsToContainers = function () {
         
+            [0, 1].forEach(n => {
+
+                const svg = getSvgCopy(svgNames[n]);
+                containers[n].appendChild(svg);
+            });
+        };
+
+        addSvgsToContainers();
     };
 
     const init = function() {

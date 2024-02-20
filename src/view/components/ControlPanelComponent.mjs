@@ -25,21 +25,29 @@ const ControlPanelComponent = function({  }) {
 
         const createButtonElements = function () {
 
+            const getSvgCopy = function (name) {
+            
+                return mediator.getSvgCopy(name);
+            };
+
+            const svgMoveNames = ['move', 'move-negative'];
+            const svgUndoNames = ['undo', 'undo-negative'];
+            
             const buttonsSpec = [
-                { id: 'select', onClick: () => mediator.selectNext(), order: 1 },
-                { id: 'up', onClick: () => mediator.moveUp(), order: 2 },
-                { id: 'turn', onClick: () => mediator.nextTurn(), order: 3 },
-                { id: 'left', onClick: () => mediator.moveLeft(), order: 4 },
-                { id: 'hold', onClick: () => mediator.hold(), order: 5 },
-                { id: 'right', onClick: () => mediator.moveRight(), order: 6 },
-                { id: 'undo', onClick: () => mediator.undo(), order: 7 },
-                { id: 'down', onClick: () => mediator.moveDown(), order: 8 },
-                { id: 'redo', onClick: () => mediator.redo(), order: 9 },
+                { id: 'select', svgNames: ['select', 'select-negative'], onClick: () => mediator.selectNext(), order: 1 },
+                { id: 'up', svgNames: svgMoveNames, onClick: () => mediator.moveUp(), order: 2 },
+                { id: 'turn', svgNames: ['turn', 'turn-negative'], onClick: () => mediator.nextTurn(), order: 3 },
+                { id: 'left', svgNames: svgMoveNames, onClick: () => mediator.moveLeft(), order: 4 },
+                { id: 'hold', svgNames: ['hold', 'hold-negative'], onClick: () => mediator.hold(), order: 5 },
+                { id: 'right', svgNames: svgMoveNames, onClick: () => mediator.moveRight(), order: 6 },
+                { id: 'undo', svgNames: svgUndoNames, onClick: () => mediator.undo(), order: 7 },
+                { id: 'down', svgNames: svgMoveNames, onClick: () => mediator.moveDown(), order: 8 },
+                { id: 'redo', svgNames: svgUndoNames, onClick: () => mediator.redo(), order: 9 },
             ];
 
             buttonsSpec.forEach(spec => {
                 
-                const button = ButtonComponent(spec);
+                const button = ButtonComponent({ ...spec, getSvgCopy });
                 buttonComponents[spec.id] = button;
                 mainElement.appendChild(button.getMain());
             });
@@ -52,30 +60,13 @@ const ControlPanelComponent = function({  }) {
     const init = function () {
         
         createElements();
-    }();
+    };
 
     const setMediator = function (newMediator) {
     
         mediator = newMediator;
     };
 
-    const executeOnButtons = function (ids, methodeName) {
-
-        ids.forEach(id => {
-            buttonComponents[id][methodeName]();
-        });
-    };
-
-    const activateButtons = function (ids) {
-
-        executeOnButtons(ids, 'activate');
-    };
-
-    const disactivateButtons = function (ids) {
-
-        executeOnButtons(ids, 'disactivate');
-    };
-    
     const update = function ({ code, object }) {
 
         const gameState = object;
@@ -159,29 +150,29 @@ const ControlPanelComponent = function({  }) {
             }
         };
         
-        const checkMoves = function () {
+        // const checkMoves = function () {
 
-            const checkEachDirection = function () {
+        //     const checkEachDirection = function () {
 
-                const checkDirection = function (direction) {
-                    if (gameState.canMove(direction)) {
-                        activateButtons([direction]);
-                    } else {
-                        disactivateButtons([direction]);
-                    }
-                };
+        //         const checkDirection = function (direction) {
+        //             if (gameState.canMove(direction)) {
+        //                 activateButtons([direction]);
+        //             } else {
+        //                 disactivateButtons([direction]);
+        //             }
+        //         };
 
-                directionIds.forEach(direction => {
-                    checkDirection(direction);
-                })
-            };
+        //         directionIds.forEach(direction => {
+        //             checkDirection(direction);
+        //         })
+        //     };
             
-            if (gameState.getSelected()) { // move to model
-                checkEachDirection();
-            } else {
-                disactivateButtons(directionIds);
-            }
-        };
+        //     if (gameState.getSelected()) { // move to model
+        //         checkEachDirection();
+        //     } else {
+        //         disactivateButtons(directionIds);
+        //     }
+        // };
 
     
 
@@ -223,10 +214,11 @@ const ControlPanelComponent = function({  }) {
 
     return Object.freeze(
         {
-            setMediator: setMediator,
-            update: update,
-            getId: getId,
-            getMain: getMain,
+            setMediator,
+            init,
+            update,
+            getId,
+            getMain,
         }
     );
 };

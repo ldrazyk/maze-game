@@ -1,4 +1,5 @@
 import ViewBuilder from "./components/ViewBuilder.mjs";
+import SvgRepository from "./components/SvgRepository.mjs";
 
 const View = function() {
     
@@ -6,6 +7,7 @@ const View = function() {
     let controller;
     let viewBuilder;
     let mediator;
+    let svgRepository;
 
     const findRoot = function () {
         
@@ -17,10 +19,16 @@ const View = function() {
         viewBuilder = ViewBuilder();
     };
 
+    const createSvgRepository = function () {
+    
+        svgRepository = SvgRepository();
+    };
+
     const init = function() {
         
         findRoot();
         createViewBuilder();
+        createSvgRepository();
     }();
 
     const setController = function(newController) {
@@ -35,19 +43,20 @@ const View = function() {
 
         builder.reset(root);
         builder.setController(controller);
+        builder.setSvgRepository(svgRepository);
 
         builder.setContainer({ id: 'main', type: 'div', parentId: 'root' });
 
-        builder.setContainer({ id: 'section_1', type: 'section', parentId: 'main' });
+        builder.setContainer({ id: 'section1', type: 'section', parentId: 'main' });
 
-        builder.setBoard({ parentId: 'section_1', gameState: gameState });
-        builder.setInfoPanel({ parentId: 'section_1' });
+        builder.setBoard({ parentId: 'section1', gameState: gameState });
+        builder.setInfoPanel({ parentId: 'section1' });
 
-        builder.setContainer({ id: 'section_2', type: 'section', parentId: 'main' });
+        builder.setContainer({ id: 'section2', type: 'section', parentId: 'main' });
 
-        builder.setControlPanel({ parentId: 'section_2' });
-        builder.setPlayerPanel({ playerNumber: 1, parentId: 'section_2', gameState: gameState });
-        builder.setPlayerPanel({ playerNumber: 2, parentId: 'section_2', gameState: gameState });
+        builder.setControlPanel({ parentId: 'section2' });
+        builder.setPlayerPanel({ playerNumber: 1, parentId: 'section2', gameState: gameState });
+        builder.setPlayerPanel({ playerNumber: 2, parentId: 'section2', gameState: gameState });
 
         mediator = builder.getResult();
     };

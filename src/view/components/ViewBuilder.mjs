@@ -19,6 +19,11 @@ const ViewBuilder = function () {
         mediator.setController(controller);
     };
 
+    const setSvgRepository = function (component) {
+    
+        mediator.setSvgRepository(component);
+    };
+
     const setContainer = function (spec) {
         
         const container = ContainerComponent(spec);
@@ -26,12 +31,15 @@ const ViewBuilder = function () {
         mediator.addContainer({ ...spec, container });
     };
 
-    const addComponent = function ({ creator, spec }) {
+    const addComponent = function ({ creator, spec, init=false }) {
         
         const component = creator(spec);
 
-        mediator.addComponent({ ...spec, component });
         component.setMediator(mediator);
+        if (init) {
+            component.init();
+        }
+        mediator.addComponent({ ...spec, component });
     };
 
     const setBoard = function (spec) {
@@ -41,7 +49,7 @@ const ViewBuilder = function () {
 
     const setControlPanel = function (spec) {
         
-        addComponent({ creator: ControlPanelComponent, spec: spec });
+        addComponent({ creator: ControlPanelComponent, spec: spec, init: true });
     };
 
     const setPlayerPanel = function (spec) {
@@ -62,14 +70,15 @@ const ViewBuilder = function () {
     
     return Object.freeze(
         {
-            reset: reset,
-            setController: setController,
-            setContainer: setContainer,
-            setBoard: setBoard,
-            setControlPanel: setControlPanel,
-            setPlayerPanel: setPlayerPanel,
-            setInfoPanel: setInfoPanel,
-            getResult: getResult
+            reset,
+            setController,
+            setSvgRepository,
+            setContainer,
+            setBoard,
+            setControlPanel,
+            setPlayerPanel,
+            setInfoPanel,
+            getResult,
         }
     );
 };

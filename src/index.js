@@ -57,7 +57,7 @@ const createTestGame = function() {
             ]
     };
 
-    controller.createGame({matrixSpec: matrixSpec01, pawnsSpec: [pawnsSpec1, pawnsSpec1]});
+    controller.createGame({matrixSpec: matrixSpec00, pawnsSpec: [pawnsSpec1, pawnsSpec1]});
 };
 
 const app = function() {
