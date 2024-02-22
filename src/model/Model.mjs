@@ -92,6 +92,11 @@ const Model = function() {
         notify('createGame');
     };
 
+    const setPlayerName = function (spec) {
+    
+        session.setPlayerName(spec);
+    };
+
     // game operations
 
     const nextTurn = function() {
@@ -146,27 +151,28 @@ const Model = function() {
 
     return Object.freeze(
         {
-            attach: attach,
-            detach: detach,
+            attach,
+            detach,
 
-            createSession: createSession,
-            createGame: createGame,
+            createSession,
+            createGame,
+            setPlayerName,
 
             // game operations
-            nextTurn: nextTurn,
-            selectNext: selectNext,
-            hold: hold,
-            moveUp: moveUp,
-            moveDown: moveDown,
-            moveLeft: moveLeft,
-            moveRight: moveRight,
-            click: click,
-            undo: undo,
-            redo: redo,
+            nextTurn,
+            selectNext,
+            hold,
+            moveUp,
+            moveDown,
+            moveLeft,
+            moveRight,
+            click,
+            undo,
+            redo,
 
             // model state
-            getPlayer: getPlayer,
-            getPlayersIterator: getPlayersIterator,
+            getPlayer,
+            getPlayersIterator,
         }
     );
 };

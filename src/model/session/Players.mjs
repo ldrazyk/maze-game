@@ -66,6 +66,11 @@ const Players = function (playersSpec) {
         return players.length;
     };
 
+    const setPlayerName = function ({ playerNumber, name }) {
+    
+        getPlayer(playerNumber).setName(name);
+    };
+
     return Object.freeze(
         {
             changeActive,
@@ -76,6 +81,8 @@ const Players = function (playersSpec) {
             getPlayer,
             getPlayersIterator,
             getAmount,
+            
+            setPlayerName,
         }
     );
 };

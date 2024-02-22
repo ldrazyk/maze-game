@@ -1,15 +1,26 @@
 :root {
-    --path: hsl(60, 10%, 58%);
-    --wall: hsl(50, 10%, 20%);
+    --path: hsl(51, 10%, 54%);
+    --wall: hsl(51, 15%, 15%);
     --dark-player1: hsl(332, 73%, 19%);
-    --light-player1: hsl(115, 44%, 83%);
+    --light-player1: hsl(172, 55%, 81%);
     --dark-player2: hsl(216, 63%, 20%);
     --light-player2: hsl(64, 57%, 80%);
     --border: hsl(0, 0%, 0%);
     --back: hsl(0, 0%, 10%);
-    
 }
 
+.board {
+    display: flex;
+    flex-direction: column;
+    box-sizing: content-box;
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--wall);
+}
+
+.row {
+    display: flex;
+}
 
 /* colors */
 
@@ -151,37 +162,6 @@ svg.flag {
 .path,
 .exit {
     background-color: var(--path);
-}
-
-/* OLD */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-#root {
-    display: flex;
-}
-
-.board {
-    display: flex;
-    flex-direction: column;
-    box-sizing: content-box;
-    border-style: solid;
-    /* border-width: 0 0 2px 2px; */
-    border-width: 1px;
-    border-color: var(--wall);
-    /* background-color: var(--path); */
-}
-
-.row {
-    display: flex;
 }
 
 @keyframes blink {

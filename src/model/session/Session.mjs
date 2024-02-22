@@ -15,6 +15,11 @@ const Session = function () {
         scores = newScores;
     };
 
+    const setPlayerName = function (spec) {
+    
+        players.setPlayerName(spec);
+    };
+
     const getPlayers = function () {
         return players;
     };
@@ -38,14 +43,16 @@ const Session = function () {
 
     return Object.freeze(
         {
-            setPlayers: setPlayers,
-            setScores: setScores,
+            setPlayers,
+            setScores,
 
-            getPlayers: getPlayers,
-            getPlayer: getPlayer,
-            getPlayersIterator: getPlayersIterator,
-            getScores: getScores,
-            getIncreasedGameNumber: getIncreasedGameNumber,
+            setPlayerName,
+
+            getPlayers,
+            getPlayer,
+            getPlayersIterator,
+            getScores,
+            getIncreasedGameNumber,
         }
     );
 };

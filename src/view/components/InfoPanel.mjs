@@ -1,3 +1,5 @@
+import createElement from "../utils/createElement.mjs";
+
 const InfoPanel = function () {
     
     let mainElement;
@@ -11,17 +13,25 @@ const InfoPanel = function () {
     
         const createMain = function () {
         
-            mainElement = document.createElement('div');
-            mainElement.id = id;
-            mainElement.textContent = 'Info Panel';
+            mainElement = createElement(
+                {
+                    type: 'div',
+                    id: id,
+                    textContent: 'Info Panel'
+                }
+            );
         };
 
         const createScreen = function () {
         
-            screen = document.createElement('div');
-            screen.classList.add('screen');
-            mainElement.appendChild(screen);
-            screen.textContent = 'screen';
+            screen = createElement(
+                {
+                    type: 'div',
+                    classList: 'screen',
+                    textContent: 'This is screen...',
+                    parent: mainElement,
+                }
+            );
         };
 
         createMain();

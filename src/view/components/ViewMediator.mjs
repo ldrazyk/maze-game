@@ -109,6 +109,11 @@ const ViewMediator = function (root) {
         controller.redo() ;
     };
 
+    const setPlayerName = function (spec) {
+    
+        controller.setPlayerName(spec);
+    };
+
     
     return Object.freeze(
         {
@@ -130,6 +135,7 @@ const ViewMediator = function (root) {
             hold,
             undo,
             redo,
+            setPlayerName,
         }
     );
 };

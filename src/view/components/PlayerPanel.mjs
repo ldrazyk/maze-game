@@ -3,26 +3,42 @@ import createElement from "../utils/createElement.mjs";
 const PlayerPanel = function ({ playerNumber, gameState }) {
     
     let mainElement;
-    const elements = {};
-    let player;
+    const elements = {
+        name: false,
+        score: false,
+        turnSection: false,
+        turn: false,
+        moves: false,
+        holds: false,
+    };
+
     const props = {};
+    const state = {};
 
     let mediator;
 
-    const setPlayer = function () {
-    
-        player = gameState.getPlayer(playerNumber);
+    const updateState = function (name, value) {
+        
+        if (state[name] != value) {
+            state[name] = value;
+            return true;
+        }    
     };
 
     const initProps = function () {
     
         props.id = 'player_panel_' + playerNumber;
-        props.number = playerNumber;
-        props.name = player.getName();
-        props.color = player.getColor();
-        props.score = player.getScore();
-        props.active = false;
-        props.turn = 0;
+        props.player = gameState.getPlayer(playerNumber);
+    };
+
+    const initState = function () {
+    
+        state.name = props.player.getName();
+        state.active = false;
+        state.score = props.player.getScore();
+        state.turn = 0;
+        state.moves = [0, 0];
+        state.holds = 0;
     };
 
     const createElements = function () {
@@ -32,7 +48,7 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
             mainElement = createElement(
                 {
                     type: 'div',
-                    classList: 'player-panel ' + props.color,
+                    classList: 'player-panel player-' + playerNumber,
                     id: props.id,
                 }
             );
@@ -44,19 +60,44 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
                 {
                     type: 'input',
                     classList: 'player-name',
-                    value: props.name,
+                    value: state.name,
                     parent: mainElement,
                 }
             );
+
+            const updateName = function () {
+
+                const updateNameState = function () {
+                
+                    const getNameFromInput = function () {
+                    
+                        return elements.name.value;
+                    };
+
+                    return updateState('name', getNameFromInput());
+                };
+
+
+                const updateModelName = function () {
+                
+                    mediator.setPlayerName({ playerNumber: playerNumber, name: state.name }) ;
+                };
+
+                if (updateNameState()) updateModelName();
+                console.log(props.player.getName());
+            };
+
+            elements.name.addEventListener('blur', updateName);
+
         };
         
         const createScore = function () {
         
             elements.score = createElement(
                 {
-                    type: 'div',
+                    type: 'p',
                     classList: 'score',
-                    textContent: 'Score: ' + props.score,
+                    textContent: 'Score: ' + state.score,
                     parent: mainElement,
                 }
             );
@@ -77,7 +118,7 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
         
             elements.turn = createElement(
                 {
-                    type: 'div',
+                    type: 'p',
                     classList: 'turn',
                     textContent: 'Turn: ',
                     parent: elements.turnSection,
@@ -89,7 +130,7 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
         
             elements.moves = createElement(
                 {
-                    type: 'div',
+                    type: 'p',
                     classList: 'moves',
                     textContent: 'Moves: ',
                     parent: elements.turnSection,
@@ -101,14 +142,13 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
         
             elements.holds = createElement(
                 {
-                    type: 'div',
+                    type: 'p',
                     classList: 'holds',
                     textContent: 'Holds left: ',
                     parent: elements.turnSection,
                 }
             );
         };
-
 
         createMain();
         createName();
@@ -121,8 +161,8 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
 
     const init = function () {
     
-        setPlayer();
         initProps();
+        initState();
         createElements();
     }();
 
@@ -133,117 +173,141 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
 
     const update = function ({ code, object }) {
 
-        const getActive = function () {
         
-            const active = (props.number == object.getActiveNumber());
-            return active;
-        };
-
-        const getMoves = function () {
-
-            return [
-                object.getMoves(),
-                object.getMovesAmount()
-            ];
-        };
-
-        const getHolds = function () {
-
-            return object.getMaxHolds() - object.getHolds();
-        };
 
         const updateActive = function () {
         
-            if (props.active) {
-
-                mainElement.classList.add('active') ;
-            } else {
+            const updateActiveState = function () {
+            
+                const getActive = function () {
                 
-                mainElement.classList.remove('active') ;
-            }
-        };
-
-        const updateTurnElement = function () {
-        
-            elements.turn.textContent = 'Turn: ' + props.turn;
-        };
-
-        const updateScoreElement = function () {
-        
-            elements.score.textContent = 'Score: ' + props.score;
-        };
-
-        const updateMovesElement = function () {
-        
-            elements.moves.textContent = 'Moves: ' + props.moves[0] + '/' + props.moves[1];
-        };
-
-        const updateHoldsElement = function () {
-        
-            elements.holds.textContent = 'Holds left: ' + props.holds;
-        };
-
-        const updateParamsTable = {
-            
-            active: {
-                getter: getActive,
-                updater: updateActive
-            },
-            turn: {
-                getter: object.getTurnNumber,
-                updater: updateTurnElement
-            },
-            score: {
-                getter: player.getScore,
-                updater: updateScoreElement
-            },
-            moves: {
-                getter: getMoves,
-                updater: updateMovesElement
-            },
-            holds: {
-                getter: getHolds,
-                updater: updateHoldsElement
-            },
-
-
-        };
+                    return playerNumber == object.getActiveNumber();
+                };
+                
+                return updateState('active', getActive());
+            };
     
-        const updateProp = function (propName) {
-        
-            const dict = updateParamsTable[propName];
-            const newProp = dict.getter();
+            const updateActiveDom = function () {
+            
+                if (state.active) {
+    
+                    mainElement.classList.add('active') ;
+                } else {
+                    
+                    mainElement.classList.remove('active') ;
+                }
+            };
 
-            if (props[propName] != newProp) {
-                props[propName] = newProp;
-                dict.updater();
-            }
+            if ( updateActiveState() ) updateActiveDom();
+        };
+
+        const updateScore = function () {
+        
+            const updateScoreState = function () {
+            
+                const getScore = function () {
+                
+                    return props.player.getScore();
+                };
+                
+                return updateState('score', getScore());
+            };
+    
+            const updateScoreDom = function () {
+            
+                elements.score.textContent = 'Score: ' + state.score;
+            };
+
+            if ( updateScoreState() ) updateScoreDom();
+        };
+
+        const updateTurn = function () {
+        
+            const updateTurnState = function () {
+            
+                const getTurn = function () {
+                
+                    return object.getTurnNumber();
+                };
+                
+                return updateState('turn', getTurn());
+            };
+    
+            const updateTurnDom = function () {
+            
+                elements.turn.textContent = 'Turn: ' + state.turn;
+            };
+
+            if ( updateTurnState() ) updateTurnDom();
+        };
+
+        
+        const updateMoves = function () {
+        
+            const updateMovesState = function () {
+            
+                const getMoves = function () {
+        
+                    return [
+                        object.getMoves(),
+                        object.getMovesAmount()
+                    ];
+                };
+    
+                return updateState('moves', getMoves());
+    
+            };
+    
+            const updateMovesDom = function () {
+            
+                elements.moves.textContent = 'Moves: ' + state.moves[0] + '/' + state.moves[1];
+            };
+
+            if (updateMovesState()) updateMovesDom();
         };
 
 
-        if (props.turn == 0) {
+        const updateHolds = function () {
+        
+            const updateHoldsState = function () {
+            
+                const getHolds = function () {
+        
+                    return object.getMaxHolds() - object.getHolds();
+                };
+    
+                return updateState('holds', getHolds());
+            };
+    
+            const updateHoldsDom = function () {
+            
+                elements.holds.textContent = 'Holds left: ' + state.holds;
+            };
 
-            updateProp('turn');
+            if ( updateHoldsState() ) updateHoldsDom();
+        };
+
+        if (state.turn == 0) {
+
+            updateTurn();
         }
         
-        if (props.turn > 0) {
+        if (state.turn > 0) {
 
-            updateProp('active');
+            updateActive();
         }
 
-        if (props.active) {
+        if (state.active) {
             
-            const propNames = ['turn', 'moves', 'holds'];
-
-            propNames.forEach(name => {
-                updateProp(name);
-            });
+            updateTurn();
+            updateMoves();
+            updateHolds();
         }
 
         if (code == 'endGame') {
-            updateProp('score');
-        }
 
+            updateScore();
+        }
     };
 
     const getId = function () {

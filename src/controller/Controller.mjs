@@ -26,6 +26,11 @@ const Controller = function(model) {
         model.createGame(spec);
     };
 
+    const setPlayerName = function (spec) {
+    
+        model.setPlayerName(spec);
+    };
+
     // buttons game commands
 
     const nextTurn = function() {
@@ -121,26 +126,27 @@ const Controller = function(model) {
 
     return Object.freeze(
         {
-            setSelf: setSelf,
-            setView: setView,
+            setSelf,
+            setView,
 
-            createSession: createSession,
-            createGame: createGame,
+            createSession,
+            createGame,
+            setPlayerName,
 
-            nextTurn: nextTurn,
-            selectNext: selectNext,
-            hold: hold,
-            moveUp: moveUp,
-            moveDown: moveDown,
-            moveLeft: moveLeft,
-            moveRight: moveRight,
+            nextTurn,
+            selectNext,
+            hold,
+            moveUp,
+            moveDown,
+            moveLeft,
+            moveRight,
 
-            select: select,
-            move: move,
-            click: click,
+            select,
+            move,
+            click,
 
-            undo: undo,
-            redo: redo,
+            undo,
+            redo,
         }
     );
 };

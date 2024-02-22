@@ -1,29 +1,48 @@
-import ButtonComponent from "./ButtonComponent.mjs"
+import ButtonComponent from "./ButtonComponent.mjs";
+import createElement from "../utils/createElement.mjs";
 
 const ControlPanelComponent = function({  }) {
     
     let mainElement;
+    const containers = {};
     const buttonComponents = {};
     const state = {};
     const id = 'control_panel';
 
     let mediator;
 
-    const initState = function () {
-    
-        state.color == false;
-    };
-
     const createElements = function () {
 
         const createMainElement = function () {
 
-            mainElement = document.createElement('section');
-            mainElement.classList.add('control_panel');
-            mainElement.id = 'control_panel';
+            mainElement = createElement(
+                {
+                    type: 'section',
+                    classList: 'control_panel',
+                    id: 'control_panel'
+                }
+            );
         };
 
-        const createButtonElements = function () {
+        const createRows = function () {
+        
+            [1, 2, 3].forEach(number => {
+
+                const rowContainer = createElement(
+                    {
+                        type: 'div',
+                        classList: 'container row',
+                        order: number,
+                        parent: mainElement
+                    }
+                );
+
+                containers[number] = rowContainer;
+                mainElement.appendChild(rowContainer);
+            });
+        };
+
+        const createButtons = function () {
 
             const getSvgCopy = function (name) {
             
@@ -34,27 +53,28 @@ const ControlPanelComponent = function({  }) {
             const svgUndoNames = ['undo', 'undo-negative'];
             
             const buttonsSpec = [
-                { id: 'select', svgNames: ['select', 'select-negative'], onClick: () => mediator.selectNext(), order: 1 },
-                { id: 'up', svgNames: svgMoveNames, onClick: () => mediator.moveUp(), order: 2 },
-                { id: 'turn', svgNames: ['turn', 'turn-negative'], onClick: () => mediator.nextTurn(), order: 3 },
-                { id: 'left', svgNames: svgMoveNames, onClick: () => mediator.moveLeft(), order: 4 },
-                { id: 'hold', svgNames: ['hold', 'hold-negative'], onClick: () => mediator.hold(), order: 5 },
-                { id: 'right', svgNames: svgMoveNames, onClick: () => mediator.moveRight(), order: 6 },
-                { id: 'undo', svgNames: svgUndoNames, onClick: () => mediator.undo(), order: 7 },
-                { id: 'down', svgNames: svgMoveNames, onClick: () => mediator.moveDown(), order: 8 },
-                { id: 'redo', svgNames: svgUndoNames, onClick: () => mediator.redo(), order: 9 },
+                { id: 'select', svgNames: ['select', 'select-negative'], onClick: () => mediator.selectNext(), order: 1, row: 1 },
+                { id: 'up', svgNames: svgMoveNames, onClick: () => mediator.moveUp(), order: 2, row: 1 },
+                { id: 'turn', svgNames: ['turn', 'turn-negative'], onClick: () => mediator.nextTurn(), order: 3, row: 1 },
+                { id: 'left', svgNames: svgMoveNames, onClick: () => mediator.moveLeft(), order: 4, row: 2 },
+                { id: 'hold', svgNames: ['hold', 'hold-negative'], onClick: () => mediator.hold(), order: 5, row: 2 },
+                { id: 'right', svgNames: svgMoveNames, onClick: () => mediator.moveRight(), order: 6, row: 2 },
+                { id: 'undo', svgNames: svgUndoNames, onClick: () => mediator.undo(), order: 7, row: 3 },
+                { id: 'down', svgNames: svgMoveNames, onClick: () => mediator.moveDown(), order: 8, row: 3 },
+                { id: 'redo', svgNames: svgUndoNames, onClick: () => mediator.redo(), order: 9, row: 3 },
             ];
 
             buttonsSpec.forEach(spec => {
                 
                 const button = ButtonComponent({ ...spec, getSvgCopy });
                 buttonComponents[spec.id] = button;
-                mainElement.appendChild(button.getMain());
+                containers[spec.row].appendChild(button.getMain());
             });
         };
 
         createMainElement();
-        createButtonElements();
+        createRows();
+        createButtons();
     };
 
     const init = function () {
@@ -78,9 +98,9 @@ const ControlPanelComponent = function({  }) {
             });
         };
 
-        const updateColor = function () {
+        const updateActiveNumber = function () {
         
-            mainElement.classList = 'control_panel ' + state.color;
+            mainElement.classList = 'control_panel player-' + state['activeNumber'];
         };
 
         const updateButton = function (name) {
@@ -90,9 +110,9 @@ const ControlPanelComponent = function({  }) {
 
         const stateUpdateFunctions = {
 
-            color: {
-                getter: gameState.getActiveColor,
-                updater: updateColor
+            activeNumber: {
+                getter: gameState.getActiveNumber,
+                updater: updateActiveNumber
             },
             turn: {
                 getter: gameState.canStartTurn,
@@ -150,32 +170,6 @@ const ControlPanelComponent = function({  }) {
             }
         };
         
-        // const checkMoves = function () {
-
-        //     const checkEachDirection = function () {
-
-        //         const checkDirection = function (direction) {
-        //             if (gameState.canMove(direction)) {
-        //                 activateButtons([direction]);
-        //             } else {
-        //                 disactivateButtons([direction]);
-        //             }
-        //         };
-
-        //         directionIds.forEach(direction => {
-        //             checkDirection(direction);
-        //         })
-        //     };
-            
-        //     if (gameState.getSelected()) { // move to model
-        //         checkEachDirection();
-        //     } else {
-        //         disactivateButtons(directionIds);
-        //     }
-        // };
-
-    
-
         const moveButtonNames = ['up', 'down', 'left', 'right'];
         const otherButtonNames = ['select', 'turn', 'hold', 'undo', 'redo'];
 
@@ -190,7 +184,7 @@ const ControlPanelComponent = function({  }) {
             });
             
             if (code == 'nextTurn') {
-                updateState('color');
+                updateState('activeNumber');
             }
 
         } else if (code == 'createGame') {

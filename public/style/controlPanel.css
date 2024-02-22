@@ -1,23 +1,24 @@
 .control_panel {
     display: flex;
-    flex-wrap: wrap;
-    max-width: 400px;
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
     background-color: var(--path);
 }
 
-.control_panel.blue {
-    background-color: var(--blue);
+.control_panel.player-1 {
+    background-color: var(--light-player1);
 }
 
-.control_panel.pink {
-    background-color: var(--pink);
+.control_panel.player-2 {
+    background-color: var(--light-player2);
 }
 
 .control_panel button {
     position: relative;
     height: 100px;
     width: 100px;
+    border: none;
     background-color: var(--path);
 }
 

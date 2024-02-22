@@ -1,0 +1,70 @@
+#player_panel_1 {
+    order: 2;
+}
+
+#player_panel_2 {
+    order: -1;
+}
+
+.player-panel {
+
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.player-panel.player-1,
+.player-panel.player-1 input {
+    
+    color: var(--dark-player1);
+    background-color: var(--light-player1);
+}
+
+.player-panel.player-2,
+.player-panel.player-2 input {
+
+    color: var(--dark-player2);
+    background-color: var(--light-player2);
+}
+
+input.player-name {
+    
+    font-size: 36px;
+    font-weight: bold;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+input.player-name:focus {
+    
+    color: var(--path);
+    background-color: var(--wall);
+}
+
+.player-1 input.player-name:focus {
+    
+    color: var(--light-player1);
+    background-color: var(--dark-player1);
+}
+
+.player-2 input.player-name:focus {
+    
+    color: var(--light-player2);
+    background-color: var(--dark-player2);
+}
+
+.turn-section {
+    display: flex;
+    visibility: hidden;
+}
+
+.player-panel p {
+    padding: 5px 20px 0 0;
+    font-size: 20px;
+}
+
+.player-panel.active .turn-section {
+    visibility: visible;
+}
