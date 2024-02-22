@@ -3,11 +3,12 @@ import svgSpec from "../data/svgSpec.mjs";
 const SvgRepository = function () {
     
     const svgs = {};
+    let patternIdNumber = 1;
     let mediator;
 
     const createSvgs = function () {
 
-        const createSvg = function (spec) {
+        const createSvg = function ({ name, spec }) {
 
             const xmlns="http://www.w3.org/2000/svg";
             const elements = {};
@@ -16,6 +17,7 @@ const SvgRepository = function () {
             
                 const svg = document.createElementNS(xmlns, 'svg');
         
+                svg.classList = name;
                 svg.setAttribute('viewBox', spec.viewBox);
                 svg.setAttribute('style', "fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;");
         
@@ -51,7 +53,7 @@ const SvgRepository = function () {
     
         for (const [name, spec] of Object.entries(svgSpec)) {
 
-            svgs[name] = createSvg(spec);
+            svgs[name] = createSvg({ name, spec });
         }
     };
 
@@ -66,8 +68,26 @@ const SvgRepository = function () {
     };
 
     const getSvgCopy = function (name) {
+
+        const changePatternId = function (svg) {
+        
+            const pattern = svg.querySelector('pattern');
+            if (pattern) {
+                
+                const newId = pattern.id + '-' + patternIdNumber;
+                patternIdNumber += 1;
+                pattern.id = newId;
+                
+                const patternField = svg.querySelector('.pattern-field');
+                // console.log(patternField);
+                patternField.setAttribute('fill', `url(#${newId})`);
+            }
+        };
+
+        const svg = svgs[name].cloneNode(true)
+        changePatternId(svg);
     
-        return svgs[name].cloneNode(true);
+        return svg;
     };
     
     return Object.freeze(

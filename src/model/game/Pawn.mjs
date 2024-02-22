@@ -72,11 +72,16 @@ const Pawn = function ({ id, type, player }) {
 
     const isInReach = function (field) {
 
-        if (Object.values(reach).includes(field)) {
-            return true;
-        } else {
-            return false;
+        let direction = false;
+
+        for (const [reachDirection, reachField] of Object.entries(reach)) {
+            if (reachField == field) {
+                direction = reachDirection;
+                break;
+            }
         }
+
+        return direction;
     };
 
     const setAlive = function(bool) {

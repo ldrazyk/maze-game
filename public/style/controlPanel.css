@@ -1,15 +1,7 @@
-:root {
-    --turn: url(../img/buttons/turn.png);
-    --select: url(../img/buttons/select.png);
-    --move: url(../img/buttons/move.png);
-    --hold: url(../img/buttons/hold.png);
-    --redo: url(../img/buttons/redo.png);
-}
-
 .control_panel {
     display: flex;
     flex-wrap: wrap;
-    max-width: 500px;
+    max-width: 400px;
     padding: 20px;
     background-color: var(--path);
 }
@@ -24,10 +16,13 @@
 
 .control_panel button {
     position: relative;
-    height: 128px;
-    width: 128px;
-    padding: 8px;
+    height: 100px;
+    width: 100px;
     background-color: var(--path);
+}
+
+.control_panel button.active {
+    cursor: pointer;
 }
 
 .control_panel button .container {

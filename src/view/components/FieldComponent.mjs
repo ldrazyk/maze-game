@@ -1,205 +1,313 @@
 import updateClass from "../utils/updateClass.mjs";
+import createElement from "../utils/createElement.mjs";
 
-const FieldComponent = function({ field, onClick }) {
-    let type, row, column, id, pawn;
+const FieldComponent = function({ field, onClick, getSvgCopy }) {
+    
+    const props = {
+        id: field.getId(),
+        type: field.getType(),
+        row: field.getX(),
+        column: field.getY(),
+    };
+    const state = {
+        pawn: {
+            pawn: false,
+            type: false,
+            playerNumber: false,
+        },
+        pawnMode: false,
+        reach: {
+            direction: false,
+            playerNumber: false
+        },
+        exitNumber: false
+    };
+
     let mainElement;
-    let highlightElement, flagElement, pawnElement;
-
-    const setParams = function () {
-
-        type = field.getType();
-        row = field.getX();
-        column = field.getY();
-        id = field.getId();
-        pawn = field.getPawn();
+    const containers = {
+        highlight: false,
+        flag: false,
+        pawn: false,
     };
 
     const createElements = function () {
 
-        const createFieldElement = function() {
+        const createMain = function() {
 
-            mainElement = document.createElement('div');
-            mainElement.className = 'field ' + type;
-            mainElement.dataset.row = row;
-            mainElement.dataset.column = column;
-            mainElement.style.order = column;
-            mainElement.id = id;
+            mainElement = createElement(
+                {
+                    type: 'div',
+                    classList: 'field ' + props.type,
+                    id: props.id,
+                    datasets: { row: props.row, column: props.column },
+                    order: props.column,
+            });
         };
     
-        const createHighlightElement = function() {
+        const createHighlight = function() {
 
-            highlightElement = document.createElement('div');
-            highlightElement.classList.add('highlight');
-            mainElement.appendChild(highlightElement);
+            containers.highlight = createElement(
+                {
+                    type: 'div',
+                    classList: 'container highlight',
+                    parent: mainElement
+                }
+            );
+
+            ['active', 'reach', 'hover'].forEach(name => {
+                containers.highlight.appendChild(getSvgCopy(name));
+            });
         };
     
-        const createFlagElement = function() {
+        const createFlag = function() {
 
-            if (type == 'exit') {
-                flagElement = document.createElement('div');
-                flagElement.classList.add(field.getFlagColor(), 'flag');
-                highlightElement.appendChild(flagElement);
-            }
+            state.exitNumber = field.getExitNumber();
+
+            containers.flag = createElement(
+                {
+                    type: 'div',
+                    classList: 'container flag ' + 'player-' + state.exitNumber,
+                    parent: mainElement
+                }
+            );
+
+            containers.flag.appendChild(getSvgCopy('flag'));
         };
     
-        const createPawnElement = function() {
+        const createPawn = function() {
             
-            pawnElement = document.createElement('div');
-            pawnElement.className = 'pawn';
-            
-            if (flagElement) {
-                flagElement.appendChild(pawnElement);
-            } else {
-                highlightElement.appendChild(pawnElement);
-            }
+            containers.pawn = createElement(
+                {
+                    type: 'div',
+                    classList: 'container pawn',
+                    parent: mainElement
+                }
+            );
+
+            ['lion', 'rooster', 'snake'].forEach(name => {
+                containers.pawn.appendChild(getSvgCopy(name));
+            });
         };
 
         const addEvents = function() {
 
-            pawnElement.addEventListener('click', () => { onClick(id) });
+            mainElement.addEventListener('click', () => { onClick(props.id) });
         };
 
-        createFieldElement();
-        if (type != 'wall') {
-            createHighlightElement();
-            createFlagElement();
-            createPawnElement();
+
+        createMain();
+        if (props.type != 'wall') {
+            createHighlight();
+            if (props.type == 'exit') createFlag();
+            createPawn();
             addEvents(); 
         }
     };
 
     const init = function() {
         
-        setParams();
         createElements();
     }();
 
-    const updatePawn = function () {
-        pawn = field.getPawn();
-    };
+    const updateFlag = function () {
 
-    const hideFlag = function () {
-        if (flagElement && pawn) {
-            flagElement.className = 'flag';
+        if (state.exitNumber && state.pawn.pawn) {
+
+            containers.flag.classList.add('hidden');
         }
     };
 
-    const updatePawnElement = function () {
+    const updatePawn = function () {
 
-        const findPawnClass = function () {
-            let newClassName = 'pawn';
-            if (pawn) {
-                newClassName += ' ' + 'has_pawn ' + pawn.getType() + ' ' + pawn.getColor() + ' player-' + pawn.getPlayerNumber();
+        const updatePawnState = function () {
+        
+            const newPawn = field.getPawn();
+
+            if (newPawn != state.pawn.pawn) {
+
+                state.pawn.pawn = newPawn;
+
+                if (newPawn) {
+                    state.pawn.type = newPawn.getType();
+                    state.pawn.playerNumber = newPawn.getPlayerNumber();
+                } else {
+                    state.pawn.type = false;
+                    state.pawn.playerNumber = false;
+                }
+
+                return true;
             }
-            return newClassName;
         };
         
-        updatePawn();
-        hideFlag();
-        updateClass(pawnElement, findPawnClass());
-    };
-
-    const updateHighlight = function (selected) {
-
-        const findMainAndHiglightClass = function () {
-
-            let mainClass = 'field ' + type;
-            let highlightClass = 'highlight';
-    
-            const addActive = function () {
-                mainClass += ' active';
-                highlightClass += ' ' + pawn.getColor();
-            };
-
-            const addSelected = function () {
-                mainClass += ' selected';
-            };
-
-            const getReachDirection = function () {
-
-                let reachDirection = false;
-                for ( const [direction, reachField] of Object.entries(selected.getReach()) ) {
-                    if (reachField === field) {
-                        reachDirection = direction;
-                        break;
-                    }
-                }
-                return reachDirection;
-            };
-
-            const addReach = function (reachDirection) {
-                
-                const getReachType = function (reachDirection) {
-
-                    let reachType;
-                    if (['up', 'down'].includes(reachDirection)) {
-                        reachType = 'vertical';
-                    } else {
-                        reachType = 'horizontal';
-                    }
-                    return reachType;
-                };
-    
-                mainClass += ' reach';
-                highlightClass += ' ' + selected.getColor() + ' ' + getReachType(reachDirection);
-            };
+        const updateContainer = function () {
+        
+            const getNewClassList = function () {
             
-
-            if (pawn && pawn.isActive()) {
-
-                addActive();
-
-                if (selected && pawn === selected) {
-                    addSelected();
-                };
-
-            } else if (selected) {
-    
-                const reachDirection = getReachDirection();
-                if (reachDirection) {
-                    addReach(reachDirection);
+                let newClassList = 'container pawn';
+                if (state.pawn.pawn) {
+                    newClassList += ' ' + state.pawn.type + ' player-' + state.pawn.playerNumber;
                 }
-            }
+                return newClassList;
+            };
 
-            return { mainClass, highlightClass };
+            containers.pawn.classList = getNewClassList();
         };
 
-        updatePawn();
-        const {mainClass, highlightClass} = findMainAndHiglightClass();
-        updateClass(mainElement, mainClass);
-        updateClass(highlightElement, highlightClass);
+        const updateDom = function () {
+        
+            updateContainer();
+            // changeSvg();
+            updateFlag();
+        };
+
+        if ( updatePawnState() ) updateDom();
+    };
+
+    const updateHighlight = function (gameState) {
+
+        const updatePawnModeState = function () {
+        
+            const getNewMode = function () {
+            
+                let newMode = false;
+                
+                const pawn = state.pawn.pawn;
+
+                if (pawn) {
+    
+                    if (gameState.getSelected() === pawn) {
+                        newMode = 'selected';
+                    } else if (pawn.isActive()) {
+                        newMode = 'active';
+                    }
+                }
+
+                return newMode;
+            };
+
+            const newMode = getNewMode();
+
+            if (state.pawnMode != newMode) {
+                state.pawnMode = newMode;
+                return true;
+            }
+        };
+        
+        const updateReachState = function () {
+        
+            const getNewReach = function () {
+
+                const newReach = {
+                    direction: false,
+                    playerNumber: false
+                };
+            
+                if (gameState.getSelected()) {
+
+                    newReach.direction = gameState.isInReach(field);
+
+                    if (newReach.direction) {
+
+                        newReach.playerNumber = gameState.getActiveNumber();
+                    }
+                }
+                return newReach;
+            };
+
+            const newReach = getNewReach();
+
+            if (state.reach != newReach) {
+                state.reach = newReach;
+                return true;
+            }
+        };
+
+        const updateState = function () {
+        
+            let changed = false;
+    
+            if (updatePawnModeState()) {
+                changed = true;
+            }
+            if (updateReachState()) {
+                changed = true;
+            }
+
+            return changed;
+        };
+
+        const updateMain = function () {
+        
+            const getNewClassList = function () {
+            
+                let newClassList = 'field ' + props.type;
+                if (state.pawnMode) {
+                    newClassList += ' ' + state.pawnMode;
+                } else if (state.reach.direction) {
+                    newClassList += ' in-reach';
+                }
+                return newClassList;
+            };
+
+            mainElement.classList = getNewClassList();
+        };
+
+        const updateContainer = function () {
+        
+            const getNewClassList = function () {
+            
+                let newClassList = 'container highlight';
+                if (state.pawnMode) {
+                    newClassList += ' player-' + state.pawn.playerNumber;
+                } else if (state.reach.direction) {
+                    newClassList += ' player-' + state.reach.playerNumber + ' ' + state.reach.direction;
+                }
+                return newClassList;
+            };
+
+            containers.highlight.classList = getNewClassList();
+        };
+
+        const updateDom = function () {
+        
+            updateMain();
+            updateContainer();
+        };
+    
+        if ( updateState() ) updateDom();
+        
     };
 
     const getRow = function () {
-        return row;
+        return props.row;
     };
 
     const getColumn = function () {
-        return column;
+        return props.column;
     };
 
     const getId = function () {
-        return id;
+        return props.id;
     };
 
     const getType = function () {
-        return type;
+        return props.type;
     };
 
-    const appendTo = function (container) {
-        
-        container.appendChild(mainElement);
+    const getMain = function () {
+    
+        return mainElement;
     };
 
     return Object.freeze(
         {
-            updatePawn: updatePawnElement,
-            updateHighlight: updateHighlight,
-            getRow: getRow,
-            getColumn: getColumn,
-            getId: getId,
-            getType: getType,
-            appendTo: appendTo,
+            updatePawn,
+            updateHighlight,
+            getRow,
+            getColumn,
+            getId,
+            getType,
+            getMain,
         }
     );
 };

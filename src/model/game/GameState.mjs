@@ -87,6 +87,11 @@ const GameState = function () {
         return commands.canRedo();
     };
 
+    const isInReach = function (field) {
+    
+        return pawns.isInReach(field);
+    };
+
     // get players
 
     const getPlayer = function (number) {
@@ -165,6 +170,7 @@ const GameState = function () {
             getMaxHolds,
             canUndo,
             canRedo,
+            isInReach,
             // get players
             getPlayer,
             getActiveNumber,

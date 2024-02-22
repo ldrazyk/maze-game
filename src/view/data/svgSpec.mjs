@@ -194,6 +194,140 @@ const svgSpec = {
             }
         }
     },
+    "active": {
+        "name": "Active Highlight",
+        "viewBox": "0 0 256 256",
+        "elements": {
+            "defs": {
+                "type": "defs",
+                "parent": "svg"
+            },
+            "active-pattern": {
+                "type": "pattern",
+                "hasId": "true",
+                "attributes": {
+                    "width": "16",
+                    "height": "16",
+                    "patternUnits": "userSpaceOnUse"
+                },
+                "parent": "defs"
+            },
+            "square": {
+                "type": "rect",
+                "classList": "light",
+                "attributes": {
+                    "x": "8",
+                    "y": "8",
+                    "width": "8",
+                    "height": "8"
+                },
+                "parent": "active-pattern"
+            },
+            "pattern-field": {
+                "type": "rect",
+                "classList": "pattern-field",
+                "attributes": {
+                    "width": "100%",
+                    "height": "100%",
+                    "fill": "url(#active-pattern)"
+                },
+                "parent": "svg"
+            }
+        }
+    },
+    "hover": {
+        "name": "Hover Highlight",
+        "viewBox": "0 0 256 256",
+        "elements": {
+            "defs": {
+                "type": "defs",
+                "parent": "svg"
+            },
+            "hover-pattern": {
+                "type": "pattern",
+                "hasId": "true",
+                "attributes": {
+                    "width": "16",
+                    "height": "16",
+                    "patternUnits": "userSpaceOnUse"
+                },
+                "parent": "defs"
+            },
+            "rectangle-1": {
+                "type": "rect",
+                "classList": "light",
+                "attributes": {
+                    "x": "0",
+                    "y": "0",
+                    "width": "8",
+                    "height": "16"
+                },
+                "parent": "hover-pattern"
+            },
+            "rectangle-2": {
+                "type": "rect",
+                "classList": "light",
+                "attributes": {
+                    "x": "8",
+                    "y": "0",
+                    "width": "8",
+                    "height": "8"
+                },
+                "parent": "hover-pattern"
+            },
+            "pattern-field": {
+                "type": "rect",
+                "classList": "pattern-field",
+                "attributes": {
+                    "width": "100%",
+                    "height": "100%",
+                    "fill": "url(#hover-pattern)"
+                },
+                "parent": "svg"
+            }
+        }
+    },
+    "reach": {
+        "name": "Reach Highlight",
+        "viewBox": "0 0 256 256",
+        "elements": {
+            "defs": {
+                "type": "defs",
+                "parent": "svg"
+            },
+            "reach-pattern": {
+                "type": "pattern",
+                "hasId": "true",
+                "attributes": {
+                    "width": "16",
+                    "height": "256",
+                    "patternUnits": "userSpaceOnUse"
+                },
+                "parent": "defs"
+            },
+            "stripe": {
+                "type": "rect",
+                "classList": "light",
+                "attributes": {
+                    "x": "0",
+                    "y": "0",
+                    "width": "8",
+                    "height": "256"
+                },
+                "parent": "reach-pattern"
+            },
+            "pattern-field": {
+                "type": "rect",
+                "classList": "pattern-field",
+                "attributes": {
+                    "width": "100%",
+                    "height": "100%",
+                    "fill": "url(#reach-pattern)"
+                },
+                "parent": "svg"
+            }
+        }
+    },
     "select": {
         "name": "Select Button",
         "viewBox": "0 0 1067 1067",

@@ -44,7 +44,7 @@ const ViewBuilder = function () {
 
     const setBoard = function (spec) {
         
-        addComponent({ creator: BoardComponent, spec: spec });
+        addComponent({ creator: BoardComponent, spec: spec, init: true });
     };
 
     const setControlPanel = function (spec) {

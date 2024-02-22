@@ -1,35 +1,159 @@
 :root {
     --path: hsl(60, 10%, 58%);
     --wall: hsl(50, 10%, 20%);
-    --pink: hsl(330, 100%, 90%);
-    --blue: hsl(200, 100%, 85%);
+    --dark-player1: hsl(332, 73%, 19%);
+    --light-player1: hsl(115, 44%, 83%);
+    --dark-player2: hsl(216, 63%, 20%);
+    --light-player2: hsl(64, 57%, 80%);
     --border: hsl(0, 0%, 0%);
     --back: hsl(0, 0%, 10%);
-    /* pink */
-    --pink-flag: url(../img/board/pink/flag.png);
-    --pink-lion: url(../img/board/pink/lion.png);
-    --pink-lion-selected: url(../img/board/pink/lion-selected.png);
-    --pink-rooster: url(../img/board/pink/rooster.png);
-    --pink-rooster-selected: url(../img/board/pink/rooster-selected.png);
-    --pink-snake: url(../img/board/pink/snake.png);
-    --pink-snake-selected: url(../img/board/pink/snake-selected.png);
-    --pink-active: url(../img/active_pink_256.png);
-    --pink-reach-v: url(../img/reach_v_pink_256.png);
-    --pink-reach-h: url(../img/reach_h_pink_256.png);
-    --pink-hover: url(../img/hover_pink_256.png);
-    /* blue */
-    --blue-flag: url(../img/board/blue/flag.png);
-    --blue-lion: url(../img/board/blue/lion.png);
-    --blue-lion-selected: url(../img/board/blue/lion-selected.png);
-    --blue-rooster: url(../img/board/blue/rooster.png);
-    --blue-rooster-selected: url(../img/board/blue/rooster-selected.png);
-    --blue-snake: url(../img/board/blue/snake.png);
-    --blue-snake-selected: url(../img/board/blue/snake-selected.png);
-    --blue-active: url(../img/active_blue_256.png);
-    --blue-reach-v: url(../img/reach_v_blue_256.png);
-    --blue-reach-h: url(../img/reach_h_blue_256.png);
-    --blue-hover: url(../img/hover_blue_256.png);
+    
 }
+
+
+/* colors */
+
+.player-1 .dark {
+
+    fill: var(--dark-player1);
+}
+
+.player-1 .light {
+
+    fill: var(--light-player1);
+}
+
+.player-2 .dark {
+
+    fill: var(--dark-player2);
+}
+
+.player-2 .light {
+
+    fill: var(--light-player2);
+}
+
+/* SVG VISIBILITY */
+
+.board svg {
+
+    visibility: hidden;
+}
+
+svg.flag {
+
+    visibility: unset;
+}
+
+.hidden {
+    
+    visibility: hidden;
+}
+
+.pawn.lion svg.lion,
+.pawn.rooster svg.rooster,
+.pawn.snake svg.snake {
+
+    visibility: visible;
+}
+
+.field.active svg.active,
+.field.in-reach svg.reach {
+
+    visibility: visible;
+}
+
+.field.active:hover svg.active,
+.field.in-reach:hover svg.reach {
+    
+    visibility: hidden;
+}
+
+.field.active:hover svg.hover,
+.field.in-reach:hover svg.hover {
+
+    visibility: visible;
+}
+
+.field.selected .highlight.player-1 {
+
+    background-color: var(--light-player1);
+} 
+
+.field.selected .highlight.player-2 {
+
+    background-color: var(--light-player2);
+}
+
+.wake {
+
+    visibility: hidden;
+}
+
+.field.selected .wake,
+.field.active:hover .wake {
+
+    visibility: unset;
+}
+
+
+
+.pawn.player-2,
+.flag.player-2 {
+
+    transform: scaleX(-1);
+}
+
+.in-reach .left,
+.in-reach .right {
+
+    transform: rotate(90deg);
+}
+
+.in-reach:hover .left,
+.in-reach:hover .right {
+
+    transform: none;
+}
+
+.field .container,
+.field svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* .FIELD */
+
+.field {
+    position: relative;
+    height: 66px;
+    width: 66px;
+    border: 1px solid var(--wall); 
+}
+
+.field.selected,
+.field.active,
+.field.in-reach {
+
+    cursor: pointer;
+}
+
+.wall {
+    background-color: var(--wall);
+}
+
+.path,
+.exit {
+    background-color: var(--path);
+}
+
+/* OLD */
 
 * {
     margin: 0;
@@ -43,7 +167,6 @@ html {
 
 #root {
     display: flex;
-    height: 100vh;
 }
 
 .board {
@@ -61,166 +184,33 @@ html {
     display: flex;
 }
 
-
-/* FIELD */
-
-.field {
-    position: relative;
-    float: left;
-    height: 66px;
-    width: 66px;
-    border-style: solid; 
-    /* border-width: 2px 2px 0 0; */
-    border-width: 1px;
-    border-color: var(--wall);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    20% {
+        opacity: 1;
+    }
+    30% {
+        opacity: 0;
+    }
+    70% {
+        opacity: 0;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
-.wall {
-    background-color: var(--wall);
-}
+/* .in-reach .pawn {
 
-.path,
-.exit {
-    background-color: var(--path);
-}
+    animation: blink 1s linear infinite running;
+} */
 
-.flag.blue {
-    background-image: var(--blue-flag);
-}
+/* .in-reach:hover .pawn {
 
-.flag.pink {
-    background-image: var(--pink-flag);
-}
-
-/* PAWN, HIGHLIGHT */
-
-.pawn,
-.highlight,
-.flag {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-/* HIGHLIGHT */
-
-.field.selected .highlight.blue {
-    background-color: var(--blue);
-}
-
-.field.selected .highlight.pink {
-    background-color: var(--pink);
-}
-
-.field.active .highlight.blue {
-    background-image: var(--blue-active);
-}
-
-.field.active .highlight.pink {
-    background-image: var(--pink-active);
-}
-
-.field.active:hover .highlight.blue {
-    background-image: var(--blue-hover);
-}
-
-.field.active:hover .highlight.pink {
-    background-image: var(--pink-hover);
-}
-
-.field.reach .highlight.blue.horizontal {
-    background-image: var(--blue-reach-h);
-}
-
-.field.reach .highlight.blue.vertical {
-    background-image: var(--blue-reach-v);
-}
-
-.field.reach .highlight.pink.horizontal {
-    background-image: var(--pink-reach-h);
-}
-
-.field.reach .highlight.pink.vertical {
-    background-image: var(--pink-reach-v);
-}
-
-.field.reach .highlight.blue:hover {
-    background-image: var(--blue-hover);
-}
-
-.field.reach .highlight.pink:hover {
-    background-image: var(--pink-hover);
-}
-
-
-/* PAWN */
-
-.rooster.player-2,
-.snake.player-2 {
-    transform: scaleX(-1);
-}
-
-/* sleep */
-
-.blue.lion {
-    background-image: var(--blue-lion);
-}
-
-.blue.rooster {
-    background-image: var(--blue-rooster);
-}
-
-.blue.snake {
-    background-image: var(--blue-snake);
-}
-
-.pink.lion {
-    background-image: var(--pink-lion);
-}
-
-.pink.rooster {
-    background-image: var(--pink-rooster);
-}
-
-.pink.snake {
-    background-image: var(--pink-snake);
-}
-
-/* selected */
-
-.field.selected .blue.lion,
-.field.active:hover .blue.lion {
-    background-image: var(--blue-lion-selected);
-}
-
-.field.selected .blue.rooster,
-.field.active:hover .blue.rooster {
-    background-image: var(--blue-rooster-selected);
-}
-
-.field.selected .blue.snake,
-.field.active:hover .blue.snake {
-    background-image: var(--blue-snake-selected);
-}
-
-.field.selected .pink.lion,
-.field.active:hover .pink.lion {
-    background-image: var(--pink-lion-selected);
-}
-
-.field.selected .pink.rooster,
-.field.active:hover .pink.rooster {
-    background-image: var(--pink-rooster-selected);
-}
-
-.field.selected .pink.snake,
-.field.active:hover .pink.snake {
-    background-image: var(--pink-snake-selected);
-}
-
+    animation-play-state: running;
+} */

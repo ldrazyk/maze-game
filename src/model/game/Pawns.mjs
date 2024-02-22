@@ -146,6 +146,11 @@ const Pawns = function (pawnsSpec) {
         return selected;
     };
 
+    const isInReach = function (field) {
+    
+        return selected.isInReach(field);
+    };
+
     const getActiveAmount = function() {
         return activePawns.length;
     };
@@ -161,22 +166,23 @@ const Pawns = function (pawnsSpec) {
 
     return Object.freeze(
         {
-            setGame: setGame,
-            init: init,
+            setGame,
+            init,
 
-            reset: reset,
-            setActivePawns: setActivePawns,
-            hasNext: hasNext,
-            selectNext: selectNext,
-            select: select,
-            updateReaches: updateReaches,
+            reset,
+            setActivePawns,
+            hasNext,
+            selectNext,
+            select,
+            updateReaches,
 
-            getIterator: getIterator,
-            getPawn: getPawn,
-            getSelected: getSelected,
-            getActiveAmount: getActiveAmount,
+            getIterator,
+            getPawn,
+            getSelected,
+            isInReach,
+            getActiveAmount,
 
-            canMoveSelected: canMoveSelected,
+            canMoveSelected,
         }
     );
 };

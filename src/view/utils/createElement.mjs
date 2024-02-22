@@ -1,4 +1,4 @@
-const createElement = function ({ type, classList=false, id=false, textContent=false, value=false, order=false, parent=false }) {
+const createElement = function ({ type, classList=false, id=false, datasets=false, textContent=false, value=false, order=false, parent=false }) {
 
     const element = document.createElement(type);
 
@@ -8,6 +8,12 @@ const createElement = function ({ type, classList=false, id=false, textContent=f
 
     if (id) {
         element.id = id;
+    }
+
+    if (datasets) {
+        for (const [key, value] of Object.entries(datasets)) {
+            element.dataset[key] = value;
+        }
     }
 
     if (textContent) {

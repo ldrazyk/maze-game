@@ -1,4 +1,5 @@
 import FieldComponent from './FieldComponent.mjs';
+import createElement from '../utils/createElement.mjs';
 
 const BoardComponent = function({ gameState }) {
     
@@ -21,24 +22,30 @@ const BoardComponent = function({ gameState }) {
 
         const createMainElement = function () {
 
-            mainElement = document.createElement('div');
-            mainElement.classList.add('board');
-            
-            mainElement.dataset.name = name;
-            mainElement.dataset.rows = rows;
-            mainElement.dataset.columns = columns;
+            mainElement = createElement(
+                { 
+                    type: 'div',
+                    classList: 'board',
+                    datasets: { name, rows, columns },
+                }
+            );
         };
 
         const createRowElements = function () {
 
             const createRow = function (number) {
 
-                const rowElement = document.createElement('div');
-                rowElement.classList.add('row');
-                rowElement.id = 'row_' + number;
-                rowElement.style.order = number;
+                const rowElement = createElement(
+                    {
+                        type: 'div',
+                        classList: 'row',
+                        id: 'row_' + number,
+                        order: number,
+                        parent: mainElement,
+                    }
+                );
+                
                 rowElements.push(rowElement);
-                mainElement.appendChild(rowElement);
             };
 
             for (let n = 0; n < rows; n += 1) {
@@ -49,18 +56,30 @@ const BoardComponent = function({ gameState }) {
 
         const createFieldComponents = function () {
 
+            const getSvgCopy = function (name) {
+            
+                return mediator.getSvgCopy(name);
+            };
+
             const iterator = gameState.getBoardIterator();
+
             while (iterator.hasNext()) {
 
                 const field = iterator.next();
 
-                const component = FieldComponent({field: field, onClick: (id) => mediator.click(id) });
+                const component = FieldComponent(
+                    {
+                        field: field, 
+                        onClick: (id) => mediator.click(id),
+                        getSvgCopy: getSvgCopy,
+                    }
+                );
                 
                 if (component.getType() != 'wall') {
                     pathComponents[component.getId()] = component;
                 }
 
-                component.appendTo(rowElements[component.getRow() - 1]);
+                rowElements[component.getRow() - 1].appendChild(component.getMain());
             }
         };
 
@@ -73,7 +92,7 @@ const BoardComponent = function({ gameState }) {
 
         setProps();
         createElements();
-    }();
+    };
 
     const setMediator = function (newMediator) {
     
@@ -91,11 +110,8 @@ const BoardComponent = function({ gameState }) {
 
         const updateHighlights = function () {
 
-            const gameState = object;
-            const selected = gameState.getSelected();
-
             Object.values(pathComponents).forEach(component => {
-                component.updateHighlight(selected);
+                component.updateHighlight(object);
             });
         };
         
@@ -121,6 +137,7 @@ const BoardComponent = function({ gameState }) {
     return Object.freeze(
         {
             setMediator,
+            init,
             update,
             getId,
             getMain,
