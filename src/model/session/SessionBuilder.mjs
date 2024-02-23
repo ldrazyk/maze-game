@@ -1,12 +1,21 @@
 import Session from './Session.mjs';
 import Players from './Players.mjs';
-import Scores from './Scores.mjs'
+import Scores from './Scores.mjs';
+import BoardRepository from './BoardRepository.mjs';
+import boardSpec from '../data/boardSpec.mjs';
 
 const SessionBuilder = function () {
+    
     let session;
 
     const reset = function () {
         session = Session()
+    };
+
+    const setBoardRepository = function () {
+    
+        const repository = BoardRepository(boardSpec);
+        session.setBoardRepository(repository);
     };
 
     const setPlayers = function (playersSpec) {
@@ -28,10 +37,11 @@ const SessionBuilder = function () {
     
     return Object.freeze(
         {
-            reset: reset,
-            setPlayers: setPlayers,
-            setScores: setScores,
-            getResult: getResult,
+            reset,
+            setBoardRepository,
+            setPlayers,
+            setScores,
+            getResult,
         }
     );
 };

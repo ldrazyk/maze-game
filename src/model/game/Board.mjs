@@ -2,9 +2,8 @@ import Field from "./Field.mjs";
 import ArrayIterator from "../utils/ArrayIterator.mjs";
 import shuffle from "../utils/shuffle.mjs";
 
-const Board = function (matrixSpec) {
+const Board = function ({ id=false, name, matrix }) {
 
-    const { name, matrix } = matrixSpec;
     const size = { rows: 0, columns: 0};
 
     const fieldsArray = [];
@@ -174,6 +173,11 @@ const Board = function (matrixSpec) {
         const exit = getExit(playerNumber);
         const startZone = findStartZone(exit);
         place({ pawnsIterator, startZone })
+    };
+
+    const getId = function () {
+    
+        return id;
     };
 
     const getName = function() {

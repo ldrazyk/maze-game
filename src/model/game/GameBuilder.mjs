@@ -1,5 +1,4 @@
 import Game from "./Game.mjs";
-import Board from "./Board.mjs";
 import Pawns from "./Pawns.mjs";
 import TurnCounter from "./TurnCounter.mjs";
 import MovesCounter from "./MovesCounter.mjs";
@@ -55,14 +54,11 @@ const GameBuilder = function () {
 
     const setPlayers = function (players) {
 
-        // game.setPlayers(players);
         mediators.forEach(mediator => mediator.setPlayers(players));
     };
 
-    const setBoard = function (matrixSpec) {
+    const setBoard = function (board) {
 
-        const board = Board(matrixSpec);
-        
         mediators.forEach(mediator => mediator.setBoard(board));
         board.setGame(game);
 

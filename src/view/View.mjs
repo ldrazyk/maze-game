@@ -41,22 +41,27 @@ const View = function() {
         
         const builder = viewBuilder;
 
-        builder.reset(root);
-        builder.setController(controller);
-        builder.setSvgRepository(svgRepository);
+        const make = function () {
+        
+            builder.reset(root);
+            builder.setController(controller);
+            builder.setSvgRepository(svgRepository);
+    
+            builder.setContainer({ id: 'main', type: 'div', parentId: 'root' });
+    
+            builder.setContainer({ id: 'section1', type: 'section', parentId: 'main' });
+    
+            builder.setBoard({ parentId: 'section1', gameState: gameState });
+            builder.setInfoPanel({ parentId: 'section1' });
+    
+            builder.setContainer({ id: 'section2', type: 'section', parentId: 'main' });
+    
+            builder.setControlPanel({ parentId: 'section2' });
+            builder.setPlayerPanel({ playerNumber: 1, parentId: 'section2', gameState: gameState });
+            builder.setPlayerPanel({ playerNumber: 2, parentId: 'section2', gameState: gameState });
+        };
 
-        builder.setContainer({ id: 'main', type: 'div', parentId: 'root' });
-
-        builder.setContainer({ id: 'section1', type: 'section', parentId: 'main' });
-
-        builder.setBoard({ parentId: 'section1', gameState: gameState });
-        builder.setInfoPanel({ parentId: 'section1' });
-
-        builder.setContainer({ id: 'section2', type: 'section', parentId: 'main' });
-
-        builder.setControlPanel({ parentId: 'section2' });
-        builder.setPlayerPanel({ playerNumber: 1, parentId: 'section2', gameState: gameState });
-        builder.setPlayerPanel({ playerNumber: 2, parentId: 'section2', gameState: gameState });
+        make();
 
         mediator = builder.getResult();
     };

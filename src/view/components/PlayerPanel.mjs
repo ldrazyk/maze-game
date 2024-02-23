@@ -84,7 +84,6 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
                 };
 
                 if (updateNameState()) updateModelName();
-                console.log(props.player.getName());
             };
 
             elements.name.addEventListener('blur', updateName);
@@ -173,8 +172,6 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
 
     const update = function ({ code, object }) {
 
-        
-
         const updateActive = function () {
         
             const updateActiveState = function () {
@@ -240,7 +237,6 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
 
             if ( updateTurnState() ) updateTurnDom();
         };
-
         
         const updateMoves = function () {
         
@@ -266,7 +262,6 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
             if (updateMovesState()) updateMovesDom();
         };
 
-
         const updateHolds = function () {
         
             const updateHoldsState = function () {
@@ -287,27 +282,32 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
             if ( updateHoldsState() ) updateHoldsDom();
         };
 
-        if (state.turn == 0) {
-
-            updateTurn();
-        }
+        const exec = function () {
         
-        if (state.turn > 0) {
-
-            updateActive();
-        }
-
-        if (state.active) {
+            if (state.turn == 0) {
+    
+                updateTurn();
+            }
             
-            updateTurn();
-            updateMoves();
-            updateHolds();
-        }
+            if (state.turn > 0) {
+    
+                updateActive();
+            }
+    
+            if (state.active) {
+                
+                updateTurn();
+                updateMoves();
+                updateHolds();
+            }
+    
+            if (code == 'endGame') {
+    
+                updateScore();
+            }
+        };
 
-        if (code == 'endGame') {
-
-            updateScore();
-        }
+        exec();
     };
 
     const getId = function () {

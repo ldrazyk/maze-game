@@ -1,11 +1,17 @@
 const Session = function () {
-    let players, scores;
+
+    let players, scores, boardRepository;
     let gameNumber;
 
     const init = function () {
         
         gameNumber = 0;
     }();
+
+    const setBoardRepository = function (repository) {
+    
+        boardRepository = repository;
+    };
 
     const setPlayers = function (newPlayers) {
         players = newPlayers;
@@ -18,6 +24,11 @@ const Session = function () {
     const setPlayerName = function (spec) {
     
         players.setPlayerName(spec);
+    };
+
+    const createBoard = function (id) {
+    
+        return boardRepository.createBoard(id);
     };
 
     const getPlayers = function () {
@@ -43,10 +54,13 @@ const Session = function () {
 
     return Object.freeze(
         {
+            setBoardRepository,
             setPlayers,
             setScores,
 
             setPlayerName,
+
+            createBoard,
 
             getPlayers,
             getPlayer,
