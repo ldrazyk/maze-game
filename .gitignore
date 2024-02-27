@@ -3,5 +3,8 @@
 /public/sound
 /doc
 /learn
+/build/__pycache__
+/build/data
+/merge
 README.md
 desktop.ini
