@@ -21,10 +21,12 @@ const runApp = function () {
 
     const createGame = function () {
     
-        const boardId = 'board08';
+        const boardId = 'board0702';
+        // const boardId = 'board0900';
+        // const boardId = 'board1100';
     
         const pawnsSpec1 = [
-            {type: 'lion', amount: 2}, 
+            {type: 'lion', amount: 1}, 
             {type: 'rooster', amount: 1}, 
             {type: 'snake', amount: 1}
         ];

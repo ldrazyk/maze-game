@@ -22,10 +22,25 @@ const BoardComponent = function({ gameState }) {
 
         const createMainElement = function () {
 
+            const getFieldSizeClass = function () {
+            
+                let size;
+
+                if (rows < 8) {
+                    size = 'large';
+                } else if (rows < 10) {
+                    size = 'medium';
+                } else {
+                    size = 'small';
+                }
+
+                return size + '-fields';
+            };
+
             mainElement = createElement(
                 { 
                     type: 'div',
-                    classList: 'board',
+                    classList: 'board ' + getFieldSizeClass(),
                     datasets: { name, rows, columns },
                 }
             );

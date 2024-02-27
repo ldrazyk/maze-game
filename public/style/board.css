@@ -7,6 +7,9 @@
     --light-player2: hsl(64, 57%, 80%);
     --border: hsl(0, 0%, 0%);
     --back: hsl(0, 0%, 10%);
+    --large-border-width: 3px;
+    --medium-border-width: 2px;
+    --small-border-width: 2px;
 }
 
 .board {
@@ -14,13 +17,76 @@
     flex-direction: column;
     box-sizing: content-box;
     border-style: solid;
-    border-width: 1px;
     border-color: var(--wall);
+    border-width: 0;
+}
+
+
+.board.large-fields {
+    border-bottom-width: var(--large-border-width);
+    border-right-width: var(--large-border-width);
+}
+
+.board.medium-fields {
+    border-bottom-width: var(--medium-border-width);
+    border-right-width: var(--medium-border-width);
+}
+
+.board.small-fields {
+    border-bottom-width: var(--small-border-width);
+    border-right-width: var(--small-border-width);
 }
 
 .row {
     display: flex;
 }
+
+/* .FIELD */
+
+.field {
+    position: relative;
+    border-style: solid;
+    border-color: var(--wall);
+    border-width: 0;
+}
+
+.board.large-fields .field {
+    height: 90px;
+    width: 90px;
+    border-top-width: var(--large-border-width);
+    border-left-width: var(--large-border-width);
+}
+
+.board.medium-fields .field {
+    height: 70px;
+    width: 70px;
+    border-top-width: var(--medium-border-width);
+    border-left-width: var(--medium-border-width);
+}
+
+.board.small-fields .field {
+    height: 55px;
+    width: 55px;
+    border-top-width: var(--small-border-width);
+    border-left-width: var(--small-border-width);
+}
+
+.field.selected,
+.field.active,
+.field.in-reach {
+
+    cursor: pointer;
+}
+
+.wall {
+    background-color: var(--wall);
+}
+
+.path,
+.exit {
+    background-color: var(--path);
+}
+
 
 /* colors */
 
@@ -139,30 +205,7 @@ svg.flag {
     background-position: center;
 }
 
-/* .FIELD */
 
-.field {
-    position: relative;
-    height: 66px;
-    width: 66px;
-    border: 1px solid var(--wall); 
-}
-
-.field.selected,
-.field.active,
-.field.in-reach {
-
-    cursor: pointer;
-}
-
-.wall {
-    background-color: var(--wall);
-}
-
-.path,
-.exit {
-    background-color: var(--path);
-}
 
 @keyframes blink {
     0% {
