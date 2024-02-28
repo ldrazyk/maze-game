@@ -1,7 +1,7 @@
-from get_all_paths import *
-from JsModule import JsModule
 import string
-from storage import set_item
+from JsModule import JsModule
+from my_storage import set_item
+from my_dir import get_all_paths
 
 def concat_src():
 

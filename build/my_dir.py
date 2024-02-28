@@ -1,4 +1,15 @@
-from storage import *
+import os
+
+def get_dir_list(dir, print=False):
+    """Gets list of files and folders in directory"""
+
+    list = os.listdir(dir)
+
+    if (print):
+        print("\nFiles in dir '" + dir + "':")
+        print(list)
+
+    return list
 
 
 def get_all_paths(dir):
@@ -19,7 +30,8 @@ def get_all_paths(dir):
 
                 path = [dir, item]
 
-                if '.' in item:
+                if os.path.isfile(dir + item):
+                # if '.' in item:
                     local_files.append(path)
                 else:
                     local_folders.append(path)
@@ -39,14 +51,5 @@ def get_all_paths(dir):
 
     process_dir(dir)
 
-    # print(paths)
     return paths
     
-
-def get_and_store_all_paths(dir, json_file):
-
-    all_paths = get_all_paths(dir)
-
-    set_item(json_file, all_paths)
-
-    return all_paths

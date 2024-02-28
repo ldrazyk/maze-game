@@ -4,7 +4,8 @@
 /doc
 /learn
 /build/__pycache__
-/build/data
+/build/data/archival
+/build/data/test
 /merge
 README.md
 desktop.ini

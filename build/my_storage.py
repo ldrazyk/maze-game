@@ -1,16 +1,4 @@
-import os
 import json
-
-def get_dir_list(dir, print=False):
-    """Gets list of files and folders in directory"""
-
-    list = os.listdir(dir)
-
-    if (print):
-        print("\nFiles in dir '" + dir + "':")
-        print(list)
-
-    return list
 
 def set_item(path, data, is_json=True, lines=False):
     """Saves data to json file"""
@@ -22,9 +10,9 @@ def set_item(path, data, is_json=True, lines=False):
             file.writelines(data)
         else:
             file.write(data)
-        
 
     print("File '" + path + "' saved.")
+    
 
 def get_item(path, list=True):
     """Loads data from json or txt file. If extension is other than 'json' converts to list if 'list' is not False"""
