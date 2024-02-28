@@ -1,0 +1,650 @@
+[
+    {
+        "name": "SubjectSimple",
+        "dir": "../src/model/utils/",
+        "file_name": "SubjectSimple.mjs",
+        "import_modules": [],
+        "order": "z",
+        "numeric_order": 47,
+        "used_by": [],
+        "layer": false
+    },
+    {
+        "name": "Controller",
+        "dir": "../src/controller/",
+        "file_name": "Controller.mjs",
+        "import_modules": [],
+        "order": "aac",
+        "numeric_order": 46,
+        "used_by": [
+            "App"
+        ],
+        "layer": "Controller Layer"
+    },
+    {
+        "name": "svgSpec",
+        "dir": "../src/view/data/",
+        "file_name": "svgSpec.mjs",
+        "import_modules": [],
+        "order": "aabba",
+        "numeric_order": 45,
+        "used_by": [
+            "SvgRepository"
+        ],
+        "layer": "View Layer"
+    },
+    {
+        "name": "SvgRepository",
+        "dir": "../src/view/components/",
+        "file_name": "SvgRepository.mjs",
+        "import_modules": [
+            "svgSpec"
+        ],
+        "order": "aabb",
+        "numeric_order": 44,
+        "used_by": [
+            "View"
+        ],
+        "layer": "View Layer"
+    },
+    {
+        "name": "createElement",
+        "dir": "../src/view/utils/",
+        "file_name": "createElement.mjs",
+        "import_modules": [],
+        "order": "aabafa",
+        "numeric_order": 43,
+        "used_by": [
+            "FieldComponent",
+            "BoardComponent",
+            "ButtonComponent",
+            "ControlPanelComponent",
+            "PlayerPanel",
+            "InfoPanel"
+        ],
+        "layer": "View Layer"
+    },
+    {
+        "name": "InfoPanel",
+        "dir": "../src/view/components/",
+        "file_name": "InfoPanel.mjs",
+        "import_modules": [
+            "createElement"
+        ],
+        "order": "aabaf",
+        "numeric_order": 42,
+        "used_by": [
+            "ViewBuilder"
+        ],
+        "layer": "View Layer"
+    },
+    {
+        "name": "PlayerPanel",
+        "dir": "../src/view/components/",
+        "file_name": "PlayerPanel.mjs",
+        "import_modules": [
+            "createElement"
+        ],
+        "order": "aabae",
+        "numeric_order": 41,
+        "used_by": [
+            "ViewBuilder"
+        ],
+        "layer": "View Layer"
+    },
+    {
+        "name": "ButtonComponent",
+        "dir": "../src/view/components/",
+        "file_name": "ButtonComponent.mjs",
+        "import_modules": [
+            "createElement"
+        ],
+        "order": "aabada",
+        "numeric_order": 40,
+        "used_by": [
+            "ControlPanelComponent"
+        ],
+        "layer": "View Layer"
+    },
+    {
+        "name": "ControlPanelComponent",
+        "dir": "../src/view/components/",
+        "file_name": "ControlPanelComponent.mjs",
+        "import_modules": [
+            "ButtonComponent",
+            "createElement"
+        ],
+        "order": "aabad",
+        "numeric_order": 39,
+        "used_by": [
+            "ViewBuilder"
+        ],
+        "layer": "View Layer"
+    },
+    {
+        "name": "updateClass",
+        "dir": "../src/view/utils/",
+        "file_name": "updateClass.mjs",
+        "import_modules": [],
+        "order": "aabacaa",
+        "numeric_order": 38,
+        "used_by": [
+            "FieldComponent"
+        ],
+        "layer": "View Layer"
+    },
+    {
+        "name": "FieldComponent",
+        "dir": "../src/view/components/",
+        "file_name": "FieldComponent.mjs",
+        "import_modules": [
+            "updateClass",
+            "createElement"
+        ],
+        "order": "aabaca",
+        "numeric_order": 37,
+        "used_by": [
+            "BoardComponent"
+        ],
+        "layer": "View Layer"
+    },
+    {
+        "name": "BoardComponent",
+        "dir": "../src/view/components/",
+        "file_name": "BoardComponent.mjs",
+        "import_modules": [
+            "FieldComponent",
+            "createElement"
+        ],
+        "order": "aabac",
+        "numeric_order": 36,
+        "used_by": [
+            "ViewBuilder"
+        ],
+        "layer": "View Layer"
+    },
+    {
+        "name": "ContainerComponent",
+        "dir": "../src/view/components/",
+        "file_name": "ContainerComponent.mjs",
+        "import_modules": [],
+        "order": "aabab",
+        "numeric_order": 35,
+        "used_by": [
+            "ViewBuilder"
+        ],
+        "layer": "View Layer"
+    },
+    {
+        "name": "ViewMediator",
+        "dir": "../src/view/components/",
+        "file_name": "ViewMediator.mjs",
+        "import_modules": [],
+        "order": "aabaa",
+        "numeric_order": 34,
+        "used_by": [
+            "ViewBuilder"
+        ],
+        "layer": "View Layer"
+    },
+    {
+        "name": "ViewBuilder",
+        "dir": "../src/view/components/",
+        "file_name": "ViewBuilder.mjs",
+        "import_modules": [
+            "ViewMediator",
+            "ContainerComponent",
+            "BoardComponent",
+            "ControlPanelComponent",
+            "PlayerPanel",
+            "InfoPanel"
+        ],
+        "order": "aaba",
+        "numeric_order": 33,
+        "used_by": [
+            "View"
+        ],
+        "layer": "View Layer"
+    },
+    {
+        "name": "View",
+        "dir": "../src/view/",
+        "file_name": "View.mjs",
+        "import_modules": [
+            "ViewBuilder",
+            "SvgRepository"
+        ],
+        "order": "aab",
+        "numeric_order": 32,
+        "used_by": [
+            "App"
+        ],
+        "layer": "View Layer"
+    },
+    {
+        "name": "GameOperatorEmpty",
+        "dir": "../src/model/game/",
+        "file_name": "GameOperatorEmpty.mjs",
+        "import_modules": [],
+        "order": "aaach",
+        "numeric_order": 31,
+        "used_by": [
+            "GameBuilder"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "GameOperator",
+        "dir": "../src/model/game/",
+        "file_name": "GameOperator.mjs",
+        "import_modules": [],
+        "order": "aaacg",
+        "numeric_order": 30,
+        "used_by": [
+            "GameBuilder"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "GameState",
+        "dir": "../src/model/game/",
+        "file_name": "GameState.mjs",
+        "import_modules": [],
+        "order": "aaacf",
+        "numeric_order": 29,
+        "used_by": [
+            "GameBuilder"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "DisactivateCommand",
+        "dir": "../src/model/commands/",
+        "file_name": "DisactivateCommand.mjs",
+        "import_modules": [],
+        "order": "aaaceca",
+        "numeric_order": 28,
+        "used_by": [
+            "MoveCommand",
+            "HoldCommand"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "HoldCommand",
+        "dir": "../src/model/commands/",
+        "file_name": "HoldCommand.mjs",
+        "import_modules": [
+            "DisactivateCommand"
+        ],
+        "order": "aaacec",
+        "numeric_order": 27,
+        "used_by": [
+            "Commands"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "KillCommand",
+        "dir": "../src/model/commands/",
+        "file_name": "KillCommand.mjs",
+        "import_modules": [],
+        "order": "aaacebb",
+        "numeric_order": 26,
+        "used_by": [
+            "MoveCommand"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "MoveCommand",
+        "dir": "../src/model/commands/",
+        "file_name": "MoveCommand.mjs",
+        "import_modules": [
+            "DisactivateCommand",
+            "KillCommand"
+        ],
+        "order": "aaaceb",
+        "numeric_order": 25,
+        "used_by": [
+            "Commands"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "CommandsHistory",
+        "dir": "../src/model/commands/",
+        "file_name": "CommandsHistory.mjs",
+        "import_modules": [],
+        "order": "aaacea",
+        "numeric_order": 24,
+        "used_by": [
+            "Commands"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "Commands",
+        "dir": "../src/model/commands/",
+        "file_name": "Commands.mjs",
+        "import_modules": [
+            "CommandsHistory",
+            "MoveCommand",
+            "HoldCommand"
+        ],
+        "order": "aaace",
+        "numeric_order": 23,
+        "used_by": [
+            "GameBuilder"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "MovesCounter",
+        "dir": "../src/model/game/",
+        "file_name": "MovesCounter.mjs",
+        "import_modules": [],
+        "order": "aaacd",
+        "numeric_order": 22,
+        "used_by": [
+            "GameBuilder"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "TurnCounter",
+        "dir": "../src/model/game/",
+        "file_name": "TurnCounter.mjs",
+        "import_modules": [],
+        "order": "aaacc",
+        "numeric_order": 21,
+        "used_by": [
+            "GameBuilder"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "ArrayIterator",
+        "dir": "../src/model/utils/",
+        "file_name": "ArrayIterator.mjs",
+        "import_modules": [],
+        "order": "aaacbba",
+        "numeric_order": 20,
+        "used_by": [
+            "Players",
+            "Scores",
+            "Board",
+            "Pawns",
+            "Pawn"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "Pawn",
+        "dir": "../src/model/game/",
+        "file_name": "Pawn.mjs",
+        "import_modules": [
+            "ArrayIterator"
+        ],
+        "order": "aaacbb",
+        "numeric_order": 19,
+        "used_by": [
+            "Pawns"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "Pawns",
+        "dir": "../src/model/game/",
+        "file_name": "Pawns.mjs",
+        "import_modules": [
+            "ArrayIterator",
+            "Pawn"
+        ],
+        "order": "aaacb",
+        "numeric_order": 18,
+        "used_by": [
+            "GameBuilder"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "Game",
+        "dir": "../src/model/game/",
+        "file_name": "Game.mjs",
+        "import_modules": [],
+        "order": "aaaca",
+        "numeric_order": 17,
+        "used_by": [
+            "GameBuilder"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "GameBuilder",
+        "dir": "../src/model/game/",
+        "file_name": "GameBuilder.mjs",
+        "import_modules": [
+            "Game",
+            "Pawns",
+            "TurnCounter",
+            "MovesCounter",
+            "Commands",
+            "GameState",
+            "GameOperator",
+            "GameOperatorEmpty"
+        ],
+        "order": "aaac",
+        "numeric_order": 16,
+        "used_by": [
+            "Model"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "boardSpec",
+        "dir": "../src/model/data/",
+        "file_name": "boardSpec.mjs",
+        "import_modules": [],
+        "order": "aaabe",
+        "numeric_order": 15,
+        "used_by": [
+            "SessionBuilder"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "shuffle",
+        "dir": "../src/model/utils/",
+        "file_name": "shuffle.mjs",
+        "import_modules": [],
+        "order": "aaabdac",
+        "numeric_order": 14,
+        "used_by": [
+            "Board"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "Field",
+        "dir": "../src/model/game/",
+        "file_name": "Field.mjs",
+        "import_modules": [],
+        "order": "aaabdaa",
+        "numeric_order": 13,
+        "used_by": [
+            "Board"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "Board",
+        "dir": "../src/model/game/",
+        "file_name": "Board.mjs",
+        "import_modules": [
+            "Field",
+            "ArrayIterator",
+            "shuffle"
+        ],
+        "order": "aaabda",
+        "numeric_order": 12,
+        "used_by": [
+            "BoardRepository"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "BoardRepository",
+        "dir": "../src/model/session/",
+        "file_name": "BoardRepository.mjs",
+        "import_modules": [
+            "Board"
+        ],
+        "order": "aaabd",
+        "numeric_order": 11,
+        "used_by": [
+            "SessionBuilder"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "Score",
+        "dir": "../src/model/session/",
+        "file_name": "Score.mjs",
+        "import_modules": [],
+        "order": "aaabca",
+        "numeric_order": 10,
+        "used_by": [
+            "Scores"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "Scores",
+        "dir": "../src/model/session/",
+        "file_name": "Scores.mjs",
+        "import_modules": [
+            "Score",
+            "ArrayIterator"
+        ],
+        "order": "aaabc",
+        "numeric_order": 9,
+        "used_by": [
+            "SessionBuilder"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "Player",
+        "dir": "../src/model/session/",
+        "file_name": "Player.mjs",
+        "import_modules": [],
+        "order": "aaabba",
+        "numeric_order": 8,
+        "used_by": [
+            "Players"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "Players",
+        "dir": "../src/model/session/",
+        "file_name": "Players.mjs",
+        "import_modules": [
+            "Player",
+            "ArrayIterator"
+        ],
+        "order": "aaabb",
+        "numeric_order": 7,
+        "used_by": [
+            "SessionBuilder"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "Session",
+        "dir": "../src/model/session/",
+        "file_name": "Session.mjs",
+        "import_modules": [],
+        "order": "aaaba",
+        "numeric_order": 6,
+        "used_by": [
+            "SessionBuilder"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "SessionBuilder",
+        "dir": "../src/model/session/",
+        "file_name": "SessionBuilder.mjs",
+        "import_modules": [
+            "Session",
+            "Players",
+            "Scores",
+            "BoardRepository",
+            "boardSpec"
+        ],
+        "order": "aaab",
+        "numeric_order": 5,
+        "used_by": [
+            "Model"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "Subject",
+        "dir": "../src/model/utils/",
+        "file_name": "Subject.mjs",
+        "import_modules": [],
+        "order": "aaaa",
+        "numeric_order": 4,
+        "used_by": [
+            "Model"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "Model",
+        "dir": "../src/model/",
+        "file_name": "Model.mjs",
+        "import_modules": [
+            "Subject",
+            "SessionBuilder",
+            "GameBuilder"
+        ],
+        "order": "aaa",
+        "numeric_order": 3,
+        "used_by": [
+            "App"
+        ],
+        "layer": "Model Layer"
+    },
+    {
+        "name": "App",
+        "dir": "../src/",
+        "file_name": "App.mjs",
+        "import_modules": [
+            "Model",
+            "View",
+            "Controller"
+        ],
+        "order": "aa",
+        "numeric_order": 2,
+        "used_by": [
+            "index"
+        ],
+        "layer": "App Layer"
+    },
+    {
+        "name": "index",
+        "dir": "../src/",
+        "file_name": "index.js",
+        "import_modules": [
+            "App"
+        ],
+        "order": "a",
+        "numeric_order": 1,
+        "used_by": [],
+        "layer": "App Layer"
+    }
+]

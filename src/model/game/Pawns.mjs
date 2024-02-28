@@ -83,9 +83,9 @@ const Pawns = function (pawnsSpec) {
     };
 
     const selectNext = function() {
-        // działa tylko jak iterator (z if (.hasNext()) )
 
         const changeSelectedPosition = function() {
+
             selectedPosition += 1;
             if (selectedPosition >= activePawns.length) {
                 selectedPosition = 0;
@@ -93,7 +93,9 @@ const Pawns = function (pawnsSpec) {
         };
 
         if (hasNext()) {
+
             changeSelectedPosition();
+            
             selected = activePawns[selectedPosition];
             if (selected.isActive()) {
                 console.log('>>> pawns.selectNext(): id = ' + selected.getId());
@@ -108,9 +110,13 @@ const Pawns = function (pawnsSpec) {
     };
 
     const select = function(id) {
+
         const newSelected = pawnsDictionary[id];
+
         if (newSelected.isActive()) {
+
             selected = newSelected;
+            selectedPosition = activePawns.indexOf(selected)
             console.log('>>> pawns.select(): id = ' + selected.getId());
             return true;
         } else {

@@ -1,19 +1,25 @@
 import string
+import time
 from JsModule import JsModule
 from my_storage import set_item
+from my_storage import get_item
 from my_dir import get_all_paths
 
-def concat_src():
+def merge_js(dir, merged_file, app_root, layers_roots=False, all_paths_file=False, modules_info_file=False):
+    """ Merges all js modules in 'dir' that are imported to 'app_root' module or its children, and saves to 'merged_file'.
+        Modules must use ES6 import/export syntax. Use modules names without extension.
+        Optional: 
+        * 'layers_roots' - adds comments at the top of the layer (={root_module: layer_name, ...})
+        * 'all_paths_file', 'modules_info_file' - paths to save modules informations"""
 
-    def get_paths():
+    def get_file_paths():
 
-        dir_src = '../src/'
-        paths_src_file = './data/paths_src.json'
+        all_paths = get_all_paths(dir)
 
-        # all_paths = get_and_store_all_paths(dir_src, paths_src_file)
-        all_paths = get_all_paths(dir_src)
+        if all_paths_file:
+            set_item(all_paths_file, all_paths)
 
-        return all_paths
+        return all_paths['files']
     
 
     def create_modules(paths):
@@ -34,7 +40,7 @@ def concat_src():
         return modules
 
 
-    def set_modules_position_in_app( modules, app_root, layers_roots=False ):
+    def set_modules_position_in_app( modules ):
 
         alphabet = list(string.ascii_lowercase)
         
@@ -61,35 +67,15 @@ def concat_src():
                 n += 1
                 process_import_modules(module)
 
-        root_module = modules[app_root]
-        root_module.set_order('a')
-        root_module.set_layer('App layer')
-        process_import_modules(root_module)
+        def process_app_root():
 
+            root_module = modules[app_root]
+            root_module.set_order('a')
+            root_module.set_layer(layers_roots[app_root])
+            process_import_modules(root_module)
 
-    def create_modules_info(modules_list):
+        process_app_root()
 
-        info = []
-
-        for module in modules_list:
-
-            module_info = {}
-
-            module_info['name'] = module.get_name()
-            module_info['dir'] = module.get_dir()
-            module_info['file_name'] = module.get_file_name()
-            module_info['import_modules'] = module.get_import_names()
-            module_info['order'] = module.get_order()
-            module_info['used_by'] = module.get_used_by()
-            module_info['layer'] = module.get_layer()
-            other_layers =module.get_other_layers()
-            if len(other_layers) > 0:
-                module_info['other_layers'] = other_layers
-                
-            info.append(module_info)
-
-        modules_info_file = './data/modules_info.json'
-        set_item(modules_info_file, info)
 
     def get_sorted_list(modules):
 
@@ -99,61 +85,103 @@ def concat_src():
         modules_list = list(modules.values())
         modules_list.sort(key=get_order, reverse=True)
 
+        set_numeric_order_in_modules(modules_list)
+        if modules_info_file:
+            create_modules_info(modules_list)
+
         return modules_list
     
+
+    def set_numeric_order_in_modules(modules_list):
+
+        n = 1
+        for module in reversed(modules_list):
+
+            module.set_numeric_order(n)
+            n += 1
+
+
+    def create_modules_info(modules_list):
+
+        def create_module_info(module):
+
+            module_info = {}
+
+            module_info['name'] = module.get_name()
+            module_info['dir'] = module.get_dir()
+            module_info['file_name'] = module.get_file_name()
+            module_info['import_modules'] = module.get_import_names()
+            module_info['order'] = module.get_order()
+            module_info['numeric_order'] = module.get_numeric_order()
+            module_info['used_by'] = module.get_used_by()
+            module_info['layer'] = module.get_layer()
+            other_layers =module.get_other_layers()
+            if len(other_layers) > 0:
+                module_info['other_layers'] = other_layers
+
+            return module_info
+
+
+        info = []
+
+        for module in modules_list:
+
+            module_info = create_module_info(module)    
+            info.append(module_info)
+
+        set_item(modules_info_file, info)
+
+
     def merge_modules(modules_list):
 
         merged = []
+        layers_titles = []
 
         def add(lines):
             merged.extend(lines)
 
-        layers_titles = []
+        def add_time():
+
+            add(['// ' + time.ctime()])
 
         def add_layers_title(module):
 
             layer = module.get_layer()
             if layer not in layers_titles:
-                add(['', '// ' + layer, ''])
+                add(['', '// ' + layer.upper(), ''])
                 layers_titles.append(layer)
 
         def add_content(module):
 
             add(module.get_content())
 
+        def merge():
 
-        for module in modules_list:
-            
-            order = module.get_order()
-            if (order != 'z'):
-            
-                add_layers_title(module)
-                add_content(module)
+            add_time()
+
+            for module in modules_list:
+                
+                order = module.get_order()
+                if (order != 'z'):
+                
+                    add_layers_title(module)
+                    add_content(module)
+
+        merge()
 
         return merged
-
-    def write_to_file(path, lines):
-
-        set_item(path, '\n'.join(lines), False)
-
-
-    all_paths = get_paths()
-    modules = create_modules(all_paths['files'])
-    app_root = 'index'
-    layers_roots = {
-        'index': 'APP LAYER',
-        'Model': 'MODEL LAYER',
-        'View': 'VIEW LAYER',
-        'Controller': 'CONTROLLER LAYER',
-    }
-    set_modules_position_in_app(modules, app_root, layers_roots)
-    modules_sorted = get_sorted_list(modules)
-    # create_modules_info(modules_sorted)
-    merged = merge_modules(modules_sorted)
-    write_to_file('./data/index.js', merged)
-
     
 
+    def write_to_file(lines):
+
+        set_item(merged_file, '\n'.join(lines), False)
 
 
-concat_src()
+    def exec():
+
+        modules = create_modules(get_file_paths())
+        set_modules_position_in_app(modules)
+        modules_sorted = get_sorted_list(modules)
+        write_to_file(merge_modules(modules_sorted))
+
+    exec()

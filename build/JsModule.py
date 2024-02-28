@@ -1,4 +1,4 @@
-from storage import *
+from my_storage import get_item
 
 class JsModule:
 
@@ -50,6 +50,7 @@ class JsModule:
         self.__set_import_names()
         self.used_by = []
         self.order = 'z'
+        self.numeric_order = False
         self.layer = False
         self.other_layers = []
 
@@ -81,6 +82,14 @@ class JsModule:
     def get_order(self):
 
         return self.order
+    
+    def set_numeric_order(self, order):
+
+        self.numeric_order = order
+
+    def get_numeric_order(self):
+
+        return self.numeric_order
     
     def add_used_by(self, module_name):
 
