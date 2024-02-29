@@ -16,8 +16,7 @@ const InfoPanel = function () {
             mainElement = createElement(
                 {
                     type: 'div',
-                    id: id,
-                    textContent: 'Info Panel'
+                    classList: 'info-panel',
                 }
             );
         };
@@ -28,7 +27,6 @@ const InfoPanel = function () {
                 {
                     type: 'div',
                     classList: 'screen',
-                    textContent: 'This is screen...',
                     parent: mainElement,
                 }
             );

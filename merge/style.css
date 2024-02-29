@@ -1,3 +1,48 @@
+/* main.css */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+}
+
+#main {
+    /* flex-grow: 1; */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-height: 100%;
+    padding: 10px;
+    background-color: var(--path);
+}
+
+#main>section {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.screen {
+    width: 100%;
+    height: 200px;
+    padding: 5px;
+    color: var(--wall);
+    background-color: var(--path);
+    border: 2px solid var(--wall);
+}
+
+/* board.css */
+
 :root {
     --path: hsl(51, 10%, 54%);
     --wall: hsl(51, 15%, 15%);
@@ -41,7 +86,7 @@
     display: flex;
 }
 
-/* .FIELD */
+/* .field */
 
 .field {
     position: relative;
@@ -110,7 +155,7 @@
     fill: var(--light-player2);
 }
 
-/* SVG VISIBILITY */
+/* svg visibility */
 
 .board svg {
 
@@ -205,35 +250,150 @@ svg.flag {
     background-position: center;
 }
 
+/* playerPanel.css */
 
-
-@keyframes blink {
-    0% {
-        opacity: 1;
-    }
-    20% {
-        opacity: 1;
-    }
-    30% {
-        opacity: 0;
-    }
-    70% {
-        opacity: 0;
-    }
-    80% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 1;
-    }
+#player_panel_1 {
+    order: 2;
 }
 
-/* .in-reach .pawn {
+#player_panel_2 {
+    order: -1;
+}
 
-    animation: blink 1s linear infinite running;
-} */
+.player-panel {
 
-/* .in-reach:hover .pawn {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    font-weight: bold;
+}
 
-    animation-play-state: running;
-} */
+.player-panel.player-1,
+.player-panel.player-1 input {
+    
+    color: var(--dark-player1);
+    background-color: var(--light-player1);
+}
+
+.player-panel.player-2,
+.player-panel.player-2 input {
+
+    color: var(--dark-player2);
+    background-color: var(--light-player2);
+}
+
+input.player-name {
+    
+    font-size: 36px;
+    font-weight: bold;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+input.player-name:focus {
+    
+    color: var(--path);
+    background-color: var(--wall);
+}
+
+.player-1 input.player-name:focus {
+    
+    color: var(--light-player1);
+    background-color: var(--dark-player1);
+}
+
+.player-2 input.player-name:focus {
+    
+    color: var(--light-player2);
+    background-color: var(--dark-player2);
+}
+
+.turn-section {
+    display: flex;
+    visibility: hidden;
+}
+
+.player-panel p {
+    padding: 5px 20px 0 0;
+    font-size: 20px;
+}
+
+.player-panel.active .turn-section {
+    visibility: visible;
+}
+
+/* controlPanel.css */
+
+.control_panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--path);
+}
+
+.control_panel.player-1 {
+    background-color: var(--light-player1);
+}
+
+.control_panel.player-2 {
+    background-color: var(--light-player2);
+}
+
+.control_panel button {
+    position: relative;
+    height: 100px;
+    width: 100px;
+    border: none;
+    background-color: var(--path);
+}
+
+.control_panel button.active {
+    cursor: pointer;
+}
+
+.control_panel button .container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+}
+
+.control_panel button.active .container {
+    opacity: 1;
+}
+
+.container.negative {
+    visibility: hidden;
+}
+
+button.active:hover .container.positive {
+    visibility: hidden;
+}
+
+button.active:hover .container.negative {
+    visibility: visible;
+}
+
+.control_panel button .dark {
+    fill: var(--wall);
+}
+
+#btn-right .container {
+    transform: rotate(90deg);
+}
+
+#btn-down .container {
+    transform: rotate(180deg);
+}
+
+#btn-left .container {
+    transform: rotate(270deg);
+}
+
+#btn-redo .container {
+    transform: scaleX(-1);
+}
