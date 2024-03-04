@@ -1,32 +1,54 @@
-.control_panel {
+.control-panel {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    padding: 20px;
+    /* flex-grow: 0; */
+    padding: 3vh 0;
     background-color: var(--path);
 }
 
-.control_panel.player-1 {
+.control-panel.player-1 {
     background-color: var(--light-player1);
 }
 
-.control_panel.player-2 {
+.control-panel.player-2 {
     background-color: var(--light-player2);
 }
 
-.control_panel button {
+.control-panel>.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 45vh;
+    background-color: var(--path);
+}
+
+/* button */
+
+.control-panel button,
+.control-panel .dummy {
     position: relative;
-    height: 100px;
-    width: 100px;
+    height: 15vh;
+    width: 15vh;
     border: none;
     background-color: var(--path);
 }
 
-.control_panel button.active {
+.control-panel .dummy {
+    display: none;
+    height: 1px;
+    width: 1px;
+    background-color: var(--path);
+    /* background-color: transparent; */
+}
+
+.control-panel button.active {
     cursor: pointer;
 }
 
-.control_panel button .container {
+.control-panel button .container {
     position: absolute;
     top: 0;
     left: 0;
@@ -35,7 +57,7 @@
     opacity: 0.3;
 }
 
-.control_panel button.active .container {
+.control-panel button.active .container {
     opacity: 1;
 }
 
@@ -51,22 +73,121 @@ button.active:hover .container.negative {
     visibility: visible;
 }
 
-.control_panel button .dark {
+.control-panel button .dark {
     fill: var(--wall);
 }
 
-#btn-right .container {
+button.select {
+    order: 1;
+}
+
+button.up {
+    order: 2;
+}
+
+button.turn {
+    order: 3;
+}
+
+button.left {
+    order: 4;
+}
+
+button.hold {
+    order: 5;
+}
+
+button.right {
+    order: 6;
+}
+
+button.undo {
+    order: 7;
+}
+
+button.down {
+    order: 8;
+}
+
+button.redo {
+    order: 9;
+}
+
+button.right .container {
     transform: rotate(90deg);
 }
 
-#btn-down .container {
+button.down .container {
     transform: rotate(180deg);
 }
 
-#btn-left .container {
+button.left .container {
     transform: rotate(270deg);
 }
 
-#btn-redo .container {
+button.redo .container {
     transform: scaleX(-1);
+}
+
+
+@media (orientation: portrait) and (max-width: 900px) {
+
+    .control-panel {
+        padding: 1vh 0;
+    }
+    
+    .control-panel>.wrapper {
+        width: 90vw;
+    }
+    
+    .control-panel button {
+        height: 18vw;
+        width: 18vw;
+    }
+
+    .control-panel .dummy-1 {
+        display: block;
+        order: 0;
+    }
+
+    button.select {
+        order: 1;
+    }
+    
+    button.undo {
+        order: 2;
+    }
+    
+    button.redo {
+        order: 3;
+    }
+    
+    button.turn {
+        order: 4;
+    }
+    
+    .control-panel .dummy-2 {
+        display: block;
+        order: 5;
+    }
+    
+    button.up {
+        order: 6;
+    }
+    
+    button.down {
+        order: 7;
+    }
+
+    button.left {
+        order: 8;
+    }
+    
+    button.right {
+        order: 8;
+    }
+    
+    button.hold {
+        order: 10;
+    }
 }

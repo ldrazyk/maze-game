@@ -1,13 +1,13 @@
 import ButtonComponent from "./ButtonComponent.mjs";
 import createElement from "../utils/createElement.mjs";
 
-const ControlPanelComponent = function({  }) {
+const ControlPanelComponent = function({ order=false }) {
     
     let mainElement;
     const containers = {};
     const buttonComponents = {};
     const state = {};
-    const id = 'control_panel';
+    const id = 'control-panel';
 
     let mediator;
 
@@ -17,12 +17,43 @@ const ControlPanelComponent = function({  }) {
 
             mainElement = createElement(
                 {
-                    type: 'section',
-                    classList: 'control_panel',
-                    id: 'control_panel'
+                    type: 'div',
+                    classList: 'panel control-panel',
+                    id: 'control-panel',
+                    order: order,
                 }
             );
         };
+
+        const createWrapper = function () {
+        
+            containers['wrapper'] = createElement(
+                {
+                    type: 'div',
+                    classList: 'wrapper',
+                    parent: mainElement
+                }
+            );
+        };
+
+        const createDummies = function () {
+        
+            const createDummy = function (id) {
+    
+                containers[id] = createElement(
+                    {
+                        type: 'div',
+                        classList: 'dummy ' + id,
+                        parent: containers['wrapper'],
+                    }
+                );
+            };
+            
+            ['dummy-1', 'dummy-2'].forEach(id => {
+                createDummy(id);
+            });
+        };
+
 
         const createRows = function () {
         
@@ -53,27 +84,30 @@ const ControlPanelComponent = function({  }) {
             const svgUndoNames = ['undo', 'undo-negative'];
             
             const buttonsSpec = [
-                { id: 'select', svgNames: ['select', 'select-negative'], onClick: () => mediator.selectNext(), order: 1, row: 1 },
-                { id: 'up', svgNames: svgMoveNames, onClick: () => mediator.moveUp(), order: 2, row: 1 },
-                { id: 'turn', svgNames: ['turn', 'turn-negative'], onClick: () => mediator.nextTurn(), order: 3, row: 1 },
-                { id: 'left', svgNames: svgMoveNames, onClick: () => mediator.moveLeft(), order: 4, row: 2 },
-                { id: 'hold', svgNames: ['hold', 'hold-negative'], onClick: () => mediator.hold(), order: 5, row: 2 },
-                { id: 'right', svgNames: svgMoveNames, onClick: () => mediator.moveRight(), order: 6, row: 2 },
-                { id: 'undo', svgNames: svgUndoNames, onClick: () => mediator.undo(), order: 7, row: 3 },
-                { id: 'down', svgNames: svgMoveNames, onClick: () => mediator.moveDown(), order: 8, row: 3 },
-                { id: 'redo', svgNames: svgUndoNames, onClick: () => mediator.redo(), order: 9, row: 3 },
+                { id: 'select', svgNames: ['select', 'select-negative'], onClick: () => mediator.selectNext(), row: 1 },
+                { id: 'up', svgNames: svgMoveNames, onClick: () => mediator.moveUp(), row: 1 },
+                { id: 'turn', svgNames: ['turn', 'turn-negative'], onClick: () => mediator.nextTurn(), row: 1 },
+                { id: 'left', svgNames: svgMoveNames, onClick: () => mediator.moveLeft(), row: 2 },
+                { id: 'hold', svgNames: ['hold', 'hold-negative'], onClick: () => mediator.hold(), row: 2 },
+                { id: 'right', svgNames: svgMoveNames, onClick: () => mediator.moveRight(), row: 2 },
+                { id: 'undo', svgNames: svgUndoNames, onClick: () => mediator.undo(), row: 3 },
+                { id: 'down', svgNames: svgMoveNames, onClick: () => mediator.moveDown(), row: 3 },
+                { id: 'redo', svgNames: svgUndoNames, onClick: () => mediator.redo(), row: 3 },
             ];
 
             buttonsSpec.forEach(spec => {
                 
                 const button = ButtonComponent({ ...spec, getSvgCopy });
                 buttonComponents[spec.id] = button;
-                containers[spec.row].appendChild(button.getMain());
+                // containers[spec.row].appendChild(button.getMain());
+                containers['wrapper'].appendChild(button.getMain());
             });
         };
 
         createMainElement();
-        createRows();
+        // createRows();
+        createWrapper();
+        createDummies();
         createButtons();
     };
 
@@ -100,7 +134,7 @@ const ControlPanelComponent = function({  }) {
 
         const updateActiveNumber = function () {
         
-            mainElement.classList = 'control_panel player-' + state['activeNumber'];
+            mainElement.classList = 'control-panel player-' + state['activeNumber'];
         };
 
         const updateButton = function (name) {

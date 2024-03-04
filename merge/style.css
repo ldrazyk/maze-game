@@ -6,6 +6,17 @@
     box-sizing: border-box;
 }
 
+:root {
+    --path: hsl(51, 10%, 54%);
+    --wall: hsl(51, 15%, 15%);
+    --dark-player1: hsl(216, 63%, 20%);
+    --light-player1: hsl(216, 59%, 86%);
+    --dark-player2: hsl(332, 74%, 21%);
+    --light-player2: hsl(332, 38%, 85%);
+    --header-height: 5vh;
+    --main-height: calc(100vh - 2 * var(--header-height));
+}
+
 html {
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -16,54 +27,112 @@ body,
     height: 100%;
 }
 
-#main {
-    /* flex-grow: 1; */
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    min-height: 100%;
-    padding: 10px;
-    background-color: var(--path);
-}
-
-#main>section {
+#root {
     display: flex;
     flex-direction: column;
-    padding: 10px;
 }
 
-.screen {
-    width: 100%;
-    height: 200px;
-    padding: 5px;
-    color: var(--wall);
+header,
+footer {
+    height: var(--header-height);
+    /* width: 100%; */
+    flex-shrink: 0;
     background-color: var(--path);
-    border: 2px solid var(--wall);
 }
+
+main {
+    display: flex;
+    /* flex-wrap: wrap; */
+    flex-grow: 1;
+    background-color: var(--path);
+}
+
+main>section {
+    display: flex;
+    flex-direction: column;
+}
+
+.board-section {
+    flex-grow: 0.3;
+    align-items: center;
+}
+
+.panels-section {
+    flex-grow: 1;
+}
+
+.panel {
+    flex-grow: 1;
+}
+
+.player-panel.player-1 {
+    order: 3;
+}
+
+.player-panel.player-2 {
+    order: 1;
+}
+
+.control-panel {
+    order: 2;
+}
+
+.info-panel {
+    order: 4;
+}
+
+.player-panel,
+.info-panel {
+    user-select: none;
+}
+
+@media (orientation: portrait) {
+
+    header {
+        height: 3vh;
+    }
+
+    main {
+        flex-direction: column;
+    }
+
+    .board-section {
+        flex-grow: 0;
+    }
+
+    footer {
+        display: none;
+    }
+}
+
 
 /* board.css */
 
 :root {
-    --path: hsl(51, 10%, 54%);
-    --wall: hsl(51, 15%, 15%);
-    --dark-player1: hsl(216, 63%, 20%);
-    --light-player1: hsl(216, 59%, 86%);
-    --dark-player2: hsl(332, 74%, 21%);
-    --light-player2: hsl(332, 38%, 85%);
-    --border: hsl(0, 0%, 0%);
-    --back: hsl(0, 0%, 10%);
     --large-border-width: 3px;
     --medium-border-width: 2px;
     --small-border-width: 2px;
 }
 
+/* .board */
+
 .board {
     display: flex;
     flex-direction: column;
-    box-sizing: content-box;
+    width: var(--main-height);
+    height: var(--main-height);
+    background-color: var(--wall);
     border-style: solid;
     border-color: var(--wall);
     border-width: 0;
+}
+
+@media (orientation: portrait) {
+
+    .board {
+        width: 90vw;
+        height: 90vw;
+    }
 }
 
 
@@ -82,36 +151,34 @@ body,
     border-right-width: var(--small-border-width);
 }
 
+/* .row */
+
 .row {
     display: flex;
+    flex-basis: 100%;
 }
 
 /* .field */
 
 .field {
     position: relative;
+    flex-basis: 100%;
     border-style: solid;
     border-color: var(--wall);
     border-width: 0;
 }
 
 .board.large-fields .field {
-    height: 90px;
-    width: 90px;
     border-top-width: var(--large-border-width);
     border-left-width: var(--large-border-width);
 }
 
 .board.medium-fields .field {
-    height: 70px;
-    width: 70px;
     border-top-width: var(--medium-border-width);
     border-left-width: var(--medium-border-width);
 }
 
 .board.small-fields .field {
-    height: 55px;
-    width: 55px;
     border-top-width: var(--small-border-width);
     border-left-width: var(--small-border-width);
 }
@@ -131,7 +198,6 @@ body,
 .exit {
     background-color: var(--path);
 }
-
 
 /* colors */
 
@@ -155,7 +221,7 @@ body,
     fill: var(--light-player2);
 }
 
-/* svg visibility */
+/* svg */
 
 .board svg {
 
@@ -218,8 +284,6 @@ svg.flag {
     visibility: unset;
 }
 
-
-
 .pawn.player-2,
 .flag.player-2 {
 
@@ -252,108 +316,120 @@ svg.flag {
 
 /* playerPanel.css */
 
-#player_panel_1 {
-    order: 2;
-}
-
-#player_panel_2 {
-    order: -1;
-}
-
 .player-panel {
-
     display: flex;
-    flex-direction: column;
-    padding: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    padding-left: 1vh;
+    font-size: 3vh;
     font-weight: bold;
 }
 
 .player-panel.player-1,
 .player-panel.player-1 input {
-    
     color: var(--dark-player1);
     background-color: var(--light-player1);
 }
 
 .player-panel.player-2,
 .player-panel.player-2 input {
-
     color: var(--dark-player2);
     background-color: var(--light-player2);
 }
 
 input.player-name {
-    
-    font-size: 36px;
+    flex-basis: 100%;
+    font-size: 2em;
     font-weight: bold;
     background-color: transparent;
     border: none;
     outline: none;
 }
 
-input.player-name:focus {
-    
-    color: var(--path);
-    background-color: var(--wall);
-}
-
 .player-1 input.player-name:focus {
-    
     color: var(--light-player1);
     background-color: var(--dark-player1);
 }
 
 .player-2 input.player-name:focus {
-    
     color: var(--light-player2);
     background-color: var(--dark-player2);
 }
 
-.turn-section {
-    display: flex;
-    visibility: hidden;
-}
-
 .player-panel p {
-    padding: 5px 20px 0 0;
-    font-size: 20px;
+    padding: 0 20px 0 0;
+    /* font-size: 15%; */
 }
 
-.player-panel.active .turn-section {
-    visibility: visible;
+.player-panel .when-active {
+    display: none;
+}
+
+.player-panel.active .when-active {
+    display: block;
+}
+
+@media (orientation: portrait) {
+
+    .player-panel {
+        font-size: 2vh;
+    }
 }
 
 /* controlPanel.css */
 
-.control_panel {
+.control-panel {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    padding: 20px;
+    /* flex-grow: 0; */
+    padding: 3vh 0;
     background-color: var(--path);
 }
 
-.control_panel.player-1 {
+.control-panel.player-1 {
     background-color: var(--light-player1);
 }
 
-.control_panel.player-2 {
+.control-panel.player-2 {
     background-color: var(--light-player2);
 }
 
-.control_panel button {
+.control-panel>.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 45vh;
+    background-color: var(--path);
+}
+
+/* button */
+
+.control-panel button,
+.control-panel .dummy {
     position: relative;
-    height: 100px;
-    width: 100px;
+    height: 15vh;
+    width: 15vh;
     border: none;
     background-color: var(--path);
 }
 
-.control_panel button.active {
+.control-panel .dummy {
+    display: none;
+    height: 1px;
+    width: 1px;
+    background-color: var(--path);
+    /* background-color: transparent; */
+}
+
+.control-panel button.active {
     cursor: pointer;
 }
 
-.control_panel button .container {
+.control-panel button .container {
     position: absolute;
     top: 0;
     left: 0;
@@ -362,7 +438,7 @@ input.player-name:focus {
     opacity: 0.3;
 }
 
-.control_panel button.active .container {
+.control-panel button.active .container {
     opacity: 1;
 }
 
@@ -378,22 +454,122 @@ button.active:hover .container.negative {
     visibility: visible;
 }
 
-.control_panel button .dark {
+.control-panel button .dark {
     fill: var(--wall);
 }
 
-#btn-right .container {
+button.select {
+    order: 1;
+}
+
+button.up {
+    order: 2;
+}
+
+button.turn {
+    order: 3;
+}
+
+button.left {
+    order: 4;
+}
+
+button.hold {
+    order: 5;
+}
+
+button.right {
+    order: 6;
+}
+
+button.undo {
+    order: 7;
+}
+
+button.down {
+    order: 8;
+}
+
+button.redo {
+    order: 9;
+}
+
+button.right .container {
     transform: rotate(90deg);
 }
 
-#btn-down .container {
+button.down .container {
     transform: rotate(180deg);
 }
 
-#btn-left .container {
+button.left .container {
     transform: rotate(270deg);
 }
 
-#btn-redo .container {
+button.redo .container {
     transform: scaleX(-1);
 }
+
+
+@media (orientation: portrait) and (max-width: 900px) {
+
+    .control-panel {
+        padding: 1vh 0;
+    }
+    
+    .control-panel>.wrapper {
+        width: 90vw;
+    }
+    
+    .control-panel button {
+        height: 18vw;
+        width: 18vw;
+    }
+
+    .control-panel .dummy-1 {
+        display: block;
+        order: 0;
+    }
+
+    button.select {
+        order: 1;
+    }
+    
+    button.undo {
+        order: 2;
+    }
+    
+    button.redo {
+        order: 3;
+    }
+    
+    button.turn {
+        order: 4;
+    }
+    
+    .control-panel .dummy-2 {
+        display: block;
+        order: 5;
+    }
+    
+    button.up {
+        order: 6;
+    }
+    
+    button.down {
+        order: 7;
+    }
+
+    button.left {
+        order: 8;
+    }
+    
+    button.right {
+        order: 8;
+    }
+    
+    button.hold {
+        order: 10;
+    }
+}
+

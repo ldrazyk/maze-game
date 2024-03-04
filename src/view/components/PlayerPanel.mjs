@@ -1,6 +1,6 @@
 import createElement from "../utils/createElement.mjs";
 
-const PlayerPanel = function ({ playerNumber, gameState }) {
+const PlayerPanel = function ({ playerNumber, order=false, gameState }) {
     
     let mainElement;
     const elements = {
@@ -27,7 +27,7 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
 
     const initProps = function () {
     
-        props.id = 'player_panel_' + playerNumber;
+        props.id = 'player-panel-' + playerNumber;
         props.player = gameState.getPlayer(playerNumber);
     };
 
@@ -48,8 +48,9 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
             mainElement = createElement(
                 {
                     type: 'div',
-                    classList: 'player-panel player-' + playerNumber,
+                    classList: 'panel player-panel player-' + playerNumber,
                     id: props.id,
+                    order: order,
                 }
             );
         };
@@ -61,6 +62,7 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
                     type: 'input',
                     classList: 'player-name',
                     value: state.name,
+                    size: 1,
                     parent: mainElement,
                 }
             );
@@ -118,9 +120,9 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
             elements.turn = createElement(
                 {
                     type: 'p',
-                    classList: 'turn',
+                    classList: 'turn when-active',
                     textContent: 'Turn: ',
-                    parent: elements.turnSection,
+                    parent: mainElement,
                 }
             );
         };
@@ -130,9 +132,9 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
             elements.moves = createElement(
                 {
                     type: 'p',
-                    classList: 'moves',
+                    classList: 'moves when-active',
                     textContent: 'Moves: ',
-                    parent: elements.turnSection,
+                    parent: mainElement,
                 }
             );
         };
@@ -142,9 +144,9 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
             elements.holds = createElement(
                 {
                     type: 'p',
-                    classList: 'holds',
-                    textContent: 'Holds left: ',
-                    parent: elements.turnSection,
+                    classList: 'holds when-active',
+                    textContent: 'Holds: ',
+                    parent: mainElement,
                 }
             );
         };
@@ -152,7 +154,7 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
         createMain();
         createName();
         createScore();
-        createTurnSection();
+        // createTurnSection();
         createTurn();
         createMoves();
         createHolds();
@@ -276,7 +278,7 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
     
             const updateHoldsDom = function () {
             
-                elements.holds.textContent = 'Holds left: ' + state.holds;
+                elements.holds.textContent = 'Holds: ' + state.holds;
             };
 
             if ( updateHoldsState() ) updateHoldsDom();

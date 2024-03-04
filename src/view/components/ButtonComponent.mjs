@@ -11,7 +11,15 @@ const ButtonComponent = function ({ id=false, text=false, onClick, order=false, 
             btnId = 'btn-' + id;
         }
 
-        mainElement = createElement({ type: 'button', id: btnId, text, order});
+        mainElement = createElement(
+            { 
+                type: 'button',
+                classList: id,
+                id: btnId, 
+                text: text, 
+                order: order,
+            }
+        );
 
         containers[0] = createElement({ type: 'div', classList: 'container positive', parent: mainElement});
         containers[1] = createElement({ type: 'div', classList: 'container negative', parent: mainElement});

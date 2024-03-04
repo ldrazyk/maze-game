@@ -1,24 +1,28 @@
 :root {
-    --path: hsl(51, 10%, 54%);
-    --wall: hsl(51, 15%, 15%);
-    --dark-player1: hsl(216, 63%, 20%);
-    --light-player1: hsl(216, 59%, 86%);
-    --dark-player2: hsl(332, 74%, 21%);
-    --light-player2: hsl(332, 38%, 85%);
-    --border: hsl(0, 0%, 0%);
-    --back: hsl(0, 0%, 10%);
     --large-border-width: 3px;
     --medium-border-width: 2px;
     --small-border-width: 2px;
 }
 
+/* .board */
+
 .board {
     display: flex;
     flex-direction: column;
-    box-sizing: content-box;
+    width: var(--main-height);
+    height: var(--main-height);
+    background-color: var(--wall);
     border-style: solid;
     border-color: var(--wall);
     border-width: 0;
+}
+
+@media (orientation: portrait) {
+
+    .board {
+        width: 90vw;
+        height: 90vw;
+    }
 }
 
 
@@ -37,36 +41,34 @@
     border-right-width: var(--small-border-width);
 }
 
+/* .row */
+
 .row {
     display: flex;
+    flex-basis: 100%;
 }
 
-/* .FIELD */
+/* .field */
 
 .field {
     position: relative;
+    flex-basis: 100%;
     border-style: solid;
     border-color: var(--wall);
     border-width: 0;
 }
 
 .board.large-fields .field {
-    height: 90px;
-    width: 90px;
     border-top-width: var(--large-border-width);
     border-left-width: var(--large-border-width);
 }
 
 .board.medium-fields .field {
-    height: 70px;
-    width: 70px;
     border-top-width: var(--medium-border-width);
     border-left-width: var(--medium-border-width);
 }
 
 .board.small-fields .field {
-    height: 55px;
-    width: 55px;
     border-top-width: var(--small-border-width);
     border-left-width: var(--small-border-width);
 }
@@ -86,7 +88,6 @@
 .exit {
     background-color: var(--path);
 }
-
 
 /* colors */
 
@@ -110,7 +111,7 @@
     fill: var(--light-player2);
 }
 
-/* SVG VISIBILITY */
+/* svg */
 
 .board svg {
 
@@ -173,8 +174,6 @@ svg.flag {
     visibility: unset;
 }
 
-
-
 .pawn.player-2,
 .flag.player-2 {
 
@@ -207,7 +206,7 @@ svg.flag {
 
 
 
-@keyframes blink {
+/* @keyframes blink {
     0% {
         opacity: 1;
     }
@@ -226,7 +225,7 @@ svg.flag {
     100% {
         opacity: 1;
     }
-}
+} */
 
 /* .in-reach .pawn {
 

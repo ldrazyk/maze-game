@@ -1,11 +1,18 @@
-const ContainerComponent = function ({ id, type='div' }) {
+import createElement from "../utils/createElement.mjs";
+
+const ContainerComponent = function ({ id, type='div', classList=false }) {
     
     let mainElement;
     
     const createMainElement = function () {
         
-        mainElement = document.createElement(type);
-        mainElement.id = id;
+        mainElement = createElement(
+            {
+                type: type,
+                classList: classList,
+                id: id,
+            }
+        );
     };
 
     const init = function () {

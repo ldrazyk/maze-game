@@ -1,4 +1,4 @@
-const createElement = function ({ type, classList=false, id=false, datasets=false, textContent=false, value=false, order=false, parent=false }) {
+const createElement = function ({ type, classList=false, id=false, datasets=false, textContent=false, value=false, size=false, order=false, parent=false }) {
 
     const element = document.createElement(type);
 
@@ -22,6 +22,10 @@ const createElement = function ({ type, classList=false, id=false, datasets=fals
 
     if (value) {
         element.value = value;
+    }
+
+    if (size) {
+        element.size = size;
     }
 
     if  (order) {

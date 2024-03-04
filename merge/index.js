@@ -1,4 +1,4 @@
-// Wed Feb 28 17:52:55 2024
+// Mon Mar  4 17:48:37 2024
 
 // CONTROLLER LAYER
 
@@ -753,7 +753,7 @@ const SvgRepository = function () {
     );
 };
 
-const createElement = function ({ type, classList=false, id=false, datasets=false, textContent=false, value=false, order=false, parent=false }) {
+const createElement = function ({ type, classList=false, id=false, datasets=false, textContent=false, value=false, size=false, order=false, parent=false }) {
 
     const element = document.createElement(type);
 
@@ -779,6 +779,10 @@ const createElement = function ({ type, classList=false, id=false, datasets=fals
         element.value = value;
     }
 
+    if (size) {
+        element.size = size;
+    }
+
     if  (order) {
         element.style.order = order
     }
@@ -791,11 +795,11 @@ const createElement = function ({ type, classList=false, id=false, datasets=fals
 };
 
 
-const InfoPanel = function () {
+const InfoPanel = function ({ order=false }) {
 
     let mainElement;
     let screen;
-    const id = 'info_panel';
+    const id = 'info-panel';
 
     let mediator;
 
@@ -807,8 +811,8 @@ const InfoPanel = function () {
             mainElement = createElement(
                 {
                     type: 'div',
-                    id: id,
-                    // textContent: 'Info Panel'
+                    classList: 'panel info-panel',
+                    order: order,
                 }
             );
         };
@@ -819,7 +823,6 @@ const InfoPanel = function () {
                 {
                     type: 'div',
                     classList: 'screen',
-                    // textContent: 'This is screen...',
                     parent: mainElement,
                 }
             );
@@ -865,7 +868,7 @@ const InfoPanel = function () {
 };
 
 
-const PlayerPanel = function ({ playerNumber, gameState }) {
+const PlayerPanel = function ({ playerNumber, order=false, gameState }) {
 
     let mainElement;
     const elements = {
@@ -892,7 +895,7 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
 
     const initProps = function () {
 
-        props.id = 'player_panel_' + playerNumber;
+        props.id = 'player-panel-' + playerNumber;
         props.player = gameState.getPlayer(playerNumber);
     };
 
@@ -913,8 +916,9 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
             mainElement = createElement(
                 {
                     type: 'div',
-                    classList: 'player-panel player-' + playerNumber,
+                    classList: 'panel player-panel player-' + playerNumber,
                     id: props.id,
+                    order: order,
                 }
             );
         };
@@ -926,6 +930,7 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
                     type: 'input',
                     classList: 'player-name',
                     value: state.name,
+                    size: 1,
                     parent: mainElement,
                 }
             );
@@ -983,9 +988,9 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
             elements.turn = createElement(
                 {
                     type: 'p',
-                    classList: 'turn',
+                    classList: 'turn when-active',
                     textContent: 'Turn: ',
-                    parent: elements.turnSection,
+                    parent: mainElement,
                 }
             );
         };
@@ -995,9 +1000,9 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
             elements.moves = createElement(
                 {
                     type: 'p',
-                    classList: 'moves',
+                    classList: 'moves when-active',
                     textContent: 'Moves: ',
-                    parent: elements.turnSection,
+                    parent: mainElement,
                 }
             );
         };
@@ -1007,9 +1012,9 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
             elements.holds = createElement(
                 {
                     type: 'p',
-                    classList: 'holds',
-                    textContent: 'Holds left: ',
-                    parent: elements.turnSection,
+                    classList: 'holds when-active',
+                    textContent: 'Holds: ',
+                    parent: mainElement,
                 }
             );
         };
@@ -1017,7 +1022,7 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
         createMain();
         createName();
         createScore();
-        createTurnSection();
+        // createTurnSection();
         createTurn();
         createMoves();
         createHolds();
@@ -1141,7 +1146,7 @@ const PlayerPanel = function ({ playerNumber, gameState }) {
 
             const updateHoldsDom = function () {
 
-                elements.holds.textContent = 'Holds left: ' + state.holds;
+                elements.holds.textContent = 'Holds: ' + state.holds;
             };
 
             if ( updateHoldsState() ) updateHoldsDom();
@@ -1208,7 +1213,15 @@ const ButtonComponent = function ({ id=false, text=false, onClick, order=false, 
             btnId = 'btn-' + id;
         }
 
-        mainElement = createElement({ type: 'button', id: btnId, text, order});
+        mainElement = createElement(
+            {
+                type: 'button',
+                classList: id,
+                id: btnId,
+                text: text,
+                order: order,
+            }
+        );
 
         containers[0] = createElement({ type: 'div', classList: 'container positive', parent: mainElement});
         containers[1] = createElement({ type: 'div', classList: 'container negative', parent: mainElement});
@@ -1257,13 +1270,13 @@ const ButtonComponent = function ({ id=false, text=false, onClick, order=false, 
 };
 
 
-const ControlPanelComponent = function({  }) {
+const ControlPanelComponent = function({ order=false }) {
 
     let mainElement;
     const containers = {};
     const buttonComponents = {};
     const state = {};
-    const id = 'control_panel';
+    const id = 'control-panel';
 
     let mediator;
 
@@ -1273,12 +1286,43 @@ const ControlPanelComponent = function({  }) {
 
             mainElement = createElement(
                 {
-                    type: 'section',
-                    classList: 'control_panel',
-                    id: 'control_panel'
+                    type: 'div',
+                    classList: 'panel control-panel',
+                    id: 'control-panel',
+                    order: order,
                 }
             );
         };
+
+        const createWrapper = function () {
+
+            containers['wrapper'] = createElement(
+                {
+                    type: 'div',
+                    classList: 'wrapper',
+                    parent: mainElement
+                }
+            );
+        };
+
+        const createDummies = function () {
+
+            const createDummy = function (id) {
+
+                containers[id] = createElement(
+                    {
+                        type: 'div',
+                        classList: 'dummy ' + id,
+                        parent: containers['wrapper'],
+                    }
+                );
+            };
+
+            ['dummy-1', 'dummy-2'].forEach(id => {
+                createDummy(id);
+            });
+        };
+
 
         const createRows = function () {
 
@@ -1309,27 +1353,30 @@ const ControlPanelComponent = function({  }) {
             const svgUndoNames = ['undo', 'undo-negative'];
 
             const buttonsSpec = [
-                { id: 'select', svgNames: ['select', 'select-negative'], onClick: () => mediator.selectNext(), order: 1, row: 1 },
-                { id: 'up', svgNames: svgMoveNames, onClick: () => mediator.moveUp(), order: 2, row: 1 },
-                { id: 'turn', svgNames: ['turn', 'turn-negative'], onClick: () => mediator.nextTurn(), order: 3, row: 1 },
-                { id: 'left', svgNames: svgMoveNames, onClick: () => mediator.moveLeft(), order: 4, row: 2 },
-                { id: 'hold', svgNames: ['hold', 'hold-negative'], onClick: () => mediator.hold(), order: 5, row: 2 },
-                { id: 'right', svgNames: svgMoveNames, onClick: () => mediator.moveRight(), order: 6, row: 2 },
-                { id: 'undo', svgNames: svgUndoNames, onClick: () => mediator.undo(), order: 7, row: 3 },
-                { id: 'down', svgNames: svgMoveNames, onClick: () => mediator.moveDown(), order: 8, row: 3 },
-                { id: 'redo', svgNames: svgUndoNames, onClick: () => mediator.redo(), order: 9, row: 3 },
+                { id: 'select', svgNames: ['select', 'select-negative'], onClick: () => mediator.selectNext(), row: 1 },
+                { id: 'up', svgNames: svgMoveNames, onClick: () => mediator.moveUp(), row: 1 },
+                { id: 'turn', svgNames: ['turn', 'turn-negative'], onClick: () => mediator.nextTurn(), row: 1 },
+                { id: 'left', svgNames: svgMoveNames, onClick: () => mediator.moveLeft(), row: 2 },
+                { id: 'hold', svgNames: ['hold', 'hold-negative'], onClick: () => mediator.hold(), row: 2 },
+                { id: 'right', svgNames: svgMoveNames, onClick: () => mediator.moveRight(), row: 2 },
+                { id: 'undo', svgNames: svgUndoNames, onClick: () => mediator.undo(), row: 3 },
+                { id: 'down', svgNames: svgMoveNames, onClick: () => mediator.moveDown(), row: 3 },
+                { id: 'redo', svgNames: svgUndoNames, onClick: () => mediator.redo(), row: 3 },
             ];
 
             buttonsSpec.forEach(spec => {
 
                 const button = ButtonComponent({ ...spec, getSvgCopy });
                 buttonComponents[spec.id] = button;
-                containers[spec.row].appendChild(button.getMain());
+                // containers[spec.row].appendChild(button.getMain());
+                containers['wrapper'].appendChild(button.getMain());
             });
         };
 
         createMainElement();
-        createRows();
+        // createRows();
+        createWrapper();
+        createDummies();
         createButtons();
     };
 
@@ -1356,7 +1403,7 @@ const ControlPanelComponent = function({  }) {
 
         const updateActiveNumber = function () {
 
-            mainElement.classList = 'control_panel player-' + state['activeNumber'];
+            mainElement.classList = 'control-panel player-' + state['activeNumber'];
         };
 
         const updateButton = function (name) {
@@ -1954,14 +2001,20 @@ const BoardComponent = function({ gameState }) {
     );
 };
 
-const ContainerComponent = function ({ id, type='div' }) {
+
+const ContainerComponent = function ({ id, type='div', classList=false }) {
 
     let mainElement;
 
     const createMainElement = function () {
 
-        mainElement = document.createElement(type);
-        mainElement.id = id;
+        mainElement = createElement(
+            {
+                type: type,
+                classList: classList,
+                id: id,
+            }
+        );
     };
 
     const init = function () {
@@ -2267,18 +2320,20 @@ const View = function() {
             builder.setController(controller);
             builder.setSvgRepository(svgRepository);
 
-            builder.setContainer({ id: 'main', type: 'div', parentId: 'root' });
+            builder.setContainer({ id: 'header', type: 'header', parentId: 'root'});
 
-            builder.setContainer({ id: 'section1', type: 'section', parentId: 'main' });
+            builder.setContainer({ id: 'main', type: 'main', parentId: 'root' });
 
-            builder.setBoard({ parentId: 'section1', gameState: gameState });
-            builder.setInfoPanel({ parentId: 'section1' });
+            builder.setContainer({ id: 'board-section', type: 'section', classList: 'board-section', parentId: 'main' });
+            builder.setBoard({ parentId: 'board-section', gameState: gameState });
 
-            builder.setContainer({ id: 'section2', type: 'section', parentId: 'main' });
+            builder.setContainer({ id: 'panels-section', type: 'section', classList: 'panels-section', parentId: 'main' });
+            builder.setControlPanel({ parentId: 'panels-section' });
+            builder.setPlayerPanel({ playerNumber: 1, parentId: 'panels-section', gameState: gameState });
+            builder.setPlayerPanel({ playerNumber: 2, parentId: 'panels-section', gameState: gameState });
+            builder.setInfoPanel({ parentId: 'panels-section' });
 
-            builder.setControlPanel({ parentId: 'section2' });
-            builder.setPlayerPanel({ playerNumber: 1, parentId: 'section2', gameState: gameState });
-            builder.setPlayerPanel({ playerNumber: 2, parentId: 'section2', gameState: gameState });
+            builder.setContainer({ id: 'footer', type: 'footer', parentId: 'root'});
         };
 
         make();
@@ -5042,8 +5097,8 @@ const runApp = function () {
     const createSession = function () {
 
         const playersSpec = [
-            {name: 'Walter White', color: 'blue', number: 1},
-            {name: 'Jessy Pinkman', color: 'pink', number: 2}
+            {name: 'Player 1', color: 'blue', number: 1},
+            {name: 'Player 2', color: 'pink', number: 2}
         ];
 
         app.createSession(playersSpec);

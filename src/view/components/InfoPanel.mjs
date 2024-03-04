@@ -1,10 +1,10 @@
 import createElement from "../utils/createElement.mjs";
 
-const InfoPanel = function () {
+const InfoPanel = function ({ order=false }) {
     
     let mainElement;
     let screen;
-    const id = 'info_panel';
+    const id = 'info-panel';
 
     let mediator;
 
@@ -16,7 +16,8 @@ const InfoPanel = function () {
             mainElement = createElement(
                 {
                     type: 'div',
-                    classList: 'info-panel',
+                    classList: 'panel info-panel',
+                    order: order,
                 }
             );
         };

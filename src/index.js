@@ -12,8 +12,8 @@ const runApp = function () {
     const createSession = function () {
     
         const playersSpec = [
-            {name: 'Walter White', color: 'blue', number: 1}, 
-            {name: 'Jessy Pinkman', color: 'pink', number: 2}
+            {name: 'Player 1', color: 'blue', number: 1}, 
+            {name: 'Player 2', color: 'pink', number: 2}
         ];
     
         app.createSession(playersSpec);
