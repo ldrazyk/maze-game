@@ -26,9 +26,9 @@ const Session = function () {
         players.setPlayerName(spec);
     };
 
-    const createBoard = function (id) {
+    const getBoard = function (spec) {
     
-        return boardRepository.createBoard(id);
+        return boardRepository.getBoard(spec);
     };
 
     const getPlayers = function () {
@@ -60,7 +60,7 @@ const Session = function () {
 
             setPlayerName,
 
-            createBoard,
+            getBoard,
 
             getPlayers,
             getPlayer,

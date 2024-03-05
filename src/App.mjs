@@ -25,9 +25,9 @@ const App = function () {
         controller.createSession({ playersSpec });
     };
 
-    const createGame = function({ boardId, pawnsSpec }) {
+    const createGame = function(spec) {
 
-        controller.createGame({ boardId, pawnsSpec });
+        controller.createGame(spec);
     };
     
     

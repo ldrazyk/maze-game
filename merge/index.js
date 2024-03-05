@@ -5106,7 +5106,7 @@ const runApp = function () {
 
     const createGame = function () {
 
-        const boardId = 'board0702';
+        const boardId = 'board0701';
         // const boardId = 'board0900';
         // const boardId = 'board1100';
 

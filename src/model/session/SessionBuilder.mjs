@@ -2,7 +2,7 @@ import Session from './Session.mjs';
 import Players from './Players.mjs';
 import Scores from './Scores.mjs';
 import BoardRepository from './BoardRepository.mjs';
-import boardSpec from '../data/boardSpec.mjs';
+import boardsSpec from '../data/boardsSpec.mjs';
 
 const SessionBuilder = function () {
     
@@ -14,7 +14,7 @@ const SessionBuilder = function () {
 
     const setBoardRepository = function () {
     
-        const repository = BoardRepository(boardSpec);
+        const repository = BoardRepository(boardsSpec);
         session.setBoardRepository(repository);
     };
 

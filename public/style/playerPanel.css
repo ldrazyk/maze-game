@@ -45,11 +45,11 @@ input.player-name {
 }
 
 .player-panel .when-active {
-    display: none;
+    visibility: hidden;
 }
 
 .player-panel.active .when-active {
-    display: block;
+    visibility: visible;
 }
 
 @media (orientation: portrait) {

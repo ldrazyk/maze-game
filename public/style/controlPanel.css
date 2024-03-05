@@ -130,7 +130,7 @@ button.redo .container {
 }
 
 
-@media (orientation: portrait) and (max-width: 900px) {
+@media (orientation: portrait) and (max-width: 500px) {
 
     .control-panel {
         padding: 1vh 0;
@@ -172,22 +172,22 @@ button.redo .container {
     }
     
     button.up {
-        order: 6;
+        order: 7;
     }
     
     button.down {
-        order: 7;
+        order: 9;
     }
 
     button.left {
-        order: 8;
+        order: 6;
     }
     
     button.right {
-        order: 8;
+        order: 10;
     }
     
     button.hold {
-        order: 10;
+        order: 8;
     }
 }

@@ -21,9 +21,15 @@ const runApp = function () {
 
     const createGame = function () {
     
-        const boardId = 'board0702';
-        // const boardId = 'board0900';
+        // const boardId = 'board0701';
+        // const boardId = false;
+        const boardId = 'board0900';
         // const boardId = 'board1100';
+
+        const boardSpec = {
+            // id: 'board0702',
+            sizes: [5, 7, 9],
+        }
     
         const pawnsSpec1 = [
             {type: 'lion', amount: 1}, 
@@ -33,7 +39,7 @@ const runApp = function () {
     
         const pawnsSpec = [pawnsSpec1, pawnsSpec1];
     
-        app.createGame({ boardId, pawnsSpec });
+        app.createGame({ boardSpec, pawnsSpec });
     };
 
     createApp();

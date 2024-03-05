@@ -1,44 +1,78 @@
 import Board from "../game/Board.mjs";
+import shuffle from "../utils/shuffle.mjs";
 
-const BoardRepository = function (boardSpec) {
+const BoardRepository = function (boardsSpec) {
 
     const boards = {};
-    let hasAllBoards = false;
+    const boardsSizes = {};
+    let hasBoards = false;
     
-    const createBoard = function (id) {
     
-        const spec = boardSpec[id];
+    const createBoards = function () {
+        
+        const createBoard = function ({ id, size, spec}) {
+        
+            const board = Board({ id, ...spec});
 
-        return Board({ id, ...spec});
-    };
+            boards[id] = board;
 
-    const createAllBoards = function () {
+            if (!boardsSizes[size]) {
+                boardsSizes[size] = [];
+            }
+            boardsSizes[size].push(board);
+        };
 
-        for (const id of Object.keys(boardSpec)) {
+        for (const [size, sizeBoardsSpec] of Object.entries(boardsSpec)) {
+            for (const [id, spec] of Object.entries(sizeBoardsSpec)) {
 
-            boards[id] = createBoard(id);
+                createBoard({ id, size, spec});
+            }
         }
     };
 
-    const checkHasAllBoards = function () {
+    const checkHasBoards = function () {
     
-        if (!hasAllBoards) {
+        if (!hasBoards) {
             
-            createAllBoards();
-            hasAllBoards = true;
+            createBoards();
+            hasBoards = true;
         }
     };
 
-    const getBoard = function (id) {
+    const getBoard = function ({ id=false, sizes=false }) {
 
-        checkHasAllBoards();
-    
-        return boards[id];
+        const getRandomBoard = function (sizes) {
+        
+            let boardsArray;
+
+            if (sizes) {
+
+                boardsArray = [];
+                sizes.forEach(size => {
+                    boardsArray = [...boardsArray, ...boardsSizes[size]];
+                });
+
+            } else {
+
+                boardsArray = Object.values(boards);
+            }
+
+            shuffle(boardsArray);
+
+            return boardsArray[0];
+        };
+
+        checkHasBoards();
+
+        if (id) {
+            return boards[id];
+        } else {
+            return getRandomBoard(sizes);
+        }
     };
     
     return Object.freeze(
         {
-            createBoard,
             getBoard,
         }
     );

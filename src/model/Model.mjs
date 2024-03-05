@@ -67,7 +67,7 @@ const Model = function() {
         notify('createSession');
     };
 
-    const createGame = function({ boardId, pawnsSpec }) {
+    const createGame = function({ boardSpec, pawnsSpec }) {
         
         const builder = gameBuilder;
 
@@ -79,7 +79,7 @@ const Model = function() {
             builder.setNotify(notify);
             builder.setNumber(session.getIncreasedGameNumber());
             builder.setPlayers(session.getPlayers());
-            builder.setBoard(session.createBoard(boardId));
+            builder.setBoard(session.getBoard(boardSpec));
             builder.setPawns(pawnsSpec);
             builder.setTurnCounter();
             builder.setMovesCounter();
