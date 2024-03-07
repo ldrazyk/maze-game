@@ -7,11 +7,22 @@
 :root {
     --path: hsl(51, 10%, 54%);
     --wall: hsl(51, 15%, 15%);
-    --dark-player1: hsl(216, 63%, 20%);
-    --light-player1: hsl(216, 59%, 86%);
-    --dark-player2: hsl(332, 74%, 21%);
-    --light-player2: hsl(332, 38%, 85%);
+
+    --red-dark: hsl(0, 74%, 21%);
+    --red-light: hsl(0, 38%, 85%);
+    --yellow-dark: hsl(60, 100%, 14%);
+    --yellow-light: hsl(60, 38%, 85%);
+    --blue-dark: hsl(216, 63%, 20%);
+    --blue-light: hsl(216, 59%, 86%);
+    --pink-dark: hsl(332, 74%, 21%);
+    --pink-light: hsl(332, 38%, 85%);
+
+    --dark-player1: var(--blue-dark);
+    --light-player1: var(--blue-light);
+    --dark-player2: var(--yellow-dark);
+    --light-player2: var(--yellow-light);
     --header-height: 5vh;
+    --header-height-portrait: 3vh;
     --main-height: calc(100vh - 2 * var(--header-height));
 }
 
@@ -36,6 +47,11 @@ footer {
     /* width: 100%; */
     flex-shrink: 0;
     background-color: var(--path);
+}
+
+header {
+    display: flex;
+    justify-content: flex-end;
 }
 
 main {
@@ -80,14 +96,15 @@ main>section {
 }
 
 .player-panel,
-.info-panel {
+.info-panel,
+.menu {
     user-select: none;
 }
 
 @media (orientation: portrait) {
 
     header {
-        height: 3vh;
+        height: var(--header-height-portrait);
     }
 
     main {

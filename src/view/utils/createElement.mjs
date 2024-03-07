@@ -1,4 +1,4 @@
-const createElement = function ({ type, classList=false, id=false, datasets=false, textContent=false, value=false, size=false, order=false, parent=false }) {
+const createElement = function ({ type, classList=false, id=false, datasets=false, textContent=false, value=false, size=false, order=false, onClick=false, parent=false }) {
 
     const element = document.createElement(type);
 
@@ -29,7 +29,11 @@ const createElement = function ({ type, classList=false, id=false, datasets=fals
     }
 
     if  (order) {
-        element.style.order = order
+        element.style.order = order;
+    }
+
+    if (onClick) {
+        element.addEventListener('click', onClick);
     }
     
     if (parent) {

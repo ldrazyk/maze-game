@@ -1,7 +1,6 @@
 const ViewMediator = function (root) {
 
     let controller;
-    let svgRepository;
     const containers = {};
     const components = {};
 
@@ -9,11 +8,6 @@ const ViewMediator = function (root) {
     const setController = function (newController) {
         
         controller = newController;
-    };
-
-    const setSvgRepository = function (component) {
-    
-        svgRepository = component;
     };
 
     const append = function ({ component, parentId }) {
@@ -48,13 +42,6 @@ const ViewMediator = function (root) {
         for (let component of Object.values(components)) {
             component.update(spec);
         }
-    };
-
-    // mediator
-
-    const getSvgCopy = function (name) {
-    
-        return svgRepository.getSvgCopy(name);
     };
 
     // controller
@@ -118,12 +105,9 @@ const ViewMediator = function (root) {
     return Object.freeze(
         {
             setController,
-            setSvgRepository,
             addContainer,
             addComponent,
             update,
-            // mediator
-            getSvgCopy,
             // controller
             click,
             nextTurn,

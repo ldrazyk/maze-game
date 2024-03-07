@@ -1,7 +1,7 @@
 import FieldComponent from './FieldComponent.mjs';
 import createElement from '../utils/createElement.mjs';
 
-const BoardComponent = function({ gameState }) {
+const BoardComponent = function({ gameState, domElementsFactory }) {
     
     let mainElement;
     const id = 'board';
@@ -19,6 +19,8 @@ const BoardComponent = function({ gameState }) {
     };
 
     const createElements = function () {
+
+
 
         const createMainElement = function () {
 
@@ -86,7 +88,7 @@ const BoardComponent = function({ gameState }) {
                     {
                         field: field, 
                         onClick: (id) => mediator.click(id),
-                        getSvgCopy: getSvgCopy,
+                        domElementsFactory,
                     }
                 );
                 

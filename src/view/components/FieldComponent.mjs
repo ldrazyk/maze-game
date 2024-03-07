@@ -1,7 +1,4 @@
-import updateClass from "../utils/updateClass.mjs";
-import createElement from "../utils/createElement.mjs";
-
-const FieldComponent = function({ field, onClick, getSvgCopy }) {
+const FieldComponent = function({ field, onClick, domElementsFactory }) {
     
     const props = {
         id: field.getId(),
@@ -9,6 +6,7 @@ const FieldComponent = function({ field, onClick, getSvgCopy }) {
         row: field.getX(),
         column: field.getY(),
     };
+
     const state = {
         pawn: {
             pawn: false,
@@ -23,85 +21,112 @@ const FieldComponent = function({ field, onClick, getSvgCopy }) {
         exitNumber: false
     };
 
-    let mainElement;
-    const containers = {
-        highlight: false,
-        flag: false,
-        pawn: false,
-    };
+    let elements;
+
 
     const createElements = function () {
 
-        const createMain = function() {
+        const getElementsSpec = function () {
 
-            mainElement = createElement(
-                {
+            let elementsSpec = {};
+
+            const addMain = function () {
+            
+                elementsSpec.main = {
                     type: 'div',
                     classList: 'field ' + props.type,
                     id: props.id,
                     datasets: { row: props.row, column: props.column },
                     order: props.column,
-            });
-        };
-    
-        const createHighlight = function() {
+                };
+            };
 
-            containers.highlight = createElement(
-                {
-                    type: 'div',
-                    classList: 'container highlight',
-                    parent: mainElement
-                }
-            );
+            const addOnClick = function () {
 
-            ['active', 'reach', 'hover'].forEach(name => {
-                containers.highlight.appendChild(getSvgCopy(name));
-            });
-        };
-    
-        const createFlag = function() {
+                elementsSpec.main.onClick = () => { onClick(props.id) };
+            };
 
-            state.exitNumber = field.getExitNumber();
-
-            containers.flag = createElement(
-                {
-                    type: 'div',
-                    classList: 'container flag ' + 'player-' + state.exitNumber,
-                    parent: mainElement
-                }
-            );
-
-            containers.flag.appendChild(getSvgCopy('flag'));
-        };
-    
-        const createPawn = function() {
+            const addPathElements = function () {
             
-            containers.pawn = createElement(
-                {
-                    type: 'div',
-                    classList: 'container pawn',
-                    parent: mainElement
+                const pathElementsSpec = {
+                    highlight: {
+                        type: 'div',
+                        classList: 'container highlight',
+                        parentKey: 'main'
+                    },
+                    pawn: {
+                        type: 'div',
+                        classList: 'container pawn',
+                        parentKey: 'main'
+                    },
+                    svgActive: {
+                        type: 'svg',
+                        name: 'active',
+                        parentKey: 'highlight'
+                    },
+                    svgReach: {
+                        type: 'svg',
+                        name: 'reach',
+                        parentKey: 'highlight'
+                    },
+                    svgHover: {
+                        type: 'svg',
+                        name: 'hover',
+                        parentKey: 'highlight'
+                    },
+                    svgLion: {
+                        type: 'svg',
+                        name: 'lion',
+                        parentKey: 'pawn'
+                    },
+                    svgRooster: {
+                        type: 'svg',
+                        name: 'rooster',
+                        parentKey: 'pawn'
+                    },
+                    svgSnake: {
+                        type: 'svg',
+                        name: 'snake',
+                        parentKey: 'pawn'
+                    },
+                };
+                
+                elementsSpec = {...elementsSpec, ...pathElementsSpec};
+            };
+
+            const addFlagElements = function () {
+            
+                const flagElementsSpec = {
+                    flag: {
+                        type: 'div',
+                        classList: 'container flag ' + 'player-' + state.exitNumber,
+                        parentKey: 'main'
+                    },
+                    svgFlag: {
+                        type: 'svg',
+                        name: 'flag',
+                        parentKey: 'flag'
+                    }
                 }
-            );
 
-            ['lion', 'rooster', 'snake'].forEach(name => {
-                containers.pawn.appendChild(getSvgCopy(name));
-            });
+                elementsSpec = {...elementsSpec, ...flagElementsSpec};
+            };
+
+
+            addMain();
+            if (props.type != 'wall') {
+                addOnClick();
+                addPathElements();
+                if (props.type == 'exit') {
+                    state.exitNumber = field.getExitNumber();
+                    addFlagElements();
+                }
+            }
+        
+            return elementsSpec;
         };
 
-        const addEvents = function() {
-
-            mainElement.addEventListener('click', () => { onClick(props.id) });
-        };
-
-
-        createMain();
-        if (props.type != 'wall') {
-            createHighlight();
-            if (props.type == 'exit') createFlag();
-            createPawn();
-            addEvents(); 
-        }
+        elements = domElementsFactory.createElements(getElementsSpec());
     };
 
     const init = function() {
@@ -109,11 +134,11 @@ const FieldComponent = function({ field, onClick, getSvgCopy }) {
         createElements();
     }();
 
-    const updateFlag = function () {
+    const updateFlagElement = function () {
 
         if (state.exitNumber && state.pawn.pawn) {
 
-            containers.flag.classList.add('hidden');
+            elements.flag.classList.add('hidden');
         }
     };
 
@@ -139,7 +164,7 @@ const FieldComponent = function({ field, onClick, getSvgCopy }) {
             }
         };
         
-        const updateContainer = function () {
+        const updatePawnElement = function () {
         
             const getNewClassList = function () {
             
@@ -150,14 +175,13 @@ const FieldComponent = function({ field, onClick, getSvgCopy }) {
                 return newClassList;
             };
 
-            containers.pawn.classList = getNewClassList();
+            elements.pawn.classList = getNewClassList();
         };
 
         const updateDom = function () {
         
-            updateContainer();
-            // changeSvg();
-            updateFlag();
+            updatePawnElement();
+            updateFlagElement();
         };
 
         if ( updatePawnState() ) updateDom();
@@ -236,7 +260,7 @@ const FieldComponent = function({ field, onClick, getSvgCopy }) {
             return changed;
         };
 
-        const updateMain = function () {
+        const updateMainElement = function () {
         
             const getNewClassList = function () {
             
@@ -249,10 +273,10 @@ const FieldComponent = function({ field, onClick, getSvgCopy }) {
                 return newClassList;
             };
 
-            mainElement.classList = getNewClassList();
+            elements.main.classList = getNewClassList();
         };
 
-        const updateContainer = function () {
+        const updateHighlightElement = function () {
         
             const getNewClassList = function () {
             
@@ -265,13 +289,13 @@ const FieldComponent = function({ field, onClick, getSvgCopy }) {
                 return newClassList;
             };
 
-            containers.highlight.classList = getNewClassList();
+            elements.highlight.classList = getNewClassList();
         };
 
         const updateDom = function () {
         
-            updateMain();
-            updateContainer();
+            updateMainElement();
+            updateHighlightElement();
         };
     
         if ( updateState() ) updateDom();
@@ -296,7 +320,7 @@ const FieldComponent = function({ field, onClick, getSvgCopy }) {
 
     const getMain = function () {
     
-        return mainElement;
+        return elements.main;
     };
 
     return Object.freeze(

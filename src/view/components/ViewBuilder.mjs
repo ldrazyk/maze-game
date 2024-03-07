@@ -1,13 +1,28 @@
+import SvgRepository from "./SvgRepository.mjs";
+import DomElementsFactory from "./DomElementsFactory.mjs";
 import ViewMediator from "./ViewMediator.mjs";
 import ContainerComponent from "./ContainerComponent.mjs";
 import BoardComponent from "./BoardComponent.mjs";
 import ControlPanelComponent from "./ControlPanelComponent.mjs";
 import PlayerPanel from "./PlayerPanel.mjs";
 import InfoPanel from "./InfoPanel.mjs";
+import MenuComponent from "./MenuComponent.mjs";
 
 const ViewBuilder = function () {
     
-    let mediator
+    let domElementsFactory;
+    let mediator;
+
+    const createDomElementsFactory = function () {
+    
+        const svgRepository = SvgRepository();
+        domElementsFactory = DomElementsFactory({ svgRepository });
+    };
+
+    const init = function () {
+    
+        createDomElementsFactory();
+    }();
 
     const reset = function (root) {
         
@@ -19,11 +34,6 @@ const ViewBuilder = function () {
         mediator.setController(controller);
     };
 
-    const setSvgRepository = function (component) {
-    
-        mediator.setSvgRepository(component);
-    };
-
     const setContainer = function (spec) {
         
         const container = ContainerComponent(spec);
@@ -33,13 +43,18 @@ const ViewBuilder = function () {
 
     const addComponent = function ({ creator, spec, init=false }) {
         
-        const component = creator(spec);
+        const component = creator({ ...spec, domElementsFactory });
 
         component.setMediator(mediator);
         if (init) {
             component.init();
         }
         mediator.addComponent({ ...spec, component });
+    };
+
+    const setMenu = function (spec) {
+    
+        addComponent({ creator: MenuComponent, spec: spec});
     };
 
     const setBoard = function (spec) {
@@ -72,8 +87,8 @@ const ViewBuilder = function () {
         {
             reset,
             setController,
-            setSvgRepository,
             setContainer,
+            setMenu,
             setBoard,
             setControlPanel,
             setPlayerPanel,

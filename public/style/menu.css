@@ -1,0 +1,125 @@
+header .menu {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    height: 100%;
+    position: relative;
+}
+
+.button {
+    cursor: pointer;
+}
+
+.menu>.hidden-container {
+    height: 100%;
+    /* text-align: right; */
+}
+
+.menu>.hidden-container>.button {
+    height: var(--header-height);
+    width: var(--header-height);
+    background-color: var(--wall);
+}
+
+.menu .hidden-container.collapsed>.cover,
+.menu .hidden-container.collapsed>.content {
+    display: none;
+}
+
+.menu .cover {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* backdrop-filter: blur(1px); */
+}
+
+.menu>.hidden-container>.content {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    z-index: 2;
+    top: 100%;
+    right: 0;
+    color: var(--wall);
+    background-color: var(--path);
+    border-style: solid;
+    border-color: var(--wall);
+    border-width: 0 0 1vh 1vh;
+}
+
+.content>.hidden-container>.button {
+    padding: 2vh 4vh;
+    font-size: 5vh;
+    font-weight: bold;
+    color: var(--wall);
+}
+
+.content>.hidden-container>.button:hover {
+    color: var(--path);
+    background-color: var(--wall);
+}
+
+.fixed-window {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    position: fixed;
+    top: 3vh;
+    bottom: 3vh;
+    left: 3vw;
+    right: 3vw;
+    background-color: var(--path);
+    border: 1vh solid var(--wall);
+}
+
+.fixed-window>.close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5vh;
+    height: 5vh;
+    background-color: var(--wall);
+}
+
+.rules-panel {
+    padding: 2vh;
+}
+
+.rules-line {
+    font-size: 6vh;
+    font-weight: bold;
+}
+
+
+@media (orientation: portrait) {
+
+    .menu>.hidden-container>.container {
+        border-width: 1vw;
+    }
+
+    .menu>.hidden-container>.button {
+        height: var(--header-height-portrait);
+        width: var(--header-height-portrait);
+    }
+
+    .menu .option-text {
+        padding: 2vw 4vw;
+        font-size: 5vw;
+    }
+
+    .rules-panel {
+        padding: 2vw;
+    }
+
+    .rules-line {
+        font-size: 6vw;
+    }
+
+}
+

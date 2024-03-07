@@ -91,7 +91,7 @@ const PlayerPanel = function ({ playerNumber, order=false, gameState }) {
             elements.name.addEventListener('blur', updateName);
 
         };
-        
+
         const createScore = function () {
         
             elements.score = createElement(
@@ -99,17 +99,6 @@ const PlayerPanel = function ({ playerNumber, order=false, gameState }) {
                     type: 'p',
                     classList: 'score',
                     textContent: 'Score: ' + state.score,
-                    parent: mainElement,
-                }
-            );
-        };
-
-        const createTurnSection = function () {
-        
-            elements.turnSection = createElement(
-                {
-                    type: 'div',
-                    classList: 'turn-section',
                     parent: mainElement,
                 }
             );
@@ -154,7 +143,6 @@ const PlayerPanel = function ({ playerNumber, order=false, gameState }) {
         createMain();
         createName();
         createScore();
-        // createTurnSection();
         createTurn();
         createMoves();
         createHolds();
