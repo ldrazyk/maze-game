@@ -1,4 +1,4 @@
-import ViewBuilder from "./components/ViewBuilder.mjs";
+import ViewBuilder from "./build/ViewBuilder.mjs";
 
 const View = function() {
     
@@ -38,18 +38,18 @@ const View = function() {
             builder.reset(root);
             builder.setController(controller);
 
-            builder.setContainer({ id: 'header', type: 'header', parentId: 'root'});
-            builder.setContainer({ id: 'main', type: 'main', parentId: 'root' });
-            builder.setContainer({ id: 'footer', type: 'footer', parentId: 'root'});
-            builder.setContainer({ id: 'board-section', type: 'section', classList: 'board-section', parentId: 'main' });
-            builder.setContainer({ id: 'panels-section', type: 'section', classList: 'panels-section', parentId: 'main' });
+            builder.setContainer({ id: 'header', elementType: 'header', parentId: 'root'});
+            builder.setContainer({ id: 'main', elementType: 'main', parentId: 'root' });
+            builder.setContainer({ id: 'footer', elementType: 'footer', parentId: 'root'});
+            builder.setContainer({ id: 'board-section', elementType: 'section', classList: 'board-section', parentId: 'main' });
+            builder.setContainer({ id: 'panels-section', elementType: 'section', classList: 'panels-section', parentId: 'main' });
 
-            builder.setMenu({ id: 'menu', parentId: 'header' });
-            builder.setBoard({ parentId: 'board-section', gameState: gameState });
-            builder.setControlPanel({ parentId: 'panels-section' });
-            builder.setPlayerPanel({ playerNumber: 1, parentId: 'panels-section', gameState: gameState });
-            builder.setPlayerPanel({ playerNumber: 2, parentId: 'panels-section', gameState: gameState });
-            builder.setInfoPanel({ parentId: 'panels-section' });
+            builder.setComponent({ id: 'menu', type: 'menu', parentId: 'header' });
+            builder.setComponent({ id: 'board', type: 'board', parentId: 'board-section', gameState: gameState });
+            builder.setComponent({ id: 'control-panel', type: 'controlPanel', parentId: 'panels-section' });
+            builder.setComponent({ id: 'player-panel-1', type: 'playerPanel', playerNumber: 1, parentId: 'panels-section', gameState: gameState });
+            builder.setComponent({ id: 'player-panel-2', type: 'playerPanel', playerNumber: 2, parentId: 'panels-section', gameState: gameState });
+            builder.setComponent({ id: 'info-panel', type: 'infoPanel', parentId: 'panels-section' });
         };
 
         make();

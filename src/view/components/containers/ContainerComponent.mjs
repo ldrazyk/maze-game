@@ -1,14 +1,12 @@
-import createElement from "../utils/createElement.mjs";
-
-const ContainerComponent = function ({ id, type='div', classList=false }) {
+const ContainerComponent = function ({ id, elementType='div', classList=false, factory }) {
     
     let mainElement;
     
     const createMainElement = function () {
         
-        mainElement = createElement(
+        mainElement = factory.createElement(
             {
-                type: type,
+                type: elementType,
                 classList: classList,
                 id: id,
             }
@@ -20,14 +18,14 @@ const ContainerComponent = function ({ id, type='div', classList=false }) {
         createMainElement();
     }();
 
-    const add = function (component) {
+    const appendChild = function (element) {
         
-        mainElement.appendChild(component.getMain());
+        mainElement.appendChild(element);
     };
 
-    const remove = function (component) {
+    const remove = function (element) {
     
-        mainElement.remove(component);
+        mainElement.remove(element);
     };
 
     const getId = function () {
@@ -42,10 +40,10 @@ const ContainerComponent = function ({ id, type='div', classList=false }) {
 
     return Object.freeze(
         {
-            add: add,
-            remove: remove,
-            getId: getId,
-            getMain: getMain,
+            appendChild,
+            remove,
+            getId,
+            getMain,
         }
     );
 };

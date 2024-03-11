@@ -1,11 +1,5 @@
 import ViewFactory from "./ViewFactory.mjs";
 import ViewMediator from "./ViewMediator.mjs";
-import ContainerComponent from "./ContainerComponent.mjs";
-import BoardComponent from "./BoardComponent.mjs";
-import ControlPanelComponent from "./ControlPanelComponent.mjs";
-import PlayerPanel from "./PlayerPanel.mjs";
-import InfoPanel from "./InfoPanel.mjs";
-import MenuComponent from "./MenuComponent.mjs";
 
 const ViewBuilder = function () {
     
@@ -34,47 +28,31 @@ const ViewBuilder = function () {
 
     const setContainer = function (spec) {
         
-        const container = ContainerComponent(spec);
+        const container = factory.createComponent(
+            { 
+                type: 'container', 
+                ...spec,
+                factory,
+                parent: mediator.getContainer(spec.parentId),
+            }
+        );
 
-        mediator.addContainer({ ...spec, container });
+        mediator.addContainer(container);
     };
 
-    const addComponent = function ({ constructor, spec, init=false }) {
+    const setComponent = function (spec) {
         
-        const component = constructor({ ...spec, factory });
+        const component = factory.createComponent(
+            { 
+                ...spec, 
+                factory,
+                parent: mediator.getContainer(spec.parentId), 
+            }
+        );
 
         component.setMediator(mediator);
-        if (init) {
-            component.init();
-        }
-        mediator.addComponent({ ...spec, component });
+        mediator.addComponent(component);
     };
-
-    const setMenu = function (spec) {
-    
-        addComponent({ constructor: MenuComponent, spec: spec});
-    };
-
-    const setBoard = function (spec) {
-        
-        addComponent({ constructor: BoardComponent, spec: spec, init: true });
-    };
-
-    const setControlPanel = function (spec) {
-        
-        addComponent({ constructor: ControlPanelComponent, spec: spec, init: true });
-    };
-
-    const setPlayerPanel = function (spec) {
-        
-        addComponent({ constructor: PlayerPanel, spec: spec});
-    };
-
-    const setInfoPanel = function (spec) {
-        
-        addComponent({ constructor: InfoPanel, spec: spec });
-    };
-    
 
     const getResult = function () {
         
@@ -86,11 +64,7 @@ const ViewBuilder = function () {
             reset,
             setController,
             setContainer,
-            setMenu,
-            setBoard,
-            setControlPanel,
-            setPlayerPanel,
-            setInfoPanel,
+            setComponent,
             getResult,
         }
     );

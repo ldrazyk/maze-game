@@ -1,7 +1,7 @@
 const ViewMediator = function (root) {
 
     let controller;
-    const containers = {};
+    const containers = { root };
     const components = {};
 
 
@@ -10,33 +10,21 @@ const ViewMediator = function (root) {
         controller = newController;
     };
 
-    const append = function ({ component, parentId }) {
-
-        if (parentId == 'root') {
-
-            root.appendChild(component.getMain());
-        } else {
-
-            containers[parentId].add(component);
-        }
-    };
-
-    const addContainer = function ({ container, parentId }) {
+    const addContainer = function (container) {
     
         containers[container.getId()] = container;
-
-        append({ component: container, parentId: parentId });
     };
     
-    
-    const addComponent = function ({ component, parentId }) {
+    const addComponent = function (component) {
         
         components[component.getId()] = component;
-        
-        append({ component: component, parentId: parentId });
-        
     };
 
+    const getContainer = function (id) {
+    
+        return containers[id];
+    };
+    
     const update = function (spec) {
         
         for (let component of Object.values(components)) {
@@ -107,6 +95,7 @@ const ViewMediator = function (root) {
             setController,
             addContainer,
             addComponent,
+            getContainer,
             update,
             // controller
             click,

@@ -1,40 +1,26 @@
-import createElement from "../utils/createElement.mjs";
-
-const InfoPanel = function ({ order=false }) {
+const InfoPanel = function ({ factory }) {
     
-    let mainElement;
-    let screen;
+    let elements;
     const id = 'info-panel';
 
     let mediator;
 
 
     const createElements = function () {
-    
-        const createMain = function () {
-        
-            mainElement = createElement(
-                {
-                    type: 'div',
-                    classList: 'panel info-panel',
-                    order: order,
-                }
-            );
+
+        const spec = {
+            main: {
+                type: 'div',
+                classList: 'panel info-panel',
+            },
+            screen: {
+                type: 'div',
+                classList: 'screen',
+                parentKey: 'main',
+            },
         };
 
-        const createScreen = function () {
-        
-            screen = createElement(
-                {
-                    type: 'div',
-                    classList: 'screen',
-                    parent: mainElement,
-                }
-            );
-        };
-
-        createMain();
-        createScreen();
+        elements = factory.createElements(spec);
     };
 
     const init = function () {
@@ -59,7 +45,7 @@ const InfoPanel = function ({ order=false }) {
     
     const getMain = function () {
         
-        return mainElement;
+        return elements.main;
     };
     
     return Object.freeze(

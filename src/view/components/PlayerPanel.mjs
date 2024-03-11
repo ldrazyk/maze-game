@@ -1,6 +1,6 @@
 import createElement from "../utils/createElement.mjs";
 
-const PlayerPanel = function ({ playerNumber, order=false, gameState }) {
+const PlayerPanel = function ({ playerNumber, order=false, gameState, factory }) {
     
     let mainElement;
     const elements = {

@@ -1,9 +1,7 @@
-import createElement from "../utils/createElement.mjs";
-
-const RulesPanel = function () {
+const RulesPanel = function ({ factory }) {
     
-    let mainElement;
-    const components = {
+    const elements = {
+        main: false,
         rulesContainer: false,
     };
     const id = 'rules-panel';
@@ -11,7 +9,7 @@ const RulesPanel = function () {
     
     const createMain = function () {
 
-        mainElement = createElement(
+        elements.main = factory.createElement(
             {
                 type: 'div',
                 id: id,
@@ -22,15 +20,15 @@ const RulesPanel = function () {
 
     const createRulesContainer = function () {
 
-        if (components.rulesContainer) {
-            components.rulesContainer.remove();
+        if (elements.rulesContainer) {
+            elements.rulesContainer.remove();
         }
     
-        components.rulesContainer = createElement(
+        elements.rulesContainer = factory.createElement(
             {
                 type: 'div',
                 classList: 'rules',
-                parent: mainElement,
+                parent: elements.main,
             }
         );
     };
@@ -56,12 +54,12 @@ const RulesPanel = function () {
         
             rulesLines.forEach(line => {
     
-                const lineElement = createElement(
+                const lineElement = factory.createElement(
                     {
                         type: 'p',
                         classList: 'rules-line',
                         textContent: line,
-                        parent: components.rulesContainer,
+                        parent: elements.rulesContainer,
                     }
                 );
             });
@@ -90,7 +88,7 @@ const RulesPanel = function () {
     
     const getMain = function () {
         
-        return mainElement;
+        return elements.main;
     };
     
     

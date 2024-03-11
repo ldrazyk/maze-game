@@ -1,6 +1,4 @@
-import createElement from "../utils/createElement.mjs";
-
-const ComponentInterface = function () {
+const ComponentInterface = function ({ factory }) {
     
     let mainElement;
     const id = 'component';
@@ -11,7 +9,7 @@ const ComponentInterface = function () {
     
         const createMain = function () {
         
-            mainElement = createElement(
+            mainElement = factory.createElement(
                 {
                     type: 'div',
                     classList: 'component',

@@ -101,7 +101,7 @@ const BoardComponent = function({ gameState, factory }) {
     const init = function() {
 
         createElements();
-    };
+    }();
 
     const setMediator = function (newMediator) {
     

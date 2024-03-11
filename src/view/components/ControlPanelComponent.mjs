@@ -67,7 +67,7 @@ const ControlPanelComponent = function({ factory }) {
         
         createElements();
         createButtons();
-    };
+    }();
 
     const setMediator = function (newMediator) {
     

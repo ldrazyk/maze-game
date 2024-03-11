@@ -1,75 +1,45 @@
-import createElement from "../utils/createElement.mjs";
-
-const HiddenContainer = function ({ id=false, classList=false, buttonText=false, cover=true, parent=false }) {
+const HiddenContainer = function ({ id=false, classList=false, buttonText=false, cover=true, parent=false, factory }) {
     
-    let mainElement;
-    let containers = {
-        button: false,
-        cover: false,
-        content: false,
-    };
+    let elements;
 
     const toggle = function () {
     
-        mainElement.classList.toggle('collapsed') ;
+        elements.main.classList.toggle('collapsed') ;
     };
 
     const createElements = function () {
-    
-        const createMain = function () {
-        
-            mainElement = createElement(
-                {
-                    type: 'div',
-                    classList: 'hidden-container collapsed ' + classList,
-                    id: id,
-                    parent: parent,
-                }
-            );
+
+        const spec = {
+            main: {
+                type: 'div',
+                classList: 'hidden-container collapsed ' + classList,
+                id: id,
+                parent: parent,
+            },
+            button: {
+                type: 'div',
+                classList: 'button',
+                textContent: buttonText,
+                onClick: toggle,
+                parentKey: 'main',
+            },
+            content: {
+                type: 'div',
+                classList: 'content',
+                parentKey: 'main',
+            }
         };
 
-        const createButton = function () {
-        
-            containers.button = createElement(
-                {
-                    type: 'div',
-                    classList: 'button',
-                    textContent: buttonText,
-                    onClick: toggle,
-                    parent: mainElement,
-                }
-            );
-        };
-
-        const createCover = function () {
-        
-            containers.cover = createElement(
-                {
-                    type: 'div',
-                    classList: 'cover',
-                    onClick: toggle,
-                    parent: mainElement,
-                }
-            )
-        };
-
-        const createContent = function () {
-        
-            containers.content = createElement(
-                {
-                    type: 'div',
-                    classList: 'content',
-                    parent: mainElement,
-                }
-            )
-        };
-
-        createMain();
-        createButton();
         if (cover) {
-            createCover();
+            spec.cover = {
+                type: 'div',
+                classList: 'cover',
+                onClick: toggle,
+                parentKey: 'main',
+            }
         }
-        createContent();
+
+        elements = factory.createElements(spec);
     };
 
     const init = function () {
@@ -88,12 +58,12 @@ const HiddenContainer = function ({ id=false, classList=false, buttonText=false,
 
     const addButton = function (component) {
     
-        __add({ component, container: containers.button });
+        __add({ component, container: elements.button });
     };
 
     const add = function ({ component, setToggle=false }) {
     
-        __add({ component, container: containers.content });
+        __add({ component, container: elements.content });
 
         if (setToggle) {
             component.setToggle(toggle);
@@ -107,7 +77,7 @@ const HiddenContainer = function ({ id=false, classList=false, buttonText=false,
     
     const getMain = function () {
         
-        return mainElement;
+        return elements.main;
     };
     
     

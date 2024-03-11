@@ -1,6 +1,4 @@
-import createElement from "../utils/createElement.mjs";
-
-const ChangeColorsPanel = function () {
+const ColorsPanel = function ({ factory }) {
     
     let mainElement;
     const components = {};
@@ -8,9 +6,7 @@ const ChangeColorsPanel = function () {
 
     const createElements = function () {
     
-        const createMain = function () {
-        
-            mainElement = createElement(
+            mainElement = factory.createElement(
                 {
                     type: 'div',
                     id: id,
@@ -18,9 +14,6 @@ const ChangeColorsPanel = function () {
                     textContent: 'Change Colors',
                 }
             );
-        };
-
-        createMain();
     };
 
     const init = function () {
@@ -53,4 +46,4 @@ const ChangeColorsPanel = function () {
     );
 };
 
-export default ChangeColorsPanel;
+export default ColorsPanel;

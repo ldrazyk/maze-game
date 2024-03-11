@@ -1,54 +1,31 @@
-import createElement from "../utils/createElement.mjs";
-
-const WindowContainer = function ({ id, classList=false }) {
+const WindowContainer = function ({ id, classList=false, factory }) {
     
-    let mainElement;
-    const components = {
-        container: false,
-        closeButton: false,
-    };
+    let elements;
     let toggleFunction = false;
 
     let mediator;
 
     const createElements = function () {
-    
-        const createMain = function () {
-        
-            mainElement = createElement(
-                {
-                    type: 'div',
-                    classList: 'window ' + classList,
-                    id: id,
-                }
-            );
+
+        const spec = {
+            main: {
+                type: 'div',
+                classList: 'window ' + classList,
+                id: id,
+            },
+            closeButton: {
+                type: 'div',
+                classList: 'button close-button',
+                parentKey: 'main',
+            },
+            container: {
+                type: 'div',
+                classList: 'container',
+                parentKey: 'main',
+            },
         };
 
-        const createCloseButton = function () {
-        
-            components.closeButton = createElement(
-                {
-                    type: 'div',
-                    classList: 'button close-button',
-                    parent: mainElement,
-                }
-            )
-        };
-
-        const createContainer = function () {
-        
-            components.container = createElement(
-                {
-                    type: 'div',
-                    classList: 'container',
-                    parent: mainElement,
-                }
-            )
-        };
-
-        createMain();
-        createCloseButton();
-        createContainer();
+        elements = factory.createElements(spec);
     };
 
     const init = function () {
@@ -65,15 +42,15 @@ const WindowContainer = function ({ id, classList=false }) {
     
         toggleFunction = toggle;
 
-        components.closeButton.addEventListener('click', toggleFunction);
+        elements.closeButton.addEventListener('click', toggleFunction);
     };
 
     const add = function (component) {
     
         try {
-            components.container.appendChild(component.getMain());
+            elements.container.appendChild(component.getMain());
         } catch {
-            components.container.appendChild(component);
+            elements.container.appendChild(component);
         }
     };
 
@@ -89,7 +66,7 @@ const WindowContainer = function ({ id, classList=false }) {
     
     const getMain = function () {
         
-        return mainElement;
+        return elements.main;
     };
     
     

@@ -1,8 +1,3 @@
-import HiddenContainer from "./HiddenContainer.mjs";
-import WindowContainer from "./WindowContainer.mjs";
-import ChangeColorsPanel from "./ChangeColorsPanel.mjs";
-import RulesPanel from "./RulesPanel.mjs";
-
 const MenuComponent = function ({ factory }) {
     
     let mainElement;
@@ -31,10 +26,12 @@ const MenuComponent = function ({ factory }) {
 
         const createMainDropdown = function () {
         
-            components.mainDropdown = HiddenContainer(
-                { 
+            components.mainDropdown = factory.createComponent(
+                {
+                    type: 'hiddenContainer',
                     id: 'main-dropdown',
                     classList: 'dropdown',
+                    factory,
                     parent: mainElement 
                 }
             );
@@ -46,12 +43,16 @@ const MenuComponent = function ({ factory }) {
 
                 const createOptionContainer = function ({ id, buttonText }) {
                 
-                    const option = HiddenContainer({
-                        id: id + '-option',
-                        classList: 'option',
-                        buttonText: buttonText,
-                        cover: false,
-                    })
+                    const option = factory.createComponent(
+                        {
+                            type: 'hiddenContainer',
+                            id: id + '-option',
+                            classList: 'option',
+                            buttonText: buttonText,
+                            cover: false,
+                            factory,
+                        }
+                    );
     
                     components[id] = option;
                     components.mainDropdown.add({ component: option, setToggle: false });
@@ -61,10 +62,12 @@ const MenuComponent = function ({ factory }) {
 
                 const createWindowContainer = function ({ id, parent }) {
                 
-                    const window = WindowContainer(
+                    const window = factory.createComponent(
                         {
+                            type: 'windowContainer',
                             id: id + '-window',
                             classList: 'fixed-window',
+                            factory,
                         }
                     );
 
@@ -85,7 +88,13 @@ const MenuComponent = function ({ factory }) {
 
             const createChangeColors = function () {
             
-                const panel = ChangeColorsPanel({ factory });
+                const panel = factory.createComponent(
+                    { 
+                        type: 'colorsPanel',
+                        factory,
+                    }
+                );
+
                 addComponentToOptionWindow(
                     {
                         id: 'change-colors',
@@ -98,7 +107,13 @@ const MenuComponent = function ({ factory }) {
 
             const createShowRules = function () {
             
-                const panel = RulesPanel({ factory });
+                const panel = factory.createComponent(
+                    { 
+                        type: 'rulesPanel',
+                        factory,
+                    }
+                );
+
                 addComponentToOptionWindow(
                     {
                         id: 'show-rules',
