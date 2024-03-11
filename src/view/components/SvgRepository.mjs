@@ -4,7 +4,6 @@ const SvgRepository = function () {
     
     const svgs = {};
     let patternIdNumber = 1;
-    let mediator;
 
     const createSvgs = function () {
 
@@ -62,11 +61,6 @@ const SvgRepository = function () {
         createSvgs();
     }();
 
-    const setMediator = function (newMediator) {
-    
-        mediator = newMediator;
-    };
-
     const getSvgCopy = function (name) {
 
         const changePatternId = function (svg) {
@@ -86,13 +80,12 @@ const SvgRepository = function () {
 
         const svg = svgs[name].cloneNode(true)
         changePatternId(svg);
-    
+        
         return svg;
     };
     
     return Object.freeze(
         {
-            setMediator,
             getSvgCopy,
         }
     );

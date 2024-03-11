@@ -28,7 +28,7 @@ const runApp = function () {
 
         const boardSpec = {
             // id: 'board0702',
-            sizes: [6],
+            sizes: [7],
         }
     
         const pawnsSpec1 = [

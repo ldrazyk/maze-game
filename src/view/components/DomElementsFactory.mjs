@@ -1,6 +1,10 @@
-const DomElementsFactory = function ( { svgRepository } ) {
+import SvgRepository from "./SvgRepository.mjs";
 
-    const createElement = function ({ type, classList=false, id=false, datasets=false, textContent=false, value=false, size=false, order=false, onClick=false, parent=false }) {
+const DomElementsFactory = function () {
+
+    const svgRepository = SvgRepository();
+
+    const createHtmlElement = function ({ type, classList=false, id=false, datasets=false, textContent=false, value=false, size=false, order=false, onClick=false, parent=false }) {
 
         const element = document.createElement(type);
     
@@ -45,7 +49,7 @@ const DomElementsFactory = function ( { svgRepository } ) {
         return element;
     };
 
-    const getSvgCopy = function ({ name, parent=false }) {
+    const createSvg = function ({ name, parent=false }) {
 
         const svg = svgRepository.getSvgCopy(name);
 
@@ -54,6 +58,19 @@ const DomElementsFactory = function ( { svgRepository } ) {
         }
     
         return svg;
+    };
+
+    const createElement = function (spec) {
+    
+        let element;
+    
+        if (spec.type == 'svg') {
+            element = createSvg(spec);
+        } else {
+            element = createHtmlElement(spec);
+        }
+
+        return element;
     };
     
     const createElements = function (elementsSpec) {
@@ -64,15 +81,7 @@ const DomElementsFactory = function ( { svgRepository } ) {
         
             for (const [key, spec] of Object.entries(elementsSpec)) {
                 
-                let element;
-    
-                if (spec.type = 'svg') {
-                    element = getSvgCopy(spec);
-                } else {
-                    element = createElement(spec);
-                }
-
-                elements[key] = element;
+                elements[key] = createElement(spec);
             }
 
             return elements;

@@ -1,26 +1,17 @@
-import FieldComponent from './FieldComponent.mjs';
-import createElement from '../utils/createElement.mjs';
-
-const BoardComponent = function({ gameState, domElementsFactory }) {
+const BoardComponent = function({ gameState, factory }) {
     
     let mainElement;
-    const id = 'board';
     const rowElements = [];
     const pathComponents = {};
-    let name, rows, columns;
-    
+    const id = 'board';
+    const props = {
+        name: gameState.getBoardName(),
+        rows: gameState.getBoardRows(),
+        columns: gameState.getBoardColumns(),
+    }
     let mediator;
 
-    const setProps = function () {
-
-        name = gameState.getBoardName();
-        rows = gameState.getBoardRows();
-        columns = gameState.getBoardColumns();
-    };
-
     const createElements = function () {
-
-
 
         const createMainElement = function () {
 
@@ -28,9 +19,9 @@ const BoardComponent = function({ gameState, domElementsFactory }) {
             
                 let size;
 
-                if (rows < 8) {
+                if (props.rows < 8) {
                     size = 'large';
-                } else if (rows < 10) {
+                } else if (props.rows < 10) {
                     size = 'medium';
                 } else {
                     size = 'small';
@@ -39,11 +30,11 @@ const BoardComponent = function({ gameState, domElementsFactory }) {
                 return size + '-fields';
             };
 
-            mainElement = createElement(
+            mainElement = factory.createElement(
                 { 
                     type: 'div',
                     classList: 'board ' + getFieldSizeClass(),
-                    datasets: { name, rows, columns },
+                    datasets: { name: props.name, rows: props.rows, columns: props.columns },
                 }
             );
         };
@@ -52,7 +43,7 @@ const BoardComponent = function({ gameState, domElementsFactory }) {
 
             const createRow = function (number) {
 
-                const rowElement = createElement(
+                const rowElement = factory.createElement(
                     {
                         type: 'div',
                         classList: 'row',
@@ -65,7 +56,7 @@ const BoardComponent = function({ gameState, domElementsFactory }) {
                 rowElements.push(rowElement);
             };
 
-            for (let n = 0; n < rows; n += 1) {
+            for (let n = 0; n < props.rows; n += 1) {
                 
                 createRow(n + 1);
             }
@@ -73,22 +64,25 @@ const BoardComponent = function({ gameState, domElementsFactory }) {
 
         const createFieldComponents = function () {
 
-            const getSvgCopy = function (name) {
-            
-                return mediator.getSvgCopy(name);
-            };
-
             const iterator = gameState.getBoardIterator();
 
             while (iterator.hasNext()) {
 
                 const field = iterator.next();
 
-                const component = FieldComponent(
+                const component = factory.createComponent(
                     {
+                        type: 'field',
                         field: field, 
                         onClick: (id) => mediator.click(id),
-                        domElementsFactory,
+                        factory,
+                    }
+                );
+
+                factory.append(
+                    {
+                        parent: rowElements[component.getRow() - 1],
+                        child: component
                     }
                 );
                 
@@ -96,7 +90,6 @@ const BoardComponent = function({ gameState, domElementsFactory }) {
                     pathComponents[component.getId()] = component;
                 }
 
-                rowElements[component.getRow() - 1].appendChild(component.getMain());
             }
         };
 
@@ -107,7 +100,6 @@ const BoardComponent = function({ gameState, domElementsFactory }) {
 
     const init = function() {
 
-        setProps();
         createElements();
     };
 

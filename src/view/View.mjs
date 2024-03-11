@@ -1,13 +1,9 @@
 import ViewBuilder from "./components/ViewBuilder.mjs";
-import SvgRepository from "./components/SvgRepository.mjs";
-import DomElementsFactory from "./components/DomElementsFactory.mjs";
 
 const View = function() {
     
     let root; 
     let controller;
-    // let svgRepository;
-    // let domElementsFactory;
     let viewBuilder;
     let mediator;
 
@@ -15,16 +11,6 @@ const View = function() {
         
         root = document.getElementById('root');
     };
-
-    // const createSvgRepository = function () {
-    
-    //     svgRepository = SvgRepository();
-    // };
-
-    // const createDomElementsFactory = function () {
-    
-    //     domElementsFactory = DomElementsFactory({ svgRepository });
-    // };
 
     const createViewBuilder = function () {
         
@@ -35,8 +21,6 @@ const View = function() {
         
         findRoot();
         createViewBuilder();
-        // createSvgRepository();
-        // createDomElementsFactory();
     }();
 
     const setController = function(newController) {
@@ -53,7 +37,6 @@ const View = function() {
         
             builder.reset(root);
             builder.setController(controller);
-            // builder.setSvgRepository(svgRepository);
 
             builder.setContainer({ id: 'header', type: 'header', parentId: 'root'});
             builder.setContainer({ id: 'main', type: 'main', parentId: 'root' });

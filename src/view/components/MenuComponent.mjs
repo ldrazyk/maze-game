@@ -1,10 +1,9 @@
-import createElement from "../utils/createElement.mjs";
 import HiddenContainer from "./HiddenContainer.mjs";
 import WindowContainer from "./WindowContainer.mjs";
 import ChangeColorsPanel from "./ChangeColorsPanel.mjs";
 import RulesPanel from "./RulesPanel.mjs";
 
-const MenuComponent = function () {
+const MenuComponent = function ({ factory }) {
     
     let mainElement;
     let components = {
@@ -22,7 +21,7 @@ const MenuComponent = function () {
     
         const createMain = function () {
         
-            mainElement = createElement(
+            mainElement = factory.createElement(
                 {
                     type: 'div',
                     classList: 'menu',
@@ -86,7 +85,7 @@ const MenuComponent = function () {
 
             const createChangeColors = function () {
             
-                const panel = ChangeColorsPanel();
+                const panel = ChangeColorsPanel({ factory });
                 addComponentToOptionWindow(
                     {
                         id: 'change-colors',
@@ -99,7 +98,7 @@ const MenuComponent = function () {
 
             const createShowRules = function () {
             
-                const panel = RulesPanel();
+                const panel = RulesPanel({ factory });
                 addComponentToOptionWindow(
                     {
                         id: 'show-rules',

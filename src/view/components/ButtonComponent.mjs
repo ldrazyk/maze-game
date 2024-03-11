@@ -1,8 +1,7 @@
-import createElement from "../utils/createElement.mjs";
-
-const ButtonComponent = function ({ id=false, text=false, onClick, order=false, svgNames, getSvgCopy }) {
-    let mainElement;
-    let containers = [];
+const ButtonComponent = function ({ id=false, textContent=false, onClick, svgName=false, factory }) {
+    
+    let elements;
+    let activeState = false;
 
     const createElements = function () {
 
@@ -11,29 +10,42 @@ const ButtonComponent = function ({ id=false, text=false, onClick, order=false, 
             btnId = 'btn-' + id;
         }
 
-        mainElement = createElement(
-            { 
+        const onClickIfActive = function () {
+        
+            if (activeState) {
+                onClick();
+            };
+        };
+
+        let spec = {
+            main: {
                 type: 'button',
                 classList: id,
                 id: btnId, 
-                text: text, 
-                order: order,
-            }
-        );
-
-        containers[0] = createElement({ type: 'div', classList: 'container positive', parent: mainElement});
-        containers[1] = createElement({ type: 'div', classList: 'container negative', parent: mainElement});
-
-        const addSvgsToContainers = function () {
-        
-            [0, 1].forEach(n => {
-
-                const svg = getSvgCopy(svgNames[n]);
-                containers[n].appendChild(svg);
-            });
+                onClick: onClickIfActive,
+            },
+            container: {
+                type: 'div', 
+                classList: 'container',
+                textContent: textContent,
+                parentKey: 'main',
+            },
         };
 
-        addSvgsToContainers();
+        if (svgName) {
+
+            const svgElementsSpec = {
+                svg: {
+                    type: 'svg',
+                    name: svgName,
+                    parentKey: 'container',
+                }
+            };
+
+            spec = {...spec, ...svgElementsSpec};
+        }
+
+        elements = factory.createElements(spec);
     };
 
     const init = function() {
@@ -43,20 +55,20 @@ const ButtonComponent = function ({ id=false, text=false, onClick, order=false, 
 
     const setActive = function (active=true) {
 
+        activeState = active;
+
         if (active) {
 
-            mainElement.addEventListener('click', onClick);
-            mainElement.classList.add('active');
+            elements.main.classList.add('active');
         } else {
 
-            mainElement.removeEventListener('click', onClick);
-            mainElement.classList.remove('active');
+            elements.main.classList.remove('active');
         }
     };
 
     const getMain = function () {
     
-        return mainElement;
+        return elements.main;
     };
 
     return Object.freeze(

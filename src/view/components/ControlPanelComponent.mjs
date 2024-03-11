@@ -1,10 +1,6 @@
-import ButtonComponent from "./ButtonComponent.mjs";
-import createElement from "../utils/createElement.mjs";
-
-const ControlPanelComponent = function({ order=false }) {
+const ControlPanelComponent = function({ factory }) {
     
-    let mainElement;
-    const containers = {};
+    let elements;
     const buttonComponents = {};
     const state = {};
     const id = 'control-panel';
@@ -13,107 +9,64 @@ const ControlPanelComponent = function({ order=false }) {
 
     const createElements = function () {
 
-        const createMainElement = function () {
+        const spec = {
+            main: {
+                type: 'div',
+                classList: 'panel control-panel',
+                id: 'control-panel',
+            },
+            wrapper: {
+                type: 'div',
+                classList: 'wrapper',
+                parentKey: 'main',
+            },
+            dummy1: {
+                type: 'div',
+                classList: 'dummy dummy-1',
+                parentKey: 'wrapper',
+            },
+            dummy2: {
+                type: 'div',
+                classList: 'dummy dummy-2',
+                parentKey: 'wrapper',
+            },
+        };
 
-            mainElement = createElement(
-                {
-                    type: 'div',
-                    classList: 'panel control-panel',
-                    id: 'control-panel',
-                    order: order,
+        elements = factory.createElements(spec);
+    };
+
+    const createButtons = function () {
+
+        const buttonsSpec = [
+            { id: 'select', svgName: 'select', onClick: () => mediator.selectNext() },
+            { id: 'up', svgName: 'move', onClick: () => mediator.moveUp() },
+            { id: 'turn', svgName: 'turn', onClick: () => mediator.nextTurn() },
+            { id: 'left', svgName: 'move', onClick: () => mediator.moveLeft() },
+            { id: 'hold', svgName: 'hold', onClick: () => mediator.hold() },
+            { id: 'right', svgName: 'move', onClick: () => mediator.moveRight() },
+            { id: 'undo', svgName: 'undo', onClick: () => mediator.undo() },
+            { id: 'down', svgName: 'move', onClick: () => mediator.moveDown() },
+            { id: 'redo', svgName: 'undo', onClick: () => mediator.redo() },
+        ];
+
+        buttonsSpec.forEach(spec => {
+            
+            const button = factory.createComponent(
+                { 
+                    type: 'button', 
+                    ...spec, 
+                    factory, 
+                    parent: elements.wrapper,
                 }
             );
-        };
-
-        const createWrapper = function () {
-        
-            containers['wrapper'] = createElement(
-                {
-                    type: 'div',
-                    classList: 'wrapper',
-                    parent: mainElement
-                }
-            );
-        };
-
-        const createDummies = function () {
-        
-            const createDummy = function (id) {
-    
-                containers[id] = createElement(
-                    {
-                        type: 'div',
-                        classList: 'dummy ' + id,
-                        parent: containers['wrapper'],
-                    }
-                );
-            };
-            
-            ['dummy-1', 'dummy-2'].forEach(id => {
-                createDummy(id);
-            });
-        };
-
-
-        const createRows = function () {
-        
-            [1, 2, 3].forEach(number => {
-
-                const rowContainer = createElement(
-                    {
-                        type: 'div',
-                        classList: 'container row',
-                        order: number,
-                        parent: mainElement
-                    }
-                );
-
-                containers[number] = rowContainer;
-                mainElement.appendChild(rowContainer);
-            });
-        };
-
-        const createButtons = function () {
-
-            const getSvgCopy = function (name) {
-            
-                return mediator.getSvgCopy(name);
-            };
-
-            const svgMoveNames = ['move', 'move-negative'];
-            const svgUndoNames = ['undo', 'undo-negative'];
-            
-            const buttonsSpec = [
-                { id: 'select', svgNames: ['select', 'select-negative'], onClick: () => mediator.selectNext(), row: 1 },
-                { id: 'up', svgNames: svgMoveNames, onClick: () => mediator.moveUp(), row: 1 },
-                { id: 'turn', svgNames: ['turn', 'turn-negative'], onClick: () => mediator.nextTurn(), row: 1 },
-                { id: 'left', svgNames: svgMoveNames, onClick: () => mediator.moveLeft(), row: 2 },
-                { id: 'hold', svgNames: ['hold', 'hold-negative'], onClick: () => mediator.hold(), row: 2 },
-                { id: 'right', svgNames: svgMoveNames, onClick: () => mediator.moveRight(), row: 2 },
-                { id: 'undo', svgNames: svgUndoNames, onClick: () => mediator.undo(), row: 3 },
-                { id: 'down', svgNames: svgMoveNames, onClick: () => mediator.moveDown(), row: 3 },
-                { id: 'redo', svgNames: svgUndoNames, onClick: () => mediator.redo(), row: 3 },
-            ];
-
-            buttonsSpec.forEach(spec => {
-                
-                const button = ButtonComponent({ ...spec, getSvgCopy });
-                buttonComponents[spec.id] = button;
-                // containers[spec.row].appendChild(button.getMain());
-                containers['wrapper'].appendChild(button.getMain());
-            });
-        };
-
-        createMainElement();
-        // createRows();
-        createWrapper();
-        createDummies();
-        createButtons();
+            buttonComponents[spec.id] = button;
+        });
     };
 
     const init = function () {
         
         createElements();
+        createButtons();
     };
 
     const setMediator = function (newMediator) {
@@ -134,7 +87,7 @@ const ControlPanelComponent = function({ order=false }) {
 
         const updateActiveNumber = function () {
         
-            mainElement.classList = 'control-panel player-' + state['activeNumber'];
+            elements.main.classList = 'control-panel player-' + state['activeNumber'];
         };
 
         const updateButton = function (name) {
@@ -237,7 +190,7 @@ const ControlPanelComponent = function({ order=false }) {
 
     const getMain = function () {
         
-        return mainElement;
+        return elements.main;
     };
 
     return Object.freeze(

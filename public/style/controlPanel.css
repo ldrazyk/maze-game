@@ -3,7 +3,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* flex-grow: 0; */
     padding: 3vh 0;
     background-color: var(--path);
 }
@@ -41,11 +40,14 @@
     height: 1px;
     width: 1px;
     background-color: var(--path);
-    /* background-color: transparent; */
 }
 
 .control-panel button.active {
     cursor: pointer;
+}
+
+.control-panel button.active:hover {
+    background-color: var(--wall);
 }
 
 .control-panel button .container {
@@ -61,20 +63,12 @@
     opacity: 1;
 }
 
-.container.negative {
-    visibility: hidden;
-}
-
-button.active:hover .container.positive {
-    visibility: hidden;
-}
-
-button.active:hover .container.negative {
-    visibility: visible;
-}
-
 .control-panel button .dark {
     fill: var(--wall);
+}
+
+.control-panel button.active:hover .dark {
+    fill: var(--path);
 }
 
 button.select {

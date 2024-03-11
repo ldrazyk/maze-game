@@ -1,4 +1,4 @@
-const FieldComponent = function({ field, onClick, domElementsFactory }) {
+const FieldComponent = function({ field, onClick, factory }) {
     
     const props = {
         id: field.getId(),
@@ -126,7 +126,7 @@ const FieldComponent = function({ field, onClick, domElementsFactory }) {
             return elementsSpec;
         };
 
-        elements = domElementsFactory.createElements(getElementsSpec());
+        elements = factory.createElements(getElementsSpec());
     };
 
     const init = function() {
