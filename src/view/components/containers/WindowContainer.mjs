@@ -45,13 +45,9 @@ const WindowContainer = function ({ id, classList=false, factory }) {
         elements.closeButton.addEventListener('click', toggleFunction);
     };
 
-    const add = function (component) {
+    const appendChild = function (child) {
     
-        try {
-            elements.container.appendChild(component.getMain());
-        } catch {
-            elements.container.appendChild(component);
-        }
+        factory.append({ parent: elements.container, child});
     };
 
     const update = function () {
@@ -74,7 +70,7 @@ const WindowContainer = function ({ id, classList=false, factory }) {
         {
             setMediator,
             setToggle,
-            add,
+            appendChild,
             update,
             getId,
             getMain,

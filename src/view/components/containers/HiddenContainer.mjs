@@ -1,6 +1,7 @@
 const HiddenContainer = function ({ id=false, classList=false, buttonText=false, cover=true, parent=false, factory }) {
     
     let elements;
+    let childContainer;
 
     const toggle = function () {
     
@@ -47,27 +48,32 @@ const HiddenContainer = function ({ id=false, classList=false, buttonText=false,
         createElements();
     }();
 
-    const __add = function ({ component, container }) {
-    
-        try {
-            container.appendChild(component.getMain());
-        } catch {
-            container.appendChild(component);
-        }
+    const appendToButton = function (element) {
+
+        factory.append({parent: elements.button, child: element});
     };
 
-    const addButton = function (component) {
+    const addContainer = function ({ container, setToggle=false }) {
     
-        __add({ component, container: elements.button });
-    };
+        childContainer = container;
 
-    const add = function ({ component, setToggle=false }) {
-    
-        __add({ component, container: elements.content });
+        factory.append({ parent: elements.content, child: container })
 
         if (setToggle) {
-            component.setToggle(toggle);
+            container.setToggle(toggle);
         }
+    };
+
+    const appendChild = function (child) {
+    
+        let parent;
+        if (childContainer) {
+            parent = childContainer;
+        } else {
+            parent = elements.content;
+        }
+
+        factory.append({ parent, child })
     };
 
     const getId = function () {
@@ -83,8 +89,9 @@ const HiddenContainer = function ({ id=false, classList=false, buttonText=false,
     
     return Object.freeze(
         {
-            addButton,
-            add,
+            appendToButton,
+            addContainer,
+            appendChild,
             getId,
             getMain,
         }

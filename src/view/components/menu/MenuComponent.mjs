@@ -1,19 +1,13 @@
 const MenuComponent = function ({ factory }) {
     
     let mainElement;
-    let components = {
-        mainDropdown: false,
-        'show-rules-option': false,
-        gameSetupOption: false,
-        newGameOption: false,
-        'change-colors-option': false,
-    };
+    let components = {};
     const id = 'menu';
 
     let mediator;
 
     const createElements = function () {
-    
+
         const createMain = function () {
         
             mainElement = factory.createElement(
@@ -38,94 +32,63 @@ const MenuComponent = function ({ factory }) {
         };
 
         const createOptions = function () {
-        
-            const addComponentToOptionWindow = function ({ id, buttonText, setToggle=false, component }) {
 
-                const createOptionContainer = function ({ id, buttonText }) {
-                
-                    const option = factory.createComponent(
-                        {
-                            type: 'hiddenContainer',
-                            id: id + '-option',
+            const appendToOptionWindow = function ({ component, buttonText }) {
+            
+                const option = factory.createComponent(
+                    {
+                        type: 'hiddenContainerWithWindow',
+                        hiddenSpec: {
                             classList: 'option',
                             buttonText: buttonText,
                             cover: false,
-                            factory,
-                        }
-                    );
-    
-                    components[id] = option;
-                    components.mainDropdown.add({ component: option, setToggle: false });
-                    
-                    return option;
-                };
-
-                const createWindowContainer = function ({ id, parent }) {
-                
-                    const window = factory.createComponent(
-                        {
-                            type: 'windowContainer',
-                            id: id + '-window',
+                        },
+                        windowSpec: {
                             classList: 'fixed-window',
-                            factory,
-                        }
-                    );
-
-                    parent.add({ component: window, setToggle });
-
-                    return window;
-                };
-
-                const addComponent = function ({ component, parent }) {
-                
-                    parent.add(component);;
-                };
-
-                const option = createOptionContainer({ id, buttonText });
-                const window = createWindowContainer({ id, parent: option });
-                addComponent({ component, parent: window});
-            };
-
-            const createChangeColors = function () {
-            
-                const panel = factory.createComponent(
-                    { 
-                        type: 'colorsPanel',
+                            setToggle: true,
+                        },
                         factory,
+                        parent: components.mainDropdown,
                     }
                 );
 
-                addComponentToOptionWindow(
+                option.appendChild(component);
+            };
+
+            const createOption = function ({ id, buttonText, componentSpec }) {
+            
+                const component = factory.createComponent({ ...componentSpec, factory });
+
+                components[id] = component;
+
+                appendToOptionWindow({ component, buttonText });
+            };
+
+            const create = function () {
+            
+                const optionsSpec = [
                     {
-                        id: 'change-colors',
+                        id: 'colorsPanel',
                         buttonText: 'Change Colors',
-                        setToggle: true,
-                        component: panel, 
-                    }
-                );
-            };
-
-            const createShowRules = function () {
-            
-                const panel = factory.createComponent(
-                    { 
-                        type: 'rulesPanel',
-                        factory,
-                    }
-                );
-
-                addComponentToOptionWindow(
+                        componentSpec: {
+                            type: 'colorsPanel',
+                        }
+                    },
                     {
-                        id: 'show-rules',
+                        id: 'rulesPanel',
                         buttonText: 'Show Rules',
-                        setToggle: true,
-                        component: panel, 
-                    }
-                );
+                        componentSpec: {
+                            type: 'rulesPanel',
+                        }
+                    },
+                ];
+                
+                optionsSpec.forEach(spec => {
+                    createOption(spec);
+                });
             };
 
-            createShowRules();
-            createChangeColors();
+            create();
         };
 
 

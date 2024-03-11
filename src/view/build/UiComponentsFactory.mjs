@@ -12,6 +12,34 @@ import HiddenContainer from "../components/containers/HiddenContainer.mjs"
 import WindowContainer from "../components/containers/WindowContainer.mjs"
 
 const UiComponentsFactory = function () {
+
+    const createHiddenContainerWithWindow = function ({ hiddenSpec, windowSpec, factory }) {
+
+        const hiddenContainer = factory.createComponent(
+            {
+                type: 'hiddenContainer',
+                ...hiddenSpec,
+                factory,
+            }
+        );
+
+        const windowContainer = factory.createComponent(
+            {
+                type: 'windowContainer',
+                ...windowSpec,
+                factory,
+            }
+        );
+
+        hiddenContainer.addContainer(
+            {
+                container: windowContainer,
+                setToggle: windowSpec.setToggle,
+            }
+        );
+
+        return hiddenContainer;
+    };
     
     const constructors = {
         board: BoardComponent,
@@ -26,6 +54,7 @@ const UiComponentsFactory = function () {
         container: ContainerComponent,
         hiddenContainer: HiddenContainer,
         windowContainer: WindowContainer,
+        hiddenContainerWithWindow: createHiddenContainerWithWindow,
     };
     
     const append = function ({ parent, child }) {
