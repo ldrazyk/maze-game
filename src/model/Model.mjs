@@ -35,9 +35,9 @@ const Model = function() {
         createGameBuilder();
     }();
 
-    const notify = function (code) {
+    const notify = function (code, object=false) {
         
-        subject.notify(code);
+        subject.notify(code, object);
     };
 
     const attach = function (observer) {
@@ -96,6 +96,7 @@ const Model = function() {
     const setPlayerName = function (spec) {
     
         session.setPlayerName(spec);
+        notify('changePlayerName');
     };
 
     // game operations

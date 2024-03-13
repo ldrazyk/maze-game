@@ -422,76 +422,67 @@ const svgSpec = {
             }
         }
     },
-    // "select-negative": {
-    //     "name": "Negative Select Button",
-    //     "viewBox": "0 0 1067 1067",
-    //     "elements": {
-    //         "negative": {
-    //             "type": "path",
-    //             "classList": "dark",
-    //             "attributes": {
-    //                 "d": "M1066.67,0l-1066.67,0l0,1066.67l1066.67,-0l-0,-1066.67Zm-533.334,825l291.667,-291.667l0,291.667l-291.667,0Zm-291.666,-291.667l291.666,291.667l-291.666,-0l-0,-583.333l291.666,-0l-291.666,291.666Zm291.666,-291.666l291.667,291.666l0,-291.666l-291.667,-0Z"
-    //             },
-    //             "parent": "svg"
-    //         }
-    //     }
-    // },
-    // "move-negative": {
-    //     "name": "Negative Move Button",
-    //     "viewBox": "0 0 1067 1067",
-    //     "elements": {
-    //         "negative": {
-    //             "type": "path",
-    //             "classList": "dark",
-    //             "attributes": {
-    //                 "d": "M1066.67,0l-1066.67,0l0,1066.67l1066.67,-0l-0,-1066.67Zm-533.334,220.833l-312.5,625l312.5,-254.166l312.5,254.166l-312.5,-625Z"
-    //             },
-    //             "parent": "svg"
-    //         }
-    //     }
-    // },
-    // "turn-negative": {
-    //     "name": "Negative Turn Button",
-    //     "viewBox": "0 0 1067 1067",
-    //     "elements": {
-    //         "negative": {
-    //             "type": "path",
-    //             "classList": "dark",
-    //             "attributes": {
-    //                 "d": "M1066.67,0l-1066.67,0l0,1066.67l1066.67,-0l-0,-1066.67Zm-533.334,533.333l291.667,291.667l-583.333,0l291.666,-291.667l-291.666,-291.666l583.333,-0l-291.667,291.666Z"
-    //             },
-    //             "parent": "svg"
-    //         }
-    //     }
-    // },
-    // "hold-negative": {
-    //     "name": "Negative Hold Button",
-    //     "viewBox": "0 0 1067 1067",
-    //     "elements": {
-    //         "negative": {
-    //             "type": "path",
-    //             "classList": "dark",
-    //             "attributes": {
-    //                 "d": "M1066.67,-0l-1066.67,-0l0,1066.67l1066.67,-0l-0,-1066.67Zm-850.059,216.608l316.725,186.83l316.725,-186.83l-186.829,316.725l186.829,316.725l-316.725,-186.829l-316.725,186.829l186.83,-316.725l-186.83,-316.725Z"
-    //             },
-    //             "parent": "svg"
-    //         }
-    //     }
-    // },
-    // "undo-negative": {
-    //     "name": "Negative Undo Button",
-    //     "viewBox": "0 0 1067 1067",
-    //     "elements": {
-    //         "negative": {
-    //             "type": "path",
-    //             "classList": "dark",
-    //             "attributes": {
-    //                 "d": "M1066.67,0l-1066.67,0l0,1066.67l1066.67,-0l-0,-1066.67Zm-220.834,845.833l0,-255.217c0,-98.073 -38.959,-192.128 -108.306,-261.476c-69.348,-69.348 -163.404,-108.307 -261.476,-108.307l-255.218,0c0,0 134.089,59.101 254.152,112.02c112.7,49.673 185.432,161.214 185.432,284.375c-0,111.961 -0,228.605 -0,228.605l185.416,0Z"
-    //             },
-    //             "parent": "svg"
-    //         }
-    //     }
-    // }
+    "burger": {
+        "name": "Burger Button",
+        "viewBox": "0 0 256 256",
+        "elements": {
+            "rect1": {
+                "type": "rect",
+                "classList": "dark",
+                "attributes": {
+                    "x": "38",
+                    "y": "46",
+                    "width": "180",
+                    "height": "36"
+                },
+                "parent": "svg"
+            },
+            "rect2": {
+                "type": "rect",
+                "classList": "dark",
+                "attributes": {
+                    "x": "38",
+                    "y": "110",
+                    "width": "180",
+                    "height": "36"
+                },
+                "parent": "svg"
+            },
+            "rect3": {
+                "type": "rect",
+                "classList": "dark",
+                "attributes": {
+                    "x": "38",
+                    "y": "174",
+                    "width": "180",
+                    "height": "36"
+                },
+                "parent": "svg"
+            },
+        }
+    },
+    "close": {
+        "name": "Close Button",
+        "viewBox": "0 0 1067 1067",
+        "elements": {
+            "line1": {
+                "type": "path",
+                "classList": "dark",
+                "attributes": {
+                    "d": "M297.631,179.78l-117.851,117.851l589.256,589.256l117.851,-117.851l-589.256,-589.256Z"
+                },
+                "parent": "svg"
+            },
+            "line2": {
+                "type": "path",
+                "classList": "dark",
+                "attributes": {
+                    "d": "M886.887,297.631l-117.851,-117.851l-589.256,589.256l117.851,117.851l589.256,-589.256Z"
+                },
+                "parent": "svg"
+            }
+        }
+    },
 }
 
 export default svgSpec;

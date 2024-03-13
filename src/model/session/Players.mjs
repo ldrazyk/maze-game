@@ -6,6 +6,8 @@ const Players = function (playersSpec) {
     let activePosition;
     let passivePosition;
 
+    let mediator;
+
     const createPlayers = function () {
         for (const spec of playersSpec) {
             players.push(Player(spec));
@@ -23,6 +25,11 @@ const Players = function (playersSpec) {
         createPlayers();
         initActivePosition();
     }();
+
+    const setMediator = function (newMediator) {
+    
+        mediator = newMediator;
+    };
 
     const changeActive = function () {
         if (activePosition == 0) {
@@ -73,6 +80,8 @@ const Players = function (playersSpec) {
 
     return Object.freeze(
         {
+            setMediator,
+
             changeActive,
             
             getActive,

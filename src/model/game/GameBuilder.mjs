@@ -55,6 +55,7 @@ const GameBuilder = function () {
     const setPlayers = function (players) {
 
         mediators.forEach(mediator => mediator.setPlayers(players));
+        players.setMediator(game);
     };
 
     const setBoard = function (board) {

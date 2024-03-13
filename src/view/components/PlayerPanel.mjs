@@ -67,6 +67,11 @@ const PlayerPanel = function ({ playerNumber, order=false, gameState, factory })
                 }
             );
 
+            const disableKeydown = function () {
+            
+                mediator.setKeydown(false);
+            };
+
             const updateName = function () {
 
                 const updateNameState = function () {
@@ -85,11 +90,14 @@ const PlayerPanel = function ({ playerNumber, order=false, gameState, factory })
                     mediator.setPlayerName({ playerNumber: playerNumber, name: state.name }) ;
                 };
 
-                if (updateNameState()) updateModelName();
+                if (updateNameState()) {
+                    updateModelName();
+                }
+                mediator.setKeydown(true);
             };
 
+            elements.name.addEventListener('focus', disableKeydown)
             elements.name.addEventListener('blur', updateName);
-
         };
 
         const createScore = function () {

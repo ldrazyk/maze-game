@@ -6,7 +6,9 @@ import InfoPanel from "../components/InfoPanel.mjs";
 import PlayerPanel from "../components/PlayerPanel.mjs";
 import MenuComponent from "../components/menu/MenuComponent.mjs";
 import ColorsPanel from "../components/menu/ColorsPanel.mjs";
+import ChangeColorsComponent from "../components/menu/ChangeColorsComponent.mjs";
 import RulesPanel from "../components/menu/RulesPanel.mjs";
+import EmptyPanel from "../components/menu/EmptyPanel.mjs";
 import ContainerComponent from "../components/containers/ContainerComponent.mjs"
 import HiddenContainer from "../components/containers/HiddenContainer.mjs"
 import WindowContainer from "../components/containers/WindowContainer.mjs"
@@ -50,7 +52,9 @@ const UiComponentsFactory = function () {
         playerPanel: PlayerPanel,
         menu: MenuComponent,
         colorsPanel: ColorsPanel,
+        changeColors: ChangeColorsComponent,
         rulesPanel: RulesPanel,
+        emptyPanel: EmptyPanel,
         container: ContainerComponent,
         hiddenContainer: HiddenContainer,
         windowContainer: WindowContainer,

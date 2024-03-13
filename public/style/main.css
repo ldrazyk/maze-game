@@ -10,13 +10,23 @@
 
     --red-dark: hsl(0, 74%, 21%);
     --red-light: hsl(0, 38%, 85%);
+    --orange-dark: hsl(30, 100%, 18%);
+    --orange-light: hsl(30, 50%, 87%);
     --yellow-dark: hsl(60, 100%, 14%);
     --yellow-light: hsl(60, 38%, 85%);
+    --green-dark: hsl(110, 100%, 14%);
+    --green-light: hsl(110, 50%, 85%);
+    --cyan-dark: hsl(180, 100%, 14%);
+    --cyan-light: hsl(180, 50%, 85%);
     --blue-dark: hsl(216, 63%, 20%);
     --blue-light: hsl(216, 59%, 86%);
-    --pink-dark: hsl(332, 74%, 21%);
-    --pink-light: hsl(332, 38%, 85%);
+    --purple-dark: hsl(270, 63%, 20%);
+    --purple-light: hsl(270, 59%, 86%);
+    --magenta-dark: hsl(325, 74%, 21%);
+    --magenta-light: hsl(325, 38%, 85%);
 
+    --color-player1: blue;
+    --color-player2: yellow;
     --dark-player1: var(--blue-dark);
     --light-player1: var(--blue-light);
     --dark-player2: var(--yellow-dark);

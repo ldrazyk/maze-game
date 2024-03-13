@@ -1,5 +1,6 @@
 const Controller = function(model) {
     let self, view;
+    let keydown = true;
 
     // init
 
@@ -90,39 +91,53 @@ const Controller = function(model) {
         model.redo();
     };
 
+    // keydown
+
+    const executeIfKeydown = function (command) {
+    
+        if (keydown) {
+            command();
+        }
+    };
+
     const addKeydownEvents = function() {
         document.addEventListener('keydown', function(event) {
             switch (event.code) {
                 case 'KeyS':
-                    selectNext();
+                    executeIfKeydown(selectNext);
                     break;
                 case 'Enter':
-                    hold();
+                    executeIfKeydown(hold);
                     break;
                 case 'ArrowUp':
-                    moveUp();
+                    executeIfKeydown(moveUp);
                     break;
                 case 'ArrowDown':
-                    moveDown();
+                    executeIfKeydown(moveDown);
                     break;
                 case 'ArrowLeft':
-                    moveLeft();
+                    executeIfKeydown(moveLeft);
                     break;
                 case 'ArrowRight':
-                    moveRight();
+                    executeIfKeydown(moveRight);
                     break;
                 case 'KeyZ':
-                    undo();
+                    executeIfKeydown(undo);
                     break;
                 case 'KeyY':
-                    redo();
+                    executeIfKeydown(redo);
                     break;
                 case 'KeyT':
-                    nextTurn();
+                    executeIfKeydown(nextTurn);
                     break;
             }
         });
     }();
+
+    const setKeydown = function (on=true) {
+    
+        keydown = on;
+    };
 
     return Object.freeze(
         {
@@ -147,6 +162,8 @@ const Controller = function(model) {
 
             undo,
             redo,
+
+            setKeydown,
         }
     );
 };

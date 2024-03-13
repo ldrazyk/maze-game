@@ -44,11 +44,11 @@ const View = function() {
             builder.setContainer({ id: 'board-section', elementType: 'section', classList: 'board-section', parentId: 'main' });
             builder.setContainer({ id: 'panels-section', elementType: 'section', classList: 'panels-section', parentId: 'main' });
 
-            builder.setComponent({ id: 'menu', type: 'menu', parentId: 'header' });
-            builder.setComponent({ id: 'board', type: 'board', parentId: 'board-section', gameState: gameState });
+            builder.setComponent({ id: 'menu', type: 'menu', parentId: 'header', gameState });
+            builder.setComponent({ id: 'board', type: 'board', parentId: 'board-section', gameState });
             builder.setComponent({ id: 'control-panel', type: 'controlPanel', parentId: 'panels-section' });
-            builder.setComponent({ id: 'player-panel-1', type: 'playerPanel', playerNumber: 1, parentId: 'panels-section', gameState: gameState });
-            builder.setComponent({ id: 'player-panel-2', type: 'playerPanel', playerNumber: 2, parentId: 'panels-section', gameState: gameState });
+            builder.setComponent({ id: 'player-panel-1', type: 'playerPanel', playerNumber: 1, parentId: 'panels-section', gameState });
+            builder.setComponent({ id: 'player-panel-2', type: 'playerPanel', playerNumber: 2, parentId: 'panels-section', gameState });
             builder.setComponent({ id: 'info-panel', type: 'infoPanel', parentId: 'panels-section' });
         };
 

@@ -18,6 +18,11 @@ const WindowContainer = function ({ id, classList=false, factory }) {
                 classList: 'button close-button',
                 parentKey: 'main',
             },
+            svg: {
+                type: 'svg',
+                name: 'close',
+                parentKey: 'closeButton',
+            },
             container: {
                 type: 'div',
                 classList: 'container',

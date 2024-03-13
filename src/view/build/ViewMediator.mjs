@@ -89,6 +89,11 @@ const ViewMediator = function (root) {
         controller.setPlayerName(spec);
     };
 
+    const setKeydown = function (on) {
+    
+        controller.setKeydown(on);
+    };
+
     
     return Object.freeze(
         {
@@ -109,6 +114,7 @@ const ViewMediator = function (root) {
             undo,
             redo,
             setPlayerName,
+            setKeydown,
         }
     );
 };

@@ -18,7 +18,23 @@ header .menu {
 .menu>.hidden-container>.button {
     height: var(--header-height);
     width: var(--header-height);
+    background-color: var(--path);
+}
+
+.menu .button {
+    background-color: var(--path);
+}
+
+.menu .button .dark {
+    fill: var(--wall);
+}
+
+.menu .button:hover {
     background-color: var(--wall);
+}
+
+.menu .button:hover .dark {
+    fill: var(--path);
 }
 
 .menu .hidden-container.collapsed>.cover,
@@ -63,38 +79,122 @@ header .menu {
     background-color: var(--wall);
 }
 
+.window {
+    background-color: var(--path);
+    border: 1vh solid var(--wall);
+}
+
+
+
 .fixed-window {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     z-index: 10;
     position: fixed;
     top: 3vh;
     bottom: 3vh;
     left: 3vw;
     right: 3vw;
-    background-color: var(--path);
-    border: 1vh solid var(--wall);
 }
 
-.fixed-window>.close-button {
+.window .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.window>.close-button {
     position: absolute;
     top: 0;
     right: 0;
     width: 5vh;
     height: 5vh;
-    background-color: var(--wall);
 }
 
-.rules-panel {
-    padding: 2vh;
+.window .panel {
+    width: 100%;
+    height: 100%;
+    padding: 5vh 2vh 2vh 4vh;
+}
+
+.rules {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
 }
 
 .rules-line {
     font-size: 6vh;
     font-weight: bold;
 }
+
+::-webkit-scrollbar {
+    width: 1vh;
+  }
+  
+::-webkit-scrollbar-track {
+    /* background: var(--path); */
+}
+  
+::-webkit-scrollbar-thumb {
+    background: var(--wall);
+}
+
+/* colors-panel */
+
+.change-colors {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.change-colors .player-icon {
+    width: 10vh;
+    height: 10vh;
+}
+
+.change-colors .color-sample {
+    width: 10vh;
+    height: 10vh;
+    border-radius: 33%;
+}
+
+.change-colors .button {
+    width: 5vh;
+    height: 5vh;
+}
+
+.change-colors .button.next {
+    transform: rotate(90deg);
+}
+
+.change-colors .button.prev {
+    transform: rotate(-90deg);
+}
+
+
+
+.player-1 .color-sample.light {
+    background-color: var(--light-player1);
+}
+
+.player-2 .color-sample.light {
+    background-color: var(--light-player2);
+}
+
+.player-1 .color-sample.dark {
+    background-color: var(--dark-player1);
+}
+
+.player-2 .color-sample.dark {
+    background-color: var(--dark-player2);
+}
+
+
+
 
 
 @media (orientation: portrait) {
@@ -120,6 +220,22 @@ header .menu {
     .rules-line {
         font-size: 6vw;
     }
-
 }
 
+@media (orientation: portrait) and (max-height: 900px) {
+    .fixed-window {
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+}
+
+@media (max-width: 900px) {
+    .fixed-window {
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+}
