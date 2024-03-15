@@ -7,6 +7,7 @@ import PlayerPanel from "../components/PlayerPanel.mjs";
 import MenuComponent from "../components/menu/MenuComponent.mjs";
 import ColorsPanel from "../components/menu/ColorsPanel.mjs";
 import ChangeColorsComponent from "../components/menu/ChangeColorsComponent.mjs";
+import NewGamePanel from "../components/menu/NewGamePanel.mjs";
 import RulesPanel from "../components/menu/RulesPanel.mjs";
 import EmptyPanel from "../components/menu/EmptyPanel.mjs";
 import ContainerComponent from "../components/containers/ContainerComponent.mjs"
@@ -54,6 +55,7 @@ const UiComponentsFactory = function () {
         colorsPanel: ColorsPanel,
         changeColors: ChangeColorsComponent,
         rulesPanel: RulesPanel,
+        newGamePanel: NewGamePanel,
         emptyPanel: EmptyPanel,
         container: ContainerComponent,
         hiddenContainer: HiddenContainer,
@@ -67,10 +69,26 @@ const UiComponentsFactory = function () {
 
             parent.appendChild(child);
         } else {
-            
+
             parent.appendChild(child.getMain());
         }
-        return ;
+    };
+
+    const remove = function (component) {
+
+        let element;
+
+        if (component instanceof Element) {
+
+            element = component;
+        } else {
+            
+            element = component.getMain();
+        }
+
+        console.log('Element removed: ');
+        console.log(element);
+        element.remove();
     };
 
     const createComponent = function (spec) {
@@ -89,6 +107,7 @@ const UiComponentsFactory = function () {
         {
             createComponent,
             append,
+            remove,
         }
     );
 };

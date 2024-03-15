@@ -1,5 +1,6 @@
 const Session = function () {
 
+    let state;
     let players, scores, boardRepository;
     let gameNumber;
 
@@ -7,6 +8,11 @@ const Session = function () {
         
         gameNumber = 0;
     }();
+
+    const setState = function (stateObject) {
+    
+        state = stateObject;
+    };
 
     const setBoardRepository = function (repository) {
     
@@ -26,9 +32,14 @@ const Session = function () {
         players.setPlayerName(spec);
     };
 
-    const getBoard = function (spec) {
+    const getState = function () {
     
-        return boardRepository.getBoard(spec);
+        return state;
+    };
+
+    const createBoard = function (spec) {
+    
+        return boardRepository.createBoard(spec);
     };
 
     const getPlayers = function () {
@@ -54,13 +65,15 @@ const Session = function () {
 
     return Object.freeze(
         {
+            setState,
             setBoardRepository,
             setPlayers,
             setScores,
 
             setPlayerName,
 
-            getBoard,
+            getState,
+            createBoard,
 
             getPlayers,
             getPlayer,

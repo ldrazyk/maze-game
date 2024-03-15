@@ -2,7 +2,7 @@ import Field from "./Field.mjs";
 import ArrayIterator from "../utils/ArrayIterator.mjs";
 import shuffle from "../utils/shuffle.mjs";
 
-const Board = function ({ id=false, name, matrix }) {
+const Board = function ({ name, matrix }) {
 
     const size = { rows: 0, columns: 0};
 
@@ -173,11 +173,6 @@ const Board = function ({ id=false, name, matrix }) {
         const exit = getExit(playerNumber);
         const startZone = findStartZone(exit);
         place({ pawnsIterator, startZone })
-    };
-
-    const getId = function () {
-    
-        return id;
     };
 
     const getName = function() {

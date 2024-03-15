@@ -56,6 +56,7 @@ const Model = function() {
 
         const make = function () {
             builder.reset();
+            builder.setState();
             builder.setBoardRepository();
             builder.setPlayers(playersSpec);
             builder.setScores();
@@ -64,7 +65,7 @@ const Model = function() {
         make();
         session = builder.getResult();
 
-        notify('createSession');
+        notify('createSession', session.getState());
     };
 
     const createGame = function({ boardSpec, pawnsSpec }) {
@@ -79,7 +80,7 @@ const Model = function() {
             builder.setNotify(notify);
             builder.setNumber(session.getIncreasedGameNumber());
             builder.setPlayers(session.getPlayers());
-            builder.setBoard(session.getBoard(boardSpec));
+            builder.setBoard(session.createBoard(boardSpec));
             builder.setPawns(pawnsSpec);
             builder.setTurnCounter();
             builder.setMovesCounter();

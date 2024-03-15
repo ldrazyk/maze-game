@@ -305,7 +305,11 @@ const PlayerPanel = function ({ playerNumber, order=false, gameState, factory })
             }
         };
 
-        exec();
+        if (code != 'createSession') {
+
+            exec();
+        }
+
     };
 
     const getId = function () {

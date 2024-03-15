@@ -160,7 +160,7 @@ const ControlPanelComponent = function({ factory }) {
         const moveButtonNames = ['up', 'down', 'left', 'right'];
         const otherButtonNames = ['select', 'turn', 'hold', 'undo', 'redo'];
 
-        if ( !['createGame', 'endGame'].includes(code) ) {
+        if ( !['createSession', 'createGame', 'endGame'].includes(code) ) {
             
             moveButtonNames.forEach(name => {
                 updateMoveButtonState(name);
@@ -196,7 +196,6 @@ const ControlPanelComponent = function({ factory }) {
     return Object.freeze(
         {
             setMediator,
-            init,
             update,
             getId,
             getMain,

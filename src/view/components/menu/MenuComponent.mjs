@@ -45,14 +45,15 @@ const MenuComponent = function ({ gameState, factory }) {
 
         const createOptions = function () {
 
-            const appendToOptionWindow = function ({ component, buttonText }) {
+            const appendToOptionWindow = function ({ component, containerSpec, setToggle=false }) {
             
                 const optionContainer = factory.createComponent(
                     {
                         type: 'hiddenContainerWithWindow',
                         hiddenSpec: {
+                            id: containerSpec.id,
                             classList: 'option',
-                            buttonText: buttonText,
+                            buttonText: containerSpec.buttonText,
                             cover: true,
                         },
                         windowSpec: {
@@ -64,46 +65,69 @@ const MenuComponent = function ({ gameState, factory }) {
                     }
                 );
 
-                optionContainer.appendChild(component);
+                containers[containerSpec.id] = optionContainer;
+
+                optionContainer.appendChild(component, setToggle);
             };
 
-            const createOption = function ({ id, buttonText, componentSpec }) {
+            const createComponent = function (componentSpec) {
             
                 const component = factory.createComponent({ ...componentSpec, gameState, factory });
 
-                components[id] = component;
+                components[componentSpec.id] = component;
 
-                appendToOptionWindow({ component, buttonText });
+                return component;
+            };
+
+            const createOption = function ({ containerSpec, componentSpec }) {
+            
+                const component = createComponent(componentSpec);
+
+                appendToOptionWindow({ component, containerSpec, setToggle: componentSpec.setToggle });
             };
 
             const create = function () {
-            
+
                 const optionsSpec = [
                     {
-                        id: 'newGamePanel',
-                        buttonText: 'New Game',
+                        containerSpec: {
+                            id: 'newGameOption',
+                            buttonText: 'New Game',
+                        },
                         componentSpec: {
+                            id: 'newGamePanel',
+                            type: 'newGamePanel',
+                            createGame: (spec) => mediator.createGame(spec),
+                            setToggle: true,
+                        }
+                    },
+                    {
+                        containerSpec: {
+                            id: 'settingsOption',
+                            buttonText: 'Board',
+                        },
+                        componentSpec: {
+                            id: 'settingsPanel',
                             type: 'emptyPanel',
                         }
                     },
                     {
-                        id: 'settingsPanel',
-                        buttonText: 'Board',
+                        containerSpec: {
+                            id: 'colorsOption',
+                            buttonText: 'Colors',
+                        },
                         componentSpec: {
-                            type: 'emptyPanel',
-                        }
-                    },
-                    {
-                        id: 'colorsPanel',
-                        buttonText: 'Colors',
-                        componentSpec: {
+                            id: 'colorsPanel',
                             type: 'colorsPanel',
                         }
                     },
                     {
-                        id: 'rulesPanel',
-                        buttonText: 'Rules',
+                        containerSpec: {
+                            id: 'rulesOption',
+                            buttonText: 'Rules',
+                        },
                         componentSpec: {
+                            id: 'rulesPanel',
                             type: 'rulesPanel',
                         }
                     },

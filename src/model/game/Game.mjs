@@ -17,6 +17,7 @@ const Game = function () {
 
     const init = function() {
 
+        console.log('Game nr ' + gameNumber + ' created.');
         placePawns(2);
     };
 

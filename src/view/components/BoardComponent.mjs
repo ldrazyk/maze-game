@@ -146,7 +146,6 @@ const BoardComponent = function({ gameState, factory }) {
     return Object.freeze(
         {
             setMediator,
-            init,
             update,
             getId,
             getMain,

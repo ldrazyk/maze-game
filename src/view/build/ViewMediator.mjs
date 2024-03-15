@@ -1,4 +1,4 @@
-const ViewMediator = function (root) {
+const ViewMediator = function ({ root, factory }) {
 
     let controller;
     const containers = { root };
@@ -17,7 +17,13 @@ const ViewMediator = function (root) {
     
     const addComponent = function (component) {
         
-        components[component.getId()] = component;
+        const id = component.getId();
+
+        if (components[id]) {
+            factory.remove(components[id]);
+        }
+
+        components[id] = component;
     };
 
     const getContainer = function (id) {
@@ -33,6 +39,11 @@ const ViewMediator = function (root) {
     };
 
     // controller
+
+    const createGame = function (spec) {
+    
+        controller.createGame(spec);
+    };
 
     const click = function (id) {
     
@@ -103,6 +114,7 @@ const ViewMediator = function (root) {
             getContainer,
             update,
             // controller
+            createGame,
             click,
             nextTurn,
             selectNext,

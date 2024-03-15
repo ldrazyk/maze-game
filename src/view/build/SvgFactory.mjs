@@ -1,6 +1,6 @@
 import svgSpec from "../data/svgSpec.mjs";
 
-const SvgRepository = function () {
+const SvgFactory = function () {
     
     const svgs = {};
     let patternIdNumber = 1;
@@ -91,4 +91,4 @@ const SvgRepository = function () {
     );
 };
 
-export default SvgRepository;
+export default SvgFactory;

@@ -18,7 +18,12 @@ const ViewBuilder = function () {
 
     const reset = function (root) {
         
-        mediator = ViewMediator(root);
+        mediator = ViewMediator({ root, factory });
+    };
+
+    const setMediator = function (mediatorObject) {
+        
+        mediator = mediatorObject;
     };
 
     const setController = function (controller) {
@@ -62,6 +67,7 @@ const ViewBuilder = function () {
     return Object.freeze(
         {
             reset,
+            setMediator,
             setController,
             setContainer,
             setComponent,

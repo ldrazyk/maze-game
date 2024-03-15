@@ -1,8 +1,8 @@
-import SvgRepository from "./SvgRepository.mjs";
+import SvgFactory from "./SvgFactory.mjs";
 
 const DomElementsFactory = function () {
 
-    const svgRepository = SvgRepository();
+    const svgFactory = SvgFactory();
 
     const createHtmlElement = function ({ type, classList=false, id=false, datasets=false, textContent=false, value=false, size=false, order=false, onClick=false, parent=false }) {
 
@@ -51,7 +51,7 @@ const DomElementsFactory = function () {
 
     const createSvg = function ({ name, parent=false }) {
 
-        const svg = svgRepository.getSvgCopy(name);
+        const svg = svgFactory.getSvgCopy(name);
 
         if (parent) {
             parent.appendChild(svg);

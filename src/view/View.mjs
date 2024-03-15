@@ -28,8 +28,16 @@ const View = function() {
         controller = newController;
     };
 
+    const buildBoardView = function (gameState) {
 
-    const buildGameView = function (gameState) {
+        const builder = viewBuilder;
+
+        builder.setMediator(mediator);
+        builder.setComponent({ id: 'board', type: 'board', parentId: 'board-section', gameState });
+
+    };
+
+    const buildView = function (gameState) {
         
         const builder = viewBuilder;
 
@@ -45,7 +53,6 @@ const View = function() {
             builder.setContainer({ id: 'panels-section', elementType: 'section', classList: 'panels-section', parentId: 'main' });
 
             builder.setComponent({ id: 'menu', type: 'menu', parentId: 'header', gameState });
-            builder.setComponent({ id: 'board', type: 'board', parentId: 'board-section', gameState });
             builder.setComponent({ id: 'control-panel', type: 'controlPanel', parentId: 'panels-section' });
             builder.setComponent({ id: 'player-panel-1', type: 'playerPanel', playerNumber: 1, parentId: 'panels-section', gameState });
             builder.setComponent({ id: 'player-panel-2', type: 'playerPanel', playerNumber: 2, parentId: 'panels-section', gameState });
@@ -69,10 +76,13 @@ const View = function() {
         
         if (code == 'createGame') {
 
-            buildGameView(object)
+            buildBoardView(object);
         } else if (code == 'endGame') {
-
+            
             endGame(object);
+        } else if (code == 'createSession') {
+            
+            buildView(object);
         } 
         
         if (mediator) {

@@ -30,11 +30,25 @@ header .menu {
 }
 
 .menu .button:hover {
+    color: var(--path);
     background-color: var(--wall);
 }
 
 .menu .button:hover .dark {
     fill: var(--path);
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.new-game-panel .button {
+    padding: 1vh 2vh;
+    font-size: 5vh;
+    font-weight: bold;
+    color: var(--wall);
+    border: none;
 }
 
 .menu .hidden-container.collapsed>.cover,
@@ -120,6 +134,8 @@ header .menu {
     padding: 5vh 2vh 2vh 4vh;
 }
 
+
+
 .rules {
     width: 100%;
     height: 100%;
@@ -135,9 +151,9 @@ header .menu {
     width: 1vh;
   }
   
-::-webkit-scrollbar-track {
-    /* background: var(--path); */
-}
+/* ::-webkit-scrollbar-track {
+    background: var(--path);
+} */
   
 ::-webkit-scrollbar-thumb {
     background: var(--wall);
@@ -151,20 +167,32 @@ header .menu {
     flex-wrap: wrap;
 }
 
+.change-colors .player-name {
+    flex-basis: 50%;
+    font-size: 10vh;
+    font-weight: bold;
+}
+
+.change-colors>.wrapper {
+    display: flex;
+    align-items: center;
+    flex-basis: 50%;
+}
+
 .change-colors .player-icon {
-    width: 10vh;
-    height: 10vh;
+    width: 20vh;
+    height: 20vh;
 }
 
 .change-colors .color-sample {
-    width: 10vh;
-    height: 10vh;
+    width: 20vh;
+    height: 20vh;
     border-radius: 33%;
 }
 
 .change-colors .button {
-    width: 5vh;
-    height: 5vh;
+    width: 10vh;
+    height: 10vh;
 }
 
 .change-colors .button.next {

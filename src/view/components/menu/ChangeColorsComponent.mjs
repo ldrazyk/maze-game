@@ -95,11 +95,16 @@ const ChangeColorsComponent = function ({ playerNumber, gameState, factory }) {
                 parentKey: 'main',
             },
             // both
+            bothWrapper: {
+                type: 'div',
+                classList: 'wrapper',
+                parentKey: 'main',
+            },
             bothColorsPrev: {
                 type: 'div',
                 classList: 'button prev',
                 onClick: () => changeBothColors(-1),
-                parentKey: 'main',
+                parentKey: 'bothWrapper',
             },
             bothColorsPrevSvg: {
                 type: 'svg',
@@ -109,7 +114,7 @@ const ChangeColorsComponent = function ({ playerNumber, gameState, factory }) {
             playerIcon: {
                 type: 'div',
                 classList: 'player-icon',
-                parentKey: 'main',
+                parentKey: 'bothWrapper',
             },
             svgPlayer: {
                 type: 'svg',
@@ -120,7 +125,7 @@ const ChangeColorsComponent = function ({ playerNumber, gameState, factory }) {
                 type: 'div',
                 classList: 'button next',
                 onClick: () => changeBothColors(1),
-                parentKey: 'main',
+                parentKey: 'bothWrapper',
             },
             bothColorsNextSvg: {
                 type: 'svg',
@@ -207,7 +212,7 @@ const ChangeColorsComponent = function ({ playerNumber, gameState, factory }) {
         });
     };
 
-    const updatePlayerName = function () {
+    const updatePlayerNameState = function () {
 
         const getPlayerName = function () {
         
@@ -217,17 +222,12 @@ const ChangeColorsComponent = function ({ playerNumber, gameState, factory }) {
         state.update('playerName', getPlayerName());
     };
 
-    const updateState = function () {
-    
-        updatePlayerName();
-    };
-
     const init = function () {
     
         initColorIndexes();
         createElements();
         createState();
-        updateState();
+        updatePlayerNameState();
     }();
 
     const setMediator = function (newMediator) {
@@ -239,7 +239,7 @@ const ChangeColorsComponent = function ({ playerNumber, gameState, factory }) {
 
         if (code == 'changePlayerName') {
 
-            updatePlayerName();
+            updatePlayerNameState();
         }
     };
 

@@ -64,7 +64,7 @@ const HiddenContainer = function ({ id=false, classList=false, buttonText=false,
         }
     };
 
-    const appendChild = function (child) {
+    const appendChild = function (child, setToggle=false) {
     
         let parent;
         if (childContainer) {
@@ -73,12 +73,21 @@ const HiddenContainer = function ({ id=false, classList=false, buttonText=false,
             parent = elements.content;
         }
 
-        factory.append({ parent, child })
+        factory.append({ parent, child });
+
+        if (setToggle) {
+            child.setToggle(toggle);
+        }
     };
 
     const getId = function () {
         
         return id;
+    };
+
+    const getToggle = function () {
+    
+        return toggle;
     };
     
     const getMain = function () {
@@ -93,6 +102,7 @@ const HiddenContainer = function ({ id=false, classList=false, buttonText=false,
             addContainer,
             appendChild,
             getId,
+            getToggle,
             getMain,
         }
     );

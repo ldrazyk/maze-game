@@ -43,6 +43,11 @@ const ViewFactory = function () {
         uiComponentsFactory.append({ parent, child });
     };
 
+    const remove = function (component) {
+    
+        uiComponentsFactory.remove(component);
+    };
+
     
     return Object.freeze(
         {
@@ -51,6 +56,7 @@ const ViewFactory = function () {
             createComponent,
             createState,
             append,
+            remove,
         }
     );
 };

@@ -42,10 +42,17 @@ const RulesPanel = function ({ factory }) {
                 "Lion kills Rooster.",
                 "Rooster kills Snake.",
                 "Snake kills Lion.",
-                "If you're left with no pawns you loose.",
-                "You have to move or hold all of your pawns each turn.",
+                "If you have no pawns you loose.",
+                "Every turn you must move/hold all pawns.",
                 "You can't hold more than half of your pawns.",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                "Commands:",
+                "Start next turn: press 'T' or 'Hourglass Button'",
+                "Move Pawn: press 'Arrows' or click Field.",
+                "Hold Pawn: press 'Enter' or 'Cross Button' or click selected pawn.",
+                "Select Pawn: click Pawn.",
+                "Select next Pawn: press 'S' or 'Frame Button'.",
+                "Undo: press 'Z' or 'Left-Bend Button'.",
+                "Redo: press 'Y' or 'Right-Bend Button'.",
             ];
 
             return rulesLines;
