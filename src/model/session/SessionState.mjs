@@ -1,7 +1,7 @@
 const SessionState = function () {
     
     let session;
-    let players, scores, boardRepository;
+    let players, scores, boardFactory;
 
     // setters
 
@@ -17,9 +17,9 @@ const SessionState = function () {
         scores = component;
     };
 
-    const setBoardRepository = function (repository) {
+    const setBoardFactory = function (factory) {
     
-        boardRepository = repository;
+        boardFactory = factory;
     };
 
     // get players
@@ -41,7 +41,7 @@ const SessionState = function () {
             setSession,
             setPlayers,
             setScores,
-            setBoardRepository,
+            setBoardFactory,
             // get players
             getPlayer,
             getActiveNumber,

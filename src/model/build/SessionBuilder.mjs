@@ -1,8 +1,8 @@
-import Session from './Session.mjs';
-import SessionState from './SessionState.mjs';
-import Players from './Players.mjs';
-import Scores from './Scores.mjs';
-import BoardRepository from './BoardRepository.mjs';
+import Session from '../session/Session.mjs';
+import SessionState from '../session/SessionState.mjs';
+import Players from '../session/Players.mjs';
+import Scores from '../session/Scores.mjs';
+import BoardFactory from './BoardFactory.mjs';
 import boardsSpec from '../data/boardsSpec.mjs';
 
 const SessionBuilder = function () {
@@ -25,12 +25,12 @@ const SessionBuilder = function () {
         state.setSession(session);
     };
 
-    const setBoardRepository = function () {
+    const setBoardFactory = function () {
     
-        const repository = BoardRepository(boardsSpec);
+        const repository = BoardFactory(boardsSpec);
 
         mediators.forEach(mediator => {
-            mediator.setBoardRepository(repository);
+            mediator.setBoardFactory(repository);
         });
     };
 
@@ -61,7 +61,7 @@ const SessionBuilder = function () {
         {
             reset,
             setState,
-            setBoardRepository,
+            setBoardFactory,
             setPlayers,
             setScores,
             getResult,

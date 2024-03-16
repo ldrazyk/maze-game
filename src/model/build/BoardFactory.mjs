@@ -1,7 +1,7 @@
 import Board from "../game/Board.mjs";
 import shuffle from "../utils/shuffle.mjs";
 
-const BoardRepository = function (boardsSpec) {
+const BoardFactory = function (boardsSpec) {
 
     const boards = {};
     const boardsSizes = {};
@@ -115,4 +115,4 @@ const BoardRepository = function (boardsSpec) {
     );
 };
 
-export default BoardRepository;
+export default BoardFactory;

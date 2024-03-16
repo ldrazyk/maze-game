@@ -1,6 +1,6 @@
 import Subject from "./utils/Subject.mjs";
-import SessionBuilder from "./session/SessionBuilder.mjs";
-import GameBuilder from "./game/GameBuilder.mjs";
+import SessionBuilder from "./build/SessionBuilder.mjs";
+import GameBuilder from "./build/GameBuilder.mjs";
 
 const Model = function() {
     let subject, gameBuilder, sessionBuilder;
@@ -57,7 +57,7 @@ const Model = function() {
         const make = function () {
             builder.reset();
             builder.setState();
-            builder.setBoardRepository();
+            builder.setBoardFactory();
             builder.setPlayers(playersSpec);
             builder.setScores();
         };

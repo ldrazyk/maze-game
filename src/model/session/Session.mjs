@@ -1,7 +1,7 @@
 const Session = function () {
 
     let state;
-    let players, scores, boardRepository;
+    let players, scores, boardFactory;
     let gameNumber;
 
     const init = function () {
@@ -14,9 +14,9 @@ const Session = function () {
         state = stateObject;
     };
 
-    const setBoardRepository = function (repository) {
+    const setBoardFactory = function (factory) {
     
-        boardRepository = repository;
+        boardFactory = factory;
     };
 
     const setPlayers = function (newPlayers) {
@@ -39,7 +39,7 @@ const Session = function () {
 
     const createBoard = function (spec) {
     
-        return boardRepository.createBoard(spec);
+        return boardFactory.createBoard(spec);
     };
 
     const getPlayers = function () {
@@ -66,7 +66,7 @@ const Session = function () {
     return Object.freeze(
         {
             setState,
-            setBoardRepository,
+            setBoardFactory,
             setPlayers,
             setScores,
 

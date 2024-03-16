@@ -1,11 +1,11 @@
-import Game from "./Game.mjs";
-import Pawns from "./Pawns.mjs";
-import TurnCounter from "./TurnCounter.mjs";
-import MovesCounter from "./MovesCounter.mjs";
+import Game from "../game/Game.mjs";
+import Pawns from "../game/Pawns.mjs";
+import TurnCounter from "../game/TurnCounter.mjs";
+import MovesCounter from "../game/MovesCounter.mjs";
+import GameState from "../game/GameState.mjs";
+import GameOperator from "../game/GameOperator.mjs";
+import GameOperatorEmpty from "../game/GameOperatorEmpty.mjs";
 import Commands from "../commands/Commands.mjs";
-import GameState from "./GameState.mjs";
-import GameOperator from "./GameOperator.mjs";
-import GameOperatorEmpty from "./GameOperatorEmpty.mjs";
 
 const GameBuilder = function () {
     let game, gameState;
