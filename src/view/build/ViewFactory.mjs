@@ -1,6 +1,6 @@
 import DomElementsFactory from './DomElementsFactory.mjs';
 import UiComponentsFactory from './UiComponentsFactory.mjs';
-import UiState from '../utils/UiState.mjs';
+import State from '../utils/State.mjs';
 
 const ViewFactory = function () {
     
@@ -35,7 +35,7 @@ const ViewFactory = function () {
 
     const createState = function () {
     
-        return UiState();
+        return State();
     };
 
     const append = function ({ parent, child }) {

@@ -1,76 +1,21 @@
-:root {
-    --large-border-width: 3px;
-    --medium-border-width: 2px;
-    --small-border-width: 2px;
-}
-
-/* .board */
-
 .board {
-    display: flex;
-    flex-direction: column;
-    width: var(--main-height);
-    height: var(--main-height);
+    display: grid;
+    row-gap: 2px;
+    aspect-ratio: 1;
     background-color: var(--wall);
     border-style: solid;
     border-color: var(--wall);
-    border-width: 0;
+    border-width: 2px;
 }
 
-@media (orientation: portrait) {
-
-    .board {
-        width: 90vw;
-        height: 90vw;
-    }
+.board .row {
+    display: grid;
+    grid-auto-flow: column;
+    column-gap: 2px;
 }
-
-
-.board.large-fields {
-    border-bottom-width: var(--large-border-width);
-    border-right-width: var(--large-border-width);
-}
-
-.board.medium-fields {
-    border-bottom-width: var(--medium-border-width);
-    border-right-width: var(--medium-border-width);
-}
-
-.board.small-fields {
-    border-bottom-width: var(--small-border-width);
-    border-right-width: var(--small-border-width);
-}
-
-/* .row */
-
-.row {
-    display: flex;
-    flex-basis: 100%;
-}
-
-/* .field */
 
 .field {
     position: relative;
-    flex-basis: 100%;
-    border-style: solid;
-    border-color: var(--wall);
-    border-width: 0;
-}
-
-.board.large-fields .field {
-    border-top-width: var(--large-border-width);
-    border-left-width: var(--large-border-width);
-}
-
-.board.medium-fields .field {
-    border-top-width: var(--medium-border-width);
-    border-left-width: var(--medium-border-width);
-}
-
-.board.small-fields .field {
-    border-top-width: var(--small-border-width);
-    border-left-width: var(--small-border-width);
 }
 
 .field.selected,
@@ -199,40 +144,4 @@ svg.flag {
     height: 100%;
     top: 0;
     left: 0;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
 }
-
-
-
-/* @keyframes blink {
-    0% {
-        opacity: 1;
-    }
-    20% {
-        opacity: 1;
-    }
-    30% {
-        opacity: 0;
-    }
-    70% {
-        opacity: 0;
-    }
-    80% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 1;
-    }
-} */
-
-/* .in-reach .pawn {
-
-    animation: blink 1s linear infinite running;
-} */
-
-/* .in-reach:hover .pawn {
-
-    animation-play-state: running;
-} */

@@ -3,6 +3,7 @@ const ViewMediator = function ({ root, factory }) {
     let controller;
     const containers = { root };
     const components = {};
+    const colleagues = {};
 
 
     const setController = function (newController) {
@@ -24,6 +25,11 @@ const ViewMediator = function ({ root, factory }) {
         }
 
         components[id] = component;
+    };
+
+    const addColleague = function ({ id, colleague }) {
+    
+        colleagues[id] = colleague;
     };
 
     const getContainer = function (id) {
@@ -105,12 +111,18 @@ const ViewMediator = function ({ root, factory }) {
         controller.setKeydown(on);
     };
 
+    const updateRootClass = function (classList) {
+    
+        containers.root.classList = classList;
+    };
+
     
     return Object.freeze(
         {
             setController,
             addContainer,
             addComponent,
+            addColleague,
             getContainer,
             update,
             // controller
@@ -127,6 +139,7 @@ const ViewMediator = function ({ root, factory }) {
             redo,
             setPlayerName,
             setKeydown,
+            updateRootClass,
         }
     );
 };

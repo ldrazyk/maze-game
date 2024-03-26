@@ -1,9 +1,4 @@
 .control-panel {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 3vh 0;
     background-color: var(--path);
 }
 
@@ -16,46 +11,53 @@
 }
 
 .control-panel>.wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 45vh;
-    background-color: var(--path);
+    display: grid;
+}
+
+.control-panel>.wrapper,
+.portrait.narrow.very.much .control-panel>.wrapper {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-areas: 
+        "select up turn"
+        "left hold right"
+        "undo down redo";
+}
+
+
+.portrait.narrow .control-panel>.wrapper {
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas: 
+        "a select select undo undo redo redo turn turn b"
+        "left left down down hold hold up up right right";
 }
 
 /* button */
 
-.control-panel button,
-.control-panel .dummy {
-    position: relative;
-    height: 15vh;
-    width: 15vh;
+.control-panel button {
     border: none;
-    background-color: var(--path);
-}
-
-.control-panel .dummy {
-    display: none;
-    height: 1px;
-    width: 1px;
-    background-color: var(--path);
-}
-
-.control-panel button.active {
-    cursor: pointer;
+    background-color: transparent;
+    /* background-color: var(--path); */
 }
 
 .control-panel button.active:hover {
     background-color: var(--wall);
 }
 
+.control-panel.player-1 button.active:hover {
+    background-color: var(--dark-player1);
+}
+
+.control-panel.player-2 button.active:hover {
+    background-color: var(--dark-player2);
+}
+
+.control-panel button.active {
+    cursor: pointer;
+}
+
 .control-panel button .container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     opacity: 0.3;
 }
 
@@ -67,44 +69,60 @@
     fill: var(--wall);
 }
 
+.control-panel.player-1 button .dark {
+    fill: var(--dark-player1);
+}
+
+.control-panel.player-2 button .dark {
+    fill: var(--dark-player2);
+}
+
 .control-panel button.active:hover .dark {
     fill: var(--path);
 }
 
+.control-panel.player-1 button.active:hover .dark {
+    fill: var(--light-player1);
+}
+
+.control-panel.player-2 button.active:hover .dark {
+    fill: var(--light-player2);
+}
+
 button.select {
-    order: 1;
+    grid-area: select;
 }
 
 button.up {
-    order: 2;
+    grid-area: up;
 }
 
 button.turn {
-    order: 3;
+    grid-area: turn;
 }
 
 button.left {
-    order: 4;
+    grid-area: left;
 }
 
 button.hold {
-    order: 5;
+    grid-area: hold;
 }
 
 button.right {
-    order: 6;
+    grid-area: right;
 }
 
 button.undo {
-    order: 7;
+    grid-area: undo;
 }
 
 button.down {
-    order: 8;
+    grid-area: down;
 }
 
 button.redo {
-    order: 9;
+    grid-area: redo;
 }
 
 button.right .container {
@@ -121,67 +139,4 @@ button.left .container {
 
 button.redo .container {
     transform: scaleX(-1);
-}
-
-
-@media (orientation: portrait) and (max-width: 500px) {
-
-    .control-panel {
-        padding: 1vh 0;
-    }
-    
-    .control-panel>.wrapper {
-        width: 90vw;
-    }
-    
-    .control-panel button {
-        height: 18vw;
-        width: 18vw;
-    }
-
-    .control-panel .dummy-1 {
-        display: block;
-        order: 0;
-    }
-
-    button.select {
-        order: 1;
-    }
-    
-    button.undo {
-        order: 2;
-    }
-    
-    button.redo {
-        order: 3;
-    }
-    
-    button.turn {
-        order: 4;
-    }
-    
-    .control-panel .dummy-2 {
-        display: block;
-        order: 5;
-    }
-    
-    button.up {
-        order: 7;
-    }
-    
-    button.down {
-        order: 9;
-    }
-
-    button.left {
-        order: 6;
-    }
-    
-    button.right {
-        order: 10;
-    }
-    
-    button.hold {
-        order: 8;
-    }
 }

@@ -33,7 +33,7 @@ const View = function() {
         const builder = viewBuilder;
 
         builder.setMediator(mediator);
-        builder.setComponent({ id: 'board', type: 'board', parentId: 'board-section', gameState });
+        builder.setComponent({ id: 'board', type: 'board', parentId: 'board-panel', gameState });
 
     };
 
@@ -49,14 +49,15 @@ const View = function() {
             builder.setContainer({ id: 'header', elementType: 'header', parentId: 'root'});
             builder.setContainer({ id: 'main', elementType: 'main', parentId: 'root' });
             builder.setContainer({ id: 'footer', elementType: 'footer', parentId: 'root'});
-            builder.setContainer({ id: 'board-section', elementType: 'section', classList: 'board-section', parentId: 'main' });
-            builder.setContainer({ id: 'panels-section', elementType: 'section', classList: 'panels-section', parentId: 'main' });
+            builder.setContainer({ id: 'board-panel', elementType: 'div', classList: 'board-panel', parentId: 'main' });
 
             builder.setComponent({ id: 'menu', type: 'menu', parentId: 'header', gameState });
-            builder.setComponent({ id: 'control-panel', type: 'controlPanel', parentId: 'panels-section' });
-            builder.setComponent({ id: 'player-panel-1', type: 'playerPanel', playerNumber: 1, parentId: 'panels-section', gameState });
-            builder.setComponent({ id: 'player-panel-2', type: 'playerPanel', playerNumber: 2, parentId: 'panels-section', gameState });
-            builder.setComponent({ id: 'info-panel', type: 'infoPanel', parentId: 'panels-section' });
+            builder.setComponent({ id: 'control-panel', type: 'controlPanel', parentId: 'main' });
+            builder.setComponent({ id: 'player-panel-1', type: 'playerPanel', playerNumber: 1, parentId: 'main', gameState });
+            builder.setComponent({ id: 'player-panel-2', type: 'playerPanel', playerNumber: 2, parentId: 'main', gameState });
+            builder.setComponent({ id: 'info-panel', type: 'infoPanel', parentId: 'main' });
+
+            builder.setAspectRatioTracker({ test: true });
         };
 
         make();

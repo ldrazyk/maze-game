@@ -20,16 +20,6 @@ const ControlPanelComponent = function({ factory }) {
                 classList: 'wrapper',
                 parentKey: 'main',
             },
-            dummy1: {
-                type: 'div',
-                classList: 'dummy dummy-1',
-                parentKey: 'wrapper',
-            },
-            dummy2: {
-                type: 'div',
-                classList: 'dummy dummy-2',
-                parentKey: 'wrapper',
-            },
         };
 
         elements = factory.createElements(spec);

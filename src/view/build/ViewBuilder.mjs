@@ -1,10 +1,12 @@
 import ViewFactory from "./ViewFactory.mjs";
 import ViewMediator from "./ViewMediator.mjs";
+import WindowAspectRatioTracker from "../utils/WindowAspectRatioTracker.mjs";
 
 const ViewBuilder = function () {
     
     let factory;
     let mediator;
+    let objectsToInit;
 
     const createFactory = function () {
     
@@ -14,6 +16,7 @@ const ViewBuilder = function () {
     const init = function () {
     
         createFactory();
+        objectsToInit = [];
     }();
 
     const reset = function (root) {
@@ -59,8 +62,37 @@ const ViewBuilder = function () {
         mediator.addComponent(component);
     };
 
+    const setColleague = function ({ id, colleague, init=false }) {
+    
+        colleague.setMediator(mediator);
+        mediator.addColleague({ id, colleague });
+        if (init) {
+            objectsToInit.push(colleague);
+        }
+    };
+
+    const setAspectRatioTracker = function ({ test }) {
+    
+        const tracker = WindowAspectRatioTracker({ factory, test });
+
+        setColleague({
+            id: 'aspectRatioTracker',
+            colleague: tracker,
+            init: true,
+        });
+    };
+
+
     const getResult = function () {
         
+        const initObjects = function () {
+        
+            objectsToInit.forEach(object => {
+                object.init();
+            });
+        };
+
+        initObjects();
         return mediator;
     };
     
@@ -71,6 +103,7 @@ const ViewBuilder = function () {
             setController,
             setContainer,
             setComponent,
+            setAspectRatioTracker,
             getResult,
         }
     );

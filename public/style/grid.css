@@ -1,0 +1,202 @@
+.test {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+}
+
+main {
+    display: grid;
+}
+
+
+.board-panel {
+    grid-area: board;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: green; */
+}
+
+
+.player-panel.player-1 {
+    grid-area: player1;
+}
+
+.player-panel.player-2 {
+    grid-area: player2;
+}
+
+.control-panel {
+    grid-area: control;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.control-panel>.wrapper {
+    aspect-ratio: 1;
+}
+
+.info-panel {
+    grid-area: info;
+    /* background-color: yellow; */
+    border: 1px solid black;
+}
+
+/* landscape (ar < 2) */
+
+.landscape main {
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-areas: 
+        "board player1 control"
+        "board player2 control"
+        "board info info";
+}
+
+.landscape div.board {
+    width: 100%;
+}
+
+.landscape .control-panel>.wrapper {
+    width: 90%;
+}
+
+/* landscape wide (ar > 2) */
+
+.wide main {
+    grid-template-columns: auto 1fr 1fr;
+}
+
+.wide div.board {
+    height: 100vh;
+    width: 100vh;
+}
+
+/* landscape wide very (ar > 2.3) */
+
+.wide.very main {
+    grid-template-columns: auto 1fr 66vh;
+}
+
+/* landscape wide very much (ar > 2.5) */
+
+.wide.very.much main {
+    grid-template-columns: auto 1fr 0.78fr;
+    grid-template-areas: 
+        "board player1 control"
+        "board player2 control"
+        "board info control";
+}
+
+/* landscape.wide.very.much.final */
+
+.wide.very.much.final main {
+    justify-content: center;
+    grid-template-columns: 100vh 128vh 100vh;
+    grid-template-areas: 
+        "board player1 control"
+        "board player2 control"
+        "board info control";
+}
+
+/* landscape narrow */
+
+.landscape.narrow main {
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas: 
+        "board player1 player1"
+        "board control control"
+        "board control control"
+        "info player2 player2";
+}
+
+.landscape.narrow .control-panel>.wrapper {
+    height: 90%;
+    width: auto;
+}
+
+.landscape.narrow .board-panel {
+    align-items: end;
+}
+
+/* portrait */
+
+.portrait main {
+    grid-template-columns: 1fr 0.75fr;
+    grid-template-rows: auto 1fr 1fr 1fr;
+    grid-template-areas:
+        "board board"
+        "player1 control"
+        "player2 control"
+        "info info";
+}
+
+.portrait .board {
+    width: 100%;
+}
+
+.portrait .control-panel>.wrapper {
+    width: 90%;
+}
+
+/* portrait wide */
+
+.portrait.wide main {
+    grid-template-rows: 4.5fr 1fr 1fr 1fr;
+    grid-template-areas:
+        "board board"
+        "player1 control"
+        "player2 control"
+        "info control";
+}
+
+.portrait.wide .board {
+    height: 100%;
+    width: auto;
+}
+
+/* portrait narrow */
+
+.portrait.narrow main {
+    grid-template-rows: auto 1fr 1.5fr 1fr 1fr;
+    grid-template-areas:
+        "board board"
+        "player1 player1"
+        "control control"
+        "player2 player2"
+        "info info";
+}
+
+.portrait.narrow .control-panel>.wrapper {
+    height: 90%;
+    width: auto;
+    aspect-ratio: 2.5;
+}
+
+/* portrait narrow very */
+
+.portrait.narrow.very .control-panel>.wrapper {
+    width: 90%;
+    height: auto;
+}
+
+/* portrait narrow very much */
+
+.portrait.narrow.very.much main {
+    grid-template-rows: auto 1fr 1.7fr 1fr 1fr;
+}
+
+.portrait.narrow.very.much .control-panel>.wrapper {
+    height: 90%;
+    width: auto;
+    aspect-ratio: 1;
+}
+
+/* portrait narrow very much final */
+
+.portrait.narrow.very.much.final main {
+    grid-template-rows: 100vw 57vw 100vw 57vw 57vw;
+}

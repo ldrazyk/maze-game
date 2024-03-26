@@ -1,24 +1,26 @@
-header .menu {
-    flex-grow: 1;
-    display: flex;
-    justify-content: flex-end;
-    height: 100%;
-    position: relative;
-}
-
 .button {
     cursor: pointer;
 }
 
 .menu>.hidden-container {
-    height: 100%;
-    /* text-align: right; */
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 2;
 }
 
 .menu>.hidden-container>.button {
-    height: var(--header-height);
-    width: var(--header-height);
+    height: 5vh;
+    width: 5vh;
     background-color: var(--path);
+}
+
+@media (orientation: portrait) {
+
+    .menu>.hidden-container>.button {
+        height: 5vw;
+        width: 5vw;
+    }
 }
 
 .menu .button {
@@ -97,8 +99,6 @@ header .menu {
     background-color: var(--path);
     border: 1vh solid var(--wall);
 }
-
-
 
 .fixed-window {
     z-index: 10;
@@ -228,12 +228,7 @@ header .menu {
 @media (orientation: portrait) {
 
     .menu>.hidden-container>.container {
-        border-width: 1vw;
-    }
-
-    .menu>.hidden-container>.button {
-        height: var(--header-height-portrait);
-        width: var(--header-height-portrait);
+        border-width: 0.5vw;
     }
 
     .menu .option-text {
