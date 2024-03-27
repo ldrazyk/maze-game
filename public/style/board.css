@@ -1,17 +1,43 @@
 .board {
     display: grid;
-    row-gap: 2px;
+    row-gap: 3px;
     aspect-ratio: 1;
     background-color: var(--wall);
     border-style: solid;
     border-color: var(--wall);
-    border-width: 2px;
+    border-width: 3px;
 }
 
 .board .row {
     display: grid;
     grid-auto-flow: column;
-    column-gap: 2px;
+    column-gap: 3px;
+}
+
+@media (max-height: 500px) {
+    
+}
+
+@media (orientation: portrait) and (max-width: 500px), (max-height: 500px) {
+    .board {
+        row-gap: 2px;
+        border-width: 2px;
+    }
+    
+    .board .row {
+        column-gap: 2px;
+    }
+}
+
+@media (orientation: portrait) and (max-width: 250px), (max-height: 250px) {
+    .board {
+        row-gap: 1px;
+        border-width: 1px;
+    }
+    
+    .board .row {
+        column-gap: 1px;
+    }
 }
 
 .field {

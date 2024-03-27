@@ -43,7 +43,6 @@ const NewGamePanel = function ({ factory, gameState, createGame }) {
                     type: 'div',
                     id: props.id,
                     classList: 'panel ' + props.id,
-                    textContent: 'New Game Panel',
                 },
                 drawButton: {
                     type: 'button',
@@ -90,6 +89,8 @@ const NewGamePanel = function ({ factory, gameState, createGame }) {
             value: '',
             onChange: (value) => onPlayerNameChange(2, value),
         });
+
+        
     };
 
     const updatePlayerNameStates = function () {

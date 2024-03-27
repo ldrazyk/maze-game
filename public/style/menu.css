@@ -1,15 +1,15 @@
-.button {
+.menu .button {
     cursor: pointer;
 }
 
-.menu>.hidden-container {
+.menu>.dropdown-container {
     position: fixed;
     top: 0;
     right: 0;
     z-index: 2;
 }
 
-.menu>.hidden-container>.button {
+.menu>.dropdown-container>.button {
     height: 5vh;
     width: 5vh;
     background-color: var(--path);
@@ -17,7 +17,7 @@
 
 @media (orientation: portrait) {
 
-    .menu>.hidden-container>.button {
+    .menu>.dropdown-container>.button {
         height: 5vw;
         width: 5vw;
     }
@@ -53,8 +53,8 @@
     border: none;
 }
 
-.menu .hidden-container.collapsed>.cover,
-.menu .hidden-container.collapsed>.content {
+.menu .dropdown-container.collapsed>.cover,
+.menu .dropdown-container.collapsed>.content {
     display: none;
 }
 
@@ -69,7 +69,7 @@
     /* backdrop-filter: blur(1px); */
 }
 
-.menu>.hidden-container>.content {
+.menu>.dropdown-container>.content {
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -83,14 +83,26 @@
     border-width: 0 0 1vh 1vh;
 }
 
-.content>.hidden-container>.button {
+.content>.dropdown-container>.button {
     padding: 2vh 4vh;
     font-size: 5vh;
     font-weight: bold;
     color: var(--wall);
 }
 
-.content>.hidden-container>.button:hover {
+@media (orientation: portrait) {
+
+    .menu>.dropdown-container>.content {
+        border-width: 0 0 1vw 1vw;
+    }
+
+    .content>.dropdown-container>.button {
+        padding: 2vw 4vw;
+        font-size: 5vw;
+    }
+}
+
+.content>.dropdown-container>.button:hover {
     color: var(--path);
     background-color: var(--wall);
 }
@@ -103,10 +115,10 @@
 .fixed-window {
     z-index: 10;
     position: fixed;
-    top: 3vh;
-    bottom: 3vh;
-    left: 3vw;
-    right: 3vw;
+    top: 25px;
+    bottom: 25px;
+    left: 25px;
+    right: 25px;
 }
 
 .window .container {
@@ -117,8 +129,6 @@
     width: 100%;
     height: 100%;
 }
-
-
 
 .window>.close-button {
     position: absolute;
@@ -133,8 +143,6 @@
     height: 100%;
     padding: 5vh 2vh 2vh 4vh;
 }
-
-
 
 .rules {
     width: 100%;
@@ -203,8 +211,6 @@
     transform: rotate(-90deg);
 }
 
-
-
 .player-1 .color-sample.light {
     background-color: var(--light-player1);
 }
@@ -221,13 +227,9 @@
     background-color: var(--dark-player2);
 }
 
-
-
-
-
 @media (orientation: portrait) {
 
-    .menu>.hidden-container>.container {
+    .menu>.dropdown-container>.container {
         border-width: 0.5vw;
     }
 
@@ -245,7 +247,7 @@
     }
 }
 
-@media (orientation: portrait) and (max-height: 900px) {
+@media (orientation: portrait) and (max-width: 500px), (max-height: 500px) {
     .fixed-window {
         top: 0;
         bottom: 0;
@@ -254,11 +256,3 @@
     }
 }
 
-@media (max-width: 900px) {
-    .fixed-window {
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-    }
-}

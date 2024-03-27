@@ -11,7 +11,7 @@ import NewGamePanel from "../components/menu/NewGamePanel.mjs";
 import RulesPanel from "../components/menu/RulesPanel.mjs";
 import EmptyPanel from "../components/menu/EmptyPanel.mjs";
 import ContainerComponent from "../components/containers/ContainerComponent.mjs"
-import HiddenContainer from "../components/containers/HiddenContainer.mjs"
+import DropdownContainer from "../components/containers/DropdownContainer.mjs"
 import WindowContainer from "../components/containers/WindowContainer.mjs"
 
 const UiComponentsFactory = function () {
@@ -58,9 +58,8 @@ const UiComponentsFactory = function () {
         newGamePanel: NewGamePanel,
         emptyPanel: EmptyPanel,
         container: ContainerComponent,
-        hiddenContainer: HiddenContainer,
+        dropdownContainer: DropdownContainer,
         windowContainer: WindowContainer,
-        hiddenContainerWithWindow: createHiddenContainerWithWindow,
     };
     
     const append = function ({ parent, child }) {

@@ -1,7 +1,6 @@
-const HiddenContainer = function ({ id=false, classList=false, buttonText=false, cover=true, parent=false, factory }) {
+const DropdownContainer = function ({ id=false, classList=false, buttonText=false, cover=true, parent=false, factory }) {
     
     let elements;
-    let childContainer;
 
     const toggle = function () {
     
@@ -13,7 +12,7 @@ const HiddenContainer = function ({ id=false, classList=false, buttonText=false,
         const spec = {
             main: {
                 type: 'div',
-                classList: 'hidden-container collapsed ' + classList,
+                classList: 'dropdown-container ' + classList,
                 id: id,
                 parent: parent,
             },
@@ -46,6 +45,7 @@ const HiddenContainer = function ({ id=false, classList=false, buttonText=false,
     const init = function () {
     
         createElements();
+        toggle();
     }();
 
     const appendToButton = function (element) {
@@ -53,31 +53,9 @@ const HiddenContainer = function ({ id=false, classList=false, buttonText=false,
         factory.append({parent: elements.button, child: element});
     };
 
-    const addContainer = function ({ container, setToggle=false }) {
+    const appendChild = function (child) {
     
-        childContainer = container;
-
-        factory.append({ parent: elements.content, child: container })
-
-        if (setToggle) {
-            container.setToggle(toggle);
-        }
-    };
-
-    const appendChild = function (child, setToggle=false) {
-    
-        let parent;
-        if (childContainer) {
-            parent = childContainer;
-        } else {
-            parent = elements.content;
-        }
-
-        factory.append({ parent, child });
-
-        if (setToggle) {
-            child.setToggle(toggle);
-        }
+        factory.append({ parent: elements.content, child });
     };
 
     const getId = function () {
@@ -85,11 +63,6 @@ const HiddenContainer = function ({ id=false, classList=false, buttonText=false,
         return id;
     };
 
-    const getToggle = function () {
-    
-        return toggle;
-    };
-    
     const getMain = function () {
         
         return elements.main;
@@ -98,14 +71,13 @@ const HiddenContainer = function ({ id=false, classList=false, buttonText=false,
     
     return Object.freeze(
         {
+            toggle,
             appendToButton,
-            addContainer,
             appendChild,
             getId,
-            getToggle,
             getMain,
         }
     );
 };
 
-export default HiddenContainer;
+export default DropdownContainer;

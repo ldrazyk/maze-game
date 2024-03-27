@@ -1,9 +1,11 @@
 const WindowContainer = function ({ id, classList=false, factory }) {
     
     let elements;
-    let toggleFunction = false;
 
-    let mediator;
+    const toggle = function () {
+    
+        elements.main.classList.toggle('hidden');
+    };
 
     const createElements = function () {
 
@@ -16,6 +18,7 @@ const WindowContainer = function ({ id, classList=false, factory }) {
             closeButton: {
                 type: 'div',
                 classList: 'button close-button',
+                onClick: toggle,
                 parentKey: 'main',
             },
             svg: {
@@ -36,28 +39,12 @@ const WindowContainer = function ({ id, classList=false, factory }) {
     const init = function () {
     
         createElements();
+        toggle();
     }();
-
-    const setMediator = function (newMediator) {
-    
-        mediator = newMediator;
-    };
-
-    const setToggle = function (toggle) {
-    
-        toggleFunction = toggle;
-
-        elements.closeButton.addEventListener('click', toggleFunction);
-    };
 
     const appendChild = function (child) {
     
         factory.append({ parent: elements.container, child});
-    };
-
-    const update = function () {
-    
-        return ;
     };
 
     const getId = function () {
@@ -70,13 +57,10 @@ const WindowContainer = function ({ id, classList=false, factory }) {
         return elements.main;
     };
     
-    
     return Object.freeze(
         {
-            setMediator,
-            setToggle,
+            toggle,
             appendChild,
-            update,
             getId,
             getMain,
         }

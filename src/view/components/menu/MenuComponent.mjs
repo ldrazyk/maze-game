@@ -43,6 +43,29 @@ const MenuComponent = function ({ gameState, factory }) {
             containers.mainDropdown = container;
         };
 
+        const createWindowContainers = function () {
+        
+            const ids = [
+                'newGameWindow',
+                'colorsWindow',
+                'rulesWindow',
+            ];
+
+            ids.forEach(id => {
+
+                const windowComponent = factory.createComponent({
+                    type: 'windowContainer',
+                    classList: 'fixed-window',
+                    id,
+                    factory,
+                });
+
+                containers[id] = windowComponent;
+            });
+        };
+
+
+
         const createOptions = function () {
 
             const appendToOptionWindow = function ({ component, containerSpec, setToggle=false }) {
@@ -143,6 +166,8 @@ const MenuComponent = function ({ gameState, factory }) {
 
         createMain();
         createMainDropdownContainer();
+        createWindowContainers();
+        
         createOptions();
     };
 
