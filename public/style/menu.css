@@ -83,11 +83,11 @@
     border-width: 0 0 1vh 1vh;
 }
 
-.content>.dropdown-container>.button {
+.dropdown-container>.content>.button {
     padding: 2vh 4vh;
     font-size: 5vh;
     font-weight: bold;
-    color: var(--wall);
+    /* color: var(--wall); */
 }
 
 @media (orientation: portrait) {
@@ -96,7 +96,7 @@
         border-width: 0 0 1vw 1vw;
     }
 
-    .content>.dropdown-container>.button {
+    .dropdown-container>.content>.button {
         padding: 2vw 4vw;
         font-size: 5vw;
     }

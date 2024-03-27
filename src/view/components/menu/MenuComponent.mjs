@@ -1,51 +1,98 @@
 const MenuComponent = function ({ gameState, factory }) {
     
     let mainElement;
-    const components = {};
+    const elements = {};
     const containers = {}
+    const components = {};
     const id = 'menu';
 
     let mediator;
 
-    const createElements = function () {
+    const toggleContainer = function (id) {
+    
+        containers[id].toggle();
+    };
 
-        const createMain = function () {
+    const createMain = function () {
         
-            mainElement = factory.createElement(
-                {
-                    type: 'div',
-                    classList: 'menu',
-                }
-            );
-        };
+        mainElement = factory.createElement(
+            {
+                type: 'div',
+                classList: 'menu',
+            }
+        );
+    };
+
+    const createContainers = function () {
 
         const createMainDropdownContainer = function () {
         
-            const container = factory.createComponent(
-                {
-                    type: 'hiddenContainer',
-                    id: 'main-dropdown',
-                    classList: 'dropdown',
-                    factory,
-                    parent: mainElement 
-                }
-            );
+            const createDropdown = function () {
+            
+                const dropdown = factory.createComponent(
+                    {
+                        type: 'dropdownContainer',
+                        id: 'mainDropdown',
+                        // classList: 'dropdown',
+                        factory,
+                        parent: mainElement 
+                    }
+                );
+    
+                const svg = factory.createElement(
+                    {
+                        type: 'svg',
+                        name: 'burger',
+                    }
+                );
+    
+                dropdown.appendToButton(svg);
+    
+                containers.mainDropdown = dropdown;
+            };
 
-            const svg = factory.createElement(
-                {
-                    type: 'svg',
-                    name: 'burger',
-                }
-            );
+            const createOptionButtons = function () {
+            
+                const buttonsSpec = [
+                    {
+                        id: 'newGameButton',
+                        textContent: 'New Game',
+                        windowId: 'endGameWindow',
+                    },
+                    {
+                        id: 'colorsButton',
+                        textContent: 'Colors',
+                        windowId: 'colorsWindow',
+                    },
+                    {
+                        id: 'rulesButton',
+                        textContent: 'Rules',
+                        windowId: 'rulesWindow',
+                    },
+                ];
 
-            container.appendToButton(svg);
+                buttonsSpec.forEach(spec => {
 
-            containers.mainDropdown = container;
+                    const button = factory.createElement({
+                        type: 'div',
+                        classList: 'button option',
+                        textContent: spec.textContent,
+                        onClick: () => toggleContainer(spec.windowId),
+                        parent: containers.mainDropdown,
+                    });
+
+                    elements[spec.id] = button;
+                });
+            };
+
+            createDropdown();
+            createOptionButtons();
         };
 
         const createWindowContainers = function () {
         
             const ids = [
+                'endGameWindow',
                 'newGameWindow',
                 'colorsWindow',
                 'rulesWindow',
@@ -55,125 +102,68 @@ const MenuComponent = function ({ gameState, factory }) {
 
                 const windowComponent = factory.createComponent({
                     type: 'windowContainer',
-                    classList: 'fixed-window',
                     id,
+                    classList: 'fixed-window',
                     factory,
+                    parent: mainElement,
                 });
 
                 containers[id] = windowComponent;
             });
         };
 
-
-
-        const createOptions = function () {
-
-            const appendToOptionWindow = function ({ component, containerSpec, setToggle=false }) {
-            
-                const optionContainer = factory.createComponent(
-                    {
-                        type: 'hiddenContainerWithWindow',
-                        hiddenSpec: {
-                            id: containerSpec.id,
-                            classList: 'option',
-                            buttonText: containerSpec.buttonText,
-                            cover: true,
-                        },
-                        windowSpec: {
-                            classList: 'fixed-window',
-                            setToggle: true,
-                        },
-                        factory,
-                        parent: containers.mainDropdown,
-                    }
-                );
-
-                containers[containerSpec.id] = optionContainer;
-
-                optionContainer.appendChild(component, setToggle);
-            };
-
-            const createComponent = function (componentSpec) {
-            
-                const component = factory.createComponent({ ...componentSpec, gameState, factory });
-
-                components[componentSpec.id] = component;
-
-                return component;
-            };
-
-            const createOption = function ({ containerSpec, componentSpec }) {
-            
-                const component = createComponent(componentSpec);
-
-                appendToOptionWindow({ component, containerSpec, setToggle: componentSpec.setToggle });
-            };
-
-            const create = function () {
-
-                const optionsSpec = [
-                    {
-                        containerSpec: {
-                            id: 'newGameOption',
-                            buttonText: 'New Game',
-                        },
-                        componentSpec: {
-                            id: 'newGamePanel',
-                            type: 'newGamePanel',
-                            createGame: (spec) => mediator.createGame(spec),
-                            setToggle: true,
-                        }
-                    },
-                    {
-                        containerSpec: {
-                            id: 'settingsOption',
-                            buttonText: 'Board',
-                        },
-                        componentSpec: {
-                            id: 'settingsPanel',
-                            type: 'emptyPanel',
-                        }
-                    },
-                    {
-                        containerSpec: {
-                            id: 'colorsOption',
-                            buttonText: 'Colors',
-                        },
-                        componentSpec: {
-                            id: 'colorsPanel',
-                            type: 'colorsPanel',
-                        }
-                    },
-                    {
-                        containerSpec: {
-                            id: 'rulesOption',
-                            buttonText: 'Rules',
-                        },
-                        componentSpec: {
-                            id: 'rulesPanel',
-                            type: 'rulesPanel',
-                        }
-                    },
-                ];
-                
-                optionsSpec.forEach(spec => {
-                    createOption(spec);
-                });
-            };
-
-            create();
-        };
-
-        createMain();
         createMainDropdownContainer();
         createWindowContainers();
+    };
+
+    const createComponents = function () {
+
+        const createComponent = function (spec) {
         
-        createOptions();
+            const component = factory.createComponent({ ...spec, gameState, factory });
+
+            components[spec.id] = component;
+
+            return component;
+        };
+
+        const componentsSpec = [
+            {
+                id: 'endGamePanel',
+                type: 'endGamePanel',
+                endGame: (spec) => components.newGamePanel.endGame(spec),
+                parent: containers.endGameWindow,
+            },
+            {
+                id: 'newGamePanel',
+                type: 'newGamePanel',
+                endGame: (spec) => mediator.endGame(spec),
+                createGame: (spec) => mediator.createGame(spec),
+                parent: containers.newGameWindow,
+            },
+            {
+                id: 'colorsPanel',
+                type: 'colorsPanel',
+                parent: containers.colorsWindow,
+            },
+            {
+                id: 'rulesPanel',
+                type: 'rulesPanel',
+                parent: containers.rulesWindow,
+            }
+        ];
+
+        componentsSpec.forEach(spec => {
+
+            createComponent(spec);
+        });
     };
 
     const init = function () {
     
-        createElements();
+        createMain();
+        createContainers();
+        createComponents();
     }();
 
     const setMediator = function (newMediator) {

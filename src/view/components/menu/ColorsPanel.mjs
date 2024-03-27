@@ -11,7 +11,6 @@ const ColorsPanel = function ({ gameState, factory }) {
                 type: 'div',
                 id: id,
                 classList: 'panel ' + id,
-                textContent: 'Change Colors',
             }
         );
     };

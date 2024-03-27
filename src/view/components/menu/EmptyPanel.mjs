@@ -1,8 +1,6 @@
 const EmptyPanel = function ({ factory }) {
     
-    const elements = {
-        main: false,
-    };
+    const elements = {};
     const id = 'empty-panel';
 
     

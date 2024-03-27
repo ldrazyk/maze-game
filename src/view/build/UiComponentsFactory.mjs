@@ -7,6 +7,7 @@ import PlayerPanel from "../components/PlayerPanel.mjs";
 import MenuComponent from "../components/menu/MenuComponent.mjs";
 import ColorsPanel from "../components/menu/ColorsPanel.mjs";
 import ChangeColorsComponent from "../components/menu/ChangeColorsComponent.mjs";
+import EndGamePanel from "../components/menu/EndGamePanel.mjs";
 import NewGamePanel from "../components/menu/NewGamePanel.mjs";
 import RulesPanel from "../components/menu/RulesPanel.mjs";
 import EmptyPanel from "../components/menu/EmptyPanel.mjs";
@@ -16,34 +17,6 @@ import WindowContainer from "../components/containers/WindowContainer.mjs"
 
 const UiComponentsFactory = function () {
 
-    const createHiddenContainerWithWindow = function ({ hiddenSpec, windowSpec, factory }) {
-
-        const hiddenContainer = factory.createComponent(
-            {
-                type: 'hiddenContainer',
-                ...hiddenSpec,
-                factory,
-            }
-        );
-
-        const windowContainer = factory.createComponent(
-            {
-                type: 'windowContainer',
-                ...windowSpec,
-                factory,
-            }
-        );
-
-        hiddenContainer.addContainer(
-            {
-                container: windowContainer,
-                setToggle: windowSpec.setToggle,
-            }
-        );
-
-        return hiddenContainer;
-    };
-    
     const constructors = {
         board: BoardComponent,
         button: ButtonComponent,
@@ -55,6 +28,7 @@ const UiComponentsFactory = function () {
         colorsPanel: ColorsPanel,
         changeColors: ChangeColorsComponent,
         rulesPanel: RulesPanel,
+        endGamePanel: EndGamePanel,
         newGamePanel: NewGamePanel,
         emptyPanel: EmptyPanel,
         container: ContainerComponent,

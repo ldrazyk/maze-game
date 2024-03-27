@@ -1,4 +1,4 @@
-const NewGamePanel = function ({ factory, gameState, createGame }) {
+const EndGamePanel = function ({ factory, gameState, endGame, createGame }) {
     
     let elements;
 
@@ -35,6 +35,11 @@ const NewGamePanel = function ({ factory, gameState, createGame }) {
         toggle();
     };
 
+    const endGame = function () {
+    
+        return ;
+    };
+
     const createElements = function () {
 
         elements = factory.createElements(
@@ -54,14 +59,14 @@ const NewGamePanel = function ({ factory, gameState, createGame }) {
                 player2WinsButton: {
                     type: 'button',
                     classList: 'button',
-                    textContent: 'Player 1 Wins',
+                    textContent: 'Player 1 wins',
                     onClick: () => newGame(),
                     parentKey: 'main',
                 },
                 player1WinsButton: {
                     type: 'button',
                     classList: 'button',
-                    textContent: 'Player 1 Wins',
+                    textContent: 'Player 1 wins',
                     onClick: () => newGame(),
                     parentKey: 'main',
                 },
@@ -73,7 +78,7 @@ const NewGamePanel = function ({ factory, gameState, createGame }) {
 
         const onPlayerNameChange = function (playerNumber, value) {
         
-            elements['player' + playerNumber + 'WinsButton'].textContent = value + ' Wins';
+            elements['player' + playerNumber + 'WinsButton'].textContent = value + ' wins';
         };
     
         state = factory.createState();
@@ -90,7 +95,7 @@ const NewGamePanel = function ({ factory, gameState, createGame }) {
             onChange: (value) => onPlayerNameChange(2, value),
         });
 
-        
+
     };
 
     const updatePlayerNameStates = function () {
@@ -147,4 +152,4 @@ const NewGamePanel = function ({ factory, gameState, createGame }) {
     );
 };
 
-export default NewGamePanel;
+export default EndGamePanel;
