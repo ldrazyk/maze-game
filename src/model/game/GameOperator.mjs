@@ -45,22 +45,28 @@ const GameOperator = function () {
     const redo = function () {
         game.redo();
     };
+
+    const endGame = function (spec) {
+    
+        game.endGame(spec.type, spec.winnerNumber);
+    };
     
     return Object.freeze(
         {
-            setGame: setGame,
+            setGame,
 
             // UI
-            nextTurn: nextTurn,
-            selectNext: selectNext,
-            hold: hold,
-            moveUp: moveUp,
-            moveDown: moveDown,
-            moveLeft: moveLeft,
-            moveRight: moveRight,
-            click: click,
-            undo: undo,
-            redo: redo,
+            nextTurn,
+            selectNext,
+            hold,
+            moveUp,
+            moveDown,
+            moveLeft,
+            moveRight,
+            click,
+            undo,
+            redo,
+            endGame,
         }
     );
 };

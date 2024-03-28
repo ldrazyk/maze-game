@@ -10,6 +10,10 @@ const Player = function ({ name, color, number }) {
         score += 1;
     };
 
+    const addDraw = function() {
+        score += 0.5;
+    };
+
     const setName = function (newName) {
     
         name = newName;
@@ -41,6 +45,7 @@ const Player = function ({ name, color, number }) {
     return Object.freeze(
         {
             addWin,
+            addDraw,
             setName,
             
             getName,

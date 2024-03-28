@@ -30,14 +30,6 @@ const Game = function () {
 
     // PRIVATE
 
-    const endGame = function(code) {
-        
-        scores.add(code);
-        pawns.reset();
-        gameOperator = emptyGameOperator;
-        notify('endGame');
-    };
-
     const updateReaches = function() {
         pawns.updateReaches();
     };
@@ -57,6 +49,14 @@ const Game = function () {
     // PUBLIC
 
     // for operator
+
+    const endGame = function(type, winnerNumber=false) {
+
+        scores.add(type, winnerNumber);
+        pawns.reset();
+        gameOperator = emptyGameOperator;
+        notify('endGame');
+    };
 
     const nextTurn = function() {
 
@@ -361,44 +361,45 @@ const Game = function () {
 
     return Object.freeze(
         {
-            init: init,
+            init,
 
             // used in GameOperator
-            nextTurn: nextTurn,
-            selectNext: selectNext,
-            hold: hold,
-            moveInDirection: moveInDirection,
-            click: click,
-            undo: undo,
-            redo: redo,
+            endGame,
+            nextTurn,
+            selectNext,
+            hold,
+            moveInDirection,
+            click,
+            undo,
+            redo,
 
             // mediator interface
-            canStartTurn: canStartTurn, // used privately and in GameState
-            movePawn: movePawn, // used in Board, MoveCommand
-            cleanAfterMove: cleanAfterMove, // used in DisactivateCommand
-            isMoveLegal: isMoveLegal,   // used in Pawn
-            getPlayer: getPlayer, // used in Board, Pawns
-            getActivePlayer: getActivePlayer,   // used in Scores
-            getSelected: getSelected,   // used in Commands
-            getNumber: getNumber,   // used in Scores
+            canStartTurn, // used privately and in GameState
+            movePawn, // used in Board, MoveCommand
+            cleanAfterMove, // used in DisactivateCommand
+            isMoveLegal,   // used in Pawn
+            getPlayer, // used in Board, Pawns
+            getActivePlayer,   // used in Scores
+            getSelected,   // used in Commands
+            getNumber,   // used in Scores
             
             // getters for model
-            getGameState: getGameState, // used in Model
-            getGameOperator: getGameOperator,   // used in Model
+            getGameState, // used in Model
+            getGameOperator,   // used in Model
 
             // mediator setters
-            setNotify: setNotify,
-            setNumber: setNumber,
-            setGameState: setGameState,
-            setGameOperator: setGameOperator,
-            setEmptyGameOperator: setEmptyGameOperator,
-            setPlayers: setPlayers,
-            setBoard: setBoard,
-            setPawns: setPawns,
-            setTurnCounter: setTurnCounter,
-            setMovesCounter: setMovesCounter,
-            setScores: setScores,
-            setCommands: setCommands,
+            setNotify,
+            setNumber,
+            setGameState,
+            setGameOperator,
+            setEmptyGameOperator,
+            setPlayers,
+            setBoard,
+            setPawns,
+            setTurnCounter,
+            setMovesCounter,
+            setScores,
+            setCommands,
         }
     );
 };

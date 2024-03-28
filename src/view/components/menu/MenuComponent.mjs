@@ -120,7 +120,7 @@ const MenuComponent = function ({ gameState, factory }) {
 
         const createComponent = function (spec) {
         
-            const component = factory.createComponent({ ...spec, gameState, factory });
+            const component = factory.createComponent({ ...spec, gameState, factory, toggleParent: () => spec.parent.toggle() });
 
             components[spec.id] = component;
 
@@ -131,13 +131,12 @@ const MenuComponent = function ({ gameState, factory }) {
             {
                 id: 'endGamePanel',
                 type: 'endGamePanel',
-                endGame: (spec) => components.newGamePanel.endGame(spec),
+                endGame: (spec) => mediator.endGame(spec),
                 parent: containers.endGameWindow,
             },
             {
                 id: 'newGamePanel',
                 type: 'newGamePanel',
-                endGame: (spec) => mediator.endGame(spec),
                 createGame: (spec) => mediator.createGame(spec),
                 parent: containers.newGameWindow,
             },

@@ -142,6 +142,11 @@ const Model = function() {
         game.getGameOperator().redo();
     };
 
+    const endGame = function (spec) {
+    
+        game.getGameOperator().endGame(spec);
+    };
+
     // state
     
     const getPlayer = function (number) {
@@ -172,6 +177,7 @@ const Model = function() {
             click,
             undo,
             redo,
+            endGame,
 
             // model state
             getPlayer,

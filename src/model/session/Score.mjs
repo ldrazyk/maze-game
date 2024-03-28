@@ -1,23 +1,45 @@
-const Score = function ({ gameNumber, type, activePlayer, passivePlayer }) {
+const Score = function ({ gameNumber, type, activePlayer, passivePlayer, winningPlayer=false }) {
     let winner, looser, tied;
 
     const init = function () {
 
-        if (type == 'exit') {
-            winner = activePlayer;
-            looser = passivePlayer;
-        } else if (['no_pawns', 'give_up'].includes(type)) {
-            winner = passivePlayer;
-            looser = activePlayer;
-        } else if (type == 'draw') {
-            tied = [activePlayer, passivePlayer];
-        }
+        const findResults = function () {
         
-        if (winner) {
-            winner.addWin();
-        } else {
-            tied.forEach(player => player.addDraw());
-        }
+            if (type == 'exit') {
+
+                winner = activePlayer;
+                looser = passivePlayer;
+
+            } else if (['no_pawns'].includes(type)) {
+
+                winner = passivePlayer;
+                looser = activePlayer;
+
+            } else if (type == 'draw') {
+
+                tied = [activePlayer, passivePlayer];
+
+            } else if (type == 'give_up') {
+
+                winner = winningPlayer;
+                
+                if (activePlayer == winningPlayer) {
+                    looser = passivePlayer;
+                } else {
+                    looser = activePlayer;
+                }
+            }
+        }();
+
+        const addScoreToPlayers = function () {
+        
+            if (winner) {
+                winner.addWin();
+            } else {
+                tied.forEach(player => player.addDraw());
+            }
+        }();
+        
     }();
 
     const getGameNumber = function () {
@@ -38,7 +60,10 @@ const Score = function ({ gameNumber, type, activePlayer, passivePlayer }) {
 
     const toString = function () {
         
-        const scoreString = `Game over!\nWinner: ${winner.getName()}\nType: ${type}`;
+        let scoreString = `Game over!\nType: ${type}`;
+        if (winner) {
+            scoreString += `\nWinner: ${winner.getName()}`;
+        }
         return scoreString;
     };
 

@@ -42,7 +42,7 @@ main {
 .info-panel {
     grid-area: info;
     /* background-color: yellow; */
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 
 /* landscape (ar < 2) */

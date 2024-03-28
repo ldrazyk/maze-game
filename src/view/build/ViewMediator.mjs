@@ -111,6 +111,12 @@ const ViewMediator = function ({ root, factory }) {
         controller.setKeydown(on);
     };
 
+    const endGame = function (spec) {
+    
+        console.log(spec);
+        controller.endGame(spec);
+    };
+
     const updateRootClass = function (classList) {
     
         containers.root.classList = classList;
@@ -139,6 +145,7 @@ const ViewMediator = function ({ root, factory }) {
             redo,
             setPlayerName,
             setKeydown,
+            endGame,
             updateRootClass,
         }
     );

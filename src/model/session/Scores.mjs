@@ -14,16 +14,28 @@ const Scores = function () {
         ended = false;
     };
 
-    const add = function (code) {
+    const add = function (type, winnerNumber=false) {
 
         ended = true;
 
+        const getWinner = function () {
+        
+            let winner = false;
+
+            if (winnerNumber) {
+                winner = game.getPlayer(winnerNumber);
+            }
+
+            return winner;
+        };
+
         const score = Score(
             {
-                type: code, 
+                type: type, 
                 gameNumber: game.getNumber(), 
                 activePlayer: game.getActivePlayer(), 
-                passivePlayer: game.getActivePlayer(false)
+                passivePlayer: game.getActivePlayer(false),
+                winningPlayer: getWinner(),
             }
         );
 
@@ -45,13 +57,13 @@ const Scores = function () {
 
     return Object.freeze(
         {
-            setGame: setGame,
+            setGame,
 
-            reset: reset,
-            add: add,
+            reset,
+            add,
             ended: gameEnded,
-            getLastScoreString: getLastScoreString,
-            getScoresIterator: getScoresIterator
+            getLastScoreString,
+            getScoresIterator,
         }
     )
 };

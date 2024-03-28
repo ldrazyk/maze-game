@@ -45,7 +45,7 @@
     flex-direction: column;
 }
 
-.new-game-panel .button {
+.end-game-panel .button {
     padding: 1vh 2vh;
     font-size: 5vh;
     font-weight: bold;

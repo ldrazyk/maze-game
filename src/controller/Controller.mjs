@@ -31,6 +31,11 @@ const Controller = function(model) {
     
         model.setPlayerName(spec);
     };
+    
+    const endGame = function (spec) {
+    
+        model.endGame(spec);
+    };
 
     // buttons game commands
 
@@ -147,6 +152,7 @@ const Controller = function(model) {
             createSession,
             createGame,
             setPlayerName,
+            endGame,
 
             nextTurn,
             selectNext,

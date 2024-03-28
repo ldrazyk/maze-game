@@ -1,43 +1,19 @@
-const EndGamePanel = function ({ factory, gameState, endGame, createGame }) {
+const EndGamePanel = function ({ factory, gameState, endGame, toggleParent }) {
     
     let elements;
 
     const props = {
-        id: 'new-game-panel',
+        id: 'end-game-panel',
         player1: gameState.getPlayer(1),
         player2: gameState.getPlayer(2),
     };
 
     let state;
 
-    let toggle = () => {console.log('toggle')};
-
-    const newGame = function () {
-
-        const create = function () {
-        
-            const boardSpec = {
-                sizes: [7],
-            };
-        
-            const pawnsSpec1 = [
-                {type: 'lion', amount: 1}, 
-                {type: 'rooster', amount: 1}, 
-                {type: 'snake', amount: 1}
-            ];
-        
-            const pawnsSpec = [pawnsSpec1, pawnsSpec1];
-        
-            createGame({ boardSpec, pawnsSpec });
-        };
-
-        create();
-        toggle();
-    };
-
-    const endGame = function () {
+    const executeEndGame = function (spec) {
     
-        return ;
+        endGame(spec);
+        toggleParent();
     };
 
     const createElements = function () {
@@ -53,21 +29,21 @@ const EndGamePanel = function ({ factory, gameState, endGame, createGame }) {
                     type: 'button',
                     classList: 'button',
                     textContent: 'Draw',
-                    onClick: () => newGame(),
+                    onClick: () => executeEndGame({ type: 'draw' }),
                     parentKey: 'main',
                 },
                 player2WinsButton: {
                     type: 'button',
                     classList: 'button',
-                    textContent: 'Player 1 wins',
-                    onClick: () => newGame(),
+                    textContent: 'Player 2 wins',
+                    onClick: () => executeEndGame({ type: 'give_up', winnerNumber: 2 }),
                     parentKey: 'main',
                 },
                 player1WinsButton: {
                     type: 'button',
                     classList: 'button',
                     textContent: 'Player 1 wins',
-                    onClick: () => newGame(),
+                    onClick: () => executeEndGame({ type: 'give_up', winnerNumber: 1 }),
                     parentKey: 'main',
                 },
             }
@@ -118,11 +94,6 @@ const EndGamePanel = function ({ factory, gameState, endGame, createGame }) {
         updatePlayerNameStates();
     }();
 
-    const setToggle = function (toggleParent) {
-    
-        toggle = toggleParent;
-    };
-
     const update = function ({ code, gameState }) {
 
         if (code == 'changePlayerName') {
@@ -144,7 +115,6 @@ const EndGamePanel = function ({ factory, gameState, endGame, createGame }) {
     
     return Object.freeze(
         {
-            setToggle,
             update,
             getId,
             getMain,
