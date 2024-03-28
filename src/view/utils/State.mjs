@@ -2,7 +2,11 @@ const UiState = function () {
 
     const state = {};
     
-    const add = function ({ name, value=false, onChange=(value) => {} }) {
+    const add = function ({ name, value=false, onChange=false }) {
+
+        if (!onChange) {
+            onChange = (value) => {};
+        }
     
         state[name] = {
             value,

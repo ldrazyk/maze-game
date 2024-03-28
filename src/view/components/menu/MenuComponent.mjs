@@ -6,11 +6,25 @@ const MenuComponent = function ({ gameState, factory }) {
     const components = {};
     const id = 'menu';
 
+    let state;
+
     let mediator;
 
     const toggleContainer = function (id) {
     
         containers[id].toggle();
+    };
+
+    const createState = function () {
+    
+        state = factory.createState();
+
+        state.add({
+            name: 'isPlaying',
+            value: false,
+            onClick: false,
+        });
+
     };
 
     const createMain = function () {
@@ -57,17 +71,24 @@ const MenuComponent = function ({ gameState, factory }) {
                     {
                         id: 'newGameButton',
                         textContent: 'New Game',
+                        onClick: () => {
+                            if (state.get('isPlaying')) {
+                                toggleContainer('endGameWindow');
+                            } else {
+                                toggleContainer('createGameWindow');
+                            }
+                        },
                         windowId: 'endGameWindow',
                     },
                     {
                         id: 'colorsButton',
                         textContent: 'Colors',
-                        windowId: 'colorsWindow',
+                        onClick: () => toggleContainer('colorsWindow'),
                     },
                     {
                         id: 'rulesButton',
                         textContent: 'Rules',
-                        windowId: 'rulesWindow',
+                        onClick: () => toggleContainer('rulesWindow'),
                     },
                 ];
 
@@ -77,7 +98,7 @@ const MenuComponent = function ({ gameState, factory }) {
                         type: 'div',
                         classList: 'button option',
                         textContent: spec.textContent,
-                        onClick: () => toggleContainer(spec.windowId),
+                        onClick: spec.onClick,
                         parent: containers.mainDropdown,
                     });
 
@@ -93,7 +114,7 @@ const MenuComponent = function ({ gameState, factory }) {
         
             const ids = [
                 'endGameWindow',
-                'newGameWindow',
+                'createGameWindow',
                 'colorsWindow',
                 'rulesWindow',
             ];
@@ -135,10 +156,10 @@ const MenuComponent = function ({ gameState, factory }) {
                 parent: containers.endGameWindow,
             },
             {
-                id: 'newGamePanel',
-                type: 'newGamePanel',
+                id: 'createGamePanel',
+                type: 'createGamePanel',
                 createGame: (spec) => mediator.createGame(spec),
-                parent: containers.newGameWindow,
+                parent: containers.createGameWindow,
             },
             {
                 id: 'colorsPanel',
@@ -160,6 +181,7 @@ const MenuComponent = function ({ gameState, factory }) {
 
     const init = function () {
     
+        createState();
         createMain();
         createContainers();
         createComponents();
@@ -176,6 +198,8 @@ const MenuComponent = function ({ gameState, factory }) {
             Object.values(components).forEach(component => {
                 component.update({ code, gameState: object });
             });
+        } else if (['createGame', 'endGame'].includes(code)) {
+            state.update('isPlaying', object.isPlaying());
         }
     };
 

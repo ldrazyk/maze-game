@@ -1,7 +1,7 @@
-const NewGamePanel = function ({ factory, createGame }) {
+const CreateGamePanel = function ({ factory, createGame }) {
     
     const elements = {};
-    const id = 'new-game-panel';
+    const id = 'create-game-panel';
 
 
 
@@ -36,7 +36,7 @@ const NewGamePanel = function ({ factory, createGame }) {
                 type: 'div',
                 id: id,
                 classList: 'panel ' + id,
-                textContent: 'New Game Panel',
+                textContent: 'Create Game Panel',
             }
         );
     };
@@ -71,4 +71,4 @@ const NewGamePanel = function ({ factory, createGame }) {
     );
 };
 
-export default NewGamePanel;
+export default CreateGamePanel;

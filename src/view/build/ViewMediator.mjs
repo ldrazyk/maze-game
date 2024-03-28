@@ -51,6 +51,11 @@ const ViewMediator = function ({ root, factory }) {
         controller.createGame(spec);
     };
 
+    const endGame = function (spec) {
+    
+        controller.endGame(spec);
+    };
+
     const click = function (id) {
     
         controller.click(id);
@@ -111,12 +116,6 @@ const ViewMediator = function ({ root, factory }) {
         controller.setKeydown(on);
     };
 
-    const endGame = function (spec) {
-    
-        console.log(spec);
-        controller.endGame(spec);
-    };
-
     const updateRootClass = function (classList) {
     
         containers.root.classList = classList;
@@ -133,6 +132,7 @@ const ViewMediator = function ({ root, factory }) {
             update,
             // controller
             createGame,
+            endGame,
             click,
             nextTurn,
             selectNext,
@@ -145,7 +145,6 @@ const ViewMediator = function ({ root, factory }) {
             redo,
             setPlayerName,
             setKeydown,
-            endGame,
             updateRootClass,
         }
     );

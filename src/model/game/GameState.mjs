@@ -43,6 +43,11 @@ const GameState = function () {
 
     // game state interface
 
+    const isPlaying = function () {
+    
+        return !scores.ended();
+    };
+
     const canStartTurn = function () {
         return game.canStartTurn();
     };
@@ -179,6 +184,8 @@ const GameState = function () {
             getGameNumber,   // will be used
             getTurnNumber,   // will be used
             getLastScoreString, // used in ViewJs
+            isPlaying,
+
             // get board
             getBoardIterator, // used in BoardComponent
             getBoardName, // used in BoardComponent
