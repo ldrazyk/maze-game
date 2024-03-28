@@ -153,6 +153,7 @@ const MenuComponent = function ({ gameState, factory }) {
                 id: 'endGamePanel',
                 type: 'endGamePanel',
                 endGame: (spec) => mediator.endGame(spec),
+                toggleNext: () => toggleContainer('createGameWindow'),
                 parent: containers.endGameWindow,
             },
             {

@@ -31,6 +31,12 @@ const WindowContainer = function ({ id, classList=false, factory }) {
                 classList: 'container',
                 parentKey: 'main',
             },
+            cover: {
+                type: 'div',
+                classList: 'cover',
+                onClick: toggle,
+                parentKey: 'main',
+            },
         };
 
         elements = factory.createElements(spec);

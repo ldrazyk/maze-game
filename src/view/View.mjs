@@ -28,15 +28,6 @@ const View = function() {
         controller = newController;
     };
 
-    const buildBoardView = function (gameState) {
-
-        const builder = viewBuilder;
-
-        builder.setMediator(mediator);
-        builder.setComponent({ id: 'board', type: 'board', parentId: 'board-panel', gameState });
-
-    };
-
     const buildView = function (gameState) {
         
         const builder = viewBuilder;
@@ -63,6 +54,14 @@ const View = function() {
         make();
 
         mediator = builder.getResult();
+    };
+
+    const buildBoardView = function (gameState) {
+
+        const builder = viewBuilder;
+
+        builder.setMediator(mediator);
+        builder.setComponent({ id: 'board', type: 'board', parentId: 'board-panel', gameState });
     };
 
     const endGame = function(gameState) {

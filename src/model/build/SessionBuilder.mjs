@@ -3,6 +3,7 @@ import SessionState from '../session/SessionState.mjs';
 import Players from '../session/Players.mjs';
 import Scores from '../session/Scores.mjs';
 import BoardFactory from './BoardFactory.mjs';
+import BoardDummyRepository from './BoardDummyRepository.mjs';
 import boardsSpec from '../data/boardsSpec.mjs';
 
 const SessionBuilder = function () {
@@ -27,11 +28,21 @@ const SessionBuilder = function () {
 
     const setBoardFactory = function () {
     
-        const repository = BoardFactory(boardsSpec);
+        const factory = BoardFactory(boardsSpec);
 
         mediators.forEach(mediator => {
-            mediator.setBoardFactory(repository);
+            mediator.setBoardFactory(factory);
         });
+    };
+
+    const setBoardDummyRepository = function () {
+    
+        const repository = BoardDummyRepository();
+
+        mediators.forEach(mediator => {
+            mediator.setBoardDummyRepository(repository);
+        });
+        repository.setMediator(session);
     };
 
     const setPlayers = function (playersSpec) {
@@ -62,6 +73,7 @@ const SessionBuilder = function () {
             reset,
             setState,
             setBoardFactory,
+            setBoardDummyRepository,
             setPlayers,
             setScores,
             getResult,

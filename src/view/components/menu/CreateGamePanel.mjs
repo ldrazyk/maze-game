@@ -1,4 +1,4 @@
-const CreateGamePanel = function ({ factory, createGame }) {
+const CreateGamePanel = function ({ factory, gameState, createGame }) {
     
     const elements = {};
     const id = 'create-game-panel';
@@ -41,9 +41,32 @@ const CreateGamePanel = function ({ factory, createGame }) {
         );
     };
 
+    const createBoards = function () {
+    
+        const printBoardNames = function () {
+        
+            const iterator = gameState.getBoardDummyIterator();
+
+            const firstBoardIterator = iterator.next().getIterator();
+
+            while (firstBoardIterator.hasNext()) {
+                console.log(firstBoardIterator.next());
+            }
+
+            while (iterator.hasNext()) {
+
+                const board = iterator.next();
+                console.log(board.getName());
+            }
+        };
+
+        printBoardNames();
+    };
+
     const init = function () {
     
         createMain();
+        createBoards();
     }();
 
     const update = function () {

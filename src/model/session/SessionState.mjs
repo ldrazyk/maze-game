@@ -1,7 +1,7 @@
 const SessionState = function () {
     
     let session;
-    let players, scores, boardFactory;
+    let players, scores, boardFactory, boardDummyRepository;
 
     // setters
 
@@ -22,7 +22,12 @@ const SessionState = function () {
         boardFactory = factory;
     };
 
-    // get players
+    const setBoardDummyRepository = function (repository) {
+    
+        boardDummyRepository = repository;
+    };
+
+    // getters
 
     const getPlayer = function (number) {
     
@@ -34,6 +39,11 @@ const SessionState = function () {
         return players.getActiveNumber(active);
     };
 
+    const getBoardDummyIterator = function () {
+    
+        return boardDummyRepository.getIterator();
+    };
+
     
     return Object.freeze(
         {
@@ -42,9 +52,11 @@ const SessionState = function () {
             setPlayers,
             setScores,
             setBoardFactory,
-            // get players
+            setBoardDummyRepository,
+            // getters
             getPlayer,
             getActiveNumber,
+            getBoardDummyIterator,
         }
     );
 };

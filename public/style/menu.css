@@ -121,6 +121,10 @@
     right: 25px;
 }
 
+.window .cover {
+    z-index: -1;
+}
+
 .window .container {
     display: flex;
     flex-direction: column;
@@ -248,6 +252,20 @@
 }
 
 @media (orientation: portrait) and (max-width: 500px), (max-height: 500px) {
+
+    .menu>.dropdown-container>.button {
+        height: 25px;
+        width: 25px;
+    }
+
+    .menu>.dropdown-container>.content {
+        border-width: 0 0 5px 5px;
+    }
+    
+    .dropdown-container>.content>.button {
+        font-size: 25px;
+    }
+
     .fixed-window {
         top: 0;
         bottom: 0;

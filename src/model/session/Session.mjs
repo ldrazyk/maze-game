@@ -1,7 +1,7 @@
 const Session = function () {
 
     let state;
-    let players, scores, boardFactory;
+    let players, scores, boardFactory, boardDummyRepository;
     let gameNumber;
 
     const init = function () {
@@ -18,6 +18,11 @@ const Session = function () {
     
         boardFactory = factory;
     };
+    
+    const setBoardDummyRepository = function (repository) {
+    
+        boardDummyRepository = repository;
+    };
 
     const setPlayers = function (newPlayers) {
         players = newPlayers;
@@ -27,19 +32,30 @@ const Session = function () {
         scores = newScores;
     };
 
+    // model interface
+
     const setPlayerName = function (spec) {
     
         players.setPlayerName(spec);
     };
 
-    const getState = function () {
-    
-        return state;
-    };
-
     const createBoard = function (spec) {
     
         return boardFactory.createBoard(spec);
+    };
+
+    // mediator
+
+    const createAllBoardDummies = function () {
+    
+        return boardFactory.createAllBoardDummies();
+    };
+
+    // getters
+
+    const getState = function () {
+    
+        return state;
     };
 
     const getPlayers = function () {
@@ -67,14 +83,16 @@ const Session = function () {
         {
             setState,
             setBoardFactory,
+            setBoardDummyRepository,
             setPlayers,
             setScores,
-
+            // model interface
             setPlayerName,
-
-            getState,
             createBoard,
-
+            // mediator 
+            createAllBoardDummies,
+            // getters
+            getState,
             getPlayers,
             getPlayer,
             getPlayersIterator,

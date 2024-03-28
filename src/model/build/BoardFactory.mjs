@@ -1,78 +1,25 @@
 import Board from "../game/Board.mjs";
+import BoardDummy from "./BoardDummy.mjs";
 import shuffle from "../utils/shuffle.mjs";
 
 const BoardFactory = function (boardsSpec) {
 
-    const boards = {};
-    const boardsSizes = {};
-    let hasBoards = false;
-
     const boardsSpecById = {};
     
-    
-    const createBoards = function () {
+    const setBoardsSpecById = function () {
         
-        const createBoard = function ({ id, size, spec}) {
-        
-            const board = Board(spec);
-
-            boards[id] = board;
-
-            if (!boardsSizes[size]) {
-                boardsSizes[size] = [];
-            }
-            boardsSizes[size].push(board);
-        };
-
-        for (const [size, sizeBoardsSpec] of Object.entries(boardsSpec)) {
+        for (const sizeBoardsSpec of Object.values(boardsSpec)) {
             for (const [id, spec] of Object.entries(sizeBoardsSpec)) {
 
                 boardsSpecById[id] = spec;
-                createBoard({ id, size, spec});
             }
         }
     };
 
-    const checkHasBoards = function () {
+    const init = function () {
     
-        if (!hasBoards) {
-            
-            createBoards();
-            hasBoards = true;
-        }
-    };
-
-    const getBoard = function ({ id=false, sizes=false }) {
-
-        const getRandomBoard = function (sizes) {
-        
-            let boardsArray;
-
-            if (sizes) {
-
-                boardsArray = [];
-                sizes.forEach(size => {
-                    boardsArray = [...boardsArray, ...boardsSizes[size]];
-                });
-
-            } else {
-
-                boardsArray = Object.values(boards);
-            }
-
-            shuffle(boardsArray);
-
-            return boardsArray[0];
-        };
-
-        checkHasBoards();
-
-        if (id) {
-            return boards[id];
-        } else {
-            return getRandomBoard(sizes);
-        }
-    };
+        setBoardsSpecById();
+    }();
 
     const createBoard = function ({ id=false, sizes=false }) {
 
@@ -106,11 +53,25 @@ const BoardFactory = function (boardsSpec) {
     
         return Board(getSpec());
     };
+
+    const createAllBoardDummies = function () {
+
+        const allDummies = [];
+
+        for (const [size, sizeBoardsSpec] of Object.entries(boardsSpec)) {
+            for (const [id, spec] of Object.entries(sizeBoardsSpec)) {
+
+                allDummies.push(BoardDummy({ ...spec, id, size }))
+            }
+        }
+    
+        return allDummies;
+    };
     
     return Object.freeze(
         {
-            getBoard,
             createBoard,
+            createAllBoardDummies,
         }
     );
 };

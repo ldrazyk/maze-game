@@ -1,4 +1,4 @@
-const EndGamePanel = function ({ factory, gameState, endGame, toggleParent }) {
+const EndGamePanel = function ({ factory, gameState, endGame, toggleParent, toggleNext }) {
     
     let elements;
 
@@ -14,6 +14,7 @@ const EndGamePanel = function ({ factory, gameState, endGame, toggleParent }) {
     
         endGame(spec);
         toggleParent();
+        toggleNext();
     };
 
     const createElements = function () {

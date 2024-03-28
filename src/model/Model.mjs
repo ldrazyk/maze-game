@@ -58,6 +58,7 @@ const Model = function() {
             builder.reset();
             builder.setState();
             builder.setBoardFactory();
+            builder.setBoardDummyRepository();
             builder.setPlayers(playersSpec);
             builder.setScores();
         };
