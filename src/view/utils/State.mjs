@@ -21,7 +21,7 @@ const UiState = function () {
 
     const update = function (name, value) {
     
-        if (state[name].value != value) {
+        if (state[name].value !== value) {
             state[name].value = value;
             state[name].onChange(value);
         };

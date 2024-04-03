@@ -9,6 +9,7 @@ import ColorsPanel from "../components/menu/ColorsPanel.mjs";
 import ChangeColorsComponent from "../components/menu/ChangeColorsComponent.mjs";
 import EndGamePanel from "../components/menu/EndGamePanel.mjs";
 import CreateGamePanel from "../components/menu/CreateGamePanel.mjs";
+import BoardDummyComponent from "../components/menu/BoardDummyComponent.mjs";
 import RulesPanel from "../components/menu/RulesPanel.mjs";
 import EmptyPanel from "../components/menu/EmptyPanel.mjs";
 import ContainerComponent from "../components/containers/ContainerComponent.mjs"
@@ -30,6 +31,7 @@ const UiComponentsFactory = function () {
         rulesPanel: RulesPanel,
         endGamePanel: EndGamePanel,
         createGamePanel: CreateGamePanel,
+        boardDummy: BoardDummyComponent,
         emptyPanel: EmptyPanel,
         container: ContainerComponent,
         dropdownContainer: DropdownContainer,

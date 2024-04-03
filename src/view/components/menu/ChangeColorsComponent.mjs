@@ -94,105 +94,46 @@ const ChangeColorsComponent = function ({ playerNumber, gameState, factory }) {
                 textContent: '',
                 parentKey: 'main',
             },
-            // both
-            bothWrapper: {
+            // selecteColor
+            selecteColorsPanel: {
                 type: 'div',
-                classList: 'wrapper',
+                classList: 'list-preview',
                 parentKey: 'main',
             },
-            bothColorsPrev: {
+            prevColorButton: {
                 type: 'div',
                 classList: 'button prev',
                 onClick: () => changeBothColors(-1),
-                parentKey: 'bothWrapper',
+                parentKey: 'selecteColorsPanel',
             },
-            bothColorsPrevSvg: {
+            prevColorSvg: {
                 type: 'svg',
                 name: 'move',
-                parentKey: 'bothColorsPrev',
+                parentKey: 'prevColorButton',
             },
             playerIcon: {
                 type: 'div',
                 classList: 'player-icon',
-                parentKey: 'bothWrapper',
+                parentKey: 'selecteColorsPanel',
             },
             svgPlayer: {
                 type: 'svg',
                 name: 'rooster',
                 parentKey: 'playerIcon',
             },
-            bothColorsNext: {
+            nextColorButton: {
                 type: 'div',
                 classList: 'button next',
                 onClick: () => changeBothColors(1),
-                parentKey: 'bothWrapper',
+                parentKey: 'selecteColorsPanel',
             },
-            bothColorsNextSvg: {
+            nextColorSvg: {
                 type: 'svg',
                 name: 'move',
-                parentKey: 'bothColorsNext',
+                parentKey: 'nextColorButton',
             },
         };
 
-        const singleColorsSpec = {
-            // ligth
-            lightColorPrev: {
-                type: 'div',
-                classList: 'button prev',
-                onClick: () => changeColor('light', -1),
-                parentKey: 'main',
-            },
-            lightColorPrevSvg: {
-                type: 'svg',
-                name: 'move',
-                parentKey: 'lightColorPrev',
-            },
-            lightColorSample: {
-                type: 'div',
-                classList: 'color-sample light',
-                parentKey: 'main',
-            },
-            lightColorNext: {
-                type: 'div',
-                classList: 'button next',
-                onClick: () => changeColor('light', 1),
-                parentKey: 'main',
-            },
-            lightColorNextSvg: {
-                type: 'svg',
-                name: 'move',
-                parentKey: 'lightColorNext',
-            },
-            // dark
-            darkColorPrev: {
-                type: 'div',
-                classList: 'button prev',
-                onClick: () => changeColor('dark', -1),
-                parentKey: 'main',
-            },
-            darkColorPrevSvg: {
-                type: 'svg',
-                name: 'move',
-                parentKey: 'darkColorPrev',
-            },
-            darkColorSample: {
-                type: 'div',
-                classList: 'color-sample dark',
-                parentKey: 'main',
-            },
-            darkColorNext: {
-                type: 'div',
-                classList: 'button next',
-                onClick: () => changeColor('dark', 1),
-                parentKey: 'main',
-            },
-            darkColorNextSvg: {
-                type: 'svg',
-                name: 'move',
-                parentKey: 'darkColorNext',
-            },
-        }
-    
         elements = factory.createElements(spec);
     };
 

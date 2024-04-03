@@ -1,0 +1,30 @@
+.menu .create-game-panel {
+    display: grid;
+    
+}
+
+.landscape .menu .create-game-panel {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.create-game-panel .board-section {
+    position: relative;
+    width: 50vh;
+    height: 50vh;
+}
+
+.board-dummy {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+@media (orientation :portrait) {
+
+    .create-game-panel .board-section {
+        width: 50vw;
+        height: 50vw;
+    }
+}

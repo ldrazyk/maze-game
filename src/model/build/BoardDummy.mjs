@@ -25,6 +25,7 @@ const BoardDummy = function ({ id, name, matrix, size }) {
                 row,
                 column,
                 type,
+                id: 'field-' + row + '-' + column,
             }
 
             if (exitNumber) {

@@ -40,7 +40,7 @@
     fill: var(--path);
 }
 
-.panel {
+.menu .panel {
     display: flex;
     flex-direction: column;
 }
@@ -185,11 +185,6 @@
     font-weight: bold;
 }
 
-.change-colors>.wrapper {
-    display: flex;
-    align-items: center;
-    flex-basis: 50%;
-}
 
 .change-colors .player-icon {
     width: 20vh;
@@ -202,18 +197,28 @@
     border-radius: 33%;
 }
 
-.change-colors .button {
+
+.list-preview {
+    display: flex;
+    align-items: center;
+    flex-basis: 50%;
+}
+
+.menu .button.next,
+.menu .button.prev {
     width: 10vh;
     height: 10vh;
 }
 
-.change-colors .button.next {
+.menu .button.next {
     transform: rotate(90deg);
 }
 
-.change-colors .button.prev {
+.menu .button.prev {
     transform: rotate(-90deg);
 }
+
+
 
 .player-1 .color-sample.light {
     background-color: var(--light-player1);
