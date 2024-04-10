@@ -7,10 +7,23 @@
     grid-template-columns: repeat(2, 1fr);
 }
 
-.create-game-panel .board-section {
+.create-game-panel .size-panel {
+    order: 1;
+}
+
+.create-game-panel .id-panel {
+    order: 2;
+}
+
+.create-game-panel .board-panel {
     position: relative;
     width: 50vh;
     height: 50vh;
+    order: 3;
+}
+
+.create-game-panel .button.send {
+    order: 4;
 }
 
 .board-dummy {
@@ -21,9 +34,36 @@
     width: 100%;
 }
 
+.checkbox {
+    opacity: 0.3;
+}
+
+.active.checkbox {
+    opacity: 1;
+}
+
+.collection-panel {
+    display: flex;
+}
+
+.collection-panel .checkbox {
+    width: 20%;
+    aspect-ratio: 1;
+}
+
+.create-game-panel .button.send {
+    padding: 2vh;
+    height: 8vh;
+    font-size: 3vh;
+    font-weight: bold;
+    border: 3px solid var(--wall);
+}
+
+
+
 @media (orientation :portrait) {
 
-    .create-game-panel .board-section {
+    .create-game-panel .board-panel {
         width: 50vw;
         height: 50vw;
     }
