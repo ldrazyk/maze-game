@@ -1,10 +1,20 @@
-const WindowContainer = function ({ id, classList=false, factory }) {
+const WindowContainer = function ({ id, classList=false, onHide= () => {}, factory }) {
     
     let elements;
 
     const toggle = function () {
     
         elements.main.classList.toggle('hidden');
+    };
+
+    const show = function (show=true) {
+    
+        if (show) {
+            elements.main.classList.remove('hidden');
+        } else {
+            elements.main.classList.add('hidden');
+            onHide();
+        }
     };
 
     const createElements = function () {
@@ -18,7 +28,7 @@ const WindowContainer = function ({ id, classList=false, factory }) {
             closeButton: {
                 type: 'div',
                 classList: 'button close-button',
-                onClick: toggle,
+                onClick: () => show(false),
                 parentKey: 'main',
             },
             svg: {
@@ -34,7 +44,7 @@ const WindowContainer = function ({ id, classList=false, factory }) {
             cover: {
                 type: 'div',
                 classList: 'cover',
-                onClick: toggle,
+                onClick: () => show(false),
                 parentKey: 'main',
             },
         };
@@ -66,6 +76,7 @@ const WindowContainer = function ({ id, classList=false, factory }) {
     return Object.freeze(
         {
             toggle,
+            show,
             appendChild,
             getId,
             getMain,

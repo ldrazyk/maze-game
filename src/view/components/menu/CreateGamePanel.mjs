@@ -1,6 +1,6 @@
 import BoardSelector from "./BoardSelector.mjs";
 
-const CreateGamePanel = function ({ factory, gameState, createGame, toggleParent }) {
+const CreateGamePanel = function ({ factory, gameState, createGame, toggleParent, hideParent }) {
     
     let elements = {};
     const components = {};
@@ -47,7 +47,7 @@ const CreateGamePanel = function ({ factory, gameState, createGame, toggleParent
         };
 
         create();
-        toggleParent();
+        hideParent();
     };
 
     const updateBoardState = function () {

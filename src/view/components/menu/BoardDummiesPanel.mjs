@@ -62,10 +62,10 @@ const BoardDummiesPanel = function ({ factory, iterator }) {
         createBoardComponents();
     }();
 
-    const updateVisibleBoardId = function (id) {
+    const updateVisibleBoard = function (id) {
 
-        console.log('old id: ' + visibleBoardId);
-        console.log('new id: ' + id);
+        // console.log('old id: ' + visibleBoardId);
+        // console.log('new id: ' + id);
 
         if (visibleBoardId) {
             components[visibleBoardId].show(false);
@@ -83,20 +83,18 @@ const BoardDummiesPanel = function ({ factory, iterator }) {
         boardId = id;
 
         if (id) {
-            updateVisibleBoardId(id);
+            updateVisibleBoard(id);
         } else {
-            updateVisibleBoardId(boardSize);
+            updateVisibleBoard(boardSize);
         }
     };
 
     const updateSize = function (size) {
     
-        // console.log(size);
-
         boardSize = size;
 
         if (!boardId) {
-            updateVisibleBoardId(boardSize);
+            updateVisibleBoard(boardSize);
         }
     };
     

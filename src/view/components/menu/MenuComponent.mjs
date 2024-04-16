@@ -125,6 +125,7 @@ const MenuComponent = function ({ gameState, factory }) {
                     type: 'windowContainer',
                     id,
                     classList: 'fixed-window',
+                    onHide: () => containers.mainDropdown.show(false),
                     factory,
                     parent: mainElement,
                 });
@@ -141,7 +142,17 @@ const MenuComponent = function ({ gameState, factory }) {
 
         const createComponent = function (spec) {
         
-            const component = factory.createComponent({ ...spec, gameState, factory, toggleParent: () => spec.parent.toggle() });
+            const component = factory.createComponent({
+                ...spec, 
+                gameState, 
+                factory, 
+                toggleParent: () => {
+                    spec.parent.toggle();
+                },
+                hideParent: () => {
+                    spec.parent.show(false);
+                },
+            });
 
             components[spec.id] = component;
 

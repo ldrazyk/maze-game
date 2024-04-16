@@ -126,6 +126,11 @@ const Board = function ({ name, matrix }) {
 
     const placePawns = function ({ playerNumber, pawnsIterator, startZoneSize }) {
 
+        const getStartZoneSize = function () {
+        
+            return ( size.columns - 3 ) / 2;
+        };
+
         const getExit = function (playerNumber) {
             let exit;
     
@@ -139,6 +144,9 @@ const Board = function ({ name, matrix }) {
         };
 
         const findStartZone = function (exit) {
+
+            const startZoneSize = getStartZoneSize();
+
             const startZone = [];
 
             const exitsX = exit.getX();

@@ -7,6 +7,15 @@ const DropdownContainer = function ({ id=false, classList=false, buttonText=fals
         elements.main.classList.toggle('collapsed') ;
     };
 
+    const show = function (show=true) {
+    
+        if (show) {
+            elements.main.classList.remove('collapsed');
+        } else {
+            elements.main.classList.add('collapsed');
+        }
+    };
+
     const createElements = function () {
 
         const spec = {
@@ -72,6 +81,7 @@ const DropdownContainer = function ({ id=false, classList=false, buttonText=fals
     return Object.freeze(
         {
             toggle,
+            show,
             appendToButton,
             appendChild,
             getId,
