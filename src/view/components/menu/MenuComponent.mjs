@@ -191,12 +191,21 @@ const MenuComponent = function ({ gameState, factory }) {
         });
     };
 
+    const showWindowForTesting = function () {
+    
+        const showCreateGameWindow = function () {
+        
+            containers.createGameWindow.show();
+        }();
+    };
+
     const init = function () {
     
         createState();
         createMain();
         createContainers();
         createComponents();
+        showWindowForTesting();
     }();
 
     const setMediator = function (newMediator) {

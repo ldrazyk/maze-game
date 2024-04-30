@@ -1,8 +1,8 @@
-const BoardDummiesPanel = function ({ factory, iterator }) {
+const BoardPreviewPanel = function ({ factory, iterator }) {
 
     let elements = {};
     let components = {};
-    const id = 'board-panel';
+    const id = 'board-preview-panel';
 
     let boardId = false;
     let boardSize = false;
@@ -14,15 +14,19 @@ const BoardDummiesPanel = function ({ factory, iterator }) {
             main: {
                 type: 'div',
                 id: id,
-                classList: 'panel ' + id,
-                textContent: 'Board Dummies Panel',
+                classList: id,
+            },
+            wrapper: {
+                type: 'div',
+                classList: 'wrapper',
+                parentKey: 'main',
             },
         });
     };
 
     const createBoardComponents = function () {
 
-        const createGrid = function (size) {
+        const createEmptyGrid = function (size) {
         
             if (!components[size]) {
 
@@ -30,7 +34,7 @@ const BoardDummiesPanel = function ({ factory, iterator }) {
                     type: 'gridDummy',
                     size,
                     factory,
-                    parent: elements.main
+                    parent: elements.wrapper,
                 });
             }
         };
@@ -49,10 +53,10 @@ const BoardDummiesPanel = function ({ factory, iterator }) {
                 type: 'boardDummy',
                 boardDummy,
                 factory,
-                parent: elements.main,
+                parent: elements.wrapper,
             });
 
-            createGrid(size);
+            createEmptyGrid(size);
         };
     };
 
@@ -112,4 +116,4 @@ const BoardDummiesPanel = function ({ factory, iterator }) {
     );
 };
 
-export default BoardDummiesPanel;
+export default BoardPreviewPanel;

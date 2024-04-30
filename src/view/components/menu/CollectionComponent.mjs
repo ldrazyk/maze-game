@@ -1,4 +1,4 @@
-const CollectionPreviewComponent = function ({ factory, changeItem, hasCheckbox=false, toggleActive=false, active=true }) {
+const CollectionComponent = function ({ factory, changeItem, hasCheckbox=false, toggleActive=false, active=true }) {
     
     let elements = {};
     const id = 'change-board-id';
@@ -17,7 +17,7 @@ const CollectionPreviewComponent = function ({ factory, changeItem, hasCheckbox=
         let spec = {
             main: {
                 type: 'div',
-                classList: 'collection-passer',
+                classList: 'item-panel',
             },
             prevButton: {
                 type: 'div',
@@ -30,10 +30,14 @@ const CollectionPreviewComponent = function ({ factory, changeItem, hasCheckbox=
                 name: 'move',
                 parentKey: 'prevButton',
             },
-            itemOutput: {
+            screen: {
                 type: 'div',
-                classList: 'item-output',
+                classList: 'screen',
                 parentKey: 'main',
+            },
+            screenParagraph: {
+                type: 'p',
+                parentKey: 'screen',
             },
             nextButton: {
                 type: 'div',
@@ -77,7 +81,7 @@ const CollectionPreviewComponent = function ({ factory, changeItem, hasCheckbox=
 
     const setItemOutput = function (itemOutput) {
     
-        elements.itemOutput.textContent = itemOutput;
+        elements.screenParagraph.textContent = itemOutput;
     };
 
     const update = function () {
@@ -107,4 +111,4 @@ const CollectionPreviewComponent = function ({ factory, changeItem, hasCheckbox=
     );
 };
 
-export default CollectionPreviewComponent;
+export default CollectionComponent;

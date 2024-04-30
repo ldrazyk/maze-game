@@ -114,9 +114,9 @@ const CreateGamePanel = function ({ factory, gameState, createGame, toggleParent
     const onHasSizeChange = function (hasSize) {
     
         if (hasSize) {
-            elements.hasSizeCheckbox.classList.add('active');
+            elements.sizeCheckbox.classList.add('active');
         } else {
-            elements.hasSizeCheckbox.classList.remove('active');
+            elements.sizeCheckbox.classList.remove('active');
         }
     };
 
@@ -140,124 +140,205 @@ const CreateGamePanel = function ({ factory, gameState, createGame, toggleParent
 
     const build = function () {
 
+        const createBoardSelector = function () {
+        
+            boardSelector = BoardSelector( { factory, iterator: gameState.getBoardDummyIterator() } );
+        };
+
         const createElements = function () {
-
-            elements = factory.createElements({
-                main: {
-                    type: 'div',
-                    id: id,
-                    classList: 'panel ' + id,
-                },
-                createGameButton: {
-                    type: 'div',
-                    classList: 'button send',
-                    textContent: 'Create Game',
-                    onClick: createNewGame,
-                    parentKey: 'main',
-                },
-            });
-        };
         
-        const createComponents = function () {
-            
-            const createSizePanel = function () {
 
-                const sizePanelElements = factory.createElements({
-                    sizePanel: {
+            const addElements = function (spec) {
+            
+                const newElements = factory.createElements(spec);
+    
+                elements = {...elements, ...newElements};
+            };
+    
+    
+            const createMain = function () {
+    
+                addElements({
+                    main: {
                         type: 'div',
-                        classList: 'collection-panel size-panel',
-                        parent: elements.main,
-                    },
-                    sizePanelTitle: {
-                        type: 'p',
-                        classList: 'title',
-                        textContent: 'Board Size',
-                        parentKey: 'sizePanel',
-                    },
-                    hasSizeCheckbox: {
-                        type: 'div',
-                        classList: 'checkbox button',
-                        onClick: toggleHasSize,
-                        parentKey: 'sizePanel',
-                    },
-                    hasSizeSvg: {
-                        type: 'svg',
-                        name: 'hold',
-                        parentKey: 'hasSizeCheckbox',
+                        id: id,
+                        classList: 'panel ' + id,
                     },
                 });
-
-                elements = {...elements, ...sizePanelElements};
-        
-                components.boardSizePreview = factory.createComponent(
-                    {
-                        type: 'collectionPreview',
-                        changeItem: changeBoardSize,
-                        active: true,
-                        factory,
-                        parent: elements.sizePanel,
-                    }
-                );
             };
-        
-            const createIdPanel = function () {
-        
-                const idPanelElements = factory.createElements({
-                    idPanel: {
-                        type: 'div',
-                        classList: 'collection-panel id-panel',
+    
+            const createBoardSection = function () {
+            
+                addElements({
+                    boardSection: {
+                        type: 'section',
+                        classList: 'board-section',
                         parent: elements.main,
                     },
-                    idPanelTitle: {
+                    boardSectionTitle: {
                         type: 'p',
                         classList: 'title',
-                        textContent: 'Board',
-                        parentKey: 'idPanel',
-                    },
-                    hasIdCheckbox: {
-                        type: 'div',
-                        classList: 'checkbox button',
-                        onClick: toggleHasId,
-                        parentKey: 'idPanel',
-                    },
-                    hasIdSvg: {
-                        type: 'svg',
-                        name: 'hold',
-                        parentKey: 'hasIdCheckbox',
+                        textContent: 'Board Section',
+                        parentKey: 'boardSection',
                     },
                 });
-
-                elements = {...elements, ...idPanelElements};
+    
+                const createSizePanel = function () {
+    
+                    addElements({
+                        sizePanel: {
+                            type: 'div',
+                            classList: 'collection-panel size-panel',
+                            parent: elements.boardSection,
+                        },
+                        sizePanelTitle: {
+                            type: 'div',
+                            classList: 'title',
+                            parentKey: 'sizePanel',
+                        },
+                        sizePanelTitleParagraph: {
+                            type: 'p',
+                            textContent: 'Size',
+                            parentKey: 'sizePanelTitle',
+                        },
+                        sizeCheckboxWrapper: {
+                            type: 'div',
+                            classList: 'checkbox-wrapper',
+                            parentKey: 'sizePanel',
+                        },
+                        sizeCheckbox: {
+                            type: 'div',
+                            classList: 'checkbox button',
+                            onClick: toggleHasSize,
+                            parentKey: 'sizeCheckboxWrapper',
+                        },
+                        sizeCheckboxSvg: {
+                            type: 'svg',
+                            name: 'hold',
+                            parentKey: 'sizeCheckbox',
+                        },
+                    });
+    
+                    components.boardSizePreview = factory.createComponent(
+                        {
+                            type: 'collectionComponent',
+                            changeItem: changeBoardSize,
+                            active: true,
+                            factory,
+                            parent: elements.sizePanel,
+                        }
+                    );
+                };
             
-                components.boardIdPreview = factory.createComponent(
-                    {
-                        type: 'collectionPreview',
-                        changeItem: changeBoardId,
-                        active: true,
-                        factory,
-                        parent: elements.idPanel,
-                    }
-                );
+                const createIdPanel = function () {
+            
+                    const idPanelElements = factory.createElements({
+                        idPanel: {
+                            type: 'div',
+                            classList: 'collection-panel id-panel',
+                            parent: elements.boardSection,
+                        },
+                        idPanelTitle: {
+                            type: 'div',
+                            classList: 'title',
+                            parentKey: 'idPanel',
+                        },
+                        idPanelTitleParagraph: {
+                            type: 'p',
+                            textContent: 'Id',
+                            parentKey: 'idPanelTitle',
+                        },
+                        hasIdCheckbox: {
+                            type: 'div',
+                            classList: 'checkbox button',
+                            onClick: toggleHasId,
+                            parentKey: 'idPanel',
+                        },
+                        hasIdSvg: {
+                            type: 'svg',
+                            name: 'hold',
+                            parentKey: 'hasIdCheckbox',
+                        },
+                    });
+    
+                    elements = {...elements, ...idPanelElements};
+                
+                    components.boardIdPreview = factory.createComponent(
+                        {
+                            type: 'collectionComponent',
+                            changeItem: changeBoardId,
+                            active: true,
+                            factory,
+                            parent: elements.idPanel,
+                        }
+                    );
+                };
+    
+                const createPreviewPanel = function () {
+    
+                    const iterator = gameState.getBoardDummyIterator();
+            
+                    components.boardPanel = factory.createComponent(
+                        {
+                            type: 'boardPreviewPanel',
+                            factory,
+                            iterator,
+                            parent: elements.boardSection,
+                        }
+                    );
+                };
+    
+                createSizePanel();
+                createIdPanel();
+                createPreviewPanel();
+                
             };
-
-            const createBoardPanel = function () {
-
-                const iterator = gameState.getBoardDummyIterator();
-        
-                components.boardPanel = factory.createComponent(
-                    {
-                        type: 'boardDummiesPanel',
-                        factory,
-                        iterator,
+    
+            const createPawnsSection = function () {
+            
+                addElements({
+                    pawnsSection: {
+                        type: 'section',
+                        classList: 'pawns-section',
                         parent: elements.main,
+                    },
+                    pawnsSectionTitle: {
+                        type: 'p',
+                        classList: 'title',
+                        textContent: 'Pawns Section',
+                        parentKey: 'pawnsSection',
+                    },
+                });
+            };
+    
+            const createCommitSection = function () {
+            
+                addElements({
+                    commitSection: {
+                        type: 'section',
+                        classList: 'commit-section',
+                        parent: elements.main,
+                    },
+                    createGameButton: {
+                        type: 'div',
+                        classList: 'button send',
+                        onClick: createNewGame,
+                        parentKey: 'commitSection',
+                    },
+                    createGameButtonParagraph: {
+                        type: 'p',
+                        textContent: 'Create',
+                        parentKey: 'createGameButton',
                     }
-                );
+                });
             };
 
-            createSizePanel();
-            createIdPanel();
-            createBoardPanel();
+            createMain();
+            createBoardSection();
+            createPawnsSection();
+            createCommitSection();
         };
+
         
         const createStates = function () {
             
@@ -295,15 +376,10 @@ const CreateGamePanel = function ({ factory, gameState, createGame, toggleParent
             }();
 
         };
-                    
-        const createBoardSelector = function () {
         
-            boardSelector = BoardSelector( { factory, iterator: gameState.getBoardDummyIterator() } );
-        };
 
         createBoardSelector();
         createElements();
-        createComponents();
         createStates();
     };
     

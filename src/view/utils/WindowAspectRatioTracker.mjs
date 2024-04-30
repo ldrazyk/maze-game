@@ -86,11 +86,11 @@ const WindowAspectRatioTracker = function ({ factory, test=false }) {
                     
                 } else if (aspectRatio >= 1) {
     
-                    aspectRatioClass = 'landscape narrow';
+                    aspectRatioClass = 'landscape narrow square';
 
                 } else if (aspectRatio >= 0.6) {
     
-                    aspectRatioClass = 'portrait wide';
+                    aspectRatioClass = 'portrait wide square';
 
                 } else if (aspectRatio >= 0.5) {
     

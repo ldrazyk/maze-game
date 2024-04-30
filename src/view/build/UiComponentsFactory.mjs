@@ -9,8 +9,8 @@ import ColorsPanel from "../components/menu/ColorsPanel.mjs";
 import ChangeColorsComponent from "../components/menu/ChangeColorsComponent.mjs";
 import EndGamePanel from "../components/menu/EndGamePanel.mjs";
 import CreateGamePanel from "../components/menu/CreateGamePanel.mjs";
-import CollectionPreviewComponent from "../components/menu/CollectionPreviewComponent.mjs";
-import BoardDummiesPanel from "../components/menu/BoardDummiesPanel.mjs";
+import CollectionComponent from "../components/menu/CollectionComponent.mjs";
+import BoardPreviewPanel from "../components/menu/BoardPreviewPanel.mjs";
 import BoardDummyComponent from "../components/menu/BoardDummyComponent.mjs";
 import GridDummyComponent from "../components/menu/GridDummyComponent.mjs";
 import RulesPanel from "../components/menu/RulesPanel.mjs";
@@ -34,8 +34,8 @@ const UiComponentsFactory = function () {
         rulesPanel: RulesPanel,
         endGamePanel: EndGamePanel,
         createGamePanel: CreateGamePanel,
-        collectionPreview: CollectionPreviewComponent,
-        boardDummiesPanel: BoardDummiesPanel,
+        collectionComponent: CollectionComponent,
+        boardPreviewPanel: BoardPreviewPanel,
         boardDummy: BoardDummyComponent,
         gridDummy: GridDummyComponent,
         emptyPanel: EmptyPanel,

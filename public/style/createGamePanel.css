@@ -1,10 +1,15 @@
-.menu .create-game-panel {
+/* .create-game-panel {
     display: grid;
     
 }
 
-.landscape .menu .create-game-panel {
+.landscape .create-game-panel {
     grid-template-columns: repeat(2, 1fr);
+}
+
+.create-game-panel .board-section {
+
+    
 }
 
 .create-game-panel .size-panel {
@@ -43,7 +48,12 @@
 }
 
 .collection-panel {
-    display: flex;
+    display: grid;
+
+}
+
+.collection-panel .title {
+
 }
 
 .collection-panel .checkbox {
@@ -67,4 +77,360 @@
         width: 50vw;
         height: 50vw;
     }
+} */
+
+/* NEW */
+
+.create-game-panel .title {
+    background-color: pink;
 }
+
+/* BOARD SECTION */
+
+.board-section {
+    background-color: greenyellow;
+}
+
+.item-panel {
+    background-color: brown;
+}
+
+.item-panel .button {
+    height: 100%;
+    aspect-ratio: 1;
+    background-color: lightgreen;
+}
+
+.item-panel .screen {
+    flex-grow: 1;
+    height: 100%;
+    background-color: yellow;
+}
+
+
+/* checkbox */
+
+.create-game-panel .checkbox-wrapper {
+    background-color: blue;
+}
+
+.create-game-panel .checkbox {
+    height: 50%;
+    aspect-ratio: 1;
+    background-color: lightskyblue;
+}
+
+/* board-preview */
+
+.board-preview-panel {
+    flex-direction: column;
+    background-color: brown;
+}
+
+.board-preview-panel>.wrapper {
+    position: relative;
+    height: 90%;
+    max-height: 90vw;
+    aspect-ratio: 1;
+    background-color: limegreen;
+}
+
+.board-dummy {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+/* PAWNS SECTION */
+
+.pawns-section {
+    background-color: palevioletred;
+}
+
+.pawn-amount-panel {
+    background-color: lightseagreen;
+}
+
+.pawn-icon {
+    aspect-ratio: 1;
+    background-color: blueviolet;
+}
+
+.amount-panel {
+    aspect-ratio: 1;
+    background-color: gainsboro;
+}
+
+
+
+.amount-panel .screen {
+    font-size: 1.3em;
+    background-color: yellow;
+}
+
+/* CONFIRM SECTION*/
+
+.confirm-section {
+    background-color: orange;
+}
+
+.confirm-section .button {
+    padding: 2vh;    
+    background-color: aqua;
+}
+
+/* FLEX */
+
+.create-game-panel .title,
+.item-panel,
+.item-panel .screen,
+.create-game-panel .checkbox-wrapper,
+.board-preview-panel,
+.pawn-amount-panel,
+.amount-panel .screen,
+.confirm-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+/* GRID */
+
+.create-game-panel,
+.board-section,
+.collection-panel,
+/* .size-panel, */
+/* .id-panel, */
+.pawns-section,
+.amount-panel {
+    display: grid;
+}
+
+/* areas */
+
+/* 0 */
+
+.create-game-panel .title {
+    grid-area: title;
+}
+
+/* 1 */
+
+.create-game-panel .board-section {
+    grid-area: boardSection;
+}
+
+.create-game-panel .pawns-section {
+    grid-area: pawnsSection;
+}
+
+.create-game-panel .commit-section {
+    grid-area: commitSection;
+}
+
+/* 2 */
+
+/* 2 board */
+
+.board-section .size-panel {
+    grid-area: size;
+}
+
+.board-section .id-panel {
+    grid-area: id;
+}
+
+.board-section .board-preview-panel {
+    grid-area: preview;
+}
+
+/* 2 pawns */
+
+.pawn-amount-panel:nth-child(1) {
+    grid-area: pawn1;
+}
+
+.pawn-amount-panel:nth-child(2) {
+    grid-area: pawn2;
+}
+
+.pawn-amount-panel:nth-child(3) {
+    grid-area: pawn3;
+}
+
+/* 3 */
+
+/* 3 board */
+
+.board-section .checkbox-wrapper {
+    grid-area: checkbox;
+}
+
+.board-section .item-panel {
+    grid-area: itemPanel;
+}
+
+/* 3 pawns */
+
+.amount-panel .screen {
+    grid-area: screen;
+}
+
+.amount-panel .plus-button {
+    grid-area: plus;
+}
+
+.amount-panel .minus-button {
+    grid-area: minus;
+}
+
+
+/* BASIC */
+
+.create-game-panel {
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    grid-template-areas: 
+        "boardSection pawnsSection"
+        "boardSection commitSection";
+}
+
+
+/* .size-panel, */
+/* .id-panel, */
+.collection-panel {
+    grid-template-columns: auto 15vh;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+        "title checkbox"
+        "itemPanel checkbox";
+}
+
+.pawns-section {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto repeat(3, 1fr);
+    grid-template-areas: 
+        "title"
+        "pawn1"
+        "pawn2"
+        "pawn3";
+}
+
+.amount-panel {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+        "screen plus"    
+        "screen minus";
+}
+
+
+/* LANDSCAPE */
+
+.landscape .board-section {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas: 
+        "title title"
+        "size id"
+        "preview preview";
+}
+
+
+/* SQUARE */
+
+.square .board-section {
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto 1fr;
+    grid-template-areas: 
+        "title"
+        "size"
+        "id"
+        "preview";
+}
+
+
+/* PORTRAIT */
+
+.portrait .create-game-panel {
+    grid-template-columns: auto auto;
+    grid-template-rows: 1fr auto;
+    grid-template-areas: 
+        "boardSection boardSection"
+        "pawnsSection commitSection";
+    }
+    
+.portrait .board-section {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas: 
+        "title title"
+        "size id"
+        "preview preview";
+}
+
+
+/* .portrait .size-panel, */
+/* .portrait .id-panel, */
+.portrait .collection-panel {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+        "title checkbox"
+        "itemPanel itemPanel";
+}
+    
+.portrait .pawns-section {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 
+        "title title title"
+        "pawn1 pawn2 pawn3";
+}
+
+
+/* GENERAL */
+
+.create-game-panel {
+    font-size: 4vh;
+}
+
+/* .size-panel, */
+/* .id-panel, */
+.collection-panel {
+    height: 20vh;
+}
+
+.pawn-icon,
+.amount-panel {
+    height: 20vh;
+}
+
+/* PORTRAIT */
+.portrait .create-game-panel .checkbox {
+    height: 100%;
+}
+
+.portrait .create-game-panel {
+    font-size: 6vw;
+}
+
+/* .portrait .size-panel, */
+/* .portrait .id-panel, */
+.portrait .collection-panel {
+    height: 30vw;
+}
+
+.portrait .pawn-icon,
+.portrait .amount-panel {
+    height: 20vw;
+}
+
+.portrait .pawn-amount-panel {
+    flex-direction: column;
+}
+
