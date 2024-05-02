@@ -204,8 +204,8 @@
     flex-basis: 50%;
 }
 
-.menu .button.next,
-.menu .button.prev {
+.colors-panel .button.next,
+.colors-panel .button.prev {
     width: 10vh;
     height: 10vh;
 }

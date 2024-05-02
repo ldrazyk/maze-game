@@ -95,7 +95,14 @@ const DomElementsFactory = function () {
 
                     const element = elements[key];
                     const parent = elements[spec.parentKey];
-                    parent.appendChild(element);
+                    try {
+                        parent.appendChild(element);
+                    } catch {
+                        console.log('error in appendToKey');
+                        console.log(spec.parentKey);
+                        console.log(parent);
+                        console.log(element);
+                    }
                 }
             }
         };

@@ -1,85 +1,13 @@
-/* .create-game-panel {
-    display: grid;
-    
+
+/* CREATE GAME PANEL */
+
+.create-game-panel {
+    font-size: 4vh;
 }
 
-.landscape .create-game-panel {
-    grid-template-columns: repeat(2, 1fr);
+.portrait .create-game-panel {
+    font-size: 4vw;
 }
-
-.create-game-panel .board-section {
-
-    
-}
-
-.create-game-panel .size-panel {
-    order: 1;
-}
-
-.create-game-panel .id-panel {
-    order: 2;
-}
-
-.create-game-panel .board-panel {
-    position: relative;
-    width: 50vh;
-    height: 50vh;
-    order: 3;
-}
-
-.create-game-panel .button.send {
-    order: 4;
-}
-
-.board-dummy {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-}
-
-.checkbox {
-    opacity: 0.3;
-}
-
-.active.checkbox {
-    opacity: 1;
-}
-
-.collection-panel {
-    display: grid;
-
-}
-
-.collection-panel .title {
-
-}
-
-.collection-panel .checkbox {
-    width: 20%;
-    aspect-ratio: 1;
-}
-
-.create-game-panel .button.send {
-    padding: 2vh;
-    height: 8vh;
-    font-size: 3vh;
-    font-weight: bold;
-    border: 3px solid var(--wall);
-}
-
-
-
-@media (orientation :portrait) {
-
-    .create-game-panel .board-panel {
-        width: 50vw;
-        height: 50vw;
-    }
-} */
-
-/* NEW */
 
 .create-game-panel .title {
     background-color: pink;
@@ -91,8 +19,63 @@
     background-color: greenyellow;
 }
 
+/* COLLECTION PANEL */
+
+.collection-panel {
+    height: 20vh;
+}
+
+.collection-panel .checkbox-wrapper,
+.collection-panel .item-panel .button {
+    height: 10vh;
+}
+
+.portrait .collection-panel {
+    height: 20vw;
+}
+
+.portrait .collection-panel .checkbox-wrapper,
+.portrait .collection-panel .item-panel .button {
+    height: 10vw;
+}
+
+/* checkbox */
+
+.collection-panel .checkbox-wrapper {
+    border-style: solid;
+    border-color: var(--wall);
+    border-width: 0.5vh;
+    background-color: blue;
+}
+
+.portrait .collection-panel .checkbox-wrapper {
+    border-width: 0.5vw;
+}
+
+.collection-panel .checkbox {
+    height: 100%;
+    aspect-ratio: 1;
+    background-color: lightskyblue;
+}
+
+.collection-panel .checkbox svg {
+    opacity: 0;
+}
+
+.collection-panel .checkbox:hover svg,
+.collection-panel.active .checkbox svg {
+    opacity: 1;
+}
+
+/* item panel */
+
 .item-panel {
+    opacity: 0.2;
     background-color: brown;
+}
+
+.active .item-panel {
+    opacity: 1;
 }
 
 .item-panel .button {
@@ -108,17 +91,7 @@
 }
 
 
-/* checkbox */
 
-.create-game-panel .checkbox-wrapper {
-    background-color: blue;
-}
-
-.create-game-panel .checkbox {
-    height: 50%;
-    aspect-ratio: 1;
-    background-color: lightskyblue;
-}
 
 /* board-preview */
 
@@ -130,7 +103,7 @@
 .board-preview-panel>.wrapper {
     position: relative;
     height: 90%;
-    max-height: 90vw;
+    max-height: 70vw;
     aspect-ratio: 1;
     background-color: limegreen;
 }
@@ -153,6 +126,20 @@
     background-color: lightseagreen;
 }
 
+.portrait .pawn-amount-panel {
+    flex-direction: column;
+}
+
+.pawn-icon,
+.amount-panel {
+    height: 20vh;
+}
+
+.portrait .pawn-icon,
+.portrait .amount-panel {
+    height: 20vw;
+}
+
 .pawn-icon {
     aspect-ratio: 1;
     background-color: blueviolet;
@@ -163,11 +150,19 @@
     background-color: gainsboro;
 }
 
-
-
 .amount-panel .screen {
-    font-size: 1.3em;
+    font-size: 2em;
     background-color: yellow;
+}
+
+.amount-panel .button {
+    font-size: 3em;
+    line-height: 10vh;
+    text-align: center;
+}
+
+.portrait .amount-panel .button {
+    line-height: 10vw;
 }
 
 /* CONFIRM SECTION*/
@@ -203,8 +198,6 @@
 .create-game-panel,
 .board-section,
 .collection-panel,
-/* .size-panel, */
-/* .id-panel, */
 .pawns-section,
 .amount-panel {
     display: grid;
@@ -288,50 +281,27 @@
     grid-area: minus;
 }
 
-
-/* BASIC */
+/* create-game-panel */
 
 .create-game-panel {
-    grid-template-columns: auto auto;
+    grid-template-columns: 2.5fr 1fr;
     grid-template-rows: auto auto;
     grid-template-areas: 
         "boardSection pawnsSection"
         "boardSection commitSection";
 }
 
-
-/* .size-panel, */
-/* .id-panel, */
-.collection-panel {
-    grid-template-columns: auto 15vh;
-    grid-template-rows: 1fr 1fr;
+.portrait .create-game-panel {
+    grid-template-columns: auto auto;
+    grid-template-rows: 1fr auto;
     grid-template-areas: 
-        "title checkbox"
-        "itemPanel checkbox";
-}
+        "boardSection boardSection"
+        "pawnsSection commitSection";
+ }
 
-.pawns-section {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto repeat(3, 1fr);
-    grid-template-areas: 
-        "title"
-        "pawn1"
-        "pawn2"
-        "pawn3";
-}
+ /* board section */
 
-.amount-panel {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-template-areas: 
-        "screen plus"    
-        "screen minus";
-}
-
-
-/* LANDSCAPE */
-
-.landscape .board-section {
+ .landscape .board-section {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto 1fr;
     grid-template-areas: 
@@ -339,9 +309,6 @@
         "size id"
         "preview preview";
 }
-
-
-/* SQUARE */
 
 .square .board-section {
     grid-template-columns: auto;
@@ -353,17 +320,6 @@
         "preview";
 }
 
-
-/* PORTRAIT */
-
-.portrait .create-game-panel {
-    grid-template-columns: auto auto;
-    grid-template-rows: 1fr auto;
-    grid-template-areas: 
-        "boardSection boardSection"
-        "pawnsSection commitSection";
-    }
-    
 .portrait .board-section {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto auto 1fr;
@@ -373,17 +329,36 @@
         "preview preview";
 }
 
+/* collection-panel */
 
-/* .portrait .size-panel, */
-/* .portrait .id-panel, */
-.portrait .collection-panel {
+/* .collection-panel {
+    grid-template-columns: auto 15vh;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+        "title checkbox"
+        "itemPanel checkbox";
+} */
+
+.collection-panel {
     grid-template-columns: 1fr auto;
     grid-template-rows: 1fr 1fr;
     grid-template-areas: 
         "title checkbox"
         "itemPanel itemPanel";
 }
-    
+
+/* pawns-section */
+
+.pawns-section {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto repeat(3, 1fr);
+    grid-template-areas: 
+        "title"
+        "pawn1"
+        "pawn2"
+        "pawn3";
+}
+
 .portrait .pawns-section {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto 1fr;
@@ -392,45 +367,21 @@
         "pawn1 pawn2 pawn3";
 }
 
+/* amount-panel */
 
-/* GENERAL */
-
-.create-game-panel {
-    font-size: 4vh;
-}
-
-/* .size-panel, */
-/* .id-panel, */
-.collection-panel {
-    height: 20vh;
-}
-
-.pawn-icon,
 .amount-panel {
-    height: 20vh;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+        "screen plus"    
+        "screen minus";
 }
 
-/* PORTRAIT */
-.portrait .create-game-panel .checkbox {
-    height: 100%;
-}
 
-.portrait .create-game-panel {
-    font-size: 6vw;
-}
 
-/* .portrait .size-panel, */
-/* .portrait .id-panel, */
-.portrait .collection-panel {
-    height: 30vw;
-}
 
-.portrait .pawn-icon,
-.portrait .amount-panel {
-    height: 20vw;
-}
 
-.portrait .pawn-amount-panel {
-    flex-direction: column;
-}
+
+
+
 

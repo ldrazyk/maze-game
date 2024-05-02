@@ -1,76 +1,117 @@
-const CollectionComponent = function ({ factory, changeItem, hasCheckbox=false, toggleActive=false, active=true }) {
+const CollectionComponent = function ({ factory, id=false, classList=false, title, nextItem, toggleHasItem, active=true }) {
     
     let elements = {};
-    const id = 'change-board-id';
 
-    const setActive = function (active=true) {
+    
+
+    const createElements = function () {
+
+        const addElements = function (spec) {
+            
+            const newElements = factory.createElements(spec);
+
+            elements = {...elements, ...newElements};
+        };
+
+        const createMain = function () {
+        
+            addElements({
+                main: {
+                    type: 'div',
+                    id: id,
+                    classList: 'collection-panel ' + classList,
+                },
+            });
+        }();
+
+        const createTitle = function () {
+        
+            addElements({
+                title: {
+                    type: 'div',
+                    classList: 'title',
+                    parent: elements.main,
+                },
+                titleParagraph: {
+                    type: 'p',
+                    textContent: title,
+                    parentKey: 'title',
+                },
+            });
+        }();
+
+        const createCheckbox = function () {
+        
+            addElements({
+                checkboxWrapper: {
+                    type: 'div',
+                    classList: 'checkbox-wrapper',
+                    parent: elements.main,
+                },
+                checkbox: {
+                    type: 'div',
+                    classList: 'checkbox button',
+                    onClick: toggleHasItem,
+                    parentKey: 'checkboxWrapper',
+                },
+                checkboxSvg: {
+                    type: 'svg',
+                    name: 'hold',
+                    parentKey: 'checkbox',
+                },
+            });
+        }();
+
+        const createItemPanel = function () {
+        
+            addElements({
+                itemPanel: {
+                    type: 'div',
+                    classList: 'item-panel',
+                    parent: elements.main,
+                },
+                prevButton: {
+                    type: 'div',
+                    classList: 'button prev',
+                    onClick: () => nextItem(-1),
+                    parentKey: 'itemPanel',
+                },
+                prevSvg: {
+                    type: 'svg',
+                    name: 'move',
+                    parentKey: 'prevButton',
+                },
+                screen: {
+                    type: 'div',
+                    classList: 'screen',
+                    parentKey: 'itemPanel',
+                },
+                screenParagraph: {
+                    type: 'p',
+                    parentKey: 'screen',
+                },
+                nextButton: {
+                    type: 'div',
+                    classList: 'button next',
+                    onClick: () => nextItem(1),
+                    parentKey: 'itemPanel',
+                },
+                nextSvg: {
+                    type: 'svg',
+                    name: 'move',
+                    parentKey: 'nextButton',
+                },
+            });
+        }();
+    };
+
+    const setActive = function (active) {
     
         if (active) {
             elements.main.classList.add('active');
         } else {
             elements.main.classList.remove('active');
         }
-    };
-
-    const createElements = function () {
-
-        let spec = {
-            main: {
-                type: 'div',
-                classList: 'item-panel',
-            },
-            prevButton: {
-                type: 'div',
-                classList: 'button prev',
-                onClick: () => changeItem(-1),
-                parentKey: 'main',
-            },
-            prevSvg: {
-                type: 'svg',
-                name: 'move',
-                parentKey: 'prevButton',
-            },
-            screen: {
-                type: 'div',
-                classList: 'screen',
-                parentKey: 'main',
-            },
-            screenParagraph: {
-                type: 'p',
-                parentKey: 'screen',
-            },
-            nextButton: {
-                type: 'div',
-                classList: 'button next',
-                onClick: () => changeItem(1),
-                parentKey: 'main',
-            },
-            nextSvg: {
-                type: 'svg',
-                name: 'move',
-                parentKey: 'nextButton',
-            },
-        };
-
-        const checkboxSpec = {
-            checkbox: {
-                type: 'div',
-                classList: 'checkbox button',
-                onClick: toggleActive,
-                parentKey: 'main',
-            },
-            checkboxSvg: {
-                type: 'svg',
-                name: 'hold',
-                parentKey: 'checkbox',
-            },
-        };
-
-        if (hasCheckbox) {
-            spec = { ...spec, ...checkboxSpec }
-        };
-
-        elements = factory.createElements(spec);
     };
 
     const init = function () {

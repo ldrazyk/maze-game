@@ -13,6 +13,7 @@ import CollectionComponent from "../components/menu/CollectionComponent.mjs";
 import BoardPreviewPanel from "../components/menu/BoardPreviewPanel.mjs";
 import BoardDummyComponent from "../components/menu/BoardDummyComponent.mjs";
 import GridDummyComponent from "../components/menu/GridDummyComponent.mjs";
+import PawnAmountPanel from "../components/menu/PawnAmountPanel.mjs";
 import RulesPanel from "../components/menu/RulesPanel.mjs";
 import EmptyPanel from "../components/menu/EmptyPanel.mjs";
 import ContainerComponent from "../components/containers/ContainerComponent.mjs"
@@ -38,6 +39,7 @@ const UiComponentsFactory = function () {
         boardPreviewPanel: BoardPreviewPanel,
         boardDummy: BoardDummyComponent,
         gridDummy: GridDummyComponent,
+        pawnAmountPanel: PawnAmountPanel,
         emptyPanel: EmptyPanel,
         container: ContainerComponent,
         dropdownContainer: DropdownContainer,

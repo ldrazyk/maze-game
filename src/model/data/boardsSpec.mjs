@@ -13,7 +13,7 @@ const boardSpec = {
     //     },
     // },
     7: {
-        board0700: {
+        b0700: {
             name: "Board 0700 - Empty",
             matrix: [
                 [1, 1, 1, 3, 1, 1, 1],
@@ -25,7 +25,7 @@ const boardSpec = {
                 [1, 1, 1, 2, 1, 1, 1]
             ]
         },
-        board0701: {
+        b0701: {
             name: "Board 0701",
             matrix: [
                 [1, 1, 1, 3, 1, 1, 1],
@@ -37,7 +37,7 @@ const boardSpec = {
                 [1, 1, 1, 2, 1, 1, 1]
             ]
         },
-        board0702: {
+        b0702: {
             name: "Board 0702",
             matrix: [
                 [1, 1, 1, 3, 1, 1, 1],
@@ -49,7 +49,7 @@ const boardSpec = {
                 [1, 1, 1, 2, 1, 1, 1]
             ]
         },
-        board0703: {
+        b0703: {
             name: "Board 0703",
             matrix: [
                 [1, 1, 1, 3, 1, 1, 1],
@@ -63,7 +63,7 @@ const boardSpec = {
         },
     },
     9: {
-        // board0900: {
+        // b0900: {
         //     name: "Board 0900 - Empty",
         //     matrix: [
         //         [1, 1, 1, 1, 3, 1, 1, 1, 1],
@@ -77,7 +77,7 @@ const boardSpec = {
         //         [1, 1, 1, 1, 2, 1, 1, 1, 1]
         //     ]
         // },
-        board0901: {
+        b0901: {
             name: "Board 0901",
             matrix: [
                 [1, 1, 1, 1, 3, 1, 1, 1, 1],
@@ -91,7 +91,7 @@ const boardSpec = {
                 [1, 1, 1, 1, 2, 1, 1, 1, 1]
             ]
         },
-        board0902: {
+        b0902: {
             name: "Board 0902",
             matrix: [
                 [1, 1, 1, 1, 3, 1, 1, 1, 1],
@@ -108,7 +108,7 @@ const boardSpec = {
     },
     11: {
 
-        // board1100: {
+        // b1100: {
         //     name: "Board 1100 - Empty",
         //     matrix: [
         //         [1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1],
@@ -124,7 +124,7 @@ const boardSpec = {
         //         [1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1]
         //     ]
         // },
-        board1101: {
+        b1101: {
             name: "Board 1101",
             matrix: [
                 [1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1],
@@ -140,7 +140,7 @@ const boardSpec = {
                 [1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1]
             ]
         },
-        board1102: {
+        b1102: {
             name: "Board 1102",
             matrix: [
                 [1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1],
@@ -156,7 +156,7 @@ const boardSpec = {
                 [1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1]
             ]
         },
-        board1103: {
+        b1103: {
             name: "Board 1103",
             matrix: [
                 [1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1],
