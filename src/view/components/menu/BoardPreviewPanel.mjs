@@ -21,6 +21,11 @@ const BoardPreviewPanel = function ({ factory, iterator }) {
                 classList: 'wrapper',
                 parentKey: 'main',
             },
+            emptyBoard: {
+                type: 'div',
+                classList: 'board-dummy empty',
+                parentKey: 'wrapper',
+            }
         });
     };
 

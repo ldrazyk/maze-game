@@ -1,7 +1,65 @@
+/* BORDER LINES */
+
+.create-game-panel,
+.portrait.square .create-game-panel,
+.board-section {
+    column-gap: 2vw;
+}
+
+.portrait .create-game-panel {
+    column-gap: 0;
+}
+
+.portrait .board-section {
+    column-gap: 2vh;
+}
+
+section>.title,
+.collection-panel,
+.pawn-amount-panel {
+    border-width: 0;
+    border-color: var(--wall);
+    border-style: solid;
+}
+
+section>.title,
+.collection-panel,
+.pawn-amount-panel {
+    border-bottom-width: max(0.5vh, 3px);
+}
+
+.portrait section>.title,
+.portrait .collection-panel,
+.portrait.square .pawn-amount-panel {
+    border-bottom-width: max(0.5vw, 3px);
+}
+
+.portrait .pawn-amount-panel {
+    border-bottom-width: 0;
+}
+
+.portrait .pawn-amount-panel {
+    border-right-width: max(0.5vw, 3px);
+}
+
+.portrait .pawn-amount-panel:last-child,
+.portrait.square .pawn-amount-panel {
+    border-right-width: 0;
+}
+
 
 /* CREATE GAME PANEL */
 
 .create-game-panel {
+    font-weight: bold;
+    color: var(--wall);
+}
+
+.create-game-panel {
+    font-size: 4vh;
+}
+
+.portrait.square .create-game-panel {
     font-size: 4vh;
 }
 
@@ -9,53 +67,49 @@
     font-size: 4vw;
 }
 
-.create-game-panel .title {
-    background-color: pink;
-}
 
 /* BOARD SECTION */
 
-.board-section {
-    background-color: greenyellow;
-}
+
+
 
 /* COLLECTION PANEL */
 
-.collection-panel {
-    height: 20vh;
+.collection-panel .title,
+.collection-panel .checkbox,
+.collection-panel .item-panel>*,
+.portrait.square .collection-panel .title,
+.portrait.square .collection-panel .checkbox,
+.portrait.square .collection-panel .item-panel>* {
+    height: 8vh;
 }
 
-.collection-panel .checkbox-wrapper,
-.collection-panel .item-panel .button {
-    height: 10vh;
+.portrait .collection-panel .title,
+.portrait .collection-panel .checkbox,
+.portrait .collection-panel .item-panel>* {
+    height: 8vw;
 }
 
-.portrait .collection-panel {
-    height: 20vw;
+.collection-panel .checkbox,
+.item-panel .button {
+    aspect-ratio: 1;
 }
 
-.portrait .collection-panel .checkbox-wrapper,
-.portrait .collection-panel .item-panel .button {
-    height: 10vw;
+.collection-panel .title,
+.item-panel .screen {
+    aspect-ratio: 2;
 }
 
 /* checkbox */
 
-.collection-panel .checkbox-wrapper {
+.collection-panel .checkbox {
     border-style: solid;
     border-color: var(--wall);
-    border-width: 0.5vh;
-    background-color: blue;
+    border-width: max(0.5vh, 3px);
 }
 
-.portrait .collection-panel .checkbox-wrapper {
-    border-width: 0.5vw;
-}
-
-.collection-panel .checkbox {
-    height: 100%;
-    aspect-ratio: 1;
-    background-color: lightskyblue;
+.portrait .collection-panel .checkbox {
+    border-width: max(0.5vw, 3px);
 }
 
 .collection-panel .checkbox svg {
@@ -71,44 +125,35 @@
 
 .item-panel {
     opacity: 0.2;
-    background-color: brown;
 }
 
 .active .item-panel {
     opacity: 1;
 }
 
-.item-panel .button {
-    height: 100%;
-    aspect-ratio: 1;
-    background-color: lightgreen;
-}
-
-.item-panel .screen {
-    flex-grow: 1;
-    height: 100%;
-    background-color: yellow;
-}
-
-
-
 
 /* board-preview */
 
 .board-preview-panel {
     flex-direction: column;
-    background-color: brown;
 }
 
-.board-preview-panel>.wrapper {
+.board-preview-panel>.wrapper,
+.portrait.board-to-height .board-preview-panel>.wrapper {
     position: relative;
     height: 90%;
-    max-height: 70vw;
+    width: auto;
     aspect-ratio: 1;
-    background-color: limegreen;
 }
 
-.board-dummy {
+.portrait .board-preview-panel>.wrapper {
+    height: auto;
+    width: 90%;
+}
+
+
+.board-dummy,
+.confirm-section .button .wrapper {
     position: absolute;
     top: 0;
     left: 0;
@@ -116,64 +161,105 @@
     width: 100%;
 }
 
+.board-preview-panel .board-dummy {
+    border-width: max(0.5vh, 3px);
+}
+
+.portrait .board-preview-panel .board-dummy {
+    border-width: max(0.5vw, 3px);
+}
+
+.board-dummy.empty {
+    background-color: transparent;
+}
+
 /* PAWNS SECTION */
 
-.pawns-section {
-    background-color: palevioletred;
-}
-
 .pawn-amount-panel {
-    background-color: lightseagreen;
-}
 
-.portrait .pawn-amount-panel {
-    flex-direction: column;
 }
 
 .pawn-icon,
 .amount-panel {
-    height: 20vh;
+    height: 16vh;
+}
+
+.portrait.square .pawn-icon,
+.portrait.square .amount-panel {
+    height: 16vw;
+}
+
+.portrait.square.vertical-pawn-panel .pawn-icon,
+.portrait.square.vertical-pawn-panel .amount-panel {
+    height: 10vh;
 }
 
 .portrait .pawn-icon,
 .portrait .amount-panel {
-    height: 20vw;
+    height: 16vw;
+}
+
+.amount-panel .button {
+    font-size: 1em;
+    /* line-height: 8vh; */
+    text-align: center;
+}
+
+.portrait.square .amount-panel .button {
+    /* line-height: 8vw; */
+}
+
+.portrait .amount-panel .button {
+    /* line-height: 10vw; */
 }
 
 .pawn-icon {
     aspect-ratio: 1;
-    background-color: blueviolet;
 }
 
 .amount-panel {
     aspect-ratio: 1;
-    background-color: gainsboro;
 }
 
 .amount-panel .screen {
-    font-size: 2em;
-    background-color: yellow;
-}
-
-.amount-panel .button {
-    font-size: 3em;
-    line-height: 10vh;
-    text-align: center;
-}
-
-.portrait .amount-panel .button {
-    line-height: 10vw;
+    font-size: 1em;
 }
 
 /* CONFIRM SECTION*/
 
-.confirm-section {
-    background-color: orange;
+.confirm-section .button {
+    position: relative;
+    height: 100%;
+    width: 100%;
 }
 
-.confirm-section .button {
-    padding: 2vh;    
-    background-color: aqua;
+.confirm-section .button .wrapper {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.confirm-section .button .wrapper:nth-child(1) {
+    display: flex;
+}
+
+.portrait.square.vertical-pawn-panel .confirm-section .button .wrapper:nth-child(1) {
+    display: none;
+}
+
+.confirm-section .button .wrapper:nth-child(2) {
+    display: none;
+}
+
+
+.portrait.square.vertical-pawn-panel .confirm-section .button .wrapper:nth-child(2) {
+    display: flex;
+    
+}
+
+.confirm-section .button p {
+    text-align: center;
 }
 
 /* FLEX */
@@ -181,7 +267,6 @@
 .create-game-panel .title,
 .item-panel,
 .item-panel .screen,
-.create-game-panel .checkbox-wrapper,
 .board-preview-panel,
 .pawn-amount-panel,
 .amount-panel .screen,
@@ -203,7 +288,130 @@
     display: grid;
 }
 
-/* areas */
+
+
+/* create-game-panel */
+
+.landscape .create-game-panel,
+.portrait.square .create-game-panel {
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 3fr 1fr;
+    grid-template-areas: 
+        "boardSection pawnsSection"
+        "boardSection commitSection";
+}
+
+.portrait.square.vertical-pawn-panel .create-game-panel {
+    grid-template-columns: auto auto;
+}
+
+.portrait .create-game-panel {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto 8vh;
+    grid-template-areas: 
+        "boardSection"
+        "pawnsSection"
+        "commitSection";
+ }
+
+ /* board section */
+
+ .landscape .board-section {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr 3fr;
+    grid-template-areas: 
+        "title title"
+        "size id"
+        "preview preview";
+}
+
+.landscape.square .board-section,
+.portrait.square .board-section {
+    grid-template-columns: auto;
+    grid-template-rows: auto 1fr 1fr 2fr;
+    grid-template-areas: 
+        "title"
+        "size"
+        "id"
+        "preview";
+}
+
+
+.portrait.narrow .board-section {
+    grid-template-columns: auto;
+    /* grid-template-rows: auto repeat(2, 10vh) 1fr; */
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "title"
+        "size"
+        "id"
+        "preview";
+}
+
+.portrait .board-section {
+    grid-template-columns: repeat(2, 1fr);
+    /* grid-template-rows: auto auto 1fr; */
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "title title"
+        "size id"
+        "preview preview";
+}
+
+/* collection-panel */
+
+.collection-panel {
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+        "x title checkbox"
+        "itemPanel itemPanel itemPanel";
+    align-items: center;
+}
+
+/* pawns-section */
+
+.landscape .pawns-section,
+.portrait.square .pawns-section {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto repeat(3, 1fr);
+    grid-template-areas: 
+        "title"
+        "pawn1"
+        "pawn2"
+        "pawn3";
+}
+
+.portrait .pawns-section {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 
+        "title title title"
+        "pawn1 pawn2 pawn3";
+}
+
+/* amount-panel */
+
+.landscape .pawn-amount-panel,
+.portrait.square .pawn-amount-panel {
+    flex-direction: row;
+}
+
+.portrait.square.vertical-pawn-panel .pawn-amount-panel,
+.portrait .pawn-amount-panel {
+    flex-direction: column;
+}
+
+.amount-panel {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+        "screen plus"    
+        "screen minus";
+}
+
+
+/* AREAS */
 
 /* 0 */
 
@@ -259,11 +467,11 @@
 
 /* 3 board */
 
-.board-section .checkbox-wrapper {
+.collection-panel .checkbox {
     grid-area: checkbox;
 }
 
-.board-section .item-panel {
+.collection-panel .item-panel {
     grid-area: itemPanel;
 }
 
@@ -281,107 +489,67 @@
     grid-area: minus;
 }
 
-/* create-game-panel */
+/* COLORS */
 
-.create-game-panel {
-    grid-template-columns: 2.5fr 1fr;
-    grid-template-rows: auto auto;
-    grid-template-areas: 
-        "boardSection pawnsSection"
-        "boardSection commitSection";
+/* .board-section {
+    background-color: greenyellow;
 }
 
-.portrait .create-game-panel {
-    grid-template-columns: auto auto;
-    grid-template-rows: 1fr auto;
-    grid-template-areas: 
-        "boardSection boardSection"
-        "pawnsSection commitSection";
- }
-
- /* board section */
-
- .landscape .board-section {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto 1fr;
-    grid-template-areas: 
-        "title title"
-        "size id"
-        "preview preview";
+.create-game-panel .title {
+    background-color: pink;
 }
 
-.square .board-section {
-    grid-template-columns: auto;
-    grid-template-rows: auto auto auto 1fr;
-    grid-template-areas: 
-        "title"
-        "size"
-        "id"
-        "preview";
+.collection-panel .checkbox {
+    background-color: lightskyblue;
 }
 
-.portrait .board-section {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto auto 1fr;
-    grid-template-areas: 
-        "title title"
-        "size id"
-        "preview preview";
+.item-panel {
+    background-color: rgb(156, 91, 91);
 }
 
-/* collection-panel */
-
-/* .collection-panel {
-    grid-template-columns: auto 15vh;
-    grid-template-rows: 1fr 1fr;
-    grid-template-areas: 
-        "title checkbox"
-        "itemPanel checkbox";
-} */
-
-.collection-panel {
-    grid-template-columns: 1fr auto;
-    grid-template-rows: 1fr 1fr;
-    grid-template-areas: 
-        "title checkbox"
-        "itemPanel itemPanel";
+.item-panel .button {
+    background-color: lightgreen;
 }
 
-/* pawns-section */
+.item-panel .screen {
+    background-color: yellow;
+}
+
+.board-preview-panel {
+    background-color: rgb(212, 196, 140);
+}
+
+.board-preview-panel>.wrapper {
+    background-color: limegreen;
+}
 
 .pawns-section {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto repeat(3, 1fr);
-    grid-template-areas: 
-        "title"
-        "pawn1"
-        "pawn2"
-        "pawn3";
+    background-color: palevioletred;
 }
 
-.portrait .pawns-section {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto 1fr;
-    grid-template-areas: 
-        "title title title"
-        "pawn1 pawn2 pawn3";
+.pawn-amount-panel {
+    background-color: lightseagreen;
 }
 
-/* amount-panel */
+.pawn-icon {
+    background-color: blueviolet;
+}
 
 .amount-panel {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-template-areas: 
-        "screen plus"    
-        "screen minus";
+    background-color: gainsboro;
+}
+
+.amount-panel .screen {
+    background-color: yellow;
+}
+
+.confirm-section {
+    background-color: orange;
+}
+
+.confirm-section .button {
+    background-color: aqua;
 }
 
 
-
-
-
-
-
-
-
+ */

@@ -43,20 +43,15 @@ const CollectionComponent = function ({ factory, id=false, classList=false, titl
         const createCheckbox = function () {
         
             addElements({
-                checkboxWrapper: {
-                    type: 'div',
-                    classList: 'checkbox-wrapper',
-                    parent: elements.main,
-                },
                 checkbox: {
                     type: 'div',
                     classList: 'checkbox button',
                     onClick: toggleHasItem,
-                    parentKey: 'checkboxWrapper',
+                    parent: elements.main,
                 },
                 checkboxSvg: {
                     type: 'svg',
-                    name: 'hold',
+                    name: 'close',
                     parentKey: 'checkbox',
                 },
             });

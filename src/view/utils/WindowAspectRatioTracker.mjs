@@ -84,13 +84,25 @@ const WindowAspectRatioTracker = function ({ factory, test=false }) {
     
                     aspectRatioClass = 'landscape';
                     
+                } else if (aspectRatio >= 1.2) {
+    
+                    aspectRatioClass = 'landscape narrow';
+
                 } else if (aspectRatio >= 1) {
     
                     aspectRatioClass = 'landscape narrow square';
 
-                } else if (aspectRatio >= 0.6) {
+                } else if (aspectRatio >= 0.88) {
+    
+                    aspectRatioClass = 'portrait wide square board-to-height';
+
+                } else if (aspectRatio >= 0.75) {
     
                     aspectRatioClass = 'portrait wide square';
+
+                } else if (aspectRatio >= 0.6) {
+    
+                    aspectRatioClass = 'portrait wide square vertical-pawn-panel';
 
                 } else if (aspectRatio >= 0.5) {
     

@@ -124,12 +124,12 @@ const CreateGamePanel = function ({ factory, gameState, createGame, toggleParent
                         classList: 'board-section',
                         parent: elements.main,
                     },
-                    boardSectionTitle: {
-                        type: 'p',
-                        classList: 'title',
-                        textContent: 'Board',
-                        parentKey: 'boardSection',
-                    },
+                    // boardSectionTitle: {
+                    //     type: 'p',
+                    //     classList: 'title',
+                    //     textContent: 'Board',
+                    //     parentKey: 'boardSection',
+                    // },
                 });
     
                 const createSizePanel = function () {
@@ -156,7 +156,7 @@ const CreateGamePanel = function ({ factory, gameState, createGame, toggleParent
                             type: 'collectionComponent',
                             classList: 'id-panel',
                             id: 'id-panel',
-                            title: 'Id',
+                            title: 'Board',
                             nextItem: nextBoardId,
                             toggleHasItem: toggleHasId,
                             active: true,
@@ -190,12 +190,12 @@ const CreateGamePanel = function ({ factory, gameState, createGame, toggleParent
                         classList: 'pawns-section',
                         parent: elements.main,
                     },
-                    pawnsSectionTitle: {
-                        type: 'p',
-                        classList: 'title',
-                        textContent: 'Pawns',
-                        parentKey: 'pawnsSection',
-                    },
+                    // pawnsSectionTitle: {
+                    //     type: 'p',
+                    //     classList: 'title',
+                    //     textContent: 'Pawns',
+                    //     parentKey: 'pawnsSection',
+                    // },
                 });
 
 
@@ -222,25 +222,51 @@ const CreateGamePanel = function ({ factory, gameState, createGame, toggleParent
 
             }();
     
-            const createCommitSection = function () {
+            const createConfirmSection = function () {
             
                 addElements({
-                    commitSection: {
+                    confirmSection: {
                         type: 'section',
-                        classList: 'commit-section',
+                        classList: 'confirm-section',
                         parent: elements.main,
                     },
                     createGameButton: {
                         type: 'div',
                         classList: 'button send',
                         onClick: createNewGame,
-                        parentKey: 'commitSection',
+                        parentKey: 'confirmSection',
+                    },
+                    createGameButtonParagraphWrapper1: {
+                        type: 'div',
+                        classList: 'wrapper',
+                        parentKey: 'createGameButton',
                     },
                     createGameButtonParagraph: {
                         type: 'p',
-                        textContent: 'Create',
+                        textContent: 'CREATE',
+                        parentKey: 'createGameButtonParagraphWrapper1',
+                    },
+                    createGameButtonParagraphWrapper2: {
+                        type: 'div',
+                        classList: 'wrapper',
                         parentKey: 'createGameButton',
-                    }
+                    },
+                    createGameButtonParagraph1: {
+                        type: 'p',
+                        textContent: 'CR',
+                        parentKey: 'createGameButtonParagraphWrapper2',
+                    },
+                    createGameButtonParagraph2: {
+                        type: 'p',
+                        textContent: 'EA',
+                        parentKey: 'createGameButtonParagraphWrapper2',
+                    },
+                    createGameButtonParagraph3: {
+                        type: 'p',
+                        textContent: 'TE',
+                        parentKey: 'createGameButtonParagraphWrapper2',
+                    },
+
                 });
             }();
         };

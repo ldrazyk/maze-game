@@ -11,7 +11,7 @@ const PawnAmountPanel = function ({ factory, pawnType, add=(n) => {console.log(p
             },
             icon: {
                 type: 'div',
-                classList: 'pawn-icon player-1',
+                classList: 'pawn-icon',
                 parentKey: 'main',
             },
             iconSvg: {

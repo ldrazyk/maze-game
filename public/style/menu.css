@@ -145,6 +145,10 @@
 .window .panel {
     width: 100%;
     height: 100%;
+    padding: 5vh 2vh 2vh 2vh;
+}
+
+.window .rules-panel {
     padding: 5vh 2vh 2vh 4vh;
 }
 
@@ -152,11 +156,12 @@
     width: 100%;
     height: 100%;
     overflow-y: scroll;
-}
-
-.rules-line {
     font-size: 6vh;
     font-weight: bold;
+}
+
+.rules .line-break {
+    height: 0.5em;
 }
 
 ::-webkit-scrollbar {
@@ -251,7 +256,7 @@
         padding: 2vw;
     }
 
-    .rules-line {
+    .rules {
         font-size: 6vw;
     }
 }
@@ -278,4 +283,6 @@
         right: 0;
     }
 }
+
+
 
