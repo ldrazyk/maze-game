@@ -274,7 +274,7 @@ const PlayerPanel = function ({ playerNumber, order=false, gameState, factory })
     
             const updateHoldsDom = function () {
             
-                elements.holds.textContent = 'Holds: ' + state.holds;
+                elements.holds.textContent = 'Holds: (' + state.holds + ')';
             };
 
             if ( updateHoldsState() ) updateHoldsDom();

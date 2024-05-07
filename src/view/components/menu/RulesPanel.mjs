@@ -54,7 +54,7 @@ const RulesPanel = function ({ factory }) {
                 "Move Pawn:", 
                 " - press 'Arrows' or click Field.",
                 "Hold Pawn:", 
-                " - press 'Enter' or 'Cross Button' or click selected pawn.",
+                " - press 'H' or 'Cross Button' or click selected pawn.",
                 "Select Pawn:", 
                 " - click Pawn.",
                 "Select next Pawn:", 

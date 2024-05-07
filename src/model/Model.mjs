@@ -69,6 +69,10 @@ const Model = function() {
         notify('createSession', session.getState());
     };
 
+    const nextTurn = function() {
+        game.getGameOperator().nextTurn();
+    };
+
     const createGame = function({ boardSpec, pawnsSpec }) {
         
         const builder = gameBuilder;
@@ -93,6 +97,8 @@ const Model = function() {
         game = builder.getResult();
 
         notify('createGame');
+
+        nextTurn();
     };
 
     const setPlayerName = function (spec) {
@@ -102,10 +108,6 @@ const Model = function() {
     };
 
     // game operations
-
-    const nextTurn = function() {
-        game.getGameOperator().nextTurn();
-    };
 
     const selectNext = function () {
         game.getGameOperator().selectNext();

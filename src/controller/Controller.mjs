@@ -111,7 +111,7 @@ const Controller = function(model) {
                 case 'KeyS':
                     executeIfKeydown(selectNext);
                     break;
-                case 'Enter':
+                case 'KeyH':
                     executeIfKeydown(hold);
                     break;
                 case 'ArrowUp':

@@ -17,7 +17,7 @@ const ColorsPanel = function ({ gameState, factory }) {
 
     const createComponents = function () {
     
-        [2, 1].forEach(playerNumber => {
+        [1, 2].forEach(playerNumber => {
 
             const component = factory.createComponent(
                 {

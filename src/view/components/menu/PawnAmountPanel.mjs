@@ -1,4 +1,4 @@
-const PawnAmountPanel = function ({ factory, pawnType, add=(n) => {console.log(pawnType + ' add ' + n)} }) {
+const PawnAmountPanel = function ({ factory, pawnType, add=(n) => {console.log(pawnType + ' add ' + n)}, min, max }) {
     
     let elements = {};
 
@@ -57,9 +57,9 @@ const PawnAmountPanel = function ({ factory, pawnType, add=(n) => {console.log(p
         createElements();
     }();
 
-    const update = function () {
+    const setAmount = function (amount) {
     
-        return ;
+        elements.screenParagraph.textContent = String(amount);
     };
 
     const getId = function () {
@@ -74,7 +74,7 @@ const PawnAmountPanel = function ({ factory, pawnType, add=(n) => {console.log(p
     
     return Object.freeze(
         {
-            update,
+            setAmount,
             getId,
             getMain,
         }

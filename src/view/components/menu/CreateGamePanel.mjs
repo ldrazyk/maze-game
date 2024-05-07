@@ -5,8 +5,12 @@ const CreateGamePanel = function ({ factory, gameState, createGame, toggleParent
     let elements = {};
     const components = {};
     const id = 'create-game-panel';
+
+    const minPawnAmount = 1;
+    const maxPawnAmount = 3;
     
     const boardState = factory.createState();
+    const pawnsState = factory.createState();
     let boardSelector;
 
         
@@ -29,11 +33,15 @@ const CreateGamePanel = function ({ factory, gameState, createGame, toggleParent
 
             const getPawnsSpec = function () {
 
-                const pawnsSpec1 = [
-                    {type: 'lion', amount: 1}, 
-                    {type: 'rooster', amount: 1}, 
-                    {type: 'snake', amount: 1}
-                ];
+                const pawnsSpec1 = [];
+
+                ['lion', 'rooster', 'snake'].forEach(type => {
+
+                    const amount = pawnsState.get(type + 'Amount');
+
+                    pawnsSpec1.push({type, amount})
+                });
+
             
                 const pawnsSpec = [pawnsSpec1, pawnsSpec1];
             
@@ -87,6 +95,30 @@ const CreateGamePanel = function ({ factory, gameState, createGame, toggleParent
             
             boardSelector.toggleHasId();
             updateBoardState();
+        };
+
+        const addToPawnAmount = function (type, n) {
+
+            const getNewLegalAmount = function (key) {
+            
+                const newAmount = pawnsState.get(key) + n;
+
+                if (minPawnAmount <= newAmount && newAmount <= maxPawnAmount) {
+
+                    return newAmount;
+                } else {
+
+                    return false;
+                }
+            };
+
+            const key = type + 'Amount';
+            const newAmount = getNewLegalAmount(key);
+
+            if (newAmount !== false) {
+
+                pawnsState.update(key, newAmount);
+            }
         };
 
         const createBoardSelector = function () {
@@ -199,27 +231,18 @@ const CreateGamePanel = function ({ factory, gameState, createGame, toggleParent
                 });
 
 
-                components.lionAmount = factory.createComponent({
-                    type: 'pawnAmountPanel',
-                    pawnType: 'lion',
-                    factory,
-                    parent: elements.pawnsSection,
-                });
+                ['lion', 'rooster', 'snake'].forEach(type => {
 
-                components.roosterAmount = factory.createComponent({
-                    type: 'pawnAmountPanel',
-                    pawnType: 'rooster',
-                    factory,
-                    parent: elements.pawnsSection,
+                    components[type + 'Amount'] = factory.createComponent({
+                        type: 'pawnAmountPanel',
+                        pawnType: type,
+                        add: (n) => addToPawnAmount(type, n),
+                        min: minPawnAmount,
+                        max: maxPawnAmount,
+                        factory,
+                        parent: elements.pawnsSection,
+                    });                    
                 });
-
-                components.snakeAmount = factory.createComponent({
-                    type: 'pawnAmountPanel',
-                    pawnType: 'snake',
-                    factory,
-                    parent: elements.pawnsSection,
-                });
-
             }();
     
             const createConfirmSection = function () {
@@ -343,6 +366,23 @@ const CreateGamePanel = function ({ factory, gameState, createGame, toggleParent
                     name: 'hasId',
                     value: false,
                     onChange: onHasIdChange,
+                });
+            }();
+
+            const onPawnsAmountChange = function (type, amount) {
+            
+                components[type + 'Amount'].setAmount(amount);
+            };
+
+            const createPawnsState = function () {
+            
+                ['lion', 'rooster', 'snake'].forEach(type => {
+
+                    pawnsState.add({
+                        name: type + 'Amount',
+                        value: 1,
+                        onChange: (amount) => onPawnsAmountChange(type, amount),
+                    });
                 });
             }();
 

@@ -33,18 +33,18 @@ const EndGamePanel = function ({ factory, gameState, endGame, toggleParent, togg
                     onClick: () => executeEndGame({ type: 'draw' }),
                     parentKey: 'main',
                 },
-                player2WinsButton: {
-                    type: 'button',
-                    classList: 'button',
-                    textContent: 'Player 2 wins',
-                    onClick: () => executeEndGame({ type: 'give_up', winnerNumber: 2 }),
-                    parentKey: 'main',
-                },
                 player1WinsButton: {
                     type: 'button',
                     classList: 'button',
                     textContent: 'Player 1 wins',
                     onClick: () => executeEndGame({ type: 'give_up', winnerNumber: 1 }),
+                    parentKey: 'main',
+                },
+                player2WinsButton: {
+                    type: 'button',
+                    classList: 'button',
+                    textContent: 'Player 2 wins',
+                    onClick: () => executeEndGame({ type: 'give_up', winnerNumber: 2 }),
                     parentKey: 'main',
                 },
             }

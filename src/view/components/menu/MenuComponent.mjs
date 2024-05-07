@@ -196,7 +196,7 @@ const MenuComponent = function ({ gameState, factory }) {
         const showCreateGameWindow = function () {
         
             containers.createGameWindow.show();
-        }();
+        };
     };
 
     const init = function () {
