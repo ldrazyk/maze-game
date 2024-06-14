@@ -54,6 +54,10 @@ const Score = function ({ gameNumber, type, activePlayer, passivePlayer, winning
         return winner;
     };
 
+    const getWinnerName = function () {
+        return winner.getName();
+    };
+
     const getLooser = function () {
         return looser;
     };
@@ -69,11 +73,12 @@ const Score = function ({ gameNumber, type, activePlayer, passivePlayer, winning
 
     return Object.freeze(
         {
-            getGameNumber: getGameNumber,
-            getType: getType,
-            getWinner: getWinner,
-            getLooser: getLooser,
-            toString: toString
+            getGameNumber,
+            getType,
+            getWinner,
+            getWinnerName,
+            getLooser,
+            toString,
         }
     );
 };

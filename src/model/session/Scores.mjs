@@ -50,6 +50,14 @@ const Scores = function () {
         return scores[scores.length - 1].toString();
     };
 
+    const getLastScoreType = function () {
+        return scores[scores.length - 1].getType();
+    };
+
+    const getLastScoreWinnerName = function () {
+        return scores[scores.length - 1].getWinnerName();
+    };
+
     const getScoresIterator = function () {
         return ArrayIterator(scores);
     };
@@ -63,6 +71,8 @@ const Scores = function () {
             add,
             ended: gameEnded,
             getLastScoreString,
+            getLastScoreType,
+            getLastScoreWinnerName,
             getScoresIterator,
         }
     )

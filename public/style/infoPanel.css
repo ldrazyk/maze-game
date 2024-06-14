@@ -1,0 +1,23 @@
+.info-panel {
+    font-size: 3vh;
+    font-weight: bold;
+}
+
+.info-panel .screen {
+    padding: 1.5vh;
+}
+
+.portrait .info-panel {
+    font-size: 3vw;
+}
+
+.portrait .info-panel .screen {
+    padding: 1.5vw;
+}
+
+
+
+.info-panel .screen :nth-child(1) {
+    text-align: center;
+    font-size: 1.5em;
+}

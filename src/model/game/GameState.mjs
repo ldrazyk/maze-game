@@ -127,6 +127,14 @@ const GameState = function () {
     const getLastScoreString = function() {
         return scores.getLastScoreString();
     };
+     
+    const getLastScoreType = function() {
+        return scores.getLastScoreType();
+    };
+     
+    const getLastScoreWinnerName = function() {
+        return scores.getLastScoreWinnerName();
+    };
 
     // get board
 
@@ -184,6 +192,8 @@ const GameState = function () {
             getGameNumber,   // will be used
             getTurnNumber,   // will be used
             getLastScoreString, // used in ViewJs
+            getLastScoreType,
+            getLastScoreWinnerName,
             isPlaying,
 
             // get board

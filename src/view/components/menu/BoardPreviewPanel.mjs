@@ -51,9 +51,6 @@ const BoardPreviewPanel = function ({ factory, iterator }) {
             const id = boardDummy.getId();
             const size = boardDummy.getSize();
 
-            console.log(id);
-            console.log(size);
-
             components[id] = factory.createComponent({
                 type: 'boardDummy',
                 boardDummy,

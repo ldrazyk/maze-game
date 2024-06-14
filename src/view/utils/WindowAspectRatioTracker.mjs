@@ -24,7 +24,11 @@ const WindowAspectRatioTracker = function ({ factory, test=false }) {
 
             const showAspectRatioInTest = function (aspectRatio) {
             
-                testElement.textContent = aspectRatio;
+                let text = '';
+                text += aspectRatio.toFixed(3);
+                text += ' / ' + state.get('aspectRatioClass');
+
+                testElement.textContent = text;
             };
         
             state.add({
@@ -129,7 +133,9 @@ const WindowAspectRatioTracker = function ({ factory, test=false }) {
             };
 
             const aspectRatio = getWindowAspectRatio();
-            state.update('aspectRatioClass', getAspectRatioClass(aspectRatio));
+            const aspectRatioClass = getAspectRatioClass(aspectRatio);
+
+            state.update('aspectRatioClass', aspectRatioClass);
 
             if (test) {
                 state.update('aspectRatio', aspectRatio);
