@@ -1,4 +1,4 @@
-import ArrayIterator from "../utils/ArrayIterator.mjs";
+import ArrayIterator from "../../utils/ArrayIterator.mjs";
 import Pawn from "./Pawn.mjs";
 
 const Pawns = function (pawnsSpec) {

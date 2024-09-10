@@ -1,6 +1,6 @@
 import Field from "./Field.mjs";
-import ArrayIterator from "../utils/ArrayIterator.mjs";
-import shuffle from "../utils/shuffle.mjs";
+import ArrayIterator from "../../utils/ArrayIterator.mjs";
+import shuffle from "../../utils/shuffle.mjs";
 
 const Board = function ({ name, matrix }) {
 

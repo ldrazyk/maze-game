@@ -1,13 +1,13 @@
-import Game from "../game/GameObject.mjs";
-import GameMediator from "../game/GameMediator2.mjs";
-import GameOperator from "../game/GameOperator3.mjs";
-import GameOperatorEmpty from "../game/GameOperatorEmpty.mjs";
-import GameState from "../game/GameState.mjs";
-import GameOperationsFacade from "../game/GameOperationsFacade.mjs";
-import Pawns from "../game/Pawns.mjs";
-import TurnCounter from "../game/TurnCounter.mjs";
-import MovesCounter from "../game/MovesCounter.mjs";
-import GameInfo from "../game/GameInfo.mjs";
+import Game from "../game/Game.mjs";
+import GameMediator from "../game/infrastructure/GameMediator.mjs";
+import GameOperator from "../game/infrastructure/GameOperator.mjs";
+import GameOperatorEmpty from "../game/infrastructure/GameOperatorEmpty.mjs";
+import GameState from "../game/infrastructure/GameState.mjs";
+import GameOperationsFacade from "../game/infrastructure/GameOperationsFacade.mjs";
+import Pawns from "../game/elements/Pawns.mjs";
+import TurnCounter from "../game/elements/TurnCounter.mjs";
+import MovesCounter from "../game/elements/MovesCounter.mjs";
+import GameInfo from "../game/elements/GameInfo.mjs";
 import Commands from "../commands/Commands.mjs";
 
 const GameBuilder = function () {

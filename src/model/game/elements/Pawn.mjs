@@ -1,4 +1,4 @@
-import ArrayIterator from "../utils/ArrayIterator.mjs";
+import ArrayIterator from "../../utils/ArrayIterator.mjs";
 
 const Pawn = function ({ id, type, player }) {
     let kills;

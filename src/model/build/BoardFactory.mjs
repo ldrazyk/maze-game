@@ -1,4 +1,4 @@
-import Board from "../game/Board.mjs";
+import Board from "../game/elements/Board.mjs";
 import BoardDummy from "./BoardDummy.mjs";
 import shuffle from "../utils/shuffle.mjs";
 
