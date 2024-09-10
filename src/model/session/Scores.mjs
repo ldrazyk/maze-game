@@ -6,8 +6,9 @@ const Scores = function () {
     let ended;
     const scores = [];
 
-    const setGame = function (mediator) {
-        game = mediator;
+    const setComponents = function (components) {
+
+        game = components.gameMediator;
     };
 
     const reset = function () {
@@ -65,7 +66,7 @@ const Scores = function () {
 
     return Object.freeze(
         {
-            setGame,
+            setComponents,
 
             reset,
             add,

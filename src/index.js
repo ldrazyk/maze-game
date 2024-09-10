@@ -1,48 +1,34 @@
 import App from "./App.mjs";
 
-const runApp = function () {
+const runApp = function (spec) {
 
-    let app;
+    const { playersSpec, boardSpec, pawnsSpec } = spec;
 
-    const createApp = function () {
-    
-        app = App();
-    };
+    const app = App();
+    app.createSession(playersSpec);
+    app.createGame({ boardSpec, pawnsSpec });
+};
 
-    const createSession = function () {
-    
-        const playersSpec = [
-            {name: 'Player 1', color: 'blue', number: 1}, 
-            {name: 'Player 2', color: 'pink', number: 2}
-        ];
-    
-        app.createSession(playersSpec);
-    };
+const pawnsSpec1 = [
+    {type: 'lion', amount: 1}, 
+    {type: 'rooster', amount: 1}, 
+    {type: 'snake', amount: 1}
+];
 
-    const createGame = function () {
-    
-        // const boardId = 'board0701';
-        // const boardId = false;
-        const boardId = 'board0900';
-        // const boardId = 'board1100';
+const appStartSpec = {
 
-        const boardSpec = {
-            // id: 'board0702',
-            sizes: [7],
-        }
-    
-        const pawnsSpec1 = [
-            {type: 'lion', amount: 1}, 
-            {type: 'rooster', amount: 1}, 
-            {type: 'snake', amount: 1}
-        ];
-    
-        const pawnsSpec = [pawnsSpec1, pawnsSpec1];
-    
-        app.createGame({ boardSpec, pawnsSpec });
-    };
+    playersSpec: [
+        {name: 'Player 1', color: 'blue', number: 1}, 
+        {name: 'Player 2', color: 'pink', number: 2}
+    ],
+    boardSpec: {
+        id : false,
+        sizes: [7],
+    },
+    pawnsSpec: [
+        pawnsSpec1,
+        pawnsSpec1
+    ]
+};
 
-    createApp();
-    createSession();
-    createGame();
-}();
+runApp(appStartSpec);

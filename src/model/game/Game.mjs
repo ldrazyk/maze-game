@@ -43,7 +43,7 @@ const Game = function () {
 
     const moveToPosition = function (position) {
 
-        commands.move(position)
+        commands.move(position);
     };
 
     // PUBLIC
@@ -319,51 +319,34 @@ const Game = function () {
         gameNumber = newNumber;
     };
 
-    const setGameState = function (colleague) {
-        gameState = colleague;
+    const setGameInterfaces = function (interfaces) {
+    
+        [
+            gameState,
+            gameOperator,
+            emptyGameOperator
+        ] = interfaces;
     };
 
-    const setGameOperator = function (colleague) {
-        gameOperator = colleague;
-    };
+    const setGameComponents = function (components) {
 
-    const setEmptyGameOperator = function (colleague) {
-        emptyGameOperator = colleague;
-    };
-
-    const setPlayers = function (colleague) {
-        players = colleague;
-    };
-
-    const setBoard = function (colleague) {
-        board = colleague;
-    };
-
-    const setPawns = function (colleague) {
-        pawns = colleague;
-    };
-
-    const setTurnCounter = function (colleague) {
-        turnCounter = colleague;
-    };
-
-    const setMovesCounter = function (colleague) {
-        movesCounter = colleague;
-    };
-
-    const setScores = function (colleague) {
-        scores = colleague;
-    };
-
-    const setCommands = function(colleague) {
-        commands = colleague;
+        [
+            players,
+            board,
+            pawns,
+            turnCounter,
+            movesCounter,
+            scores,
+            commands
+        ] = components;
+    
     };
 
     return Object.freeze(
         {
             init,
 
-            // used in GameOperator
+            // input interface (GameOperator)
             endGame,
             nextTurn,
             selectNext,
@@ -375,6 +358,7 @@ const Game = function () {
 
             // mediator interface
             canStartTurn, // used privately and in GameState
+            
             movePawn, // used in Board, MoveCommand
             cleanAfterMove, // used in DisactivateCommand
             isMoveLegal,   // used in Pawn
@@ -383,23 +367,15 @@ const Game = function () {
             getSelected,   // used in Commands
             getNumber,   // used in Scores
             
-            // getters for model
-            getGameState, // used in Model
-            getGameOperator,   // used in Model
+            // get input/output interfaces
+            getGameState,
+            getGameOperator,
 
-            // mediator setters
+            // setters
             setNotify,
             setNumber,
-            setGameState,
-            setGameOperator,
-            setEmptyGameOperator,
-            setPlayers,
-            setBoard,
-            setPawns,
-            setTurnCounter,
-            setMovesCounter,
-            setScores,
-            setCommands,
+            setGameInterfaces,
+            setGameComponents,
         }
     );
 };

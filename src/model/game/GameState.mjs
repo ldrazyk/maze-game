@@ -1,44 +1,13 @@
 const GameState = function () {
     
-    let game;
-    let players;
+    let players, scores;
     let board, pawns;
-    let turnCounter, movesCounter, scores;
-    let commands;
+    let turnCounter, movesCounter, commands, gameInfo;
 
-    // setters
 
+    const setComponents = function (components) {
     
-    const setGame = function (mediator) {
-        game = mediator;
-    };
-
-    const setPlayers = function (component) {
-        players = component;
-    };
-
-    const setBoard = function (component) {
-        board = component;
-    };
-    
-    const setPawns = function (component) {
-        pawns = component;
-    };
-
-    const setTurnCounter = function (component) {
-        turnCounter = component;
-    };
-    
-    const setMovesCounter = function (component) {
-        movesCounter = component;
-    };
-
-    const setScores = function (component) {
-        scores = component;
-    };
-    
-    const setCommands = function(component) {
-        commands = component;
+        ({ players, scores, board, pawns, turnCounter, movesCounter, commands, gameInfo } = components);
     };
 
     // game state interface
@@ -48,8 +17,9 @@ const GameState = function () {
         return !scores.ended();
     };
 
-    const canStartTurn = function () {
-        return game.canStartTurn();
+    const canStartTurn = function () { // canEndTurn ?
+    
+        return !movesCounter.canMove();
     };
     
     const canSelectNext = function () {
@@ -117,7 +87,7 @@ const GameState = function () {
     // get game
 
     const getGameNumber = function() {
-        return game.getNumber();
+        return gameInfo.getNumber();
     };
 
     const getTurnNumber = function () {
@@ -163,15 +133,8 @@ const GameState = function () {
     
     return Object.freeze(
         {
-            // setters
-            setGame,
-            setPlayers,
-            setBoard,
-            setPawns,
-            setTurnCounter,
-            setMovesCounter,
-            setScores,
-            setCommands,
+            setComponents,
+
             // game state interface
             canStartTurn,
             canSelectNext,

@@ -70,7 +70,7 @@ const Pawn = function ({ id, type, player }) {
         });
     };
 
-    const isInReach = function (field) {
+    const hasInReach = function (field) {
 
         let direction = false;
 
@@ -100,6 +100,10 @@ const Pawn = function ({ id, type, player }) {
 
     const getPosition = function() {
         return position;
+    };
+
+    const getPositionId = function() {
+        return position.getId();
     };
 
     const getReach = function(direction=false) {
@@ -155,27 +159,28 @@ const Pawn = function ({ id, type, player }) {
 
     return Object.freeze(
         {
-            setGame: setGame,
+            setGame,
 
-            isAlive: isAlive,
-            isActive: isActive,
-            move: move,
-            setAlive: setAlive,
-            setActive: setActive,
-            setOrder: setOrder,
-            updateReach: updateReach,
-            isInReach: isInReach,
+            isAlive,
+            isActive,
+            move,
+            setAlive,
+            setActive,
+            setOrder,
+            updateReach,
+            hasInReach,
 
-            getPosition: getPosition,
-            getReach: getReach,
-            getReachIterator: getReachIterator,
-            getOrder: getOrder,
-            getId: getId,
-            getType: getType,
-            getKills: getKills,
-            getPlayerNumber: getPlayerNumber,
-            getColor: getColor,
-            toString: toString,
+            getPosition,
+            getPositionId,
+            getReach,
+            getReachIterator,
+            getOrder,
+            getId,
+            getType,
+            getKills,
+            getPlayerNumber,
+            getColor,
+            toString,
         }
     );
 };

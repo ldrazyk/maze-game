@@ -7,8 +7,9 @@ const Pawns = function (pawnsSpec) {
 
     let game;
 
-    const setGame = function (mediator) {
-        game = mediator;
+    const setComponents = function (components) {
+
+        game = components.gameMediator;
     };
 
     const createPawns = function () {
@@ -152,9 +153,19 @@ const Pawns = function (pawnsSpec) {
         return selected;
     };
 
+    const getSelectedId = function () {
+    
+        return selected.getId();
+    };
+
+    const getSelectedPositionId = function () {
+    
+        return selected.getPositionId();
+    };
+
     const isInReach = function (field) {
     
-        return selected.isInReach(field);
+        return selected.hasInReach(field);
     };
 
     const getActiveAmount = function() {
@@ -172,7 +183,7 @@ const Pawns = function (pawnsSpec) {
 
     return Object.freeze(
         {
-            setGame,
+            setComponents,
             init,
 
             reset,
@@ -185,6 +196,8 @@ const Pawns = function (pawnsSpec) {
             getIterator,
             getPawn,
             getSelected,
+            getSelectedId,
+            getSelectedPositionId,
             isInReach,
             getActiveAmount,
 

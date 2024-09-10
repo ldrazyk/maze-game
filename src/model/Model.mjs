@@ -10,6 +10,8 @@ const Model = function() {
 
         if (game) {
             return game.getGameState();
+        } else if (session) {
+            return session.getState();
         }
     };
 
@@ -66,11 +68,11 @@ const Model = function() {
         make();
         session = builder.getResult();
 
-        notify('createSession', session.getState());
+        notify('createSession');
     };
 
     const nextTurn = function() {
-        game.getGameOperator().nextTurn();
+        game.nextTurn();
     };
 
     const createGame = function({ boardSpec, pawnsSpec }) {
@@ -79,18 +81,13 @@ const Model = function() {
 
         const make = function () {
             builder.reset();
-            builder.setState();
-            builder.setOperator();
-            builder.setEmptyOperator();
-            builder.setNotify(notify);
-            builder.setNumber(session.getIncreasedGameNumber());
             builder.setPlayers(session.getPlayers());
+            builder.setScores(session.getScores());
             builder.setBoard(session.createBoard(boardSpec));
             builder.setPawns(pawnsSpec);
-            builder.setTurnCounter();
-            builder.setMovesCounter();
-            builder.setScores(session.getScores());
-            builder.setCommands();
+            builder.setOtherComponents();
+            builder.setNotify(notify);
+            builder.setNumber(session.getIncreasedGameNumber());
         };
 
         make();
@@ -110,44 +107,43 @@ const Model = function() {
     // game operations
 
     const selectNext = function () {
-        game.getGameOperator().selectNext();
+        game.selectNext();
     };
     
     const hold = function () {
-        game.getGameOperator().hold();
+        game.hold();
     };
     
     const moveUp = function () {
-        game.getGameOperator().moveUp();
+        game.moveUp();
     };
     
     const moveDown = function () {
-        game.getGameOperator().moveDown();
+        game.moveDown();
     };
     
     const moveLeft = function () {
-        game.getGameOperator().moveLeft();
+        game.moveLeft();
     };
     
     const moveRight = function () {
-        game.getGameOperator().moveRight();
+        game.moveRight();
     };
     
     const click = function (fieldId) {
-        game.getGameOperator().click(fieldId);
+        game.click(fieldId);
     };
 
     const undo = function () {
-        game.getGameOperator().undo();
+        game.undo();
     };
 
     const redo = function () {
-        game.getGameOperator().redo();
+        game.redo();
     };
 
     const endGame = function (spec) {
-    
-        game.getGameOperator().endGame(spec);
+        game.endGame(spec);
     };
 
     // state

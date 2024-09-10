@@ -7,31 +7,38 @@ const Commands = function() {
     let game;
 
     const createHistory = function () {
+
         commandsHistory = CommandsHistory();
     };
 
     const init = function() {
+
         createHistory();
     }();
 
-    const setGame = function (mediator) {
-        game = mediator;
+    const setComponents = function (components) {
+
+        game = components.gameMediator;
     };
 
     
     const resetHistory = function() {
+
         commandsHistory.reset();
     };
 
     const execute = function (command) {
+
         commandsHistory.execute(command);
     };
 
     const undo = function () {
+
         commandsHistory.undo();
     };
 
     const redo = function () {
+        
         commandsHistory.redo();
     };
 
@@ -59,17 +66,14 @@ const Commands = function() {
 
     return Object.freeze(
         {
-            setGame: setGame,
-
-            resetHistory: resetHistory,
-            undo: undo,
-            redo: redo,
-
-            hold: hold,
-            move: move,
-
-            canUndo: canUndo,
-            canRedo: canRedo,
+            setComponents,
+            resetHistory,
+            undo,
+            redo,
+            hold,
+            move,
+            canUndo,
+            canRedo,
         }
     );
 };

@@ -34,6 +34,15 @@ const Field = function ({ id, type, x, y, exitNumber=false, player=false }) {
         return pawn;
     };
 
+    const getPawnId = function () {
+        
+        if (pawn) {
+            return pawn.getId();
+        } else {
+            return false;
+        }
+    };
+
     const getId = function() {
         return id;
     };
@@ -80,18 +89,19 @@ const Field = function ({ id, type, x, y, exitNumber=false, player=false }) {
 
     return Object.freeze(
         {
-            isFree: isFree,
-            take: take,
-            free: free,
-            getPawn: getPawn,
+            isFree,
+            take,
+            free,
+            getPawn,
+            getPawnId,
             
-            getId: getId,
-            getType: getType,
-            getX: getX,
-            getY: getY,
-            getExitNumber: getExitNumber,
-            getFlagColor: getFlagColor,
-            toString: toString,
+            getId,
+            getType,
+            getX,
+            getY,
+            getExitNumber,
+            getFlagColor,
+            toString,
         }
     );
 };

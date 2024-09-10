@@ -15,8 +15,9 @@ const Board = function ({ name, matrix }) {
 
     let game;
 
-    const setGame = function (mediator) {
-        game = mediator;
+    const setComponents = function (components) {
+
+        game = components.gameMediator;
     };
     
     const setSize = function () {
@@ -124,6 +125,17 @@ const Board = function ({ name, matrix }) {
         return field;
     };
 
+    const getPawnOnField = function (id) {
+    
+        const field = getField({id});
+
+        if (field) {
+            return field.getPawn();
+        } else {
+            return false;
+        }
+    };
+
     const placePawns = function ({ playerNumber, pawnsIterator, startZoneSize }) {
 
         const getStartZoneSize = function () {
@@ -198,15 +210,16 @@ const Board = function ({ name, matrix }) {
 
     return Object.freeze(
         {
-            setGame: setGame,
-            init: init,
+            setComponents,
+            init,
 
-            placePawns: placePawns,
-            getIterator: getIterator,
-            getField: getField,
-            getName: getName,
-            getRows: getRows,
-            getColumns: getColumns,            
+            placePawns,
+            getIterator,
+            getField,
+            getPawnOnField,
+            getName,
+            getRows,
+            getColumns,
         }
     );
 };
