@@ -1,171 +1,192 @@
 const GameState = function () {
     
-    let players, scores;
-    let board, pawns;
-    let turnCounter, movesCounter, commands, gameInfo;
+    let game;
 
 
     const setComponents = function (components) {
     
-        ({ players, scores, board, pawns, turnCounter, movesCounter, commands, gameInfo } = components);
+        game = components.gameMediator;
     };
 
-    // game state interface
-
-    const isPlaying = function () {
-    
-        return !scores.ended();
-    };
-
-    const canStartTurn = function () { // canEndTurn ?
-    
-        return !movesCounter.canMove();
-    };
-    
-    const canSelectNext = function () {
-        return movesCounter.canSelectNext();
-    };
-
-    const canMove = function (direction) {
-        return pawns.canMoveSelected(direction);
-    };
-
-    const canHold = function () {
-        return movesCounter.canHold();
-    };
-
-    const getMoves = function() {
-        
-        return movesCounter.getMoves();
-    };
-    
-    const getMovesAmount = function() {
-        
-        return movesCounter.getMovesAmount();
-    };
-
-    const getHolds = function() {
-        
-        return movesCounter.getHolds();
-    };
-
-    const getMaxHolds = function() {
-        
-        return movesCounter.getMaxHolds();
-    };
-
-    const canUndo = function () {
-        return commands.canUndo();
-    };
-
-    const canRedo = function () {
-        return commands.canRedo();
-    };
-
-    const isInReach = function (field) {
-    
-        return pawns.isInReach(field);
-    };
-
-    // get players
-
-    const getPlayer = function (number) {
-    
-        return players.getPlayer(number);
-    };
-
-    const getActiveNumber = function (active=true) {
-    
-        return players.getActiveNumber(active);
-    };
-
-    const getActiveColor = function (active=true) {
-    
-        return players.getActiveColor(active);
-    };
-
-    // get game
-
-    const getGameNumber = function() {
-        return gameInfo.getNumber();
-    };
-
-    const getTurnNumber = function () {
-        return turnCounter.getTurn();
-    };
-     
-    const getLastScoreString = function() {
-        return scores.getLastScoreString();
-    };
-     
-    const getLastScoreType = function() {
-        return scores.getLastScoreType();
-    };
-     
-    const getLastScoreWinnerName = function() {
-        return scores.getLastScoreWinnerName();
-    };
-
-    // get board
+    // board
 
     const getBoardIterator = function() {
-        return board.getIterator();
+
+        return game.getBoardIterator();
     };
 
     const getBoardName = function() {
-        return board.getName();
+
+        return game.getBoardName();
     };
 
     const getBoardRows = function() {
-        return board.getRows();
+
+        return game.getBoardRows();
     };
 
     const getBoardColumns = function() {
-        return board.getColumns();
+
+        return game.getBoardColumns();
     };
 
-    // get pawns
+    // gameInfo
 
-    const getSelected = function() {
-        return pawns.getSelected();
+    const getGameNumber = function() {
+
+        return game.getGameNumber();
+    };
+
+    // movesCounter
+
+    const canStartTurn = function () {
+
+        return game.canStartTurn();
+    };
+
+    const canSelectNext = function () {
+
+        return game.canSelectNext();
+    };
+
+    const canHold = function () {
+
+        return game.canHold();
+    };
+
+    const getMoves = function() { // getMovesDone
+
+        return game.getMoves();
+    };
+
+    const getMovesAmount = function() {
+
+        return game.getMovesAmount();
+    };
+
+    const getHolds = function() { // getHoldsDone / getHoldsLeft
+
+        return game.getHolds();
+    };
+
+    const getMaxHolds = function() {
+
+        return game.getMaxHolds();
     };
     
+    // pawns
+
+    const canMove = function (direction) { // canMoveInDirection
+
+        return game.canMove(direction);
+    };
+
+    const isInReach = function (field) { // isFieldInReach
+
+        return game.isInReach(field);
+    };
+
+    const getSelected = function() {
+
+        return game.getSelected();
+    };
+
+    // turnCounter
+
+    const getTurnNumber = function () {
+
+        return game.getTurnNumber();
+    };
+
+    // commands
+
+    const canUndo = function () {
+
+        return game.canUndo();
+    };
+
+    const canRedo = function () {
+
+        return game.canRedo();
+    };
+
+    // players
+
+    const getPlayer = function (number) {
+
+        return game.getPlayer(number);
+    };
+
+    const getActiveNumber = function (active=true) { // getActivePlayerNumber
+
+        return game.getActiveNumber(active);
+    };
+
+    const getActiveColor = function (active=true) { // getActivePlayerColor
+
+        return game.getActiveColor(active);
+    };
+
+    // scores
+
+    const isPlaying = function () { // isGameRunning
+
+        return game.isPlaying();
+    };
+     
+    const getLastScoreString = function() {
+
+        return game.getLastScoreString();
+    };
+     
+    const getLastScoreType = function() {
+
+        return game.getLastScoreType();
+    };
+     
+    const getLastScoreWinnerName = function() {
+        
+        return game.getLastScoreWinnerName();
+    };
+
     
     return Object.freeze(
         {
             setComponents,
 
-            // game state interface
+            // board
+            getBoardIterator, // in BoardComponent
+            getBoardName, // in BoardComponent
+            getBoardRows, // in BoardComponent
+            getBoardColumns,   // in BoardComponent
+            // gameInfo
+            getGameNumber,
+            // movesCounter
             canStartTurn,
             canSelectNext,
-            canMove,
             canHold,
             getMoves,
             getMovesAmount,
             getHolds,
             getMaxHolds,
+            // pawns
+            canMove,
+            isInReach,
+            getSelected,   // in BoardComponent
+            // turnCounter
+            getTurnNumber,
+            // commands
             canUndo,
             canRedo,
-            isInReach,
-            // get players
+            // players
             getPlayer,
             getActiveNumber,
             getActiveColor,
-            // get game
-            getGameNumber,   // will be used
-            getTurnNumber,   // will be used
+            // scores
+            isPlaying,
             getLastScoreString, // used in ViewJs
             getLastScoreType,
             getLastScoreWinnerName,
-            isPlaying,
-
-            // get board
-            getBoardIterator, // used in BoardComponent
-            getBoardName, // used in BoardComponent
-            getBoardRows, // used in BoardComponent
-            getBoardColumns,   // used in BoardComponent
-            // get pawns
-            getSelected,   // used in BoardComponent
         }
     );
 };

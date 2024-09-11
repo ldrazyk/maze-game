@@ -1,4 +1,4 @@
-const GameOperator3 = function () {
+const GameOperator = function () {
 
     // 2nd highiest level of abstraction, makes decisions and notifies
 
@@ -168,4 +168,4 @@ const GameOperator3 = function () {
     );
 };
 
-export default GameOperator3;
+export default GameOperator;

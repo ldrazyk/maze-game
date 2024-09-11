@@ -1,4 +1,4 @@
-const GameMediator2 = function () {
+const GameMediator = function () {
     
     let players, scores;
     let board, pawns;
@@ -43,7 +43,7 @@ const GameMediator2 = function () {
         
         const maybeUpdateReaches = function() {
             if (type == 'move') {
-                updateReaches();
+                pawns.updateReaches();
             }
         };
         
@@ -51,7 +51,7 @@ const GameMediator2 = function () {
             pawns.selectNext();
         };
 
-        const checkExitWin = function() {
+        const checkExitWin = function() { // moved to OperationsInterface
             if (pawn.getPosition().getType() == 'exit') {
                 endGame('exit');
             }
@@ -64,7 +64,7 @@ const GameMediator2 = function () {
         maybeUpdateReaches();
         selectNextAfterMove();
         
-        notify(type);
+        notify(type); // todo move to OperationsInterface
         
         checkExitWin();
     };
@@ -158,4 +158,4 @@ const GameMediator2 = function () {
     );
 };
 
-export default GameMediator2;
+export default GameMediator;
