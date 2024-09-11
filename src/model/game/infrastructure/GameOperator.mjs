@@ -1,6 +1,6 @@
 const GameOperator = function () {
 
-    // 2nd highiest level of abstraction, makes decisions and notifies
+    // makes decisions and notifies
 
     let game, notify, disableInput;
 

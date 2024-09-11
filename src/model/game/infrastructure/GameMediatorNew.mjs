@@ -3,11 +3,100 @@ const GameMediatorNew = function () {
     let players, scores;
     let board, pawns;
     let turnCounter, movesCounter, commands, gameInfo;
+    let gameManager;
 
 
     const setComponents = function (components) {
     
-        ({ players, scores, board, pawns, turnCounter, movesCounter, commands, gameInfo } = components);
+        ({ players, scores, board, pawns, turnCounter, movesCounter, commands, gameInfo, gameManager } = components);
+    };
+
+    // move to manager
+
+    const fieldHasActive = function (id) {
+    
+        const pawn = board.getPawnOnField(id);
+
+        if (pawn) {
+            return pawn.isActive();
+        } else {
+            return false;
+        }
+    };
+
+    const fieldIsInReach = function (id) {
+    
+        const selected = pawns.getSelected();
+        const field = board.getField({id});
+
+        return selected.hasInReach(field);
+    };
+
+    const placePawns = function (startZoneSize) {
+    
+        for (let n = 0; n < players.getAmount(); n += 1) {
+
+            const playerNumber = n + 1;
+            const pawnsIterator = pawns.getIterator({ playerNumber });
+            board.placePawns({ playerNumber, pawnsIterator, startZoneSize });
+        }
+    };
+
+    const selectOnField = function (id) {
+    
+        const pawn = board.getPawnOnField(id);
+
+        pawns.select(pawn.getId());
+    };
+
+    const moveInDirection = function (direction) {
+    
+        const field = pawns.getSelected().getReach(direction);
+        commands.move(field);
+    };
+
+    const moveToField = function (id) {
+    
+        const field = board.getField({id});
+        commands.move(field);
+    };
+
+    const nextTurn = function () {
+
+
+        const updateTurnNumber = function () {
+        
+            turnCounter.next()
+        };
+
+        const updatePlayers = function () {
+
+            players.changeActive();
+        };
+
+        const updatePawns = function () {
+        
+            pawns.setActivePawns(players.getActive().getNumber());
+            pawns.updateReaches();
+        };
+
+        const updateMoves = function () {
+        
+            movesCounter.reset(pawns.getActiveAmount());
+            commands.resetHistory();
+        };
+
+
+        updateTurnNumber();
+        updatePlayers();
+        updatePawns();
+        updateMoves();
+    };
+
+    const endGame = function(type, winnerNumber=false) {
+
+        scores.add(type, winnerNumber);
+        pawns.reset();
     };
 
     // board
@@ -41,7 +130,7 @@ const GameMediatorNew = function () {
 
     // movesCounter
 
-    const canStartTurn = function () { // canEndTurn ?
+    const canEndTurn = function () {
         
         return !movesCounter.canMove();
     };
@@ -56,7 +145,7 @@ const GameMediatorNew = function () {
         return movesCounter.canHold();
     };
 
-    const getMoves = function() {
+    const getMoves = function() { // getMovesDone
         
         return movesCounter.getMoves();
     };
@@ -66,7 +155,7 @@ const GameMediatorNew = function () {
         return movesCounter.getMovesAmount();
     };
 
-    const getHolds = function() {
+    const getHolds = function() { // getHoldsDone / getHoldsLeft
         
         return movesCounter.getHolds();
     };
@@ -78,12 +167,12 @@ const GameMediatorNew = function () {
     
     // pawns
 
-    const canMove = function (direction) {
+    const canMove = function (direction) { // canMoveInDirection
 
         return pawns.canMoveSelected(direction);
     };
 
-    const isInReach = function (field) {
+    const isInReach = function (field) { // isFieldInReach
     
         return pawns.isInReach(field);
     };
@@ -91,6 +180,16 @@ const GameMediatorNew = function () {
     const getSelected = function() {
 
         return pawns.getSelected();
+    };
+
+    const fieldHasSelected = function (fieldId) {
+    
+        return pawns.getSelectedPositionId() == fieldId;
+    };
+
+    const selectNext = function () {
+    
+        pawns.selectNext();
     };
 
     // turnCounter
@@ -112,6 +211,21 @@ const GameMediatorNew = function () {
         return commands.canRedo();
     };
 
+    const hold = function () {
+    
+        commands.hold();
+    };
+
+    const undo = function () {
+    
+        return commands.undo(); // TODO type
+    };
+
+    const redo = function () {
+    
+        return commands.redo(); // TODO type
+    };
+
     // players
 
     const getPlayer = function (number) {
@@ -119,19 +233,19 @@ const GameMediatorNew = function () {
         return players.getPlayer(number);
     };
 
-    const getActiveNumber = function (active=true) {
+    const getActiveNumber = function (active=true) { // getActivePlayerNumber
     
         return players.getActiveNumber(active);
     };
 
-    const getActiveColor = function (active=true) {
+    const getActiveColor = function (active=true) { // getActivePlayerColor
     
         return players.getActiveColor(active);
     };
 
     // scores
 
-    const isPlaying = function () {
+    const isPlaying = function () { // isGameRunning
     
         return !scores.ended();
     };
@@ -157,39 +271,53 @@ const GameMediatorNew = function () {
         {
             setComponents,
 
+            // for manager
+            fieldHasActive,     // Operations
+            fieldIsInReach,     // Operations
+            placePawns,         // Operations
+            selectOnField,      // Operations
+            moveInDirection,    // Operations
+            moveToField,        // Operations
+            nextTurn,           // Operations
+            endGame,            // Operations
             // board
-            getBoardIterator,   // in GameState
-            getBoardName,   // in GameState
-            getBoardRows,   // in GameState
-            getBoardColumns,    // in GameState
+            getBoardIterator,   // State
+            getBoardName,       // State
+            getBoardRows,       // State
+            getBoardColumns,    // State
             // gameInfo
-            getGameNumber,  // in GameState
+            getGameNumber,      // State
             // movesCounter
-            canStartTurn,   // in GameState
-            canSelectNext,  // in GameState
-            canHold,    // in GameState
-            getMoves,   // in GameState
-            getMovesAmount, // in GameState
-            getHolds,   // in GameState
-            getMaxHolds,    // in GameState
+            canEndTurn,         // State, Operations
+            canSelectNext,      // State, Operations
+            canHold,            // State, Operations
+            getMoves,           // State
+            getMovesAmount,     // State
+            getHolds,           // State
+            getMaxHolds,        // State
             // pawns
-            canMove,    // in GameState
-            isInReach,  // in GameState
-            getSelected,    // in GameState
+            canMove,            // State, Operations
+            isInReach,          // State
+            getSelected,        // State
+            fieldHasSelected,   // Operations
+            selectNext,         // Operations
             // turnCounter
-            getTurnNumber,  // in GameState
+            getTurnNumber,      // State
             // commands
-            canUndo,    // in GameState
-            canRedo,    // in GameState
+            canUndo,            // State, Operations
+            canRedo,            // State, Operations
+            hold,               // Operations
+            undo,               // Operations
+            redo,               // Operations
             // players
-            getPlayer,  // in GameState
-            getActiveNumber,    // in GameState
-            getActiveColor, // in GameState
+            getPlayer,          // State
+            getActiveNumber,    // State
+            getActiveColor,     // State
             // scores
-            isPlaying,  // in GameState
-            getLastScoreString, // in GameState
-            getLastScoreType,   // in GameState
-            getLastScoreWinnerName, // in GameState
+            isPlaying,          // State
+            getLastScoreString, // State
+            getLastScoreType,   // State
+            getLastScoreWinnerName, // State
             
 
         }

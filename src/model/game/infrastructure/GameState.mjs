@@ -41,7 +41,7 @@ const GameState = function () {
 
     const canStartTurn = function () {
 
-        return game.canStartTurn();
+        return game.canEndTurn();
     };
 
     const canSelectNext = function () {

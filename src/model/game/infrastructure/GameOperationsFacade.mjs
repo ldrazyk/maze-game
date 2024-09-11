@@ -1,13 +1,11 @@
 const GameOperationsFacade = function () {
 
-    let players, scores;
-    let board, pawns;
-    let turnCounter, movesCounter, commands;
+    let game;
 
 
     const setComponents = function (components) {
     
-        ({ players, scores, board, pawns, turnCounter, movesCounter, commands } = components);
+        game = components.gameMediator;
     };
 
     
@@ -15,145 +13,99 @@ const GameOperationsFacade = function () {
 
     const canSelectNext = function () {
     
-        return movesCounter.canSelectNext();
+        return game.canSelectNext();
     };
 
     const canMoveInDirection = function (direction) {
     
-        return pawns.canMoveSelected(direction);
+        return game.canMove(direction);
     };
 
     const canHold = function () {
     
-        return movesCounter.canHold();
+        return game.canHold();
     };
 
     const canUndo = function () {
     
-        return commands.canUndo();
+        return game.canUndo();
     };
 
     const canRedo = function () {
     
-        return commands.canRedo();
+        return game.canRedo();
     };
 
     const canEndTurn = function () {
     
-        return !movesCounter.canMove();
+        return game.canEndTurn();
     };
 
     const fieldHasSelected = function (fieldId) {
     
-        return pawns.getSelectedPositionId() == fieldId;
+        return game.fieldHasSelected(fieldId);
     };
 
     const fieldHasActive = function (id) {
     
-        const pawn = board.getPawnOnField(id);
-
-        if (pawn) {
-            return pawn.isActive();
-        } else {
-            return false;
-        }
+        return game.fieldHasActive(id);
     };
 
     const fieldIsInReach = function (id) {
     
-        const selected = pawns.getSelected();
-        const field = board.getField({id});
-
-        return selected.hasInReach(field);
+        return game.fieldIsInReach(id);
     };
 
     // Operations Interface
 
     const placePawns = function (startZoneSize) {
     
-        for (let n = 0; n < players.getAmount(); n += 1) {
-
-            const playerNumber = n + 1;
-            const pawnsIterator = pawns.getIterator({ playerNumber });
-            board.placePawns({ playerNumber, pawnsIterator, startZoneSize });
-        }
+        game.placePawns(startZoneSize);
     };
 
     const selectNext = function () {
     
-        pawns.selectNext();
+        game.selectNext();
     };
 
     const selectOnField = function (id) {
     
-        const pawn = board.getPawnOnField(id);
-
-        pawns.select(pawn.getId());
+        game.selectOnField(id);
     };
 
     const moveInDirection = function (direction) {
     
-        const field = pawns.getSelected().getReach(direction);
-        commands.move(field);
+        game.moveInDirection(direction);
     };
 
     const moveToField = function (id) {
     
-        const field = board.getField({id});
-        commands.move(field);
+        game.moveToField(id);
     };
 
     const hold = function () {
     
-        commands.hold();
+        game.hold();
     };
 
     const undo = function () {
     
-        return commands.undo(); // TODO type
+        return game.undo();
     };
 
     const redo = function () {
     
-        return commands.redo(); // TODO type
+        return game.redo();
     };
-
+    
     const nextTurn = function () {
-
-
-        const updateTurnNumber = function () {
-        
-            turnCounter.next()
-        };
-
-        const updatePlayers = function () {
-
-            players.changeActive();
-        };
-
-        const updatePawns = function () {
-        
-            pawns.setActivePawns(players.getActive().getNumber());
-            pawns.updateReaches();
-        };
-
-        const updateMoves = function () {
-        
-            movesCounter.reset(pawns.getActiveAmount());
-            commands.resetHistory();
-        };
-
-
-        updateTurnNumber();
-        updatePlayers();
-        updatePawns();
-        updateMoves();
+    
+        game.nextTurn();
     };
 
     const endGame = function(type, winnerNumber=false) {
 
-        scores.add(type, winnerNumber);
-        pawns.reset();
+        game.endGame(type, winnerNumber);
     };
 
     
