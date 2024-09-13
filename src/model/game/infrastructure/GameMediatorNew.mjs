@@ -99,6 +99,108 @@ const GameMediatorNew = function () {
         pawns.reset();
     };
 
+    const movePawn = function({ pawn, position }) { // manageMove / executeMove
+
+        const oldPosition = pawn.getPosition();
+        if (oldPosition) {
+            oldPosition.free();
+        }
+        pawn.move(position);
+        position.take(pawn);
+    };
+
+    const cleanAfterMove = function({ pawn, type, undo }) { // part of executeMove
+
+        const updateMovesCounter = function() {
+            if (!undo) {
+                movesCounter.add(type);
+            } else {
+                movesCounter.remove(type);
+            }
+        };
+
+        const updatePawnsOrder = function() {
+            pawn.setOrder(movesCounter.getMoves());
+        };
+
+        const disactivatePawn = function() {
+            pawn.setActive(undo);
+        };
+
+        
+        const maybeUpdateReaches = function() {
+            if (type == 'move') {
+                pawns.updateReaches();
+            }
+        };
+        
+        const selectNextAfterMove = function() {
+            pawns.selectNext();
+        };
+
+        updateMovesCounter();
+        updatePawnsOrder();
+        disactivatePawn();
+        
+        maybeUpdateReaches();
+        selectNextAfterMove();
+        
+        notify(type); // todo move to OperationsInterface
+    };
+
+    const isMoveLegal = function ({ pawnSpec, fieldSpec }) {
+
+        const getPawnFromSpec = function () {
+            let { pawn, pawnId } = pawnSpec;
+
+            if (!pawn) {
+                pawn = pawns.getPawn(pawnId);
+            }
+            return pawn;
+        };
+
+        const getFieldFromSpec = function () {
+            let { id, x, y, field, direction } = fieldSpec;
+
+            let resultField;
+
+            if (id || x || direction) {
+                resultField = board.getField(fieldSpec);
+            } else {
+                resultField = field;
+            }
+
+            return resultField;
+        };
+
+        const couldPawnMoveToField = function (pawn, field) {
+            let result = false;
+
+            if (field.getType() == 'path') {
+
+                result = true;
+
+                const otherPawn = field.getPawn();
+                if ( otherPawn && ( pawn.getPlayerNumber() == otherPawn.getPlayerNumber() || pawn.getKills() != otherPawn.getType() )) {
+                    result = false;
+                }
+
+            } else if (field.getType() == 'exit' & pawn.getPlayerNumber() != field.getExitNumber()) {
+                result = true;
+            }
+            return result;
+        };
+
+        let result = false;
+        const pawn = getPawnFromSpec();
+        const field = getFieldFromSpec();
+        if (field && couldPawnMoveToField(pawn, field)) {
+            result = field;
+        }
+
+        return result;
+    };
+
     // board
 
     const getBoardIterator = function() {
@@ -233,6 +335,11 @@ const GameMediatorNew = function () {
         return players.getPlayer(number);
     };
 
+    const getActivePlayer = function(active=true) {
+
+        return players.getActive(active);
+    };
+
     const getActiveNumber = function (active=true) { // getActivePlayerNumber
     
         return players.getActiveNumber(active);
@@ -266,7 +373,6 @@ const GameMediatorNew = function () {
     };    
     
     
-    
     return Object.freeze(
         {
             setComponents,
@@ -280,13 +386,16 @@ const GameMediatorNew = function () {
             moveToField,        // Operations
             nextTurn,           // Operations
             endGame,            // Operations
+            movePawn,           // (MoveCommand, Board)
+            cleanAfterMove,     // (DisactivateCommand)
+            isMoveLegal,        // (Pawn)
             // board
             getBoardIterator,   // State
             getBoardName,       // State
             getBoardRows,       // State
             getBoardColumns,    // State
             // gameInfo
-            getGameNumber,      // State
+            getGameNumber,      // State, (Scores)
             // movesCounter
             canEndTurn,         // State, Operations
             canSelectNext,      // State, Operations
@@ -298,7 +407,7 @@ const GameMediatorNew = function () {
             // pawns
             canMove,            // State, Operations
             isInReach,          // State
-            getSelected,        // State
+            getSelected,        // State, (Commands)
             fieldHasSelected,   // Operations
             selectNext,         // Operations
             // turnCounter
@@ -310,7 +419,8 @@ const GameMediatorNew = function () {
             undo,               // Operations
             redo,               // Operations
             // players
-            getPlayer,          // State
+            getPlayer,          // State, (Board, Pawns, Scores)
+            getActivePlayer,    // (Scores)
             getActiveNumber,    // State
             getActiveColor,     // State
             // scores

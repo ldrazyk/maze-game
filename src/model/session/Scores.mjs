@@ -33,7 +33,7 @@ const Scores = function () {
         const score = Score(
             {
                 type: type, 
-                gameNumber: game.getNumber(), 
+                gameNumber: game.getGameNumber(), 
                 activePlayer: game.getActivePlayer(), 
                 passivePlayer: game.getActivePlayer(false),
                 winningPlayer: getWinner(),
