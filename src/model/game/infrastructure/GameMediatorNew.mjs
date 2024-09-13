@@ -127,6 +127,13 @@ const GameMediatorNew = function () {
             pawn.setActive(undo);
         };
 
+        const checkFlagCaptured = function () {
+        
+            if (pawn.getPosition().getType() == 'exit') {
+
+                gameInfo.setFlagCaptured();
+            }
+        };
         
         const maybeUpdateReaches = function() {
             if (type == 'move') {
@@ -141,11 +148,12 @@ const GameMediatorNew = function () {
         updateMovesCounter();
         updatePawnsOrder();
         disactivatePawn();
+        checkFlagCaptured();
         
         maybeUpdateReaches();
         selectNextAfterMove();
         
-        notify(type); // todo move to OperationsInterface
+        // notify(type); // todo move to OperationsInterface
     };
 
     const isMoveLegal = function ({ pawnSpec, fieldSpec }) {
@@ -230,6 +238,11 @@ const GameMediatorNew = function () {
         return gameInfo.getNumber();
     };
 
+    const isFlagCaptured = function () {
+    
+        return gameInfo.isFlagCaptured();
+    };
+
     // movesCounter
 
     const canEndTurn = function () {
@@ -255,6 +268,11 @@ const GameMediatorNew = function () {
     const getMovesAmount = function() {
         
         return movesCounter.getMovesAmount();
+    };
+
+    const hasMoves = function () {
+    
+        return movesCounter.getMovesAmount() > 0;
     };
 
     const getHolds = function() { // getHoldsDone / getHoldsLeft
@@ -320,12 +338,12 @@ const GameMediatorNew = function () {
 
     const undo = function () {
     
-        return commands.undo(); // TODO type
+        return commands.undo();
     };
 
     const redo = function () {
     
-        return commands.redo(); // TODO type
+        return commands.redo();
     };
 
     // players
@@ -396,12 +414,14 @@ const GameMediatorNew = function () {
             getBoardColumns,    // State
             // gameInfo
             getGameNumber,      // State, (Scores)
+            isFlagCaptured,    // Operations
             // movesCounter
             canEndTurn,         // State, Operations
             canSelectNext,      // State, Operations
             canHold,            // State, Operations
             getMoves,           // State
             getMovesAmount,     // State
+            hasMoves,           // Operations
             getHolds,           // State
             getMaxHolds,        // State
             // pawns

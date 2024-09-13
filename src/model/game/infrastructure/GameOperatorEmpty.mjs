@@ -22,19 +22,7 @@ const GameOperatorEmpty = function () {
         emptyOperation();
     };
     
-    const moveUp = function () {
-        emptyOperation();
-    };
-    
-    const moveDown = function () {
-        emptyOperation();
-    };
-    
-    const moveLeft = function () {
-        emptyOperation();
-    };
-    
-    const moveRight = function () {
+    const moveInDirection = function (direction) {
         emptyOperation();
     };
     
@@ -62,10 +50,7 @@ const GameOperatorEmpty = function () {
             nextTurn,
             selectNext,
             hold,
-            moveUp,
-            moveDown,
-            moveLeft,
-            moveRight,
+            moveInDirection,
             click,
             undo,
             redo,

@@ -16,6 +16,11 @@ const GameOperationsFacade = function () {
         return game.canSelectNext();
     };
 
+    const hasMoves = function () {
+    
+        return game.hasMoves();
+    };
+
     const canMoveInDirection = function (direction) {
     
         return game.canMove(direction);
@@ -54,6 +59,11 @@ const GameOperationsFacade = function () {
     const fieldIsInReach = function (id) {
     
         return game.fieldIsInReach(id);
+    };
+
+    const isFlagCaptured = function () {
+    
+        return game.isFlagCaptured();
     };
 
     // Operations Interface
@@ -116,6 +126,7 @@ const GameOperationsFacade = function () {
             // State Interface
 
             canSelectNext,
+            hasMoves,
             canMoveInDirection,
             canHold,
             canUndo,
@@ -124,6 +135,7 @@ const GameOperationsFacade = function () {
             fieldHasSelected,
             fieldHasActive,
             fieldIsInReach,
+            isFlagCaptured,
 
             // Operations Interface
 

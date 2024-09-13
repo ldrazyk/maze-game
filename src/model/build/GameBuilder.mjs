@@ -1,5 +1,5 @@
 import Game from "../game/Game.mjs";
-import GameMediator from "../game/infrastructure/GameMediator.mjs";
+import GameMediator from "../game/infrastructure/GameMediatorNew.mjs";
 import GameOperator from "../game/infrastructure/GameOperator.mjs";
 import GameOperatorEmpty from "../game/infrastructure/GameOperatorEmpty.mjs";
 import GameState from "../game/infrastructure/GameState.mjs";

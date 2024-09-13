@@ -1,6 +1,8 @@
 import DisactivateCommand from "./DisactivateCommand.mjs";
 
 const HoldCommand = function({ pawn, game }) {
+
+    const type = 'hold';
     let disactivateCommand;
 
     const init = function() {
@@ -21,12 +23,18 @@ const HoldCommand = function({ pawn, game }) {
         return string;
     };
 
+    const getType = function () {
+    
+        return type;
+    };
+
     return Object.freeze(
         {
-            execute: execute,
-            unexecute: unexecute,
+            execute,
+            unexecute,
 
-            toString: toString,
+            toString,
+            getType,
         }
     );
 };

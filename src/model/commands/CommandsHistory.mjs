@@ -32,19 +32,27 @@ const CommandsHistory = function () {
     const undo = function () {
         
         if (position > 0) {
+            
             position -= 1;
             history[position].unexecute();
         }
+
         logPosition(false);
+
+        return history[position].getType();
     };
 
     const redo = function () {
         
         if (position < history.length) {
+
+            history[position].execute();
             position += 1;
-            history[position - 1].execute();
         }
+
         logPosition(false);
+
+        return history[position - 1].getType();
     };
 
     const canUndo = function () {

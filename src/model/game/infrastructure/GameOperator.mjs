@@ -19,7 +19,6 @@ const GameOperator = function () {
         disableInput = command;
     };
 
-
     const placePawns = function (startZoneSize=1) {
 
         game.placePawns(startZoneSize);
@@ -35,7 +34,7 @@ const GameOperator = function () {
 
     const checkCapturedFlag = function () {
     
-        if (game.capturedFlag()) {
+        if (game.isFlagCaptured()) {
 
             endGame('flag');
         }
@@ -54,14 +53,7 @@ const GameOperator = function () {
             return false;
         }
     };
-
-    const checkNoPawns = function () {
     
-        if (!selectNext()) {
-
-            endGame('no_pawns');
-        }
-    };
 
     const moveInDirection = function (direction) {
         
@@ -93,7 +85,7 @@ const GameOperator = function () {
     
         if (game.canUndo()) {
 
-            type = game.undo();
+            const type = game.undo();
             notify(type);
 
         } else {
@@ -105,7 +97,7 @@ const GameOperator = function () {
     
         if (game.canRedo()) {
 
-            type = game.redo();
+            const type = game.redo();
             notify(type);
 
         } else {
@@ -114,13 +106,20 @@ const GameOperator = function () {
     };
 
     const nextTurn = function () {
-    
+
         if (game.canEndTurn()) {
 
             game.nextTurn();
-            notify('nextTurn');
+            notify('nextTurn'); // todo - in view no selection update
 
-            checkNoPawns();
+            if (!game.hasMoves()) {
+
+                endGame('no_pawns');
+            } else {
+
+                game.selectNext();
+                notify('select');
+            }
 
         } else {
             console.log("Can't end turn.")

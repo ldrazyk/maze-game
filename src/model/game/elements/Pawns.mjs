@@ -155,12 +155,20 @@ const Pawns = function (pawnsSpec) {
 
     const getSelectedId = function () {
     
-        return selected.getId();
+        if (selected) {
+            return selected.getId();
+        } else {
+            return false
+        }
     };
 
     const getSelectedPositionId = function () {
-    
-        return selected.getPositionId();
+
+        if (selected) {
+            return selected.getPositionId();
+        } else {
+            return false
+        }
     };
 
     const isInReach = function (field) {

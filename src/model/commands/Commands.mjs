@@ -34,12 +34,12 @@ const Commands = function() {
 
     const undo = function () {
 
-        commandsHistory.undo();
+        return commandsHistory.undo();
     };
 
     const redo = function () {
         
-        commandsHistory.redo();
+        return commandsHistory.redo();
     };
 
     const hold = function () {

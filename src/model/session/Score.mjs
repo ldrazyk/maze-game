@@ -5,7 +5,7 @@ const Score = function ({ gameNumber, type, activePlayer, passivePlayer, winning
 
         const findResults = function () {
         
-            if (type == 'exit') {
+            if (type == 'flag') {
 
                 winner = activePlayer;
                 looser = passivePlayer;

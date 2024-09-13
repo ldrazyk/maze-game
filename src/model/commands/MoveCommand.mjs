@@ -2,6 +2,8 @@ import DisactivateCommand from "./DisactivateCommand.mjs";
 import KillCommand from "./KillCommand.mjs";
 
 const MoveCommand = function({ pawn, position, game }) {
+
+    const type = 'move';
     let oldPosition, killCommand, disactivateCommand;
 
     const init = function() {
@@ -28,12 +30,18 @@ const MoveCommand = function({ pawn, position, game }) {
         return string;
     };
 
+    const getType = function () {
+    
+        return type;
+    };
+
     return Object.freeze(
         {
-            execute: execute,
-            unexecute: unexecute,
+            execute,
+            unexecute,
 
-            toString: toString,
+            toString,
+            getType,
         }
     );
 };
