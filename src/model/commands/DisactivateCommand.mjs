@@ -3,11 +3,11 @@ const DisactivateCommand = function({ game, pawn, type }) {
     // type = 'move' or 'hold'
 
     const execute = function() {
-        game.cleanAfterMove({pawn: pawn, type: type, undo: false});
+        game.cleanAfterMove({pawn, type, undo: false});
     };
 
     const unexecute = function() {
-        game.cleanAfterMove({pawn: pawn, type: type, undo: true});
+        game.cleanAfterMove({pawn, type, undo: true});
     };
 
     return Object.freeze(

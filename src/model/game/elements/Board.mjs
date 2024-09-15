@@ -93,6 +93,11 @@ const Board = function ({ name, matrix }) {
 
     const getField = function({ id=false, x=false, y=false, field=false, direction=false }) {
 
+        const getFieldById = function (id) {
+        
+            return fieldsDictionary[id];
+        };
+
         const getFieldByCoordinates = function (x, y) {
             try {
                 return fieldsMatrix[x-1][y-1];
@@ -113,12 +118,16 @@ const Board = function ({ name, matrix }) {
         };
 
         if (id) {
-            field = fieldsDictionary[id];
+
+            field = getFieldById(id);
+
         } else if (x) {
+
             field = getFieldByCoordinates(x, y);
         }
         
         if (direction) {
+            
             field = getFieldInDirection(field, direction);
         }
 
@@ -131,6 +140,17 @@ const Board = function ({ name, matrix }) {
 
         if (field) {
             return field.getPawn();
+        } else {
+            return false;
+        }
+    };
+
+    const fieldHasActive = function (id) {
+    
+        const pawn = getPawnOnField(id);
+
+        if (pawn) {
+            return pawn.isActive();
         } else {
             return false;
         }
@@ -185,7 +205,7 @@ const Board = function ({ name, matrix }) {
             while (pawnsIterator.hasNext()) {
                 const field = startZone[n];
                 const pawn = pawnsIterator.next();
-                game.movePawn({pawn: pawn, position: field});
+                game.managePlace({pawn: pawn, position: field});
                 n += 1;
             }
         };
@@ -217,6 +237,7 @@ const Board = function ({ name, matrix }) {
             getIterator,
             getField,
             getPawnOnField,
+            fieldHasActive,
             getName,
             getRows,
             getColumns,

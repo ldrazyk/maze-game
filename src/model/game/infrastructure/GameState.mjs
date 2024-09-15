@@ -119,7 +119,7 @@ const GameState = function () {
 
     const getActiveNumber = function (active=true) { // getActivePlayerNumber
 
-        return game.getActiveNumber(active);
+        return game.getActivePlayerNumber(active);
     };
 
     const getActiveColor = function (active=true) { // getActivePlayerColor

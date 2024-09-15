@@ -4,6 +4,7 @@ import GameOperator from "../game/infrastructure/GameOperator.mjs";
 import GameOperatorEmpty from "../game/infrastructure/GameOperatorEmpty.mjs";
 import GameState from "../game/infrastructure/GameState.mjs";
 import GameOperationsFacade from "../game/infrastructure/GameOperationsFacade.mjs";
+import GameManager from "../game/infrastructure/GameManager.mjs";
 import Pawns from "../game/elements/Pawns.mjs";
 import TurnCounter from "../game/elements/TurnCounter.mjs";
 import MovesCounter from "../game/elements/MovesCounter.mjs";
@@ -62,6 +63,11 @@ const GameBuilder = function () {
         
             components.gameInfo = GameInfo();
         };
+
+        const setManager = function () {
+
+            components.gameManager = GameManager();
+        };
     
         const setMediator = function () {
         
@@ -84,6 +90,7 @@ const GameBuilder = function () {
         setMovesCounter();
         setCommands();
         setGameInfo();
+        setManager();
         setMediator();
         setOperators();
         setFacades();

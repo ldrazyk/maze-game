@@ -3,6 +3,7 @@ import MoveCommand from "./MoveCommand.mjs";
 import HoldCommand from "./HoldCommand.mjs";
 
 const Commands = function() {
+    
     let commandsHistory;
     let game;
 
@@ -44,13 +45,13 @@ const Commands = function() {
 
     const hold = function () {
 
-        const command = HoldCommand({ pawn: game.getSelected(), game: game });
+        const command = HoldCommand({ pawn: game.getSelected(), game });
         execute(command);
     };
 
-    const move = function (field) {
+    const move = function (position) {
 
-        const command = MoveCommand({ pawn: game.getSelected(), position: field, game: game });
+        const command = MoveCommand({ pawn: game.getSelected(), position, game });
         execute(command);
     };
 

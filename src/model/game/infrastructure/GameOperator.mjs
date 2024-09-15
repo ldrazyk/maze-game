@@ -129,7 +129,7 @@ const GameOperator = function () {
     const click = function (id) {
 
         if (game.fieldHasSelected(id)) {
-
+            
             hold();
 
         } else if (game.fieldHasActive(id)) {

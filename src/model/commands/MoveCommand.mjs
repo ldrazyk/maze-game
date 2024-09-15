@@ -10,17 +10,19 @@ const MoveCommand = function({ pawn, position, game }) {
         
         oldPosition = pawn.getPosition();
         killCommand = KillCommand(position);
-        disactivateCommand = DisactivateCommand({game: game, pawn: pawn, type: 'move'});
+        disactivateCommand = DisactivateCommand({game, pawn, type: 'move'});
     }();
 
     const execute = function() {
+
         killCommand.execute();  // if no pawn nothing happens
-        game.movePawn({pawn: pawn, position: position});
+        game.manageMove({pawn, position});
         disactivateCommand.execute();
     };
 
     const unexecute = function() {
-        game.movePawn({pawn: pawn, position: oldPosition});
+
+        game.manageMove({pawn, position: oldPosition});
         killCommand.unexecute();
         disactivateCommand.unexecute();
     };

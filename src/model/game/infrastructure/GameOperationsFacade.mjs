@@ -58,7 +58,7 @@ const GameOperationsFacade = function () {
 
     const fieldIsInReach = function (id) {
     
-        return game.fieldIsInReach(id);
+        return game.fieldIsInSelectedReach(id);
     };
 
     const isFlagCaptured = function () {
