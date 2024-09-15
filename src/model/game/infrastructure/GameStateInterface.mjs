@@ -1,4 +1,4 @@
-const GameState = function () {
+const GameStateInterface = function () {
     
     let game;
 
@@ -191,4 +191,4 @@ const GameState = function () {
     );
 };
 
-export default GameState;
+export default GameStateInterface;

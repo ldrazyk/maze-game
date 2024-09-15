@@ -1,4 +1,4 @@
-const GameMediatorNew = function () {
+const GameMediator = function () {
     
     let players, scores;
     let board, pawns;
@@ -504,4 +504,4 @@ const GameMediatorNew = function () {
     );
 };
 
-export default GameMediatorNew;
+export default GameMediator;

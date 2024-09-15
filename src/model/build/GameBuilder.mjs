@@ -1,9 +1,9 @@
 import Game from "../game/Game.mjs";
-import GameMediator from "../game/infrastructure/GameMediatorNew.mjs";
+import GameMediator from "../game/infrastructure/GameMediator.mjs";
 import GameOperator from "../game/infrastructure/GameOperator.mjs";
 import GameOperatorEmpty from "../game/infrastructure/GameOperatorEmpty.mjs";
-import GameState from "../game/infrastructure/GameState.mjs";
-import GameOperationsFacade from "../game/infrastructure/GameOperationsFacade.mjs";
+import GameState from "../game/infrastructure/GameStateInterface.mjs";
+import GameOperationsInterface from "../game/infrastructure/GameOperationsInterface.mjs";
 import GameManager from "../game/infrastructure/GameManager.mjs";
 import Pawns from "../game/elements/Pawns.mjs";
 import TurnCounter from "../game/elements/TurnCounter.mjs";
@@ -80,10 +80,10 @@ const GameBuilder = function () {
             components.gameOperatorEmpty = GameOperatorEmpty();
         };
     
-        const setFacades = function () {
+        const setInterfaces = function () {
     
             components.gameState = GameState();
-            components.gameOperationsFacade = GameOperationsFacade();
+            components.gameOperationsInterface = GameOperationsInterface();
         };
     
         setTurnCounter();
@@ -93,7 +93,7 @@ const GameBuilder = function () {
         setManager();
         setMediator();
         setOperators();
-        setFacades();
+        setInterfaces();
     };
 
     const setNotify = function (notifyFunction) {

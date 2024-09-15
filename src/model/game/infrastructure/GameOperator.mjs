@@ -6,7 +6,7 @@ const GameOperator = function () {
 
     const setComponents = function (components) {
     
-        game = components.gameOperationsFacade;
+        game = components.gameOperationsInterface;
     };
 
     const setNotify = function (notifyFunction) {

@@ -1,4 +1,4 @@
-const GameOperationsFacade = function () {
+const GameOperationsInterfaces = function () {
 
     let game;
 
@@ -154,4 +154,4 @@ const GameOperationsFacade = function () {
     );
 };
 
-export default GameOperationsFacade;
+export default GameOperationsInterfaces;
