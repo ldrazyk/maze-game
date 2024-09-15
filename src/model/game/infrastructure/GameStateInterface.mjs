@@ -54,9 +54,9 @@ const GameStateInterface = function () {
         return game.canHold();
     };
 
-    const getMoves = function() { // getMovesDone
+    const getMoves = function() { // getMovesMade
 
-        return game.getMoves();
+        return game.getMovesMade();
     };
 
     const getMovesAmount = function() {

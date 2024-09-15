@@ -46,7 +46,7 @@ const MovesCounter = function() {
         }
     };
 
-    const getMoves = function() {
+    const getMovesMade = function() {
         return moves;
     };
     
@@ -78,7 +78,7 @@ const MovesCounter = function() {
             canMove,
             add,
             remove,
-            getMoves,
+            getMovesMade,
             getMovesAmount,
             getHolds,
             getMaxHolds,

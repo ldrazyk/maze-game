@@ -11,12 +11,7 @@ const GameMediator = function () {
         ({ players, scores, board, pawns, turnCounter, movesCounter, commands, gameInfo, gameManager } = components);
     };
 
-    // move to manager
-
-    const fieldHasActive = function (id) {
-    
-        return board.fieldHasActive(id);
-    };
+    // gameManager
 
     const fieldIsInSelectedReach = function (id) {
     
@@ -63,104 +58,14 @@ const GameMediator = function () {
         gameManager.manageMove({ pawn, position });
     };
 
-    const cleanAfterMove = function({ pawn, type, undo }) { // part of executeMove
+    const cleanAfterMove = function({ pawn, type, undo }) {
 
-        const updateMovesCounter = function() {
-            if (!undo) {
-                movesCounter.add(type);
-            } else {
-                movesCounter.remove(type);
-            }
-        };
-
-        const updatePawnsOrder = function() {
-            pawn.setOrder(movesCounter.getMoves());
-        };
-
-        const disactivatePawn = function() {
-            pawn.setActive(undo);
-        };
-
-        const checkFlagCaptured = function () {
-        
-            if (pawn.getPosition().getType() == 'exit') {
-
-                gameInfo.setFlagCaptured();
-            }
-        };
-        
-        const maybeUpdateReaches = function() {
-            if (type == 'move') {
-                pawns.updateReaches();
-            }
-        };
-        
-        const selectNextAfterMove = function() {
-            pawns.selectNext();
-        };
-
-        updateMovesCounter();
-        updatePawnsOrder();
-        disactivatePawn();
-        checkFlagCaptured();
-        
-        maybeUpdateReaches();
-        selectNextAfterMove();
-        
-        // notify(type); // todo move to OperationsInterface
+        gameManager.cleanAfterMove({ pawn, type, undo });
     };
 
     const isMoveLegal = function ({ pawnSpec, fieldSpec }) {
 
-        const getPawnFromSpec = function () {
-            let { pawn, pawnId } = pawnSpec;
-
-            if (!pawn) {
-                pawn = pawns.getPawn(pawnId);
-            }
-            return pawn;
-        };
-
-        const getFieldFromSpec = function () {
-            let { id, x, y, field, direction } = fieldSpec;
-
-            let resultField;
-
-            if (id || x || direction) {
-                resultField = board.getField(fieldSpec);
-            } else {
-                resultField = field;
-            }
-
-            return resultField;
-        };
-
-        const couldPawnMoveToField = function (pawn, field) {
-            let result = false;
-
-            if (field.getType() == 'path') {
-
-                result = true;
-
-                const otherPawn = field.getPawn();
-                if ( otherPawn && ( pawn.getPlayerNumber() == otherPawn.getPlayerNumber() || pawn.getKills() != otherPawn.getType() )) {
-                    result = false;
-                }
-
-            } else if (field.getType() == 'exit' & pawn.getPlayerNumber() != field.getExitNumber()) {
-                result = true;
-            }
-            return result;
-        };
-
-        let result = false;
-        const pawn = getPawnFromSpec();
-        const field = getFieldFromSpec();
-        if (field && couldPawnMoveToField(pawn, field)) {
-            result = field;
-        }
-
-        return result;
+        return gameManager.isMoveLegal({ pawnSpec, fieldSpec });
     };
 
     // board
@@ -173,6 +78,11 @@ const GameMediator = function () {
     const getPawnOnField = function (id) {
     
         return board.getPawnOnField(id);
+    };
+
+    const fieldHasActive = function (id) {
+    
+        return board.fieldHasActive(id);
     };
 
     const getBoardIterator = function() {
@@ -212,6 +122,11 @@ const GameMediator = function () {
         return gameInfo.isFlagCaptured();
     };
 
+    const setFlagCaptured = function () {
+    
+        gameInfo.setFlagCaptured();
+    };
+
     // movesCounter
 
     const canEndTurn = function () {
@@ -229,9 +144,9 @@ const GameMediator = function () {
         return movesCounter.canHold();
     };
 
-    const getMoves = function() { // getMovesDone
+    const getMovesMade = function() { // getMovesMade
         
-        return movesCounter.getMoves();
+        return movesCounter.getMovesMade();
     };
 
     const getMovesAmount = function() {
@@ -258,6 +173,16 @@ const GameMediator = function () {
     
         movesCounter.reset(activePawnsAmount);;
     };
+
+    const addMoveToCounter = function (type) {
+    
+        movesCounter.add(type);
+    };
+
+    const removeMoveFromCounter = function (type) {
+    
+        movesCounter.remove(type);
+    };
     
     // pawns
 
@@ -269,6 +194,11 @@ const GameMediator = function () {
     const isInReach = function (field) { // isFieldInReach
     
         return pawns.isInReach(field);
+    };
+
+    const getPawn = function (id) {
+    
+        return pawns.getPawn(id);
     };
 
     const getSelected = function() {
@@ -430,7 +360,6 @@ const GameMediator = function () {
             setComponents,
 
             // for manager
-            fieldHasActive,         // Operations
             fieldIsInSelectedReach, // Operations
             placePawns,             // Operations
             selectOnField,          // Operations
@@ -445,6 +374,7 @@ const GameMediator = function () {
             // board
             getField,               // Manager
             getPawnOnField,         // Manager
+            fieldHasActive,         // Operations
             getBoardIterator,       // State
             getBoardName,           // State
             getBoardRows,           // State
@@ -453,22 +383,26 @@ const GameMediator = function () {
             // gameInfo
             getGameNumber,          // State, (Scores)
             isFlagCaptured,         // Operations
+            setFlagCaptured,        // Manager
             // movesCounter
             canEndTurn,             // State, Operations
             canSelectNext,          // State, Operations
             canHold,                // State, Operations
-            getMoves,               // State
+            getMovesMade,           // State
             getMovesAmount,         // State
             hasMoves,               // Operations
             getHolds,               // State
             getMaxHolds,            // State
             resetMovesAmount,       // Manager
+            addMoveToCounter,       // Manager
+            removeMoveFromCounter,  // Manager
             // pawns
             canMove,                // State, Operations
             isInReach,              // State
+            getPawn,                // Manager
             getSelected,            // State, (Commands), Manager
             fieldHasSelected,       // Operations
-            selectNext,             // Operations
+            selectNext,             // Operations, Manager
             selectPawn,             // Manager
             getPawnsIterator,       // Manager
             setActivePawns,         // Manager

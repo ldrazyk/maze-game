@@ -82,8 +82,129 @@ const GameManager = function () {
         game.resetPawns();
     };
 
-    
-    
+    const cleanAfterMove = function({ pawn, type, undo }) {
+
+        const updateMovesCounter = function() {
+
+            if (!undo) {
+                game.addMoveToCounter(type);
+            } else {
+                game.removeMoveFromCounter(type);
+            }
+        };
+
+        const updatePawnOrder = function() {
+
+            pawn.setOrder(game.getMovesMade());
+        };
+
+        const disactivatePawn = function() {
+
+            pawn.setActive(undo);
+        };
+
+        const setFlagCaptured = function () {
+        
+            if (pawn.getPosition().getType() == 'exit') {
+
+                game.setFlagCaptured();
+            }
+        };
+        
+        const updateReaches = function() {
+
+            if (type == 'move') {
+
+                game.updateReaches();
+            }
+        };
+
+        updateMovesCounter();
+        updatePawnOrder();
+        disactivatePawn();
+        setFlagCaptured();
+        updateReaches();
+        game.selectNext();
+    };
+
+    const isMoveLegal = function ({ pawnSpec, fieldSpec }) {
+
+        const getPawnFromSpec = function () {
+
+            let { pawn, pawnId } = pawnSpec;
+
+            if (!pawn) {
+                pawn = game.getPawn(pawnId);
+            }
+            return pawn;
+        };
+
+        const getFieldFromSpec = function () {
+
+            let { id, x, y, field, direction } = fieldSpec;
+
+            let resultField;
+
+            if (id || x || direction) {
+                resultField = game.getField(fieldSpec);
+            } else {
+                resultField = field;
+            }
+
+            return resultField;
+        };
+
+        const couldPawnMoveToField = function (pawn, field) {
+
+            const fieldIsPath = function () {
+            
+                return field.getType() == 'path';
+            };
+
+            const fieldHasUnkillablePawn = function () {
+
+                const cantKillOtherPawn = function (otherPawn) {
+            
+                    return pawn.getPlayerNumber() == otherPawn.getPlayerNumber() || pawn.getKills() != otherPawn.getType();
+                };
+
+                const otherPawn = field.getPawn();
+
+                if (otherPawn && cantKillOtherPawn(otherPawn)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+
+            const fieldIsOpponentsFlag = function () {
+            
+                return field.getType() == 'exit' & pawn.getPlayerNumber() != field.getExitNumber();
+            };
+
+            if (fieldIsPath()) {
+
+                if (fieldHasUnkillablePawn()) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else if (fieldIsOpponentsFlag()) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+        
+        const pawn = getPawnFromSpec();
+        const field = getFieldFromSpec();
+
+        if (field && couldPawnMoveToField(pawn, field)) {
+            return field;
+        } else { 
+            return false; 
+        }
+    };
     
     return Object.freeze(
         {
@@ -98,6 +219,8 @@ const GameManager = function () {
             moveToField,
             nextTurn,
             endGame,
+            cleanAfterMove,
+            isMoveLegal,
         }
     );
 };
