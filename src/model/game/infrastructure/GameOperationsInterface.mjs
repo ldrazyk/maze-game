@@ -68,9 +68,9 @@ const GameOperationsInterfaces = function () {
 
     // Operations Interface
 
-    const placePawns = function (startZoneSize) {
+    const placePawns = function () {
     
-        game.placePawns(startZoneSize);
+        game.placePawns();
     };
 
     const selectNext = function () {

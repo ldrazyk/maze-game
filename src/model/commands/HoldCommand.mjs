@@ -7,7 +7,7 @@ const HoldCommand = function({ pawn, game }) {
 
     const init = function() {
         
-        disactivateCommand = DisactivateCommand({game: game, pawn: pawn, type: 'hold'});
+        disactivateCommand = DisactivateCommand({game, pawn, type: 'hold'});
     }();
 
     const execute = function() {

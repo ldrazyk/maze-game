@@ -156,45 +156,75 @@ const Board = function ({ name, matrix }) {
         }
     };
 
-    const placePawns = function ({ playerNumber, pawnsIterator, startZoneSize }) {
+    const placePawns = function ({ playerNumber, pawnsIterator }) {
 
-        const getStartZoneSize = function () {
+        const getStartZone = function () {
+
+            const findStartAreaExtremes = function () {
+
+                const getStartAreaSize = function () {
         
-            return ( size.columns - 3 ) / 2;
-        };
+                    return ( size.columns - 3 ) / 2;
+                };
 
-        const getExit = function (playerNumber) {
-            let exit;
-    
-            for (let n = 0; n < exits.length; n += 1) {
-                exit = exits[n];
-                if (playerNumber == exit.getExitNumber()) {
-                    break;
-                }
-            }
-            return exit;
-        };
+                const getExitX = function () {
 
-        const findStartZone = function (exit) {
+                    for (let exit of exits) {
+                        if (playerNumber == exit.getExitNumber()) {
 
-            const startZoneSize = getStartZoneSize();
+                            return(exit.getX());
+                        }
+                    }
+                };
 
-            const startZone = [];
-
-            const exitsX = exit.getX();
-            const exitsY = exit.getY();
+                const getDirection = function (exitX) {
             
-            let direction = -1;
-            if (exitsX == 1) direction = 1;
-            for (let xDistance = 1; xDistance <= startZoneSize; xDistance += 1) {
-                for (let yDistance = -startZoneSize; yDistance <= startZoneSize; yDistance += 1) {
-                    const field = getField({x: exitsX + direction * xDistance, y: exitsY + yDistance});
-                    if (field && field.getType() == 'path') {
-                        startZone.push(field);
+                    if (exitX == 1) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                };
+
+                const findExtremes = function () {
+                
+                    const startAreaSize = getStartAreaSize();
+                    const exitX = getExitX();
+                    const direction = getDirection(exitX);
+    
+                    let x, y;
+    
+                    x = [exitX + direction * 1, exitX + direction * startAreaSize];
+                    y = [2, size.columns - 1];
+    
+                    if (direction == -1) {
+                        x = [x[1], x[0]];
+                    }
+                
+                    return [x, y];
+                };
+
+                return findExtremes();
+            };
+
+            const findStartZone = function ([[xMin, xMax], [yMin, yMax]]) {
+
+                const startZone = [];
+            
+                for (let x = xMin; x <= xMax; x += 1) {
+                    for (let y = yMin; y <= yMax; y += 1) {
+
+                        const field = getField({ x, y });
+
+                        if (field && field.getType() == 'path') {
+                            startZone.push(field);
+                        }
                     }
                 }
-            }
-            return startZone;
+                return startZone;
+            };
+
+            return findStartZone( findStartAreaExtremes() );
         };
 
         const place = function ({ pawnsIterator, startZone }) {
@@ -203,16 +233,15 @@ const Board = function ({ name, matrix }) {
 
             let n = 0;
             while (pawnsIterator.hasNext()) {
+
                 const field = startZone[n];
                 const pawn = pawnsIterator.next();
-                game.managePlace({pawn: pawn, position: field});
+                game.managePlace({pawn, position: field});
                 n += 1;
             }
         };
 
-        const exit = getExit(playerNumber);
-        const startZone = findStartZone(exit);
-        place({ pawnsIterator, startZone })
+        place({ pawnsIterator, startZone: getStartZone() });
     };
 
     const getName = function() {

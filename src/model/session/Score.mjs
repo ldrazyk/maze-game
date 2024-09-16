@@ -55,7 +55,12 @@ const Score = function ({ gameNumber, type, activePlayer, passivePlayer, winning
     };
 
     const getWinnerName = function () {
-        return winner.getName();
+
+        if (winner) {
+            return winner.getName();
+        } else {
+            return 'None';
+        }
     };
 
     const getLooser = function () {

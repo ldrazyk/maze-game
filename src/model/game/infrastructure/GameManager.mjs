@@ -28,13 +28,13 @@ const GameManager = function () {
         managePlace({ pawn, position });
     };
 
-    const managePlacePawns = function (startZoneSize) {
+    const managePlacePawns = function () {
     
         for (let n = 0; n < game.getPlayersAmount(); n += 1) {
 
             const playerNumber = n + 1;
             const pawnsIterator = game.getPawnsIterator({ playerNumber });
-            game.placePawnsOnBoard({ playerNumber, pawnsIterator, startZoneSize });
+            game.placePawnsOnBoard({ playerNumber, pawnsIterator });
         }
     };
 

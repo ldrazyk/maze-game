@@ -19,10 +19,9 @@ const GameOperator = function () {
         disableInput = command;
     };
 
-    const placePawns = function (startZoneSize=1) {
+    const placePawns = function () {
 
-        game.placePawns(startZoneSize);
-
+        game.placePawns();
     };
 
     const endGame = function (type, winnerNumber=false) {

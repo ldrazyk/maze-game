@@ -23,8 +23,8 @@ const KillCommand = function(position) {
 
     return Object.freeze(
         {
-            execute: execute,
-            unexecute: unexecute,
+            execute,
+            unexecute,
         }
     );
 };

@@ -18,9 +18,9 @@ const GameMediator = function () {
         return gameManager.fieldIsInSelectedReach(id);
     };
 
-    const placePawns = function (startZoneSize) {
+    const placePawns = function () {
     
-        gameManager.managePlacePawns(startZoneSize);
+        gameManager.managePlacePawns();
     };
 
     const selectOnField = function (id) {

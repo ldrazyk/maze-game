@@ -1,4 +1,4 @@
-const GameObject = function () {
+const Game = function () {
 
     let gameOperator, gameOperatorEmpty, gameState;
     
@@ -106,4 +106,4 @@ const GameObject = function () {
     );
 };
 
-export default GameObject;
+export default Game;
