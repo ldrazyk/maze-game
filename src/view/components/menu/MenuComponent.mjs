@@ -175,6 +175,7 @@ const MenuComponent = function ({ gameState, factory }) {
             {
                 id: 'colorsPanel',
                 type: 'colorsPanel',
+                changeColor: (spec) => mediator.changeColor(spec),
                 parent: containers.colorsWindow,
             },
             {

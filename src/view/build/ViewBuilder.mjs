@@ -1,6 +1,7 @@
 import ViewFactory from "./ViewFactory.mjs";
 import ViewMediator from "./ViewMediator.mjs";
 import WindowAspectRatioTracker from "../utils/WindowAspectRatioTracker.mjs";
+import ColorsManager from "../components/ColorsManager.mjs";
 
 const ViewBuilder = function () {
     
@@ -82,6 +83,17 @@ const ViewBuilder = function () {
         });
     };
 
+    const setColorsManager = function () {
+    
+        const colorsManager = ColorsManager();
+
+        setColleague({
+            id: 'colorsManager',
+            colleague: colorsManager,
+            init: false,
+        });
+    };
+
 
     const getResult = function () {
         
@@ -104,6 +116,7 @@ const ViewBuilder = function () {
             setContainer,
             setComponent,
             setAspectRatioTracker,
+            setColorsManager,
             getResult,
         }
     );

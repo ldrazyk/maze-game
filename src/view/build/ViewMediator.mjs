@@ -123,6 +123,11 @@ const ViewMediator = function ({ root, factory }) {
 
     // mediator
 
+    const changeColor = function (spec) {
+    
+        colleagues.colorsManager.changeColor(spec);
+    };
+
     const logObject = function ({id, objectName, object}) {
 
         const logObjectKeys = function (object) {
@@ -193,6 +198,7 @@ const ViewMediator = function ({ root, factory }) {
             setKeydown,
             updateRootClass,
             // mediator
+            changeColor,        // ColorsPanel
             logObject,
         }
     );

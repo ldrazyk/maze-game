@@ -1,4 +1,4 @@
-const ColorsPanel = function ({ gameState, factory }) {
+const ColorsPanel = function ({ gameState, factory, changeColor }) {
     
     let mainElement;
     const components = [];
@@ -25,6 +25,7 @@ const ColorsPanel = function ({ gameState, factory }) {
                     playerNumber,
                     gameState,
                     factory,
+                    changeColor,
                     parent: mainElement,
                 }
             );

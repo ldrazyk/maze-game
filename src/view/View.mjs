@@ -36,6 +36,7 @@ const View = function() {
         
             builder.reset(root);
             builder.setController(controller);
+            builder.setColorsManager();
 
             builder.setContainer({ id: 'header', elementType: 'header', parentId: 'root'});
             builder.setContainer({ id: 'main', elementType: 'main', parentId: 'root' });
@@ -49,6 +50,7 @@ const View = function() {
             builder.setComponent({ id: 'info-panel', type: 'infoPanel', parentId: 'main' });
 
             builder.setAspectRatioTracker({ test: true });
+
         };
 
         make();

@@ -1,87 +1,88 @@
-const ChangeColorsComponent = function ({ playerNumber, gameState, factory }) {
+const ChangeColorsComponent = function ({ playerNumber, gameState, factory, changeColor }) {
     
+    const id = 'changeColors' + playerNumber;
     let elements;
     const props = {
         id: 'changeColors' + playerNumber,
         player: gameState.getPlayer(playerNumber),
     };
     const colors = ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'purple', 'magenta'];
-    let lightIndex, darkIndex;
+    // let lightIndex, darkIndex;
     let state;
-    const root = document.querySelector(':root');
+    // const root = document.querySelector(':root');
 
 
     let mediator;
 
-    const initColorIndexes = function () {
+    // const initColorIndexes = function () {
     
-        const initColor = getComputedStyle(root).getPropertyValue('--color-player' + playerNumber);
-        lightIndex = darkIndex = colors.indexOf(initColor);
-    };
+    //     const initColor = getComputedStyle(root).getPropertyValue('--color-player' + playerNumber);
+    //     lightIndex = darkIndex = colors.indexOf(initColor);
+    // };
 
     const createElements = function () {
 
         
-        const changeColor = function (type, direction=1) {
+        // const changeColor = function (type, direction=1) {
 
-            const changeIndex = function () {
+        //     const changeIndex = function () {
 
-                const getOldIndex = function () {
+        //         const getOldIndex = function () {
                 
-                    let oldIndex;
+        //             let oldIndex;
                     
-                    if (type == 'light') {
-                        oldIndex = lightIndex;
-                    } else {
-                        oldIndex = darkIndex;
-                    }
-                    return oldIndex;
-                };
+        //             if (type == 'light') {
+        //                 oldIndex = lightIndex;
+        //             } else {
+        //                 oldIndex = darkIndex;
+        //             }
+        //             return oldIndex;
+        //         };
 
-                const getNewIndex = function (oldIndex) {
+        //         const getNewIndex = function (oldIndex) {
                 
-                    let index = oldIndex + direction;
+        //             let index = oldIndex + direction;
 
-                    if (index >= colors.length) {
-                        index = 0
-                    } else if (index < 0) {
-                        index = colors.length - 1;
-                    }
-                    return index;
-                };
+        //             if (index >= colors.length) {
+        //                 index = 0
+        //             } else if (index < 0) {
+        //                 index = colors.length - 1;
+        //             }
+        //             return index;
+        //         };
 
-                const index = getNewIndex(getOldIndex());
+        //         const index = getNewIndex(getOldIndex());
 
-                if (type == 'light') {
-                    lightIndex = index;
-                } else {
-                    darkIndex = index;
-                }
+        //         if (type == 'light') {
+        //             lightIndex = index;
+        //         } else {
+        //             darkIndex = index;
+        //         }
 
-                return index;
-            };
+        //         return index;
+        //     };
             
-            const getColorName = function (index) {
+        //     const getColorName = function (index) {
             
-                return colors[index];
-            };
+        //         return colors[index];
+        //     };
 
-            const changeStyle = function (colorName) {
+        //     const changeStyle = function (colorName) {
 
-                const name = '--' + type + '-player' + playerNumber;
-                const value = 'var(--' + colorName + '-' + type + ')';
+        //         const name = '--' + type + '-player' + playerNumber;
+        //         const value = 'var(--' + colorName + '-' + type + ')';
             
-                root.style.setProperty(name, value);
-            };
+        //         root.style.setProperty(name, value);
+        //     };
 
-            changeStyle(getColorName(changeIndex()));
-        };
+        //     changeStyle(getColorName(changeIndex()));
+        // };
 
-        const changeBothColors = function (direction=1) {
+        // const changeBothColors = function (direction=1) {
         
-            changeColor('light', direction)
-            changeColor('dark', direction)
-        };
+        //     changeColor('light', direction)
+        //     changeColor('dark', direction)
+        // };
 
         let spec = {
             main: {
@@ -103,7 +104,7 @@ const ChangeColorsComponent = function ({ playerNumber, gameState, factory }) {
             prevColorButton: {
                 type: 'div',
                 classList: 'button prev',
-                onClick: () => changeBothColors(-1),
+                onClick: () => changeColor({direction: -1, number: playerNumber}),
                 parentKey: 'selecteColorsPanel',
             },
             prevColorSvg: {
@@ -124,7 +125,7 @@ const ChangeColorsComponent = function ({ playerNumber, gameState, factory }) {
             nextColorButton: {
                 type: 'div',
                 classList: 'button next',
-                onClick: () => changeBothColors(1),
+                onClick: () => changeColor({direction: 1, number: playerNumber}),
                 parentKey: 'selecteColorsPanel',
             },
             nextColorSvg: {
@@ -165,7 +166,7 @@ const ChangeColorsComponent = function ({ playerNumber, gameState, factory }) {
 
     const init = function () {
     
-        initColorIndexes();
+        // initColorIndexes();
         createElements();
         createState();
         updatePlayerNameState();
