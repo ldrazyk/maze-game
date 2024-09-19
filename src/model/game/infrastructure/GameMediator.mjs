@@ -327,6 +327,11 @@ const GameMediator = function () {
         players.changeActive();
     };
 
+    const getPlayerName = function (number) {
+    
+        return players.getPlayerName(number);
+    };
+
     // scores
 
     const isPlaying = function () { // isGameRunning
@@ -427,6 +432,7 @@ const GameMediator = function () {
             getActiveColor,         // State
             getPlayersAmount,       // Manager
             changeActivePlayer,     // Manager
+            getPlayerName,          // State
             // scores
             isPlaying,              // State
             getLastScoreString,     // State

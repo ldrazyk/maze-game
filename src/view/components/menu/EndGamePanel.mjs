@@ -1,30 +1,24 @@
 const EndGamePanel = function ({ factory, gameState, endGame, toggleParent, toggleNext }) {
     
+    const id = 'end-game-panel';
     let elements;
-
-    const props = {
-        id: 'end-game-panel',
-        player1: gameState.getPlayer(1),
-        player2: gameState.getPlayer(2),
-    };
-
     let state;
 
-    const executeEndGame = function (spec) {
-    
-        endGame(spec);
-        toggleParent();
-        toggleNext();
-    };
-
     const createElements = function () {
+
+        const executeEndGame = function (spec) {
+    
+            endGame(spec);
+            toggleParent();
+            toggleNext();
+        };
 
         elements = factory.createElements(
             {
                 main: {
                     type: 'div',
-                    id: props.id,
-                    classList: 'panel ' + props.id,
+                    id: id,
+                    classList: 'panel ' + id,
                 },
                 drawButton: {
                     type: 'button',
@@ -55,36 +49,37 @@ const EndGamePanel = function ({ factory, gameState, endGame, toggleParent, togg
 
         const onPlayerNameChange = function (playerNumber, value) {
         
-            elements['player' + playerNumber + 'WinsButton'].textContent = value + ' wins';
+            const changeNameInPlayerWinsButton = function () {
+            
+                const button = elements['player' + playerNumber + 'WinsButton'];
+                const newText = value + ' wins';
+
+                button.textContent = newText;
+            };
+
+            changeNameInPlayerWinsButton();
         };
     
         state = factory.createState();
 
-        state.add({
-            name: 'player1Name',
-            value: '',
-            onChange: (value) => onPlayerNameChange(1, value),
+        [1, 2].forEach(number => {
+
+            state.add({
+                name: 'player' + number + 'Name',
+                value: '',
+                onChange: (value) => onPlayerNameChange(number, value),
+            });
         });
-
-        state.add({
-            name: 'player2Name',
-            value: '',
-            onChange: (value) => onPlayerNameChange(2, value),
-        });
-
-
     };
 
-    const updatePlayerNameStates = function () {
+    const updatePlayerNameStates = function (gameState) {
 
-        const getPlayerName = function (playerNumber) {
-        
-            return props['player' + playerNumber].getName();
-        };
+        [1, 2].forEach(number => {
 
-        [1, 2].forEach(playerNumber => {
+            const name = 'player' + number + 'Name';
+            const value = gameState.getPlayerName(number);
 
-            state.update('player' + playerNumber + 'Name', getPlayerName(playerNumber));
+            state.update(name, value);
         });
     };
 
@@ -92,20 +87,20 @@ const EndGamePanel = function ({ factory, gameState, endGame, toggleParent, togg
     
         createElements();
         createState();
-        updatePlayerNameStates();
+        updatePlayerNameStates(gameState);
     }();
 
     const update = function ({ code, gameState }) {
 
         if (code == 'changePlayerName') {
 
-            updatePlayerNameStates();
+            updatePlayerNameStates(gameState);
         }
     };
 
     const getId = function () {
         
-        return props.id;
+        return id;
     };
     
     const getMain = function () {

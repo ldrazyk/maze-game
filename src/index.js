@@ -18,8 +18,8 @@ const pawnsSpec1 = [
 const appStartSpec = {
 
     playersSpec: [
-        {name: 'Player 1', color: 'blue', number: 1}, 
-        {name: 'Player 2', color: 'pink', number: 2}
+        {name: 'Walter White', color: 'blue', number: 1},   // todo: remove color ?
+        {name: 'Jesse Pinkman', color: 'pink', number: 2}
     ],
     boardSpec: {
         id : false,

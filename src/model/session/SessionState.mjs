@@ -34,6 +34,11 @@ const SessionState = function () {
         return players.getPlayer(number);
     };
 
+    const getPlayerName = function (number) {
+    
+        return players.getPlayerName(number);
+    };
+
     const getActiveNumber = function (active=true) {
     
         return players.getActiveNumber(active);
@@ -55,6 +60,7 @@ const SessionState = function () {
             setBoardDummyRepository,
             // getters
             getPlayer,
+            getPlayerName,
             getActiveNumber,
             getBoardDummyIterator,
         }

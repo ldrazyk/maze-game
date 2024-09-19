@@ -65,6 +65,11 @@ const Players = function (playersSpec) {
         return players[number - 1];
     };
 
+    const getPlayerName = function (number) {
+    
+        return getPlayer(number).getName();
+    };    
+
     const getPlayersIterator = function () {
         return ArrayIterator(players);
     };
@@ -88,6 +93,7 @@ const Players = function (playersSpec) {
             getActiveNumber,
             getActiveColor,
             getPlayer,
+            getPlayerName,
             getPlayersIterator,
             getAmount,
             

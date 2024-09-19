@@ -154,7 +154,7 @@ const GameOperator = function () {
             // game init
             placePawns,
             // UI
-            endGame,
+            endGame,            // endGamePanel
             selectNext,
             moveInDirection,
             hold,

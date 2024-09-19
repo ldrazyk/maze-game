@@ -127,6 +127,11 @@ const GameStateInterface = function () {
         return game.getActiveColor(active);
     };
 
+    const getPlayerName = function (number) {
+    
+        return game.getPlayerName(number);
+    };
+
     // scores
 
     const isPlaying = function () { // isGameRunning
@@ -155,10 +160,10 @@ const GameStateInterface = function () {
             setComponents,
 
             // board
-            getBoardIterator, // in BoardComponent
-            getBoardName, // in BoardComponent
-            getBoardRows, // in BoardComponent
-            getBoardColumns,   // in BoardComponent
+            getBoardIterator,       // BoardComponent
+            getBoardName,           // BoardComponent
+            getBoardRows,           // BoardComponent
+            getBoardColumns,        // BoardComponent
             // gameInfo
             getGameNumber,
             // movesCounter
@@ -172,7 +177,7 @@ const GameStateInterface = function () {
             // pawns
             canMove,
             isInReach,
-            getSelected,   // in BoardComponent
+            getSelected,            // BoardComponent
             // turnCounter
             getTurnNumber,
             // commands
@@ -182,9 +187,10 @@ const GameStateInterface = function () {
             getPlayer,
             getActiveNumber,
             getActiveColor,
+            getPlayerName,          // EndGamePanel
             // scores
             isPlaying,
-            getLastScoreString, // used in ViewJs
+            getLastScoreString,     // ViewJs
             getLastScoreType,
             getLastScoreWinnerName,
         }
