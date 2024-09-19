@@ -17,7 +17,7 @@ const Model = function() {
 
     const createSubject = function () {
         
-        subject = Subject(getGameState);
+        subject = Subject();
     };
 
     const createSessionBuilder = function () {
@@ -38,6 +38,11 @@ const Model = function() {
     }();
 
     const notify = function (code, object=false) {
+
+        if (!object) {
+            
+            object = getGameState();
+        }
         
         subject.notify(code, object);
     };
