@@ -24,7 +24,6 @@ const MenuComponent = function ({ gameState, factory }) {
             value: false,
             onClick: false,
         });
-
     };
 
     const createMain = function () {
@@ -233,7 +232,18 @@ const MenuComponent = function ({ gameState, factory }) {
         
         return mainElement;
     };
-    
+
+    const test = function () {
+
+        const testSelf = function () {
+        
+            mediator.logObject({ id, objectName: 'Elements', object: elements });
+            mediator.logObject({ id, objectName: 'Containers', object: containers });
+            mediator.logObject({ id, objectName: 'Components', object: components });
+        };
+
+        testSelf();
+    };
     
     return Object.freeze(
         {
@@ -241,6 +251,7 @@ const MenuComponent = function ({ gameState, factory }) {
             update,
             getId,
             getMain,
+            test,
         }
     );
 };

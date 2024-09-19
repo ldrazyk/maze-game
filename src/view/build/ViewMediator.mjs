@@ -121,6 +121,51 @@ const ViewMediator = function ({ root, factory }) {
         containers.root.classList = classList;
     };
 
+    // mediator
+
+    const logObject = function ({id, objectName, object}) {
+
+        const logObjectKeys = function (object) {
+            
+            let n = 1
+
+            for (let key of Object.keys(object)) {
+
+                console.log(`${n}. ${key}`);
+                n += 1;
+            }
+        };
+    
+        console.log(`${objectName} of '${id}':`);
+        logObjectKeys(object);
+    };
+
+    const test = function () {
+    
+        const testSelf = function () {
+        
+            const id = 'mediator'
+            logObject({ id, objectName: 'Containers', object: containers });
+            logObject({ id, objectName: 'Components', object: components });
+            logObject({ id, objectName: 'Colleagues', object: colleagues });
+        };
+
+        const testComponents = function () {
+        
+            for (let [name, component] of Object.entries(components)) {
+
+                try {
+                    component.test();
+                } catch {
+                    console.log(`${name} component dosen't have test()`);
+                }
+            }
+        };
+
+        testSelf();
+        testComponents();
+    };
+
     
     return Object.freeze(
         {
@@ -130,6 +175,7 @@ const ViewMediator = function ({ root, factory }) {
             addColleague,
             getContainer,
             update,
+            test,
             // controller
             createGame,
             endGame,
@@ -146,6 +192,8 @@ const ViewMediator = function ({ root, factory }) {
             setPlayerName,
             setKeydown,
             updateRootClass,
+            // mediator
+            logObject,
         }
     );
 };

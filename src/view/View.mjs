@@ -62,6 +62,8 @@ const View = function() {
 
         builder.setMediator(mediator);
         builder.setComponent({ id: 'board', type: 'board', parentId: 'board-panel', gameState });
+
+        mediator.test();
     };
 
     const endGame = function(gameState) {
