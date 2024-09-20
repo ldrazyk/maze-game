@@ -424,7 +424,7 @@ const CreateGamePanel = function ({ factory, gameState, createGame, toggleParent
         
         return elements.main;
     };
-    
+
     
     return Object.freeze(
         {
