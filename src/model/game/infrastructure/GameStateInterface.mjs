@@ -187,7 +187,7 @@ const GameStateInterface = function () {
             getPlayer,
             getActiveNumber,
             getActiveColor,
-            getPlayerName,          // EndGamePanel
+            getPlayerName,          // EndGamePanel, ChangeColorsComponent
             // scores
             isPlaying,
             getLastScoreString,     // ViewJs

@@ -2,87 +2,10 @@ const ChangeColorsComponent = function ({ playerNumber, gameState, factory, chan
     
     const id = 'changeColors' + playerNumber;
     let elements;
-    const props = {
-        id: 'changeColors' + playerNumber,
-        player: gameState.getPlayer(playerNumber),
-    };
-    const colors = ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'purple', 'magenta'];
-    // let lightIndex, darkIndex;
     let state;
-    // const root = document.querySelector(':root');
-
-
     let mediator;
 
-    // const initColorIndexes = function () {
-    
-    //     const initColor = getComputedStyle(root).getPropertyValue('--color-player' + playerNumber);
-    //     lightIndex = darkIndex = colors.indexOf(initColor);
-    // };
-
     const createElements = function () {
-
-        
-        // const changeColor = function (type, direction=1) {
-
-        //     const changeIndex = function () {
-
-        //         const getOldIndex = function () {
-                
-        //             let oldIndex;
-                    
-        //             if (type == 'light') {
-        //                 oldIndex = lightIndex;
-        //             } else {
-        //                 oldIndex = darkIndex;
-        //             }
-        //             return oldIndex;
-        //         };
-
-        //         const getNewIndex = function (oldIndex) {
-                
-        //             let index = oldIndex + direction;
-
-        //             if (index >= colors.length) {
-        //                 index = 0
-        //             } else if (index < 0) {
-        //                 index = colors.length - 1;
-        //             }
-        //             return index;
-        //         };
-
-        //         const index = getNewIndex(getOldIndex());
-
-        //         if (type == 'light') {
-        //             lightIndex = index;
-        //         } else {
-        //             darkIndex = index;
-        //         }
-
-        //         return index;
-        //     };
-            
-        //     const getColorName = function (index) {
-            
-        //         return colors[index];
-        //     };
-
-        //     const changeStyle = function (colorName) {
-
-        //         const name = '--' + type + '-player' + playerNumber;
-        //         const value = 'var(--' + colorName + '-' + type + ')';
-            
-        //         root.style.setProperty(name, value);
-        //     };
-
-        //     changeStyle(getColorName(changeIndex()));
-        // };
-
-        // const changeBothColors = function (direction=1) {
-        
-        //     changeColor('light', direction)
-        //     changeColor('dark', direction)
-        // };
 
         let spec = {
             main: {
@@ -154,22 +77,16 @@ const ChangeColorsComponent = function ({ playerNumber, gameState, factory, chan
         });
     };
 
-    const updatePlayerNameState = function () {
+    const updatePlayerNameState = function (gameState) {
 
-        const getPlayerName = function () {
-        
-            return props.player.getName();
-        };
-
-        state.update('playerName', getPlayerName());
+        state.update('playerName', gameState.getPlayerName(playerNumber));
     };
 
     const init = function () {
     
-        // initColorIndexes();
         createElements();
         createState();
-        updatePlayerNameState();
+        updatePlayerNameState(gameState);
     }();
 
     const setMediator = function (newMediator) {
@@ -181,13 +98,13 @@ const ChangeColorsComponent = function ({ playerNumber, gameState, factory, chan
 
         if (code == 'changePlayerName') {
 
-            updatePlayerNameState();
+            updatePlayerNameState(gameState);
         }
     };
 
     const getId = function () {
         
-        return props.id;
+        return id;
     };
     
     const getMain = function () {
