@@ -8,16 +8,15 @@ import MenuComponent from "../components/menu/MenuComponent.mjs";
 import ColorsPanel from "../components/menu/ColorsPanel.mjs";
 import ChangeColorsComponent from "../components/menu/ChangeColorsComponent.mjs";
 import EndGamePanel from "../components/menu/EndGamePanel.mjs";
-import CreateGamePanel2 from "../components/create_game/CreateGamePanel.mjs";
+import CreateGamePanel from "../components/create_game/CreateGamePanel.mjs";
 import BoardSetupPanel from "../components/create_game/BoardSetupPanel.mjs";
 import PawnsSetupPanel from "../components/create_game/PawnsSetupPanel.mjs";
+import PawnAmountComponent from "../components/create_game/PawnAmountComponent.mjs";
 import ButtonCreateGame from "../components/create_game/ButtonCreateGame.mjs";
-import CreateGamePanel from "../components/menu/CreateGamePanel.mjs";
-import CollectionComponent from "../components/menu/CollectionComponent.mjs";
-import BoardPreviewPanel from "../components/menu/BoardPreviewPanel.mjs";
+import CollectionComponent from "../components/create_game/CollectionComponent.mjs";
+import BoardPreviewPanel from "../components/create_game/BoardPreviewPanel.mjs";
 import BoardDummyComponent from "../components/menu/BoardDummyComponent.mjs";
 import GridDummyComponent from "../components/menu/GridDummyComponent.mjs";
-import PawnAmountPanel from "../components/menu/PawnAmountPanel.mjs";
 import RulesPanel from "../components/menu/RulesPanel.mjs";
 import EmptyPanel from "../components/menu/EmptyPanel.mjs";
 import ContainerComponent from "../components/containers/ContainerComponent.mjs"
@@ -38,16 +37,15 @@ const UiComponentsFactory = function () {
         changeColors: ChangeColorsComponent,
         rulesPanel: RulesPanel,
         endGamePanel: EndGamePanel,
-        createGamePanel: CreateGamePanel2,
+        createGamePanel: CreateGamePanel,
         boardSetupPanel: BoardSetupPanel,
         pawnsSetupPanel: PawnsSetupPanel,
+        pawnAmountComponent: PawnAmountComponent,
         buttonCreateGame: ButtonCreateGame,
-        // createGamePanel: CreateGamePanel,
         collectionComponent: CollectionComponent,
         boardPreviewPanel: BoardPreviewPanel,
         boardDummy: BoardDummyComponent,
         gridDummy: GridDummyComponent,
-        pawnAmountPanel: PawnAmountPanel,
         emptyPanel: EmptyPanel,
         container: ContainerComponent,
         dropdownContainer: DropdownContainer,

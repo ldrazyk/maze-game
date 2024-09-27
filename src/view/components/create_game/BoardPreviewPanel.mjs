@@ -73,18 +73,26 @@ const BoardPreviewPanel = function ({ factory, iterator }) {
         // console.log('old id: ' + visibleBoardId);
         // console.log('new id: ' + id);
 
-        if (visibleBoardId) {
-            components[visibleBoardId].show(false);
-        }
+        const hideOld = function () {
+        
+            if (visibleBoardId) {
+                components[visibleBoardId].show(false);
+            }
+        };
 
-        if (id) {
-            components[id].show(true);
-        }
+        const showNew = function () {
+        
+            if (id) {
+                components[id].show(true);
+            }
+        };
 
+        hideOld();
+        showNew();
         visibleBoardId = id;
     };
 
-    const updateId = function (id) {
+    const setId = function (id) {
     
         boardId = id;
 
@@ -95,7 +103,7 @@ const BoardPreviewPanel = function ({ factory, iterator }) {
         }
     };
 
-    const updateSize = function (size) {
+    const setSize = function (size) {
     
         boardSize = size;
 
@@ -111,8 +119,8 @@ const BoardPreviewPanel = function ({ factory, iterator }) {
     
     return Object.freeze(
         {
-            updateId,
-            updateSize,
+            setId,
+            setSize,
             getMain,
         }
     );

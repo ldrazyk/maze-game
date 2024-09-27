@@ -1,8 +1,6 @@
-const CollectionComponent = function ({ factory, id=false, classList=false, title, nextItem, toggleHasItem, active=true }) {
+const CollectionComponent = function ({ factory, id=false, classList=false, title, nextItem, toggleActive, activate, active=true }) {
     
     let elements = {};
-
-    
 
     const createElements = function () {
 
@@ -46,7 +44,7 @@ const CollectionComponent = function ({ factory, id=false, classList=false, titl
                 checkbox: {
                     type: 'div',
                     classList: 'checkbox button',
-                    onClick: toggleHasItem,
+                    onClick: toggleActive,
                     parent: elements.main,
                 },
                 checkboxSvg: {
@@ -68,7 +66,10 @@ const CollectionComponent = function ({ factory, id=false, classList=false, titl
                 prevButton: {
                     type: 'div',
                     classList: 'button prev',
-                    onClick: () => nextItem(-1),
+                    onClick: () => {
+                        activate();
+                        nextItem(-1);
+                    },
                     parentKey: 'itemPanel',
                 },
                 prevSvg: {
@@ -88,7 +89,10 @@ const CollectionComponent = function ({ factory, id=false, classList=false, titl
                 nextButton: {
                     type: 'div',
                     classList: 'button next',
-                    onClick: () => nextItem(1),
+                    onClick: () => {
+                        activate();
+                        nextItem(1);
+                    },
                     parentKey: 'itemPanel',
                 },
                 nextSvg: {
@@ -100,7 +104,7 @@ const CollectionComponent = function ({ factory, id=false, classList=false, titl
         }();
     };
 
-    const setActive = function (active) {
+    const updateActive = function (active) {
     
         if (active) {
             elements.main.classList.add('active');
@@ -112,17 +116,19 @@ const CollectionComponent = function ({ factory, id=false, classList=false, titl
     const init = function () {
     
         createElements();
-        setActive(active);
+        updateActive(active);
     }();
 
-    const setItemOutput = function (itemOutput) {
+    const setItem = function (item) {
     
-        elements.screenParagraph.textContent = itemOutput;
-    };
+        if (!item) {
+            item = '';
+            updateActive(false);
+        } else {
+            updateActive(true);
+        }
 
-    const update = function () {
-    
-        return ;
+        elements.screenParagraph.textContent = item;
     };
 
     const getId = function () {
@@ -138,9 +144,7 @@ const CollectionComponent = function ({ factory, id=false, classList=false, titl
     
     return Object.freeze(
         {
-            setItemOutput,
-            setActive,
-            update,
+            setItem,
             getId,
             getMain,
         }

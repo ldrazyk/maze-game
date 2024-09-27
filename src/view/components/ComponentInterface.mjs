@@ -1,23 +1,23 @@
-const ComponentInterface = function ({ factory }) {
+const ComponentInterface = function ({ onClick, factory }) {
     
-    let mainElement;
-    const id = 'component';
+    let elements;
+    const id = 'basic-component';
 
     let mediator;
 
     const createElements = function () {
-    
-        const createMain = function () {
-        
-            mainElement = factory.createElement(
-                {
-                    type: 'div',
-                    classList: 'component',
-                }
-            );
-        };
 
-        createMain();
+        elements = factory.createElements(
+            {
+                main: {
+                    type: 'div',
+                    id: id,
+                    classList: 'component',
+                    textContent: 'Component',
+                    onClick,
+                }
+            }
+        );
     };
 
     const init = function () {
@@ -42,7 +42,7 @@ const ComponentInterface = function ({ factory }) {
     
     const getMain = function () {
         
-        return mainElement;
+        return elements.main;
     };
     
     

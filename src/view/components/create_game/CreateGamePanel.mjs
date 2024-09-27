@@ -1,4 +1,4 @@
-const CreateGamePanel = function ({ createGame, hideParent, factory }) {
+const CreateGamePanel = function ({ gameState, createGame, hideParent, factory }) {
     
     const id = 'create-game-panel';
     const components = {};
@@ -43,7 +43,6 @@ const CreateGamePanel = function ({ createGame, hideParent, factory }) {
             };
         };
         
-        console.log('Create Game');
         createGame(getGameSpec());
         hideParent();
     };
@@ -57,16 +56,6 @@ const CreateGamePanel = function ({ createGame, hideParent, factory }) {
                     id: id,
                     classList: 'panel ' + id,
                 },
-                pawnsSection: {
-                    type: 'section',
-                    classList: 'pawns-section',
-                    parentKey: 'main',
-                },
-                boardSection: {
-                    type: 'section',
-                    classList: 'board-section',
-                    parentKey: 'main',
-                },
                 confirmSection: {
                     type: 'section',
                     classList: 'confirm-section',
@@ -74,7 +63,6 @@ const CreateGamePanel = function ({ createGame, hideParent, factory }) {
                 },
             }
         )
-        return ;
     };
 
     const createComponents = function () {
@@ -82,8 +70,9 @@ const CreateGamePanel = function ({ createGame, hideParent, factory }) {
         components.boardPanel = factory.createComponent(
             {
                 type: 'boardSetupPanel',
+                gameState,
                 factory,
-                parent: elements.boardSection,
+                parent: elements.main,
             }
         );
 
@@ -91,7 +80,7 @@ const CreateGamePanel = function ({ createGame, hideParent, factory }) {
             {
                 type: 'pawnsSetupPanel',
                 factory,
-                parent: elements.pawnsSection,
+                parent: elements.main,
             }
         );
 

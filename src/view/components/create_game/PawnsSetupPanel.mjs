@@ -1,26 +1,47 @@
 const PawnsSetupPanel = function ({ factory }) {
     
+    const minPanwsAmount = 1;
+    const maxPawnsAmount = 3;
+
     const id = 'pawns-setup-panel';
     let elements;
-    let pawnComponents = {};
+    const pawnComponents = {};
+
 
     const createElements = function () {
     
         elements = factory.createElements(
             {
                 main: {
-                    type: 'div',
+                    type: 'section',
                     id: id,
-                    classList: 'panel ' + id,
-                    textContent: 'Pawns Setup Panel',
+                    classList: 'pawns-section',
                 }
             }
         );
     };
 
+    const createComponents = function () {
+    
+        ['lion', 'rooster', 'snake'].forEach(type => {
+
+            pawnComponents[type] = factory.createComponent(
+                {
+                    type: 'pawnAmountComponent',
+                    pawnType: type,
+                    min: minPanwsAmount,
+                    max: maxPawnsAmount,
+                    factory,
+                    parent: elements.main,
+                }
+            );                    
+        });
+    };
+
     const init = function () {
     
         createElements();
+        createComponents();
     }();
     
     const getPawnsAmount = function () {
@@ -32,14 +53,7 @@ const PawnsSetupPanel = function ({ factory }) {
             amount[component.getType()] = component.getAmount();
         }
 
-        // return amount;
-
-        // TEST
-        return {
-            'lion': 1,
-            'snake': 1,
-            'rooster': 1
-        };
+        return amount;
     };
 
     const getId = function () {

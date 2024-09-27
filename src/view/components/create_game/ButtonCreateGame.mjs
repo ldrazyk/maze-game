@@ -10,10 +10,39 @@ const ButtonCreateGame = function ({ onClick, factory }) {
                 main: {
                     type: 'div',
                     id: id,
-                    classList: 'button',
-                    textContent: 'Create',
+                    classList: 'button send',
                     onClick,
-                }
+                },
+                paragraphWrapper: {
+                    type: 'div',
+                    classList: 'wrapper',
+                    parentKey: 'main',
+                },
+                paragraph: {
+                    type: 'p',
+                    textContent: 'CREATE',
+                    parentKey: 'paragraphWrapper',
+                },
+                paragraphWrapper2: {
+                    type: 'div',
+                    classList: 'wrapper',
+                    parentKey: 'main',
+                },
+                paragraph1: {
+                    type: 'p',
+                    textContent: 'CR',
+                    parentKey: 'paragraphWrapper2',
+                },
+                paragraph2: {
+                    type: 'p',
+                    textContent: 'EA',
+                    parentKey: 'paragraphWrapper2',
+                },
+                paragraph3: {
+                    type: 'p',
+                    textContent: 'TE',
+                    parentKey: 'paragraphWrapper2',
+                },
             }
         );
     };
